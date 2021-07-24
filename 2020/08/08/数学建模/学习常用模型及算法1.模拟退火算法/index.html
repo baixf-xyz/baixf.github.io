@@ -1,0 +1,661 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  
+    <meta name="description" content="学习数学建模常用模型及算法">
+  
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+  <title>学习常用模型及算法1.模拟退火算法 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.1.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.8.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":200}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>白小飞のBlog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/sjban.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="学习常用模型及算法1.模拟退火算法">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-08-08 10:39" pubdate>
+        2020年8月8日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      22
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">学习常用模型及算法1.模拟退火算法</h1>
+            
+            <div class="markdown-body">
+              <h3 id="1-算法简述"><a href="#1-算法简述" class="headerlink" title="1. 算法简述"></a>1. 算法简述</h3><p>模拟退火适用的问题通常是一些求最优解的问题。<br>比如，把问题抽象地看成一个长成这样的毫无规律的函数，而最优解就是函数的最低点。</p>
+<p><img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/a4f8Ff.png" srcset="/img/loading.gif" alt=""></p>
+<p>众所周知，对于一个没有办法在多项式复杂度的算法下完成求解的问题，我们通常会想到一种简单粗暴的方法——贪心。<br>选择问题的某一个状态，然后不断向更优的情况靠近。<br>比如从A出发，可以获得局部最优解B，但这显然不是全局最优解。</p>
+<p><img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/a4fUyj.png" srcset="/img/loading.gif" alt=""></p>
+<p>显然，这样做的局限性是，过于局限在局部的一个凹部分而无法跳出去去寻找更优的解。</p>
+<h3 id="2-原理"><a href="#2-原理" class="headerlink" title="2. 原理"></a>2. 原理</h3><p>为了解决这一问题，科学家们想到了物理的退火降温的过程——<br>一个处于很高温度的物体，现在要给它降温，使物体内能降到最低。<br>我们常规的思维是，越快越好，让它的温度迅速地降低。<br>然而，实际上，过快地降温使得物体来不及有序地收缩，难以形成结晶。而结晶态，才是物体真正内能降到最低的形态。<br>正确的做法，是徐徐降温，也就是退火，才能使得物体的每一个粒子都有足够的时间找到自己的最佳位置并紧密有序地排列。开始温度高的时候，粒子活跃地运动并逐渐找到一个合适的状态。在这过程中温度也会越降越低，温度低下来了，那么粒子也渐渐稳定下来，相较于以前不那么活跃了。这时候就可以慢慢形成最终稳定的结晶态了。<br>那么，我们可不可以把找到最优解，与形成结晶态，这两个过程联系在一起呢？<br>于是，模拟退火诞生了。</p>
+<h3 id="3-模拟退火算法要求"><a href="#3-模拟退火算法要求" class="headerlink" title="3. 模拟退火算法要求"></a>3. 模拟退火算法要求</h3><ol>
+<li>初始温度足够高</li>
+<li>降温过程足够慢</li>
+<li>终止温度足够低</li>
+</ol>
+<h3 id="4-实现过程"><a href="#4-实现过程" class="headerlink" title="4. 实现过程"></a>4. 实现过程</h3><p>我们需要设定这几个参数，模拟退火过程</p>
+<p><img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/a4grxs.png" srcset="/img/loading.gif" alt=""></p>
+<ul>
+<li>T——温度<br>ΔT——温度变化率，每次温度等于上一次温度乘上ΔT，实际应用时一般取0.95−0.99，模拟徐徐降温<br>再定义一些量&lt;/p&gt;</li>
+<li><p>x——当前选择的解</p>
+</li>
+<li><p>Δx——解变动值</p>
+</li>
+<li>x1——当前的目标解，等于x+Δx</li>
+<li>Δf——当前解的函数值与目标解函数值之差，等于f(x)−f(x1)<br><p>我们给一个初始解x，并让它不断变动。要模拟变动的大小随温度的降低而降低，我们每次的Δx应该在一个大小与T成正比的值域内随机取值。<br>这时候我们就要考虑是否将当前解变为目标解。因为我们还是需要贪心，所以如果f(x1)<f(x)，那么接受目标解，x=x1。
+那如果f(x1)>f(x)呢？我们当然要以一定概率接受它啦，这样才能跳出局部的限制，去搜寻更优的解，弥补贪心的局限性。那么这个概率应该是多少呢？同样要模拟变动的大小随温度的降低而降低。科学家经过理论分析，得出这个概率应该是eΔfT。<br>如此反复选择直到T趋近于0（可以设一个EPS）这时候我们认为我们当前的x就是最优解。</li>
+</ul>
+<p><img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20200727113332676.png" srcset="/img/loading.gif" alt=""></p>
+<p>图中or random…即为metropolis准则，也是模拟退火和贪心算法的根本区别。<br>用图片来描述的话，就拿上面那个图像寻找最优解为例</p>
+<p><img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/a4f26J.png" srcset="/img/loading.gif" alt=""></p>
+<p>首先经过大幅波动，当前解由A-&gt;B-&gt;C，找到了一个比较满意的解。<br>但还不能满足。由于温度还比较大，此时接受了一些不比当前解优的目标解，C-&gt;D-&gt;E，成功地爬了上去。而温度还在慢慢减小。<br>终于，发现了一个更优解F，成功跳出了那个非常宽的局部凹函数。<br>这时候，温度越来越小了，很难再次接受不比当前解优的目标解，再次翻出去。解终于渐渐趋于稳定，并最终到达了G，找到了最优解。<br>如此看来，基于随机的模拟退火能很大程度上提高正确率，但也不可能完全正确。上面的例子只是随意模拟出的一个情况。所以要多跑几遍，取每一次得到的解的最优值。</p>
+<h3 id="5-关于参数"><a href="#5-关于参数" class="headerlink" title="5. 关于参数"></a>5. 关于参数</h3><p>众所周知，模拟退火最麻烦的地方在调参，只有合适的参数才能在一定的时间内很大概率跑出最优解。<br>首先，根据数据范围和精度要求，可以基本确定EPS的大小了，不过也需要尝试手动微调。<br>比较麻烦的是温度和变动率。首先不必顾虑，都开大一点，先把最优解跑出来。<br>然后，手动二分吧，注意每个二分的值要多跑几遍，因为模拟退火有偶然性，一次跑出最优解不代表大部分时候都能。<br>不过因为有两个量，还不能直接二分，应该二分套二分比较合适<br>update:考试的时候写提答，总结了一种方法：观察法<br>一边退火一边输出当前的温度、解等信息，通过观察大致感受一下解的降低速率<br>一般来说，如果解的降低速率比较均匀，跑出来的最优解也就好一些<br>不均匀的话，就调整参数，将解的降低速率较快的时间段的ΔT变大一点，速率就能减慢一点。反之同理。</p>
+<h3 id="6-经典问题：旅行商问题-TSP"><a href="#6-经典问题：旅行商问题-TSP" class="headerlink" title="6. 经典问题：旅行商问题(TSP)"></a>6. 经典问题：旅行商问题(TSP)</h3><p><img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20200727110007699.png" srcset="/img/loading.gif" alt=""></p>
+<p>每个城市只有一个箭头指进，一个箭头指出，即入度和出度均为1。<br>文件介绍：</p>
+<ul>
+<li>swap.m文件用于邻解生成</li>
+<li>distance.m文件用于计算距离</li>
+<li>pathfare.m文件用于记录路线<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs matlab">clear;<br><span class="hljs-comment">% 程 序 参 数 设 定</span><br>Coord = ... <span class="hljs-comment">% 城 市 的 坐 标 Coordinates</span><br>[ <span class="hljs-number">0.6683</span> <span class="hljs-number">0.6195</span> <span class="hljs-number">0.4</span>    <span class="hljs-number">0.2439</span> <span class="hljs-number">0.1707</span> <span class="hljs-number">0.2293</span> <span class="hljs-number">0.5171</span> <span class="hljs-number">0.8732</span> <span class="hljs-number">0.6878</span> <span class="hljs-number">0.8488</span> ; ...<br>  <span class="hljs-number">0.2536</span> <span class="hljs-number">0.2634</span> <span class="hljs-number">0.4439</span> <span class="hljs-number">0.1463</span> <span class="hljs-number">0.2293</span> <span class="hljs-number">0.761</span>  <span class="hljs-number">0.9414</span> <span class="hljs-number">0.6536</span> <span class="hljs-number">0.5219</span> <span class="hljs-number">0.3609</span> ] ;<br>t0 = <span class="hljs-number">1</span> ; <span class="hljs-comment">% 初 温 t0</span><br>iLk = <span class="hljs-number">20</span> ; <span class="hljs-comment">% 内 循 环 最 大 迭 代 次 数 iLk</span><br>oLk = <span class="hljs-number">50</span> ; <span class="hljs-comment">% 外 循 环 最 大 迭 代 次 数 oLk</span><br>lam = <span class="hljs-number">0.95</span> ; <span class="hljs-comment">% λ lambda</span><br>istd = <span class="hljs-number">0.001</span> ; <span class="hljs-comment">% 若 内 循 环 函 数 值 方 差 小 于 istd 则 停 止</span><br>ostd = <span class="hljs-number">0.001</span> ; <span class="hljs-comment">% 若 外 循 环 函 数 值 方 差 小 于 ostd 则 停 止</span><br>ilen = <span class="hljs-number">5</span> ; <span class="hljs-comment">% 内 循 环 保 存 的 目 标 函 数 值 个 数</span><br>olen = <span class="hljs-number">5</span> ; <span class="hljs-comment">% 外 循 环 保 存 的 目 标 函 数 值 个 数</span><br><span class="hljs-comment">% 程 序 主 体</span><br>m = <span class="hljs-built_in">length</span>( Coord ) ; <span class="hljs-comment">% 城 市 的 个 数 m</span><br>fare = distance( Coord ) ; <span class="hljs-comment">% 路 径 费 用 fare</span><br>path = <span class="hljs-number">1</span> : m ; <span class="hljs-comment">% 初 始 路 径 path</span><br>pathfar = pathfare( fare , path ) ; <span class="hljs-comment">% 路 径 费 用 path fare</span><br>ores = <span class="hljs-built_in">zeros</span>( <span class="hljs-number">1</span> , olen ) ; <span class="hljs-comment">% 外 循 环 保 存 的 目 标 函 数 值</span><br>e0 = pathfar ; <span class="hljs-comment">% 能 量 初 值 e0</span><br>t = t0 ; <span class="hljs-comment">% 温 度 t</span><br><span class="hljs-keyword">for</span> out = <span class="hljs-number">1</span> : oLk <span class="hljs-comment">% 外 循 环 模 拟 退 火 过 程</span><br>ires = <span class="hljs-built_in">zeros</span>( <span class="hljs-number">1</span> , ilen ) ; <span class="hljs-comment">% 内 循 环 保 存 的 目 标 函 数 值</span><br><span class="hljs-keyword">for</span> in = <span class="hljs-number">1</span> : iLk <span class="hljs-comment">% 内 循 环 模 拟 热 平 衡 过 程</span><br>[ newpath , v ] = swap( path , <span class="hljs-number">1</span> ) ; <span class="hljs-comment">% 产 生 新 状 态</span><br>e1 = pathfare( fare , newpath ) ; <span class="hljs-comment">% 新 状 态 能 量</span><br><span class="hljs-comment">% Metropolis 抽 样 稳 定 准 则</span><br>r = <span class="hljs-built_in">min</span>( <span class="hljs-number">1</span> , <span class="hljs-built_in">exp</span>( - ( e1 - e0 ) / t ) ) ;<br><span class="hljs-keyword">if</span> <span class="hljs-built_in">rand</span> &lt; r<br>path = newpath ; <span class="hljs-comment">% 更 新 最 佳 状 态</span><br>e0 = e1 ;<br><span class="hljs-keyword">end</span><br>ires = [ ires( <span class="hljs-number">2</span> : <span class="hljs-keyword">end</span> ) e0 ] ; <span class="hljs-comment">% 保 存 新 状 态 能 量</span><br><span class="hljs-comment">% 内 循 环 终 止 准 则 ：连 续 ilen 个 状 态 能 量 波 动 小 于 istd</span><br><span class="hljs-keyword">if</span> std( ires , <span class="hljs-number">1</span> ) &lt; istd<br><span class="hljs-keyword">break</span> ;<br><span class="hljs-keyword">end</span><br><span class="hljs-keyword">end</span><br>ores = [ ores( <span class="hljs-number">2</span> : <span class="hljs-keyword">end</span> ) e0 ] ; <span class="hljs-comment">% 保 存 新 状 态 能 量</span><br><span class="hljs-comment">% 外 循 环 终 止 准 则 ：连 续 olen 个 状 态 能 量 波 动 小 于 ostd</span><br><span class="hljs-keyword">if</span> std( ores , <span class="hljs-number">1</span> ) &lt; ostd<br><span class="hljs-keyword">break</span> ;<br><span class="hljs-keyword">end</span><br>t = lam * t ;<br><span class="hljs-keyword">end</span><br>pathfar = e0 ;<br><span class="hljs-comment">% 输 入 结 果</span><br>fprintf( <span class="hljs-string">&#x27;近似最优路径为：\n &#x27;</span> )<br><span class="hljs-comment">%disp( char( [ path , path(1) ] + 64 ) ) ;</span><br><span class="hljs-built_in">disp</span>(path)<br>fprintf( <span class="hljs-string">&#x27;近似最优路径路程\tpathfare=&#x27;</span> ) ;<br><span class="hljs-built_in">disp</span>( pathfar ) ;<br>myplot( path , Coord , pathfar ) ;<br></code></pre></td></tr></table></figure>
+<h3 id="7-TSP“旅行商问题”的应用领域"><a href="#7-TSP“旅行商问题”的应用领域" class="headerlink" title="7. TSP“旅行商问题”的应用领域"></a>7. TSP“旅行商问题”的应用领域</h3></li>
+</ul>
+<p>如何规划最合理高效的道路交通，以减少拥堵;如何更好地规划物流，以减少运营成本;在互联网环境中如何更好地设置节点，以更好地让信息流动等。</p>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.cnblogs.com/flashhu/p/8884132.html">模拟退火总结（模拟退火）</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/You_are_blind/article/details/107606852">学习常用模型及算法：1.启发式算法（模拟退火和遗传算法）</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%AD%A6%E4%B9%A0/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+                    
+                      <a class="hover-with-bg" href="/tags/matlab/">matlab</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/08/08/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200808%E3%80%91/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">每日一题【20200808】</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/08/06/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200806%E3%80%91/">
+                        <span class="hidden-mobile">每日一题【20200806】</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                  
+                
+                
+  <div id="vcomments"></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('vcomments', function() {
+      Fluid.utils.createScript('https://cdn.staticfile.org/valine/1.4.14/Valine.min.js', function () {
+        new Valine({
+          el: "#vcomments",
+          app_id: "gn6pMOQ2Y8601y9txmR9s4DN-gzGzoHsz",
+          app_key: "KYnH8MyyiQBXK8hMwO7HevEw",
+          placeholder: "说点什么",
+          path: window.location.pathname,
+          avatar: "retro",
+          meta: ["nick","mail","link"],
+          pageSize: "10",
+          lang: "zh-CN",
+          highlight: false,
+          recordIP: false,
+          serverURLs: "",
+        });
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the
+    <a target="_blank" href="https://valine.js.org" rel="nofollow noopener noopener">comments powered by Valine.</a>
+  </noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://ghchart.rshah.org/409ba5/baixf-xyz" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:826px;background-color: #A9C9FF;background-image: linear-gradient(180deg, #A9C9FF 0%, #FFBBEC 100%);max-width:100%;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":200})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.12.0/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script defer type="text/javascript" src="//js.users.51.la/21061303.js"></script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script defer src="//s4.cnzz.com/z_stat.php?id=1279684341&show=pic"
+            type="text/javascript"></script>
+  
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

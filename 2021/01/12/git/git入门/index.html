@@ -1,0 +1,663 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  
+    <meta name="description" content="转载自TsumugiWenders大佬~">
+  
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+  <title>git入门 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.1.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.8.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":200}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>白小飞のBlog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/u=1216919364,1145391025&fm=26&gp=0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="git入门">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-01-12 15:40" pubdate>
+        2021年1月12日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      13
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">git入门</h1>
+            
+            <div class="markdown-body">
+              <h2 id="一、准备工作"><a href="#一、准备工作" class="headerlink" title="一、准备工作"></a>一、准备工作</h2><p>（1）在 <a target="_blank" rel="noopener" href="https://github.com">https://github.com</a> 网站上注册一个账号并设置用户名、密码，新建一个repository</p>
+<p>（2）在网站 <a target="_blank" rel="noopener" href="http://msysgit.github.io/">http://msysgit.github.io/</a> 上下载git，并安装</p>
+<h2 id="二、设置SSH"><a href="#二、设置SSH" class="headerlink" title="二、设置SSH"></a>二、设置SSH</h2><h3 id="1、首先在本地创建ssh-key，使用下面的命令："><a href="#1、首先在本地创建ssh-key，使用下面的命令：" class="headerlink" title="1、首先在本地创建ssh key，使用下面的命令："></a>1、首先在本地创建ssh key，使用下面的命令：</h3><p><code>$ ssh-keygen -t rsa -C &quot;your_email@youremail.com&quot;</code><br>后面的参数<code>your_email@youremail.com</code>改为你在github网站上注册的邮箱，之后要求确认路径和输入密码（密码就是网站上自己设置的密码），之后一路默认。成功之后可以在<code>C://Users/.ssh</code>下找到<code>id_rsa.pub</code>文件，打开全部复制。</p>
+<p>回到github网页版，点击头像 <code>--&gt; Settings --&gt; SSH和GPG keys --&gt; New SSH key</code>，粘贴上之前复制的密钥内容。如下图：</p>
+<p>为了验证是够成功，在git bash下输入下面的命令：</p>
+<p><code>$ ssh -T git@github.com</code><br>第一次会提示是够<code>continue</code>，输入“yes”，接着会看到“<code>You&#39;ve successfully authenticated, but GitHub does not provide shell access</code>”，表示连接成功。</p>
+<h3 id="2、设置username和email，github每次commit都会记录他们。使用下面的命令："><a href="#2、设置username和email，github每次commit都会记录他们。使用下面的命令：" class="headerlink" title="2、设置username和email，github每次commit都会记录他们。使用下面的命令："></a>2、设置username和email，github每次commit都会记录他们。使用下面的命令：</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros">$ git<span class="hljs-built_in"> config </span>--global user.name <span class="hljs-string">&quot;your name&quot;</span>  <br>$ git<span class="hljs-built_in"> config </span>--global user.email <span class="hljs-string">&quot;your_email@youremail.com&quot;</span>  <br></code></pre></td></tr></table></figure>
+<p><code>yourname</code>是网页上的用户名，<code>your_email@youremail.com</code>是用户注册的邮箱。</p>
+<h2 id="三、上传本地文件到远程仓库"><a href="#三、上传本地文件到远程仓库" class="headerlink" title="三、上传本地文件到远程仓库"></a>三、上传本地文件到远程仓库</h2><p>这里只讲述最简单的上传，所以采用了一种比较固定的模式，其他再多些的用法可自行搜索，只是成功上传了的一个流程（弄了好久，终于成功了..^_^..），说明：下面的内容几乎来自<a target="_blank" rel="noopener" href="http://blog.csdn.net/sinat_33366020/article/details/73732769，非常感谢作者！！">http://blog.csdn.net/sinat_33366020/article/details/73732769，非常感谢作者！！</a></p>
+<h3 id="1、先进入项目文件夹"><a href="#1、先进入项目文件夹" class="headerlink" title="1、先进入项目文件夹"></a>1、先进入项目文件夹</h3><p>比如我想把python下面的test文件夹及test文件夹下的文件上传，则进入python文件夹内（如上传python下面的文件及文件夹，则需要进入python的上一级目录），使用cd命令。</p>
+<h3 id="2、通过git-init把当前目录变成git可以管理的仓库"><a href="#2、通过git-init把当前目录变成git可以管理的仓库" class="headerlink" title="2、通过git init把当前目录变成git可以管理的仓库"></a>2、通过git init把当前目录变成git可以管理的仓库</h3><p>使用如下命令：</p>
+<p><code>git init</code><br>可以使用<code>ls -a</code>查看当前文件夹下是否包括一个<code>.git</code>的文件夹，若包含，则成功。</p>
+<h3 id="3、把文件添加到本地版本库"><a href="#3、把文件添加到本地版本库" class="headerlink" title="3、把文件添加到本地版本库"></a>3、把文件添加到本地版本库</h3><p>使用命令<code>git add</code>添加文件；添加到暂存区里面去，如果add后面加入的是“.”，则意味着需要添加当前文件夹下的所有文件，若只想添加<code>/python/test/note.txt</code>这个文件，则只需要将”.”改成当前路径（/test/note.txt）即可，命令如下：</p>
+<p><code>git add .</code>  </p>
+<h3 id="4、用命令git-commit把文件提交到仓库"><a href="#4、用命令git-commit把文件提交到仓库" class="headerlink" title="4、用命令git commit把文件提交到仓库"></a>4、用命令<code>git commit</code>把文件提交到仓库</h3><p>如下命令：</p>
+<p><code>git commit -m &#39;note&#39;</code><br>引号里面的是提交的说明，如果忘记带参数-m，则会自动打开vim编辑器。</p>
+<h3 id="5、关联到远程仓库"><a href="#5、关联到远程仓库" class="headerlink" title="5、关联到远程仓库"></a>5、关联到远程仓库</h3><p>使用下面的命令：</p>
+<p><code>git remote add origin 你的远程库地址</code><br>如：</p>
+<p><code>git remote add origin https://github.com/nnaa/helloworld.git</code><br><code>nnaa</code>是你的用户名，<code>helloworld</code>是新建的仓库名称。<br>如果发现上面步骤写错了，则使用下面的命令：</p>
+<p><code>git remote rm origin   //删除origin</code><br><code>git remote add origin https://github.com/nana/demo.git   //重新添加origin</code>  </p>
+<h3 id="6、远程库与本地同步合并"><a href="#6、远程库与本地同步合并" class="headerlink" title="6、远程库与本地同步合并"></a>6、远程库与本地同步合并</h3><p>（如果远程库不为空必须做这一步，否则后面的提交会失败）</p>
+<p><code>git pull --rebase origin master</code>  </p>
+<h3 id="7、将最新的修改推送到远程仓库"><a href="#7、将最新的修改推送到远程仓库" class="headerlink" title="7、将最新的修改推送到远程仓库"></a>7、将最新的修改推送到远程仓库</h3><p>使用下面的命令：<br><code>git push -u origin master</code><br>其中，<code>origin</code>是远程仓库名字; <code>master</code>是远程仓库所属分支</p>
+<p>注意: 我们第一次push的时候,加上<code>-u</code>参数,Git就会把本地的master分支和远程的master分支进行关联起来,我们以后的push操作就不再需要加上<code>-u</code>参数了</p>
+<p>如果出现类似下面内容：</p>
+<pre><code>Username for &#39;https://github.com&#39;: shiren1118  
+Password for &#39;https://shiren1118@github.com&#39;:  
+To https://github.com/shiren1118/iOS_code_agile.git  
+ ![rejected]        master -&gt; master(non-fast-forward)  
+error: failed to push some refs to&#39;https://github.com/shiren1118/iOS_code_agile.git&#39;  
+hint: Updates were rejected because the tip of yourcurrent branch is behind  
+hint: its remote counterpart. Merge the remote changes(e.g. &#39;git pull&#39;)  
+hint: before pushing again.  
+hint: See the &#39;Note about fast-forwards&#39; in &#39;git push--help&#39; for details.
+</code></pre><p>则输入命令下列命令即可：</p>
+<p><code>git push -u origin master -f</code>     </p>
+<h2 id="四、拷贝其他git文件"><a href="#四、拷贝其他git文件" class="headerlink" title="四、拷贝其他git文件"></a>四、拷贝其他git文件</h2><p>如果从在git服务器所在主机上的其他账户获取git服务器上面文件，则直接用gitclone + git仓库的路径，即：</p>
+<p><code>git clone /nnaa/sample.git</code>（将仓库地址复制）  </p>
+<h2 id="原文链接"><a href="#原文链接" class="headerlink" title="原文链接"></a>原文链接</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/TsumugiWenders/GitHub">GitHub快速入门</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%AD%A6%E4%B9%A0/git/">git</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/git/">git</a>
+                    
+                      <a class="hover-with-bg" href="/tags/github/">github</a>
+                    
+                      <a class="hover-with-bg" href="/tags/gitee/">gitee</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/01/12/git/github%E5%88%86%E6%94%AF/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Github分支</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/01/09/hexo/Github%20Pages%20%E5%92%8C%20Hexo%20%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/">
+                        <span class="hidden-mobile">Github Pages 和 Hexo 搭建自己的博客</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                  
+                
+                
+  <div id="vcomments"></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('vcomments', function() {
+      Fluid.utils.createScript('https://cdn.staticfile.org/valine/1.4.14/Valine.min.js', function () {
+        new Valine({
+          el: "#vcomments",
+          app_id: "gn6pMOQ2Y8601y9txmR9s4DN-gzGzoHsz",
+          app_key: "KYnH8MyyiQBXK8hMwO7HevEw",
+          placeholder: "说点什么",
+          path: window.location.pathname,
+          avatar: "retro",
+          meta: ["nick","mail","link"],
+          pageSize: "10",
+          lang: "zh-CN",
+          highlight: false,
+          recordIP: false,
+          serverURLs: "",
+        });
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the
+    <a target="_blank" href="https://valine.js.org" rel="nofollow noopener noopener">comments powered by Valine.</a>
+  </noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://ghchart.rshah.org/409ba5/baixf-xyz" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:826px;background-color: #A9C9FF;background-image: linear-gradient(180deg, #A9C9FF 0%, #FFBBEC 100%);max-width:100%;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":200})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.12.0/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script defer type="text/javascript" src="//js.users.51.la/21061303.js"></script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script defer src="//s4.cnzz.com/z_stat.php?id=1279684341&show=pic"
+            type="text/javascript"></script>
+  
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

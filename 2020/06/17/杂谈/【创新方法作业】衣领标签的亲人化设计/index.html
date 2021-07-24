@@ -1,0 +1,691 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  
+    <meta name="description" content="创新方法作业">
+  
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+  <title>衣领标签的亲人化设计 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.1.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.8.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":200}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>白小飞のBlog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/src=http___img.alicdn.com_imgextra_i4_2011405639_TB24H25jHBmpuFjSZFuXXaG_XXa_!!2011405639.jpg&refer=http___img.alicdn.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="衣领标签的亲人化设计">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-06-17 21:11" pubdate>
+        2020年6月17日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      21
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">衣领标签的亲人化设计</h1>
+            
+            <div class="markdown-body">
+              <h2 id="1-创意由来（主要介绍如何发现问题？当前存在的问题是什么？）"><a href="#1-创意由来（主要介绍如何发现问题？当前存在的问题是什么？）" class="headerlink" title="1. 创意由来（主要介绍如何发现问题？当前存在的问题是什么？）"></a>1. 创意由来（主要介绍如何发现问题？当前存在的问题是什么？）</h2><p><strong>衣服内的“领标”总会摩擦脖子，甚至对脖子造成伤害。最近在换季，收拾自己冬天的衣服时发现一些衣服里面的领子处总是有我大大小小的裁剪疤痕，尤其是一些贴身衣服，衣服面料很好，可是它的“领标”总是把人脖子磨得难受。所以每次买了新衣服第一件事就是不得不去拆领标。有些人可能皮肤比较敏感，有人会因此而过敏，更有甚者“领标”会对造成磨伤。</strong></p>
+<h2 id="2-创新设计介绍"><a href="#2-创新设计介绍" class="headerlink" title="2. 创新设计介绍"></a>2. 创新设计介绍</h2><h3 id="2-1-产品设计图"><a href="#2-1-产品设计图" class="headerlink" title="2.1    产品设计图"></a>2.1    产品设计图</h3><p><img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/aGaJqU.png" srcset="/img/loading.gif" alt=""></p>
+<p>特点：</p>
+<ol>
+<li>采用舒适不扎人的纯棉材质的标签。</li>
+<li>更换标签放置位置。</li>
+<li>固定简单，易于拆掉。</li>
+<li>将“领标”信息个性化处理。<br><em>（注：图中“领标”颜色只是为了易于识别。）</em></li>
+</ol>
+<h3 id="2-2-产品在创新改进前后的技术指标参数对比（参考39个功能参数，结合产品特点选取重点参数进行介绍）"><a href="#2-2-产品在创新改进前后的技术指标参数对比（参考39个功能参数，结合产品特点选取重点参数进行介绍）" class="headerlink" title="2.2 产品在创新改进前后的技术指标参数对比（参考39个功能参数，结合产品特点选取重点参数进行介绍）"></a>2.2 产品在创新改进前后的技术指标参数对比（参考39个功能参数，结合产品特点选取重点参数进行介绍）</h3><table>
+<thead>
+<tr>
+  <th>功能参数</th>
+  <th>创新改进前</th>
+  <th>创新改进后</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>盈利</td>
+  <td>-</td>
+  <td>+</td>
+</tr>
+<tr>
+  <td>物体产生的有害因素</td>
+  <td>+</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td>时间损失</td>
+  <td>+</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td>稳定性</td>
+  <td>+</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td>操作流程的方便性</td>
+  <td>-</td>
+  <td>+</td>
+</tr>
+<tr>
+  <td>可维修性</td>
+  <td>-</td>
+  <td>+</td>
+</tr>
+<tr>
+  <td>生产率</td>
+  <td>+</td>
+  <td>-</td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+<li>盈利情况：改进前厂家为了节约成本，使用了低廉材质的标签，但是改进后采用柔软纯棉标签，厂家会因此提高进货价，按照“盈利=原价-进货价”来算，商家盈利是减少了。</li>
+<li>物体产生的有害因素：化纤或者丝毛一类低廉材料的“领标”可能会对过敏性皮肤产生过敏的现象，采用纯棉优质标签相对来说不会产生此类过敏。</li>
+<li>时间损失：由于“领标固定在衣服外面，所以每次固定前都不需要进行内翻，再加上只是简单固定，所以制造过程中延续的时间就断了，时间损失也就少了。</li>
+<li>稳定性：当然由于“领标”的简单固定，不可避免的降低了“领标”与衣服之间的稳定性。</li>
+<li>操作流程的方便性：由于“领标”直接放置在衣服外面，再加上之前提到的简单固定，所以相较于改进前来说是提高了操作流程的方便性。</li>
+<li>可维修性：由于改造前“领标”均是与衣领一起固定，若在裁剪“领标”时，极易容易弄坏衣服主体，不易维修，而在创新改造后，由于“领标”只是简单固定在衣服外面，极易拆卸安装，可维修性强。</li>
+<li>生产率：改进前由于“领标”需要全面固定在衣服上，而改进后只需要简单固定，所以相对来说时间成本减少了，于时间成本降低，所以生产率也相应得到提高。</li>
+</ul>
+<h3 id="2-3-从以下TRIZ分析工具中至少选取3种进行问题分析，得出解决方案。（要体现出完整的分析步骤）"><a href="#2-3-从以下TRIZ分析工具中至少选取3种进行问题分析，得出解决方案。（要体现出完整的分析步骤）" class="headerlink" title="2.3 从以下TRIZ分析工具中至少选取3种进行问题分析，得出解决方案。（要体现出完整的分析步骤）"></a>2.3 从以下TRIZ分析工具中至少选取3种进行问题分析，得出解决方案。（要体现出完整的分析步骤）</h3><h4 id="（1）功能分析"><a href="#（1）功能分析" class="headerlink" title="（1）功能分析"></a>（1）功能分析</h4><h4 id="（2）因果链分析"><a href="#（2）因果链分析" class="headerlink" title="（2）因果链分析"></a>（2）因果链分析</h4><p>法律规定：按照我国《商标法》规定：”商标的使用人应对其使用的商标质量负责。”如果消费者购买了质量低劣的服装，可以根据商标所标识内容，向消费者协会投诉，这就是法律的监督作用。服装商标信誉的高低是和服装质量紧密地联系在一起的。名牌商标的产生是服装生产企业长年坚持自身质量监督的结果。但是法律中并未对领标的形式进行规定，设计者可以采用外部商标化，从而减少“领标”与身体的不必要接触，从而减少对人体不必要的伤害。<br>材质选择：制造商为赢得最大利益化，为降低成本采用了低廉材质，但是制造商可以从长远考虑，做好细节，从而获得大批信赖忠实用户来占有市场。<br>美观、固定方式：设计者可以立足长远，将商标设计的个性化，可以直接外穿，或者做成外部装饰挂件，方便拆卸，既能充分体现领标的作用，又能做到宣传作用。<br>指导消费与品牌宣传：产品可以立足未来，从细节出发，令用户满意，不断扩大忠实用户，提高产品市场好评，从而达到市场占有最大化，实现市场的全面覆盖。</p>
+<h4 id="（3）冲突解决理论（技术冲突或物理冲突）"><a href="#（3）冲突解决理论（技术冲突或物理冲突）" class="headerlink" title="（3）冲突解决理论（技术冲突或物理冲突）"></a>（3）冲突解决理论（技术冲突或物理冲突）</h4><p>改进前后由于改进前厂家为了节约成本，使用了低廉材质的标签，但是改进后采用柔软纯棉标签，厂家会因此提高进货价，按照“盈利=原价-进货价”来算，商家盈利是减少了。但从长远考虑，可以凭此获得市场与人们的信赖，从而获得更大的利益。由于“领标”直接放置在衣服外面，再加上之前提到的简单固定，所以相较于改进前来说是提高了操作流程的方便性。改进后只需要简单固定，所以相对来说时间成本减少了，于时间成本降低，所以生产率也相应得到提高。同时由于“领标固定在衣服外面，所以每次固定前都不需要进行内翻，再加上只是简单固定，所以制造过程中延续的时间就断了，时间损失也就少了。由于改造前“领标”均是与衣领一起固定，若在裁剪“领标”时，极易容易弄坏衣服主体，不易维修，而在创新改造后，由于“领标”只是简单固定在衣服外面，极易拆卸安装，可维修性强。但是同样由于“领标”的简单固定，不可避免的降低了“领标”与衣服之间的稳定性。</p>
+<h4 id="（4）裁剪法"><a href="#（4）裁剪法" class="headerlink" title="（4）裁剪法"></a>（4）裁剪法</h4><p>可以将领标做成衣服的装饰，从而减少装饰部分不必要的消耗。一般来说，消费者乐于购买质量好、商标知名度高的服装。在市场上享有信誉的服装商标，可以扩大商标的影响力，促进消费者购买，从而起到引导消费的作用，广告是企业用以宣传产品质量的有效方法，而广告宣传又是与服装商标有机地联系在一起的。通过各种媒体的宣传，让消费者认识该商标，以达到扩大销售本企业服装的目的。这就要求设计者可以立足长远，将商标设计的个性化，可以直接外穿，或者做成外部装饰挂件，方便拆卸，既能充分体现领标的作用，又能做到宣传作用。</p>
+<h4 id="（5）物质-场分析"><a href="#（5）物质-场分析" class="headerlink" title="（5）物质-场分析"></a>（5）物质-场分析</h4><h2 id="3-创新设计总结展望（当前设计已完成哪些方面的改进？目前仍存在什么不足之处，有何解决建议？）"><a href="#3-创新设计总结展望（当前设计已完成哪些方面的改进？目前仍存在什么不足之处，有何解决建议？）" class="headerlink" title="3. 创新设计总结展望（当前设计已完成哪些方面的改进？目前仍存在什么不足之处，有何解决建议？）"></a>3. 创新设计总结展望（当前设计已完成哪些方面的改进？目前仍存在什么不足之处，有何解决建议？）</h2><p>已完成改进：采用柔软材质，从根源上解决衣领处“领标”过敏的发生；将“领标”外置，从而减少与人体不必要的接触，从路径上断绝过敏的发生；将“领标”简单固定，方便买家拆卸，满足大部分人的需求；领标固定的折中方案，做成外置装饰或者图标，不仅可以解决过敏现象，反而会因为细节处理，获得大批信赖者，在市场上享有信誉的服装商标，可以扩大商标的影响力，促进消费者购买，从而起到引导消费的作用。<br>不足之处：如果将其做成外置装饰，“领标”就不再只是衣服的一个附属品可有可无，成为衣服主题的一部分，如何确保衣服的稳固性，保证衣服不易损坏，仍需要设计者解决。<br>建议：直接将“领标”内容以个性化形式印刷或者缝制在衣服本体上，从而解决“领标”与衣服本体的易脱离性。也可以分别从有“领标”和无“领标”角度分别设计衣服，使衣服既能在原本状态下符合审美，又能在脱离“领标”装饰的情况下得到大家的认可。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/life/">life</a>
+                    
+                      <a class="hover-with-bg" href="/categories/life/%E6%9D%82%E8%B0%88/">杂谈</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%88%9B%E6%96%B0%E6%96%B9%E6%B3%95/">创新方法</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%9C%9F%E6%9C%AB/">期末</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/07/08/raspberry/%E7%8E%A9%E8%BD%AC%E6%A0%91%E8%8E%93%E6%B4%BE%5B01%E8%A3%85%E7%B3%BB%E7%BB%9F%5D/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">玩转树莓派[01:装系统]</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/06/16/%E6%9D%82%E8%B0%88/%E3%80%90%E5%B8%82%E5%9C%BA%E8%90%A5%E9%94%80%E5%88%86%E6%9E%90%E3%80%91%E5%85%B3%E4%BA%8E%E6%A0%A1%E5%86%85%E8%B6%85%E5%B8%82%E8%BF%90%E8%90%A5%E6%83%85%E5%86%B5%E7%9A%84%E8%B0%83%E6%9F%A5%E6%8A%A5%E5%91%8A/">
+                        <span class="hidden-mobile">关于校内超市运营情况的调查报告</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                  
+                
+                
+  <div id="vcomments"></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('vcomments', function() {
+      Fluid.utils.createScript('https://cdn.staticfile.org/valine/1.4.14/Valine.min.js', function () {
+        new Valine({
+          el: "#vcomments",
+          app_id: "gn6pMOQ2Y8601y9txmR9s4DN-gzGzoHsz",
+          app_key: "KYnH8MyyiQBXK8hMwO7HevEw",
+          placeholder: "说点什么",
+          path: window.location.pathname,
+          avatar: "retro",
+          meta: ["nick","mail","link"],
+          pageSize: "10",
+          lang: "zh-CN",
+          highlight: false,
+          recordIP: false,
+          serverURLs: "",
+        });
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the
+    <a target="_blank" href="https://valine.js.org" rel="nofollow noopener noopener">comments powered by Valine.</a>
+  </noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://ghchart.rshah.org/409ba5/baixf-xyz" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:826px;background-color: #A9C9FF;background-image: linear-gradient(180deg, #A9C9FF 0%, #FFBBEC 100%);max-width:100%;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":200})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.12.0/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script defer type="text/javascript" src="//js.users.51.la/21061303.js"></script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script defer src="//s4.cnzz.com/z_stat.php?id=1279684341&show=pic"
+            type="text/javascript"></script>
+  
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

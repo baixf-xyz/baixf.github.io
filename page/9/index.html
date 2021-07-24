@@ -1,0 +1,1049 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  
+    <meta name="description" content="">
+  
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+  <title>白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/css/bootstrap.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.8.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":200}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>白小飞のBlog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://api.yimian.xyz/img?type=moe&size=1920x1080') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Welcome To My Blog">
+              
+            </span>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div class="py-5" id="board"
+          style=margin-top:0>
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2020/07/24/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200807%E3%80%91/" target="_self">
+          <img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20201129201333.jpg" srcset="/img/loading.gif" alt="每日一题【20200807】">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/07/24/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200807%E3%80%91/">每日一题【20200807】</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/24/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200807%E3%80%91/">
+          
+          
+            
+          
+          第十七天建模打卡
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-24 11:11" pubdate>
+              2020-07-24
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+            
+              <a href="/tags/%E7%BB%BC%E5%90%88%E8%AF%84%E4%BB%B7/">综合评价</a>
+            
+              <a href="/tags/%E5%9D%87%E6%96%B9%E5%B7%AE%E6%B3%95/">均方差法</a>
+            
+              <a href="/tags/%E7%86%B5%E6%9D%83%E5%AE%9A%E6%9D%83%E6%B3%95/">熵权定权法</a>
+            
+              <a href="/tags/%E6%9D%83%E9%87%8D/">权重</a>
+            
+              <a href="/tags/%E7%86%B5%E6%9D%83/">熵权</a>
+            
+              <a href="/tags/%E5%8E%BB%E9%87%8F%E7%BA%B2/">去量纲</a>
+            
+              <a href="/tags/%E7%86%B5%E5%80%BC/">熵值</a>
+            
+              <a href="/tags/%E5%B7%AE%E5%BC%82%E7%B3%BB%E6%95%B0/">差异系数</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2020/07/23/software/markdown%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F/" target="_self">
+          <img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/u=1750208429,1514486128&fm=26&gp=0.jpg" srcset="/img/loading.gif" alt="markdown数学公式">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/07/23/software/markdown%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F/">markdown数学公式</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/23/software/markdown%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F/">
+          
+          
+            
+          
+          反正latex也要学这些~
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-23 11:11" pubdate>
+              2020-07-23
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/life/">life</a>
+            
+              <a href="/categories/life/software/">software</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/markdown/">markdown</a>
+            
+              <a href="/tags/latex/">latex</a>
+            
+              <a href="/tags/%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F/">数学公式</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2020/07/23/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200723%E3%80%91/" target="_self">
+          <img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20201129201333.jpg" srcset="/img/loading.gif" alt="每日一题【20200723】">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/07/23/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200723%E3%80%91/">每日一题【20200723】</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/23/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200723%E3%80%91/">
+          
+          
+            
+          
+          第二天建模打卡
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-23 11:11" pubdate>
+              2020-07-23
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+            
+              <a href="/tags/%E6%95%B4%E6%95%B0%E8%A7%84%E5%88%92/">整数规划</a>
+            
+              <a href="/tags/%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92/">线性规划</a>
+            
+              <a href="/tags/intlinprog/">intlinprog</a>
+            
+              <a href="/tags/%E7%94%A8%E5%88%86%E6%94%AF%E5%AE%9A%E7%95%8C%E6%B3%95/">用分支定界法</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2020/07/22/software/%E8%A7%86%E9%A2%91%E7%AB%99%E8%A7%86%E9%A2%91%E4%B8%8B%E8%BD%BD%E5%B7%A5%E5%85%B7You-Get/" target="_self">
+          <img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20201128120010.png" srcset="/img/loading.gif" alt="视频站视频下载工具You-Get">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/07/22/software/%E8%A7%86%E9%A2%91%E7%AB%99%E8%A7%86%E9%A2%91%E4%B8%8B%E8%BD%BD%E5%B7%A5%E5%85%B7You-Get/">视频站视频下载工具You-Get</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/22/software/%E8%A7%86%E9%A2%91%E7%AB%99%E8%A7%86%E9%A2%91%E4%B8%8B%E8%BD%BD%E5%B7%A5%E5%85%B7You-Get/">
+          
+          
+            
+          
+          神奇的下载软件
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-22 11:11" pubdate>
+              2020-07-22
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/life/">life</a>
+            
+              <a href="/categories/life/software/">software</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/raspberry/">raspberry</a>
+            
+              <a href="/tags/you-get/">you-get</a>
+            
+              <a href="/tags/%E8%A7%86%E9%A2%91%E4%B8%8B%E8%BD%BD/">视频下载</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2020/07/22/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200722%E3%80%91/" target="_self">
+          <img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20201129201333.jpg" srcset="/img/loading.gif" alt="每日一题【20200722】">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/07/22/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200722%E3%80%91/">每日一题【20200722】</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/22/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200722%E3%80%91/">
+          
+          
+            
+          
+          第一天建模打卡
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-22 11:11" pubdate>
+              2020-07-22
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+            
+              <a href="/tags/%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92/">线性规划</a>
+            
+              <a href="/tags/linprog/">linprog</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2020/07/21/Linux/shell%E7%BC%96%E7%A8%8B/" target="_self">
+          <img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20201123222216.png" srcset="/img/loading.gif" alt="shell编程">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/07/21/Linux/shell%E7%BC%96%E7%A8%8B/">shell编程</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/21/Linux/shell%E7%BC%96%E7%A8%8B/">
+          
+          
+            
+          
+          学习linux必备
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-21 11:11" pubdate>
+              2020-07-21
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/Linux/">Linux</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/linux/">linux</a>
+            
+              <a href="/tags/shell/">shell</a>
+            
+              <a href="/tags/%E7%BC%96%E7%A8%8B/">编程</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2020/07/20/python/python%E8%AF%8D%E4%BA%91%E5%89%94%E9%99%A4%E9%9D%9E%E6%9C%89%E6%95%88%E8%AF%8D/" target="_self">
+          <img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20201123212010.png" srcset="/img/loading.gif" alt="python词云剔除非有效词">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/07/20/python/python%E8%AF%8D%E4%BA%91%E5%89%94%E9%99%A4%E9%9D%9E%E6%9C%89%E6%95%88%E8%AF%8D/">python词云剔除非有效词</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/20/python/python%E8%AF%8D%E4%BA%91%E5%89%94%E9%99%A4%E9%9D%9E%E6%9C%89%E6%95%88%E8%AF%8D/">
+          
+          
+            
+          
+          python爬虫小作业2.0
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-20 11:11" pubdate>
+              2020-07-20
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/python/">python</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/%E8%AF%8D%E4%BA%91/">词云</a>
+            
+              <a href="/tags/%E7%88%AC%E8%99%AB/">爬虫</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2020/07/19/python/%E5%9F%BA%E4%BA%8EPython%E7%9A%84%E9%98%B2%E7%BD%91%E7%BB%9C%E6%B2%89%E8%BF%B7%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96/" target="_self">
+          <img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20201123205628.png" srcset="/img/loading.gif" alt="基于Python的防网络沉迷相关信息获取">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/07/19/python/%E5%9F%BA%E4%BA%8EPython%E7%9A%84%E9%98%B2%E7%BD%91%E7%BB%9C%E6%B2%89%E8%BF%B7%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96/">基于Python的防网络沉迷相关信息获取</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/19/python/%E5%9F%BA%E4%BA%8EPython%E7%9A%84%E9%98%B2%E7%BD%91%E7%BB%9C%E6%B2%89%E8%BF%B7%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96/">
+          
+          
+            
+          
+          python爬虫小作业~
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-19 11:11" pubdate>
+              2020-07-19
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/python/">python</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/%E7%88%AC%E8%99%AB/">爬虫</a>
+            
+              <a href="/tags/%E7%BD%91%E7%BB%9C%E6%B2%89%E8%BF%B7/">网络沉迷</a>
+            
+              <a href="/tags/%E9%9D%92%E5%B0%91%E5%B9%B4/">青少年</a>
+            
+              <a href="/tags/%E8%B0%83%E6%9F%A5%E6%8A%A5%E5%91%8A/">调查报告</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2020/07/18/raspberry/%E7%8E%A9%E8%BD%AC%E6%A0%91%E8%8E%93%E6%B4%BE%5B11%E9%9D%A2%E5%90%91%E5%88%9D%E5%AD%A6%E8%80%85%E7%9A%8420%E4%B8%AA%E6%A0%91%E8%8E%93%E6%B4%BE%E5%91%BD%E4%BB%A4%5D/" target="_self">
+          <img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20201122225914.jpg" srcset="/img/loading.gif" alt="玩转树莓派[11:面向初学者的20个树莓派命令]">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/07/18/raspberry/%E7%8E%A9%E8%BD%AC%E6%A0%91%E8%8E%93%E6%B4%BE%5B11%E9%9D%A2%E5%90%91%E5%88%9D%E5%AD%A6%E8%80%85%E7%9A%8420%E4%B8%AA%E6%A0%91%E8%8E%93%E6%B4%BE%E5%91%BD%E4%BB%A4%5D/">玩转树莓派[11:面向初学者的20个树莓派命令]</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/18/raspberry/%E7%8E%A9%E8%BD%AC%E6%A0%91%E8%8E%93%E6%B4%BE%5B11%E9%9D%A2%E5%90%91%E5%88%9D%E5%AD%A6%E8%80%85%E7%9A%8420%E4%B8%AA%E6%A0%91%E8%8E%93%E6%B4%BE%E5%91%BD%E4%BB%A4%5D/">
+          
+          
+            
+          
+          转载~
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-18 11:11" pubdate>
+              2020-07-18
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/raspberry/">raspberry</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/raspberry/">raspberry</a>
+            
+              <a href="/tags/%E5%9F%BA%E5%9C%B02-0/">基地2.0</a>
+            
+              <a href="/tags/%E7%B3%BB%E7%BB%9F/">系统</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2020/07/17/raspberry/%E7%8E%A9%E8%BD%AC%E6%A0%91%E8%8E%93%E6%B4%BE%5B10%E5%9F%BA%E5%9C%B02.0%E5%BC%80%E5%90%AF9090%E7%AB%AF%E5%8F%A3%E5%92%8CVNC%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%5D/" target="_self">
+          <img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20201122222712.jpg" srcset="/img/loading.gif" alt="玩转树莓派[10:基地2.0开启9090端口和VNC内网穿透]">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/07/17/raspberry/%E7%8E%A9%E8%BD%AC%E6%A0%91%E8%8E%93%E6%B4%BE%5B10%E5%9F%BA%E5%9C%B02.0%E5%BC%80%E5%90%AF9090%E7%AB%AF%E5%8F%A3%E5%92%8CVNC%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%5D/">玩转树莓派[10:基地2.0开启9090端口和VNC内网穿透]</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/17/raspberry/%E7%8E%A9%E8%BD%AC%E6%A0%91%E8%8E%93%E6%B4%BE%5B10%E5%9F%BA%E5%9C%B02.0%E5%BC%80%E5%90%AF9090%E7%AB%AF%E5%8F%A3%E5%92%8CVNC%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%5D/">
+          
+          
+            
+          
+          内网穿透第二弹：可以远程操作桌面了~
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-17 11:11" pubdate>
+              2020-07-17
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/raspberry/">raspberry</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/raspberry/">raspberry</a>
+            
+              <a href="/tags/%E5%9F%BA%E5%9C%B02-0/">基地2.0</a>
+            
+              <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/">内网穿透</a>
+            
+              <a href="/tags/9090%E7%AB%AF%E5%8F%A3/">9090端口</a>
+            
+              <a href="/tags/vnc/">vnc</a>
+            
+              <a href="/tags/http%E5%8D%8F%E8%AE%AE/">http协议</a>
+            
+              <a href="/tags/sunny-ngrok/">sunny-ngrok</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/page/8/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/#board">7</a><a class="page-number" href="/page/8/#board">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/#board">10</a><a class="page-number" href="/page/11/#board">11</a><a class="extend next" rel="next" href="/page/10/#board"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":200})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script defer type="text/javascript" src="//js.users.51.la/21061303.js"></script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script defer src="//s4.cnzz.com/z_stat.php?id=1279684341&show=pic"
+            type="text/javascript"></script>
+  
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

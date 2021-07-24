@@ -1,0 +1,831 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  
+    <meta name="description" content="转载自 521xueweihan 大佬~">
+  
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+  <title>Git的奇技淫巧 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.1.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.8.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":200}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>白小飞のBlog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/u=1216919364,1145391025&fm=26&gp=0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Git的奇技淫巧">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-01-15 15:40" pubdate>
+        2021年1月15日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      50
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Git的奇技淫巧</h1>
+            
+            <div class="markdown-body">
+              <p>Git是一个 “分布式版本管理工具”，简单的理解版本管理工具：大家在写东西的时候都用过 “回撤” 这个功能，但是回撤只能回撤几步，假如想要找回我三天之前的修改，光用 “回撤” 是找不回来的。而 “版本管理工具” 能记录每次的修改，只要提交到版本仓库，你就可以找到之前任何时刻的状态（文本状态）。</p>
+<p>下面的内容就是列举了常用的 Git 命令和一些小技巧，可以通过 “页面内查找” 的方式进行快速查询：<code>Ctrl/Command+f</code>。</p>
+<h2 id="开卷必读"><a href="#开卷必读" class="headerlink" title="开卷必读"></a>开卷必读</h2><p><em>如果之前未使用过 Git，可以学习 <a target="_blank" rel="noopener" href="https://rogerdudler.github.io/git-guide/index.zh.html">Git 小白教程</a>入门</em></p>
+<ol>
+<li><strong>一定要先测试命令的效果后</strong>，再用于工作环境中，以防造成不能弥补的后果！<strong>到时候别拿着砍刀来找我</strong></li>
+<li>所有的命令都在<code>git version 2.7.4 (Apple Git-66)</code>下测试通过</li>
+<li>统一概念：<ul>
+<li>工作区：改动（增删文件和内容）</li>
+<li>暂存区：输入命令：<code>git add 改动的文件名</code>，此次改动就放到了 ‘暂存区’</li>
+<li>本地仓库(简称：本地)：输入命令：<code>git commit 此次修改的描述</code>，此次改动就放到了 ’本地仓库’，每个 commit，我叫它为一个 ‘版本’。</li>
+<li>远程仓库(简称：远程)：输入命令：<code>git push 远程仓库</code>，此次改动就放到了 ‘远程仓库’（GitHub 等)</li>
+<li>commit-id：输出命令：<code>git log</code>，最上面那行 <code>commit xxxxxx</code>，后面的字符串就是 commit-id</li>
+</ul>
+</li>
+<li>如果喜欢这个项目，欢迎 Star、提交 Pr、<a target="_blank" rel="noopener" href="https://github.com/521xueweihan/git-tips/issues">反馈问题</a>😊</li>
+</ol>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li><a href="#展示帮助信息">展示帮助信息</a></li>
+<li><a href="#回到远程仓库的状态">回到远程仓库的状态</a></li>
+<li><a href="#重设第一个-commit">重设第一个commit</a></li>
+<li><a href="#查看冲突文件列表">查看冲突文件列表</a></li>
+<li><a href="#展示工作区和暂存区的不同">展示工作区和暂存区的不同</a></li>
+<li><a href="#展示暂存区和最近版本的不同">展示暂存区和最近版本的不同</a></li>
+<li><a href="#展示暂存区工作区和最近版本的不同">展示暂存区、工作区和最近版本的不同</a></li>
+<li><a href="#快速切换到上一个分支">快速切换到上一个分支</a></li>
+<li><a href="#删除已经合并到-master-的分支">删除已经合并到 master 的分支</a></li>
+<li><a href="#展示本地分支关联远程仓库的情况">展示本地分支关联远程仓库的情况</a></li>
+<li><a href="#关联远程分支">关联远程分支</a></li>
+<li><a href="#列出所有远程分支">列出所有远程分支</a></li>
+<li><a href="#列出本地和远程分支">列出本地和远程分支</a></li>
+<li><a href="#查看远程分支和本地分支的对应关系">查看远程分支和本地分支的对应关系</a></li>
+<li><a href="#远程删除了分支本地也想删除">远程删除了分支本地也想删除</a></li>
+<li><a href="#创建并切换到本地分支">创建并切换到本地分支</a></li>
+<li><a href="#从远程分支中创建并切换到本地分支">从远程分支中创建并切换到本地分支</a></li>
+<li><a href="#删除本地分支">删除本地分支</a></li>
+<li><a href="#删除远程分支">删除远程分支</a></li>
+<li><a href="#重命名本地分支">重命名本地分支</a></li>
+<li><a href="#查看标签">查看标签</a></li>
+<li><a href="#查看标签详细信息">查看标签详细信息</a></li>
+<li><a href="#本地创建标签">本地创建标签</a></li>
+<li><a href="#推送标签到远程仓库">推送标签到远程仓库</a></li>
+<li><a href="#删除本地标签">删除本地标签</a></li>
+<li><a href="#删除远程标签">删除远程标签</a></li>
+<li><a href="#切回到某个标签">切回到某个标签</a></li>
+<li><a href="#放弃工作区的修改">放弃工作区的修改</a></li>
+<li><a href="#恢复删除的文件">恢复删除的文件</a></li>
+<li><a href="#以新增一个-commit-的方式还原某一个-commit-的修改">以新增一个 commit 的方式还原某一个 commit 的修改</a></li>
+<li><a href="#回到某个-commit-的状态并删除后面的-commit">回到某个 commit 的状态，并删除后面的 commit</a></li>
+<li><a href="#修改上一个-commit-的描述">修改上一个 commit 的描述</a></li>
+<li><a href="#查看-commit-历史">查看 commit 历史</a></li>
+<li><a href="#显示本地更新过-head-的-git-命令记录">显示本地更新过 HEAD 的 git 命令记录</a></li>
+<li><a href="#修改作者名">修改作者名</a></li>
+<li><a href="#修改远程仓库的-url">修改远程仓库的 url</a></li>
+<li><a href="#增加远程仓库">增加远程仓库</a></li>
+<li><a href="#列出所有远程仓库">列出所有远程仓库</a></li>
+<li><a href="#查看两个星期内的改动">查看两个星期内的改动</a></li>
+<li><a href="#把-A-分支的某一个-commit放到-B-分支上">把 A 分支的某一个 commit，放到 B 分支上</a></li>
+<li><a href="#给-git-命令起别名">给 git 命令起别名</a></li>
+<li><a href="#存储当前的修改但不用提交-commit">存储当前的修改，但不用提交 commit</a></li>
+<li><a href="#保存当前状态包括-untracked-的文件">保存当前状态，包括 untracked 的文件</a></li>
+<li><a href="#展示所有-stashes">展示所有 stashes</a></li>
+<li><a href="#回到某个-stash-的状态">回到某个 stash 的状态</a></li>
+<li><a href="#回到最后一个-stash-的状态并删除这个-stash">回到最后一个 stash 的状态，并删除这个 stash</a></li>
+<li><a href="#删除所有的-stash">删除所有的 stash</a></li>
+<li><a href="#从-stash-中拿出某个文件的修改">从 stash 中拿出某个文件的修改</a></li>
+<li><a href="#展示所有-tracked-的文件">展示所有 tracked 的文件</a></li>
+<li><a href="#展示所有-untracked-的文件">展示所有 untracked 的文件</a></li>
+<li><a href="#展示所有忽略的文件">展示所有忽略的文件</a></li>
+<li><a href="#强制删除-untracked-的文件">强制删除 untracked 的文件</a></li>
+<li><a href="#强制删除-untracked-的目录">强制删除 untracked 的目录</a></li>
+<li><a href="#展示简化的-commit-历史">展示简化的 commit 历史</a></li>
+<li><a href="#查看某段代码是谁写的">查看某段代码是谁写的</a></li>
+<li><a href="#把某一个分支到导出成一个文件">把某一个分支到导出成一个文件</a></li>
+<li><a href="#从包中导入分支">从包中导入分支</a></li>
+<li><a href="#执行-rebase-之前自动-stash">执行 rebase 之前自动 stash</a></li>
+<li><a href="#从远程仓库根据-ID-拉下某一状态-到本地分支">从远程仓库根据 ID，拉下某一状态，到本地分支</a></li>
+<li><a href="#详细展示一行中的修改">详细展示一行中的修改</a></li>
+<li><a href="#清除-gitignore-文件中记录的文件">清除 <code>.gitignore</code> 文件中记录的文件</a></li>
+<li><a href="#展示所有-alias-和-configs">展示所有 alias 和 configs</a></li>
+<li><a href="#展示忽略的文件">展示忽略的文件</a></li>
+<li><a href="#commit-历史中显示-Branch1-有的但是-Branch2-没有-commit">commit 历史中显示 Branch1 有的，但是 Branch2 没有 commit</a></li>
+<li><a href="#在-commit-log-中显示-GPG-签名">在 commit log 中显示 GPG 签名</a></li>
+<li><a href="#删除全局设置">删除全局设置</a></li>
+<li><a href="#新建并切换到新分支上同时这个分支没有任何-commit">新建并切换到新分支上，同时这个分支没有任何 commit</a></li>
+<li><a href="#展示任意分支某一文件的内容">展示任意分支某一文件的内容</a></li>
+<li><a href="#clone-下来指定的单一分支">clone 下来指定的单一分支</a></li>
+<li><a href="#clone-最新一次提交">clone 最新一次提交</a></li>
+<li><a href="#忽略某个文件的改动">忽略某个文件的改动</a></li>
+<li><a href="#忽略文件的权限变化">忽略文件的权限变化</a></li>
+<li><a href="#以最后提交的顺序列出所有-Git-分支">以最后提交的顺序列出所有 Git 分支</a></li>
+<li><a href="#在-commit-log-中查找相关内容">在 commit log 中查找相关内容</a></li>
+<li><a href="#把暂存区的指定-file-放到工作区中">把暂存区的指定 file 放到工作区中</a></li>
+<li><a href="#强制推送">强制推送</a></li>
+<li><a href="#git-配置-http-和-socks-代理">git 配置 http 和 socks 代理</a></li>
+<li><a href="#git-配置-ssh-代理">git 配置 ssh 代理</a></li>
+<li><a href="#一图详解">一图详解</a></li>
+<li><a href="#优雅的提交Commit信息">优雅的提交Commit信息</a></li>
+<li><a href="#联系我">联系我</a></li>
+</ul>
+<h2 id="展示帮助信息"><a href="#展示帮助信息" class="headerlink" title="展示帮助信息"></a>展示帮助信息</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git <span class="hljs-built_in">help</span> -g<br></code></pre></td></tr></table></figure>
+<p>The command output as below:</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs stata">The common Git guides are:<br>   attributes          Defining attributes per path<br>   <span class="hljs-keyword">cli</span>                 Git command-<span class="hljs-keyword">line</span> interface and conventions<br>   core-<span class="hljs-keyword">tutorial</span>       A Git core <span class="hljs-keyword">tutorial</span> <span class="hljs-keyword">for</span> developers<br>   cvs-migration       Git <span class="hljs-keyword">for</span> CVS users<br>   diffcore            Tweaking diff output<br>   everyday            A useful minimum <span class="hljs-keyword">set</span> of commands <span class="hljs-keyword">for</span> Everyday Git<br>   glossary            A Git Glossary<br>   hooks               Hooks used <span class="hljs-keyword">by</span> Git<br>   ignore              Specifies intentionally untracked files to ignore<br>   modules             Defining submodule properties<br>   namespaces          Git namespaces<br>   repository-layout    Git Repository Layout<br>   revisions           Specifying revisions and ranges <span class="hljs-keyword">for</span> Git<br>   <span class="hljs-keyword">tutorial</span>            A <span class="hljs-keyword">tutorial</span> introduction to Git<br>   <span class="hljs-keyword">tutorial</span>-2          A <span class="hljs-keyword">tutorial</span> introduction to Git: part <span class="hljs-keyword">two</span><br>   workflows           <span class="hljs-keyword">An</span> overview of recommended workflows with Git<br><br>&#x27;git <span class="hljs-keyword">help</span> -a&#x27; and &#x27;git <span class="hljs-keyword">help</span> -<span class="hljs-keyword">g</span>&#x27; <span class="hljs-keyword">list</span> available subcommands and some concept guides. See &#x27;git <span class="hljs-keyword">help</span> &lt;command&gt;&#x27; or &#x27;git <span class="hljs-keyword">help</span> &lt;concept&gt;&#x27; to <span class="hljs-keyword">read</span> <span class="hljs-keyword">about</span> a specific subcommand or concept.<br></code></pre></td></tr></table></figure>
+<h2 id="回到远程仓库的状态"><a href="#回到远程仓库的状态" class="headerlink" title="回到远程仓库的状态"></a>回到远程仓库的状态</h2><p>抛弃本地所有的修改，回到远程仓库的状态。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git fetch --all &amp;&amp; git reset --hard origin/master<br></code></pre></td></tr></table></figure></p>
+<h2 id="重设第一个-commit"><a href="#重设第一个-commit" class="headerlink" title="重设第一个 commit"></a>重设第一个 commit</h2><p>也就是把所有的改动都重新放回工作区，并<strong>清空所有的 commit</strong>，这样就可以重新提交第一个 commit 了</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git update-ref -d HEAD<br></code></pre></td></tr></table></figure>
+<h2 id="查看冲突文件列表"><a href="#查看冲突文件列表" class="headerlink" title="查看冲突文件列表"></a>查看冲突文件列表</h2><p>展示工作区的冲突文件列表<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git diff --name-only --diff-filter=U<br></code></pre></td></tr></table></figure></p>
+<h2 id="展示工作区和暂存区的不同"><a href="#展示工作区和暂存区的不同" class="headerlink" title="展示工作区和暂存区的不同"></a>展示工作区和暂存区的不同</h2><p>输出<strong>工作区</strong>和<strong>暂存区</strong>的 different (不同)。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git diff<br></code></pre></td></tr></table></figure>
+<p>还可以展示本地仓库中任意两个 commit 之间的文件变动：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git diff &lt;commit-id&gt; &lt;commit-id&gt;<br></code></pre></td></tr></table></figure></p>
+<h2 id="展示暂存区和最近版本的不同"><a href="#展示暂存区和最近版本的不同" class="headerlink" title="展示暂存区和最近版本的不同"></a>展示暂存区和最近版本的不同</h2><p>输出<strong>暂存区</strong>和本地最近的版本 (commit) 的 different (不同)。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git diff --cached<br></code></pre></td></tr></table></figure></p>
+<h2 id="展示暂存区、工作区和最近版本的不同"><a href="#展示暂存区、工作区和最近版本的不同" class="headerlink" title="展示暂存区、工作区和最近版本的不同"></a>展示暂存区、工作区和最近版本的不同</h2><p>输出<strong>工作区</strong>、<strong>暂存区</strong> 和本地最近的版本 (commit) 的 different (不同)。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git diff HEAD<br></code></pre></td></tr></table></figure>
+<h2 id="快速切换到上一个分支"><a href="#快速切换到上一个分支" class="headerlink" title="快速切换到上一个分支"></a>快速切换到上一个分支</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git checkout -<br></code></pre></td></tr></table></figure>
+<h2 id="删除已经合并到-master-的分支"><a href="#删除已经合并到-master-的分支" class="headerlink" title="删除已经合并到 master 的分支"></a>删除已经合并到 master 的分支</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git branch --merged master | grep -v <span class="hljs-string">&#x27;^\*\|  master&#x27;</span> | xargs -n 1 git branch -d<br></code></pre></td></tr></table></figure>
+<h2 id="展示本地分支关联远程仓库的情况"><a href="#展示本地分支关联远程仓库的情况" class="headerlink" title="展示本地分支关联远程仓库的情况"></a>展示本地分支关联远程仓库的情况</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git branch -vv<br></code></pre></td></tr></table></figure>
+<h2 id="关联远程分支"><a href="#关联远程分支" class="headerlink" title="关联远程分支"></a>关联远程分支</h2><p>关联之后，<code>git branch -vv</code> 就可以展示关联的远程分支名了，同时推送到远程仓库直接：<code>git push</code>，不需要指定远程仓库了。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git branch -u origin/mybranch<br></code></pre></td></tr></table></figure></p>
+<p>或者在 push 时加上 <code>-u</code> 参数<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git push origin/mybranch -u<br></code></pre></td></tr></table></figure></p>
+<h2 id="列出所有远程分支"><a href="#列出所有远程分支" class="headerlink" title="列出所有远程分支"></a>列出所有远程分支</h2><p>-r 参数相当于：remote<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git branch -r<br></code></pre></td></tr></table></figure></p>
+<h2 id="列出本地和远程分支"><a href="#列出本地和远程分支" class="headerlink" title="列出本地和远程分支"></a>列出本地和远程分支</h2><p>-a 参数相当于：all<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git branch -a<br></code></pre></td></tr></table></figure></p>
+<h2 id="查看远程分支和本地分支的对应关系"><a href="#查看远程分支和本地分支的对应关系" class="headerlink" title="查看远程分支和本地分支的对应关系"></a>查看远程分支和本地分支的对应关系</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git remote show origin<br></code></pre></td></tr></table></figure>
+<h2 id="远程删除了分支本地也想删除"><a href="#远程删除了分支本地也想删除" class="headerlink" title="远程删除了分支本地也想删除"></a>远程删除了分支本地也想删除</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git remote prune origin<br></code></pre></td></tr></table></figure>
+<h2 id="创建并切换到本地分支"><a href="#创建并切换到本地分支" class="headerlink" title="创建并切换到本地分支"></a>创建并切换到本地分支</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git checkout -b &lt;branch-name&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="从远程分支中创建并切换到本地分支"><a href="#从远程分支中创建并切换到本地分支" class="headerlink" title="从远程分支中创建并切换到本地分支"></a>从远程分支中创建并切换到本地分支</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git checkout -b &lt;branch-name&gt; origin/&lt;branch-name&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="删除本地分支"><a href="#删除本地分支" class="headerlink" title="删除本地分支"></a>删除本地分支</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git branch -d &lt;local-branchname&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="删除远程分支"><a href="#删除远程分支" class="headerlink" title="删除远程分支"></a>删除远程分支</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git push origin --delete &lt;remote-branchname&gt;<br></code></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git push origin :&lt;remote-branchname&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="重命名本地分支"><a href="#重命名本地分支" class="headerlink" title="重命名本地分支"></a>重命名本地分支</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git branch -m &lt;new-branch-name&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="查看标签"><a href="#查看标签" class="headerlink" title="查看标签"></a>查看标签</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git tag<br></code></pre></td></tr></table></figure>
+<p>展示当前分支的最近的 tag</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git describe --tags --abbrev=0<br></code></pre></td></tr></table></figure>
+<h2 id="查看标签详细信息"><a href="#查看标签详细信息" class="headerlink" title="查看标签详细信息"></a>查看标签详细信息</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git tag -ln<br></code></pre></td></tr></table></figure>
+<h2 id="本地创建标签"><a href="#本地创建标签" class="headerlink" title="本地创建标签"></a>本地创建标签</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git tag &lt;version-number&gt;<br></code></pre></td></tr></table></figure>
+<p>默认 tag 是打在最近的一次 commit 上，如果需要指定 commit 打 tag：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">$ git tag -a &lt;version-number&gt; -m <span class="hljs-string">&quot;v1.0 发布(描述)&quot;</span> &lt;commit-id&gt;<br></code></pre></td></tr></table></figure></p>
+<h2 id="推送标签到远程仓库"><a href="#推送标签到远程仓库" class="headerlink" title="推送标签到远程仓库"></a>推送标签到远程仓库</h2><p>首先要保证本地创建好了标签才可以推送标签到远程仓库：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git push origin &lt;local-version-number&gt;<br></code></pre></td></tr></table></figure>
+<p>一次性推送所有标签，同步到远程仓库：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git push origin --tags<br></code></pre></td></tr></table></figure>
+<h2 id="删除本地标签"><a href="#删除本地标签" class="headerlink" title="删除本地标签"></a>删除本地标签</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git tag -d &lt;tag-name&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="删除远程标签"><a href="#删除远程标签" class="headerlink" title="删除远程标签"></a>删除远程标签</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git push origin --delete tag &lt;tagname&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="切回到某个标签"><a href="#切回到某个标签" class="headerlink" title="切回到某个标签"></a>切回到某个标签</h2><p>一般上线之前都会打 tag，就是为了防止上线后出现问题，方便快速回退到上一版本。下面的命令是回到某一标签下的状态：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git checkout -b branch_name tag_name<br></code></pre></td></tr></table></figure></p>
+<h2 id="放弃工作区的修改"><a href="#放弃工作区的修改" class="headerlink" title="放弃工作区的修改"></a>放弃工作区的修改</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git checkout &lt;file-name&gt;<br></code></pre></td></tr></table></figure>
+<p>放弃所有修改：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git checkout .<br></code></pre></td></tr></table></figure></p>
+<h2 id="恢复删除的文件"><a href="#恢复删除的文件" class="headerlink" title="恢复删除的文件"></a>恢复删除的文件</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh">git rev-list -n 1 HEAD -- &lt;file_path&gt; <span class="hljs-comment">#得到 deleting_commit</span><br><br>git checkout &lt;deleting_commit&gt;^ -- &lt;file_path&gt; <span class="hljs-comment">#回到删除文件 deleting_commit 之前的状态</span><br></code></pre></td></tr></table></figure>
+<h2 id="以新增一个-commit-的方式还原某一个-commit-的修改"><a href="#以新增一个-commit-的方式还原某一个-commit-的修改" class="headerlink" title="以新增一个 commit 的方式还原某一个 commit 的修改"></a>以新增一个 commit 的方式还原某一个 commit 的修改</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git revert &lt;commit-id&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="回到某个-commit-的状态，并删除后面的-commit"><a href="#回到某个-commit-的状态，并删除后面的-commit" class="headerlink" title="回到某个 commit 的状态，并删除后面的 commit"></a>回到某个 commit 的状态，并删除后面的 commit</h2><p>和 revert 的区别：reset 命令会抹去某个 commit id 之后的所有 commit</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sh">git reset &lt;commit-id&gt;  <span class="hljs-comment">#默认就是-mixed参数。</span><br><br>git reset --mixed HEAD^  <span class="hljs-comment">#回退至上个版本，它将重置HEAD到另外一个commit,并且重置暂存区以便和HEAD相匹配，但是也到此为止。工作区不会被更改。</span><br><br>git reset --soft HEAD~3  <span class="hljs-comment">#回退至三个版本之前，只回退了commit的信息，暂存区和工作区与回退之前保持一致。如果还要提交，直接commit即可  </span><br><br>git reset --hard &lt;commit-id&gt;  <span class="hljs-comment">#彻底回退到指定commit-id的状态，暂存区和工作区也会变为指定commit-id版本的内容</span><br></code></pre></td></tr></table></figure>
+<h2 id="修改上一个-commit-的描述"><a href="#修改上一个-commit-的描述" class="headerlink" title="修改上一个 commit 的描述"></a>修改上一个 commit 的描述</h2><p>如果暂存区有改动，同时也会将暂存区的改动提交到上一个 commit</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git commit --amend<br></code></pre></td></tr></table></figure>
+<h2 id="查看-commit-历史"><a href="#查看-commit-历史" class="headerlink" title="查看 commit 历史"></a>查看 commit 历史</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git <span class="hljs-built_in">log</span><br></code></pre></td></tr></table></figure>
+<h2 id="查看某段代码是谁写的"><a href="#查看某段代码是谁写的" class="headerlink" title="查看某段代码是谁写的"></a>查看某段代码是谁写的</h2><p>blame 的意思为‘责怪’，你懂的。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git blame &lt;file-name&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="显示本地更新过-HEAD-的-git-命令记录"><a href="#显示本地更新过-HEAD-的-git-命令记录" class="headerlink" title="显示本地更新过 HEAD 的 git 命令记录"></a>显示本地更新过 HEAD 的 git 命令记录</h2><p>每次更新了 HEAD 的 git 命令比如 commit、amend、cherry-pick、reset、revert 等都会被记录下来（不限分支），就像 shell 的 history 一样。<br>这样你可以 reset 到任何一次更新了 HEAD 的操作之后，而不仅仅是回到当前分支下的某个 commit 之后的状态。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git reflog<br></code></pre></td></tr></table></figure>
+<h2 id="修改作者名"><a href="#修改作者名" class="headerlink" title="修改作者名"></a>修改作者名</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git commit --amend --author=<span class="hljs-string">&#x27;Author Name &lt;email@address.com&gt;&#x27;</span><br></code></pre></td></tr></table></figure>
+<h2 id="修改远程仓库的-url"><a href="#修改远程仓库的-url" class="headerlink" title="修改远程仓库的 url"></a>修改远程仓库的 url</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git remote set-url origin &lt;URL&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="增加远程仓库"><a href="#增加远程仓库" class="headerlink" title="增加远程仓库"></a>增加远程仓库</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git remote add origin &lt;remote-url&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="列出所有远程仓库"><a href="#列出所有远程仓库" class="headerlink" title="列出所有远程仓库"></a>列出所有远程仓库</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git remote<br></code></pre></td></tr></table></figure>
+<h2 id="查看两个星期内的改动"><a href="#查看两个星期内的改动" class="headerlink" title="查看两个星期内的改动"></a>查看两个星期内的改动</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git whatchanged --since=<span class="hljs-string">&#x27;2 weeks ago&#x27;</span><br></code></pre></td></tr></table></figure>
+<h2 id="把-A-分支的某一个-commit，放到-B-分支上"><a href="#把-A-分支的某一个-commit，放到-B-分支上" class="headerlink" title="把 A 分支的某一个 commit，放到 B 分支上"></a>把 A 分支的某一个 commit，放到 B 分支上</h2><p>这个过程需要 <code>cherry-pick</code> 命令，<a target="_blank" rel="noopener" href="http://sg552.iteye.com/blog/1300713#bc2367928">参考</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git checkout &lt;branch-name&gt; &amp;&amp; git cherry-pick &lt;commit-id&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="给-git-命令起别名"><a href="#给-git-命令起别名" class="headerlink" title="给 git 命令起别名"></a>给 git 命令起别名</h2><p>简化命令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sh">git config --global <span class="hljs-built_in">alias</span>.&lt;handle&gt; &lt;<span class="hljs-built_in">command</span>&gt;<br><br>比如：git status 改成 git st，这样可以简化命令<br><br>git config --global alias.st status<br></code></pre></td></tr></table></figure>
+<h2 id="存储当前的修改，但不用提交-commit"><a href="#存储当前的修改，但不用提交-commit" class="headerlink" title="存储当前的修改，但不用提交 commit"></a>存储当前的修改，但不用提交 commit</h2><p>详解可以参考<a target="_blank" rel="noopener" href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/00137602359178794d966923e5c4134bc8bf98dfb03aea3000">廖雪峰老师的 git 教程</a><br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git stash<br></code></pre></td></tr></table></figure></p>
+<h2 id="保存当前状态，包括-untracked-的文件"><a href="#保存当前状态，包括-untracked-的文件" class="headerlink" title="保存当前状态，包括 untracked 的文件"></a>保存当前状态，包括 untracked 的文件</h2><p>untracked 文件：新建的文件<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git stash -u<br></code></pre></td></tr></table></figure></p>
+<h2 id="展示所有-stashes"><a href="#展示所有-stashes" class="headerlink" title="展示所有 stashes"></a>展示所有 stashes</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git stash list<br></code></pre></td></tr></table></figure>
+<h2 id="回到某个-stash-的状态"><a href="#回到某个-stash-的状态" class="headerlink" title="回到某个 stash 的状态"></a>回到某个 stash 的状态</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git stash apply &lt;stash@&#123;n&#125;&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="回到最后一个-stash-的状态，并删除这个-stash"><a href="#回到最后一个-stash-的状态，并删除这个-stash" class="headerlink" title="回到最后一个 stash 的状态，并删除这个 stash"></a>回到最后一个 stash 的状态，并删除这个 stash</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git stash pop<br></code></pre></td></tr></table></figure>
+<h2 id="删除所有的-stash"><a href="#删除所有的-stash" class="headerlink" title="删除所有的 stash"></a>删除所有的 stash</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git stash clear<br></code></pre></td></tr></table></figure>
+<h2 id="从-stash-中拿出某个文件的修改"><a href="#从-stash-中拿出某个文件的修改" class="headerlink" title="从 stash 中拿出某个文件的修改"></a>从 stash 中拿出某个文件的修改</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git checkout &lt;stash@&#123;n&#125;&gt; -- &lt;file-path&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="展示所有-tracked-的文件"><a href="#展示所有-tracked-的文件" class="headerlink" title="展示所有 tracked 的文件"></a>展示所有 tracked 的文件</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git ls-files -t<br></code></pre></td></tr></table></figure>
+<h2 id="展示所有-untracked-的文件"><a href="#展示所有-untracked-的文件" class="headerlink" title="展示所有 untracked 的文件"></a>展示所有 untracked 的文件</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git ls-files --others<br></code></pre></td></tr></table></figure>
+<h2 id="展示所有忽略的文件"><a href="#展示所有忽略的文件" class="headerlink" title="展示所有忽略的文件"></a>展示所有忽略的文件</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git ls-files --others -i --exclude-standard<br></code></pre></td></tr></table></figure>
+<h2 id="强制删除-untracked-的文件"><a href="#强制删除-untracked-的文件" class="headerlink" title="强制删除 untracked 的文件"></a>强制删除 untracked 的文件</h2><p>可以用来删除新建的文件。如果不指定文件文件名，则清空所有工作的 untracked 文件。<code>clean</code> 命令，<strong>注意两点</strong>：</p>
+<ol>
+<li>clean 后，删除的文件无法找回</li>
+<li>不会影响 tracked 的文件的改动，只会删除 untracked 的文件</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git clean &lt;file-name&gt; -f<br></code></pre></td></tr></table></figure>
+<h2 id="强制删除-untracked-的目录"><a href="#强制删除-untracked-的目录" class="headerlink" title="强制删除 untracked 的目录"></a>强制删除 untracked 的目录</h2><p>可以用来删除新建的目录，<strong>注意</strong>:这个命令也可以用来删除 untracked 的文件。详情见上一条</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git clean &lt;directory-name&gt; -df<br></code></pre></td></tr></table></figure>
+<h2 id="展示简化的-commit-历史"><a href="#展示简化的-commit-历史" class="headerlink" title="展示简化的 commit 历史"></a>展示简化的 commit 历史</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git <span class="hljs-built_in">log</span> --pretty=oneline --graph --decorate --all<br></code></pre></td></tr></table></figure>
+<h2 id="把某一个分支到导出成一个文件"><a href="#把某一个分支到导出成一个文件" class="headerlink" title="把某一个分支到导出成一个文件"></a>把某一个分支到导出成一个文件</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git bundle create &lt;file&gt; &lt;branch-name&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="从包中导入分支"><a href="#从包中导入分支" class="headerlink" title="从包中导入分支"></a>从包中导入分支</h2><p>新建一个分支，分支内容就是上面 <code>git bundle create</code> 命令导出的内容</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git <span class="hljs-built_in">clone</span> repo.bundle &lt;repo-dir&gt; -b &lt;branch-name&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="执行-rebase-之前自动-stash"><a href="#执行-rebase-之前自动-stash" class="headerlink" title="执行 rebase 之前自动 stash"></a>执行 rebase 之前自动 stash</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git rebase --autostash<br></code></pre></td></tr></table></figure>
+<h2 id="从远程仓库根据-ID，拉下某一状态，到本地分支"><a href="#从远程仓库根据-ID，拉下某一状态，到本地分支" class="headerlink" title="从远程仓库根据 ID，拉下某一状态，到本地分支"></a>从远程仓库根据 ID，拉下某一状态，到本地分支</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git fetch origin pull/&lt;id&gt;/head:&lt;branch-name&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="详细展示一行中的修改"><a href="#详细展示一行中的修改" class="headerlink" title="详细展示一行中的修改"></a>详细展示一行中的修改</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git diff --word-diff<br></code></pre></td></tr></table></figure>
+<h2 id="清除-gitignore-文件中记录的文件"><a href="#清除-gitignore-文件中记录的文件" class="headerlink" title="清除 gitignore 文件中记录的文件"></a>清除 gitignore 文件中记录的文件</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git clean -X -f<br></code></pre></td></tr></table></figure>
+<h2 id="展示所有-alias-和-configs"><a href="#展示所有-alias-和-configs" class="headerlink" title="展示所有 alias 和 configs"></a>展示所有 alias 和 configs</h2><p><strong>注意：</strong> config 分为：当前目录（local）和全局（golbal）的 config，默认为当前目录的 config</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh">git config --<span class="hljs-built_in">local</span> --list (当前目录)<br>git config --global --list (全局)<br></code></pre></td></tr></table></figure>
+<h2 id="展示忽略的文件"><a href="#展示忽略的文件" class="headerlink" title="展示忽略的文件"></a>展示忽略的文件</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git status --ignored<br></code></pre></td></tr></table></figure>
+<h2 id="commit-历史中显示-Branch1-有的，但是-Branch2-没有-commit"><a href="#commit-历史中显示-Branch1-有的，但是-Branch2-没有-commit" class="headerlink" title="commit 历史中显示 Branch1 有的，但是 Branch2 没有 commit"></a>commit 历史中显示 Branch1 有的，但是 Branch2 没有 commit</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git <span class="hljs-built_in">log</span> Branch1 ^Branch2<br></code></pre></td></tr></table></figure>
+<h2 id="在-commit-log-中显示-GPG-签名"><a href="#在-commit-log-中显示-GPG-签名" class="headerlink" title="在 commit log 中显示 GPG 签名"></a>在 commit log 中显示 GPG 签名</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git <span class="hljs-built_in">log</span> --show-signature<br></code></pre></td></tr></table></figure>
+<h2 id="删除全局设置"><a href="#删除全局设置" class="headerlink" title="删除全局设置"></a>删除全局设置</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git config --global --<span class="hljs-built_in">unset</span> &lt;entry-name&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="新建并切换到新分支上，同时这个分支没有任何-commit"><a href="#新建并切换到新分支上，同时这个分支没有任何-commit" class="headerlink" title="新建并切换到新分支上，同时这个分支没有任何 commit"></a>新建并切换到新分支上，同时这个分支没有任何 commit</h2><p>相当于保存修改，但是重写 commit 历史</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git checkout --orphan &lt;branch-name&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="展示任意分支某一文件的内容"><a href="#展示任意分支某一文件的内容" class="headerlink" title="展示任意分支某一文件的内容"></a>展示任意分支某一文件的内容</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git show &lt;branch-name&gt;:&lt;file-name&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="clone-下来指定的单一分支"><a href="#clone-下来指定的单一分支" class="headerlink" title="clone 下来指定的单一分支"></a>clone 下来指定的单一分支</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git <span class="hljs-built_in">clone</span> -b &lt;branch-name&gt; --single-branch https://github.com/user/repo.git<br></code></pre></td></tr></table></figure>
+<h2 id="clone-最新一次提交"><a href="#clone-最新一次提交" class="headerlink" title="clone 最新一次提交"></a>clone 最新一次提交</h2><p>只会 clone 最近一次提交，将减少 clone 时间</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git <span class="hljs-built_in">clone</span> --depth=1 https://github.com/user/repo.git<br></code></pre></td></tr></table></figure>
+<h2 id="忽略某个文件的改动"><a href="#忽略某个文件的改动" class="headerlink" title="忽略某个文件的改动"></a>忽略某个文件的改动</h2><p>关闭 track 指定文件的改动，也就是 Git 将不会在记录这个文件的改动</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git update-index --assume-unchanged path/to/file<br></code></pre></td></tr></table></figure>
+<p>恢复 track 指定文件的改动</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git update-index --no-assume-unchanged path/to/file<br></code></pre></td></tr></table></figure>
+<h2 id="忽略文件的权限变化"><a href="#忽略文件的权限变化" class="headerlink" title="忽略文件的权限变化"></a>忽略文件的权限变化</h2><p>不再将文件的权限变化视作改动</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git config core.fileMode <span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure>
+<h2 id="以最后提交的顺序列出所有-Git-分支"><a href="#以最后提交的顺序列出所有-Git-分支" class="headerlink" title="以最后提交的顺序列出所有 Git 分支"></a>以最后提交的顺序列出所有 Git 分支</h2><p>最新的放在最上面</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git for-each-ref --sort=-committerdate --format=<span class="hljs-string">&#x27;%(refname:short)&#x27;</span> refs/heads/<br></code></pre></td></tr></table></figure>
+<h2 id="在-commit-log-中查找相关内容"><a href="#在-commit-log-中查找相关内容" class="headerlink" title="在 commit log 中查找相关内容"></a>在 commit log 中查找相关内容</h2><p>通过 grep 查找，given-text：所需要查找的字段</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git <span class="hljs-built_in">log</span> --all --grep=<span class="hljs-string">&#x27;&lt;given-text&gt;&#x27;</span><br></code></pre></td></tr></table></figure>
+<h2 id="把暂存区的指定-file-放到工作区中"><a href="#把暂存区的指定-file-放到工作区中" class="headerlink" title="把暂存区的指定 file 放到工作区中"></a>把暂存区的指定 file 放到工作区中</h2><p>不添加参数，默认是 <code>-mixed</code></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git reset &lt;file-name&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="强制推送"><a href="#强制推送" class="headerlink" title="强制推送"></a>强制推送</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git push -f &lt;remote-name&gt; &lt;branch-name&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="git-配置-http-和-socks-代理"><a href="#git-配置-http-和-socks-代理" class="headerlink" title="git 配置 http 和 socks 代理"></a>git 配置 http 和 socks 代理</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh">git config --global https.proxy <span class="hljs-string">&#x27;http://127.0.0.1:8001&#x27;</span>   <span class="hljs-comment"># 适用于 privoxy 将 socks 协议转为 http 协议的 http 端口</span><br>git config --global http.proxy <span class="hljs-string">&#x27;http://127.0.0.1:8001&#x27;</span><br>git config --global socks.proxy <span class="hljs-string">&quot;127.0.0.1:1080&quot;</span><br></code></pre></td></tr></table></figure>
+<h2 id="git-配置-ssh-代理"><a href="#git-配置-ssh-代理" class="headerlink" title="git 配置 ssh 代理"></a>git 配置 ssh 代理</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sh">$ cat ~/.ssh/config<br>Host gitlab.com<br>ProxyCommand nc -X 5 -x 127.0.0.1:1080 %h %p    <span class="hljs-comment"># 直接使用 shadowsocks 提供的 socks5 代理端口</span><br><br>Host github.com<br>ProxyCommand nc -X 5 -x 127.0.0.1:1080 %h %p    <br></code></pre></td></tr></table></figure>
+<h2 id="一图详解"><a href="#一图详解" class="headerlink" title="一图详解"></a>一图详解</h2><p><img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/git.png" srcset="/img/loading.gif" alt=""></p>
+<h2 id="优雅的提交Commit信息"><a href="#优雅的提交Commit信息" class="headerlink" title="优雅的提交Commit信息"></a>优雅的提交Commit信息</h2><p>使用<a target="_blank" rel="noopener" href="https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines">Angular团队提交规范</a></p>
+<p>主要有以下组成</p>
+<ul>
+<li>标题行: 必填, 描述主要修改类型和内容</li>
+<li>主题内容: 描述为什么修改, 做了什么样的修改, 以及开发的思路等等</li>
+<li>页脚注释: 放 Breaking Changes 或 Closed Issues</li>
+</ul>
+<p>常用的修改项</p>
+<ul>
+<li>type: commit 的类型</li>
+<li>feat: 新特性</li>
+<li>fix: 修改问题</li>
+<li>refactor: 代码重构</li>
+<li>docs: 文档修改</li>
+<li>style: 代码格式修改, 注意不是 css 修改</li>
+<li>test: 测试用例修改</li>
+<li>chore: 其他修改, 比如构建流程, 依赖管理.</li>
+<li>scope: commit 影响的范围, 比如: route, component, utils, build…</li>
+<li>subject: commit 的概述</li>
+<li>body: commit 具体修改内容, 可以分为多行</li>
+<li>footer: 一些备注, 通常是 BREAKING CHANGE 或修复的 bug 的链接.</li>
+</ul>
+<h3 id="使用Commitizen代替-git-commit"><a href="#使用Commitizen代替-git-commit" class="headerlink" title="使用Commitizen代替 git commit"></a>使用<code>Commitizen</code>代替 git commit</h3><p>可以使用<a target="_blank" rel="noopener" href="https://github.com/commitizen/cz-cli">cz-cli</a>工具代替 <code>git commit</code></p>
+<p>全局安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">npm install -g commitizen cz-conventional-changelog<br><br>echo &#x27;&#123; &quot;path&quot;: &quot;cz-conventional-changelog&quot; &#125;&#x27; &gt; ~/.czrc<br></code></pre></td></tr></table></figure>
+<p>全局安装后使用 <code>git cz</code> 代替 <code>git commit</code>就可以了,如下图</p>
+<p><img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/gitcz.png" srcset="/img/loading.gif" alt=""></p>
+<h2 id="Fork地址"><a href="#Fork地址" class="headerlink" title="Fork地址"></a>Fork地址</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/git-tips/tips">Git常用命令集合</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/521xueweihan/git-tips#%E7%9B%AE%E5%BD%95">Git的奇技淫巧🙈</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%AD%A6%E4%B9%A0/git/">git</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/git/">git</a>
+                    
+                      <a class="hover-with-bg" href="/tags/github/">github</a>
+                    
+                      <a class="hover-with-bg" href="/tags/gitee/">gitee</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/01/15/Linux/Vim%20%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Vim 从入门到精通</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/01/12/git/git%E5%91%BD%E4%BB%A4/">
+                        <span class="hidden-mobile">Git命令</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                  
+                
+                
+  <div id="vcomments"></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('vcomments', function() {
+      Fluid.utils.createScript('https://cdn.staticfile.org/valine/1.4.14/Valine.min.js', function () {
+        new Valine({
+          el: "#vcomments",
+          app_id: "gn6pMOQ2Y8601y9txmR9s4DN-gzGzoHsz",
+          app_key: "KYnH8MyyiQBXK8hMwO7HevEw",
+          placeholder: "说点什么",
+          path: window.location.pathname,
+          avatar: "retro",
+          meta: ["nick","mail","link"],
+          pageSize: "10",
+          lang: "zh-CN",
+          highlight: false,
+          recordIP: false,
+          serverURLs: "",
+        });
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the
+    <a target="_blank" href="https://valine.js.org" rel="nofollow noopener noopener">comments powered by Valine.</a>
+  </noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://ghchart.rshah.org/409ba5/baixf-xyz" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:826px;background-color: #A9C9FF;background-image: linear-gradient(180deg, #A9C9FF 0%, #FFBBEC 100%);max-width:100%;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":200})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.12.0/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script defer type="text/javascript" src="//js.users.51.la/21061303.js"></script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script defer src="//s4.cnzz.com/z_stat.php?id=1279684341&show=pic"
+            type="text/javascript"></script>
+  
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

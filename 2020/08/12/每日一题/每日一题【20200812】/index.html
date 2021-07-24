@@ -1,0 +1,637 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  
+    <meta name="description" content="第二十二天建模打卡">
+  
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+  <title>每日一题【20200812】 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.1.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.8.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":200}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>白小飞のBlog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20201129201333.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="每日一题【20200812】">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-08-12 11:11" pubdate>
+        2020年8月12日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      620 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      10
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">每日一题【20200812】</h1>
+            
+            <div class="markdown-body">
+              <h1 id="层次聚类分析、动态聚类分析"><a href="#层次聚类分析、动态聚类分析" class="headerlink" title="层次聚类分析、动态聚类分析"></a>层次聚类分析、动态聚类分析</h1><h2 id="例"><a href="#例" class="headerlink" title="例"></a>例</h2><p>尽管我个人非常不喜欢人们被划分圈子，因为这样就有了歧视、偏见、排挤和矛盾，但“物以类聚，人以群分”确实是一种客观的现实——这其中就蕴含着聚类分析的思想。</p>
+<h2 id="层次聚类分析"><a href="#层次聚类分析" class="headerlink" title="层次聚类分析"></a>层次聚类分析</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs matlab">X=xlsread(<span class="hljs-string">&#x27;chengji.xlsx&#x27;</span>)<br><span class="hljs-comment">%(1.标准化处理)</span><br>x=zscore(X(:,<span class="hljs-number">2</span>:<span class="hljs-number">3</span>))<br><span class="hljs-comment">%（2.计算点与点之间欧氏距离）</span><br>y=pdist(x,<span class="hljs-string">&#x27;euclidean&#x27;</span>)<br><span class="hljs-comment">%(3.类平均法进行合并过程)</span><br>Z=linkage(y,<span class="hljs-string">&#x27;average&#x27;</span>)<br>obslabel=cell(<span class="hljs-number">3</span>:<span class="hljs-number">1</span>)<br><span class="hljs-comment">%（5.）</span><br>H=dendrogram(Z,<span class="hljs-number">0</span>,<span class="hljs-string">&#x27;orientation&#x27;</span>,<span class="hljs-string">&#x27;right&#x27;</span>,<span class="hljs-string">&#x27;label&#x27;</span>,obslabel)<br>set(H,<span class="hljs-string">&#x27;LineWidth&#x27;</span>,<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;Color&#x27;</span>,<span class="hljs-string">&#x27;k&#x27;</span>) <span class="hljs-comment">%画图要求，线宽为1，颜色为黑色</span><br>xlabel(<span class="hljs-string">&#x27;标准化距离（类平均法）&#x27;</span>)<br>inconsisten0=inconsistent(Z,<span class="hljs-number">4</span>) <span class="hljs-comment">%4表示为深度</span><br></code></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20201129234327.png" srcset="/img/loading.gif" alt=""></p>
+<h2 id="动态聚类分析"><a href="#动态聚类分析" class="headerlink" title="动态聚类分析"></a>动态聚类分析</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs matlab"><span class="hljs-number">1.</span>手动动态聚类分析<br>data=xlsread(<span class="hljs-string">&#x27;chengji.xlsx&#x27;</span>)<br>gc=data(:,<span class="hljs-number">1</span>)<br>data=zscore(data(:,<span class="hljs-number">2</span>:<span class="hljs-number">3</span>))<br>x1=data(:,<span class="hljs-number">1</span>)<br>x2=data(:,<span class="hljs-number">2</span>)<br><span class="hljs-built_in">scatter</span>(x1,x2,<span class="hljs-string">&#x27;r&#x27;</span>) <span class="hljs-comment">%画散点图，观察凝点</span><br></code></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20201129234431.png" srcset="/img/loading.gif" alt=""></p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs matlab">startdata=data([<span class="hljs-number">7</span>,<span class="hljs-number">11</span>,<span class="hljs-number">27</span>,<span class="hljs-number">33</span>,<span class="hljs-number">22</span>],:) <span class="hljs-comment">%找四个凝点</span><br>idx=kmeans(data,<span class="hljs-number">5</span>,<span class="hljs-string">&#x27;Start&#x27;</span>,startdata) <span class="hljs-comment">%&#x27;Start为初始凝结点的标识&#x27;，startdata为具体的值</span><br>[S,H]=silhouette(data,idx)<span class="hljs-comment">%画图</span><br>gc(idx==<span class="hljs-number">1</span>),gc(idx==<span class="hljs-number">2</span>),gc(idx==<span class="hljs-number">3</span>),gc(idx==<span class="hljs-number">4</span>),gc(idx==<span class="hljs-number">5</span>)<span class="hljs-comment">%展示工厂标记</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs matlab"><span class="hljs-built_in">ans</span> =<br>     <span class="hljs-number">3</span><br>    <span class="hljs-number">12</span><br>    <span class="hljs-number">21</span><br>    <span class="hljs-number">28</span><br>    <span class="hljs-number">34</span><br>    <span class="hljs-number">36</span><br>    <span class="hljs-number">37</span><br>    <span class="hljs-number">40</span><br><span class="hljs-built_in">ans</span> =<br>    <span class="hljs-number">11</span><br>    <span class="hljs-number">13</span><br>    <span class="hljs-number">14</span><br>    <span class="hljs-number">19</span><br>    <span class="hljs-number">23</span><br>    <span class="hljs-number">24</span><br>    <span class="hljs-number">30</span><br>    <span class="hljs-number">39</span><br><span class="hljs-built_in">ans</span> =<br>     <span class="hljs-number">5</span><br>     <span class="hljs-number">8</span><br>    <span class="hljs-number">10</span><br>    <span class="hljs-number">26</span><br>    <span class="hljs-number">27</span><br><span class="hljs-built_in">ans</span> =<br>     <span class="hljs-number">6</span><br>     <span class="hljs-number">9</span><br>    <span class="hljs-number">18</span><br>    <span class="hljs-number">29</span><br>    <span class="hljs-number">33</span><br><span class="hljs-built_in">ans</span> =<br>     <span class="hljs-number">1</span><br>     <span class="hljs-number">2</span><br>     <span class="hljs-number">4</span><br>     <span class="hljs-number">7</span><br>    <span class="hljs-number">15</span><br>    <span class="hljs-number">16</span><br>    <span class="hljs-number">17</span><br>    <span class="hljs-number">20</span><br>    <span class="hljs-number">22</span><br>    <span class="hljs-number">25</span><br>    <span class="hljs-number">31</span><br>    <span class="hljs-number">32</span><br>    <span class="hljs-number">35</span><br>    <span class="hljs-number">38</span><br></code></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20201129234525.png" srcset="/img/loading.gif" alt=""><br><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs matlab"><span class="hljs-number">2.</span>自动动态聚类分析<br>data=xlsread(<span class="hljs-string">&#x27;chengji.xlsx&#x27;</span>)<br>gc=data(:,<span class="hljs-number">1</span>)<br>data=zscore(data(:,<span class="hljs-number">2</span>:<span class="hljs-number">3</span>))<br>idx=kmeans(data,<span class="hljs-number">4</span>,<span class="hljs-string">&#x27;replicates&#x27;</span>,<span class="hljs-number">100</span>) <span class="hljs-comment">%自己去找凝结点，重复十次</span><br>[S,H]=silhouette(data,idx)<span class="hljs-comment">%画图</span><br>Leibie1=gc(idx==<span class="hljs-number">1</span>),Leibie2=gc(idx==<span class="hljs-number">2</span>),Leibie3=gc(idx==<span class="hljs-number">3</span>),Leibie4=gc(idx==<span class="hljs-number">4</span>)<br></code></pre></td></tr></table></figure><br><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br></pre></td><td class="code"><pre><code class="hljs matlab">idx =<br>     <span class="hljs-number">4</span><br>     <span class="hljs-number">4</span><br>     <span class="hljs-number">4</span><br>     <span class="hljs-number">4</span><br>     <span class="hljs-number">3</span><br>     <span class="hljs-number">2</span><br>     <span class="hljs-number">4</span><br>     <span class="hljs-number">2</span><br>     <span class="hljs-number">2</span><br>     <span class="hljs-number">4</span><br>     <span class="hljs-number">1</span><br>     <span class="hljs-number">3</span><br>     <span class="hljs-number">1</span><br>     <span class="hljs-number">1</span><br>     <span class="hljs-number">4</span><br>     <span class="hljs-number">4</span><br>     <span class="hljs-number">4</span><br>     <span class="hljs-number">2</span><br>     <span class="hljs-number">1</span><br>     <span class="hljs-number">4</span><br>     <span class="hljs-number">3</span><br>     <span class="hljs-number">4</span><br>     <span class="hljs-number">1</span><br>     <span class="hljs-number">1</span><br>     <span class="hljs-number">4</span><br>     <span class="hljs-number">1</span><br>     <span class="hljs-number">2</span><br>     <span class="hljs-number">3</span><br>     <span class="hljs-number">2</span><br>     <span class="hljs-number">1</span><br>     <span class="hljs-number">4</span><br>     <span class="hljs-number">4</span><br>     <span class="hljs-number">2</span><br>     <span class="hljs-number">3</span><br>     <span class="hljs-number">4</span><br>     <span class="hljs-number">3</span><br>     <span class="hljs-number">3</span><br>     <span class="hljs-number">4</span><br>     <span class="hljs-number">1</span><br>     <span class="hljs-number">3</span><br>S =<br>    <span class="hljs-number">0.8370</span><br>    <span class="hljs-number">0.8517</span><br>    <span class="hljs-number">0.2813</span><br>    <span class="hljs-number">0.6478</span><br>    <span class="hljs-number">0.5259</span><br>    <span class="hljs-number">0.2780</span><br>    <span class="hljs-number">0.7061</span><br>    <span class="hljs-number">0.3439</span><br>    <span class="hljs-number">0.5923</span><br>    <span class="hljs-number">0.3430</span><br>    <span class="hljs-number">0.8410</span><br>    <span class="hljs-number">0.8241</span><br>    <span class="hljs-number">0.4059</span><br>    <span class="hljs-number">0.6917</span><br>    <span class="hljs-number">0.7877</span><br>    <span class="hljs-number">0.4397</span><br>    <span class="hljs-number">0.5408</span><br>    <span class="hljs-number">0.3044</span><br>    <span class="hljs-number">0.6531</span><br>    <span class="hljs-number">0.7272</span><br>    <span class="hljs-number">0.5483</span><br>    <span class="hljs-number">0.5974</span><br>    <span class="hljs-number">0.6877</span><br>    <span class="hljs-number">0.5867</span><br>    <span class="hljs-number">0.7845</span><br>    <span class="hljs-number">0.2691</span><br>    <span class="hljs-number">0.1136</span><br>    <span class="hljs-number">0.8183</span><br>    <span class="hljs-number">0.5519</span><br>    <span class="hljs-number">0.8519</span><br>    <span class="hljs-number">0.8551</span><br>    <span class="hljs-number">0.6766</span><br>    <span class="hljs-number">0.5177</span><br>    <span class="hljs-number">0.8740</span><br>    <span class="hljs-number">0.6046</span><br>    <span class="hljs-number">0.7840</span><br>    <span class="hljs-number">0.7143</span><br>    <span class="hljs-number">0.6256</span><br>    <span class="hljs-number">0.7967</span><br>    <span class="hljs-number">0.8840</span><br>H =<br>  Figure (<span class="hljs-number">1</span>) - 属性:<br>      Number: <span class="hljs-number">1</span><br>        Name: <span class="hljs-string">&#x27;&#x27;</span><br>       Color: [<span class="hljs-number">0.9400</span> <span class="hljs-number">0.9400</span> <span class="hljs-number">0.9400</span>]<br>    Position: [<span class="hljs-number">488</span> <span class="hljs-number">342</span> <span class="hljs-number">560</span> <span class="hljs-number">420</span>]<br>       Units: <span class="hljs-string">&#x27;pixels&#x27;</span><br>  显示 所有属性<br>Leibie1 =<br>    <span class="hljs-number">11</span><br>    <span class="hljs-number">13</span><br>    <span class="hljs-number">14</span><br>    <span class="hljs-number">19</span><br>    <span class="hljs-number">23</span><br>    <span class="hljs-number">24</span><br>    <span class="hljs-number">26</span><br>    <span class="hljs-number">30</span><br>    <span class="hljs-number">39</span><br>Leibie2 =<br>     <span class="hljs-number">6</span><br>     <span class="hljs-number">8</span><br>     <span class="hljs-number">9</span><br>    <span class="hljs-number">18</span><br>    <span class="hljs-number">27</span><br>    <span class="hljs-number">29</span><br>    <span class="hljs-number">33</span><br>Leibie3 =<br>     <span class="hljs-number">5</span><br>    <span class="hljs-number">12</span><br>    <span class="hljs-number">21</span><br>    <span class="hljs-number">28</span><br>    <span class="hljs-number">34</span><br>    <span class="hljs-number">36</span><br>    <span class="hljs-number">37</span><br>    <span class="hljs-number">40</span><br>Leibie4 =<br>     <span class="hljs-number">1</span><br>     <span class="hljs-number">2</span><br>     <span class="hljs-number">3</span><br>     <span class="hljs-number">4</span><br>     <span class="hljs-number">7</span><br>    <span class="hljs-number">10</span><br>    <span class="hljs-number">15</span><br>    <span class="hljs-number">16</span><br>    <span class="hljs-number">17</span><br>    <span class="hljs-number">20</span><br>    <span class="hljs-number">22</span><br>    <span class="hljs-number">25</span><br>    <span class="hljs-number">31</span><br>    <span class="hljs-number">32</span><br>    <span class="hljs-number">35</span><br>    <span class="hljs-number">38</span><br></code></pre></td></tr></table></figure><br><img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20201129234628.png" srcset="/img/loading.gif" alt=""></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a href="">NULL</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%AD%A6%E4%B9%A0/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%B1%82%E6%AC%A1%E8%81%9A%E7%B1%BB%E5%88%86%E6%9E%90/">层次聚类分析</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%89%8B%E5%8A%A8%E5%8A%A8%E6%80%81%E8%81%9A%E7%B1%BB%E5%88%86%E6%9E%90/">手动动态聚类分析</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%87%AA%E5%8A%A8%E5%8A%A8%E6%80%81%E8%81%9A%E7%B1%BB%E5%88%86%E6%9E%90/">自动动态聚类分析</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%87%9D%E7%82%B9/">凝点</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/08/13/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200813%E3%80%91/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">每日一题【20200813】</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/08/11/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200811%E3%80%91/">
+                        <span class="hidden-mobile">每日一题【20200811】</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                  
+                
+                
+  <div id="vcomments"></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('vcomments', function() {
+      Fluid.utils.createScript('https://cdn.staticfile.org/valine/1.4.14/Valine.min.js', function () {
+        new Valine({
+          el: "#vcomments",
+          app_id: "gn6pMOQ2Y8601y9txmR9s4DN-gzGzoHsz",
+          app_key: "KYnH8MyyiQBXK8hMwO7HevEw",
+          placeholder: "说点什么",
+          path: window.location.pathname,
+          avatar: "retro",
+          meta: ["nick","mail","link"],
+          pageSize: "10",
+          lang: "zh-CN",
+          highlight: false,
+          recordIP: false,
+          serverURLs: "",
+        });
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the
+    <a target="_blank" href="https://valine.js.org" rel="nofollow noopener noopener">comments powered by Valine.</a>
+  </noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://ghchart.rshah.org/409ba5/baixf-xyz" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:826px;background-color: #A9C9FF;background-image: linear-gradient(180deg, #A9C9FF 0%, #FFBBEC 100%);max-width:100%;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":200})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.12.0/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script defer type="text/javascript" src="//js.users.51.la/21061303.js"></script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script defer src="//s4.cnzz.com/z_stat.php?id=1279684341&show=pic"
+            type="text/javascript"></script>
+  
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

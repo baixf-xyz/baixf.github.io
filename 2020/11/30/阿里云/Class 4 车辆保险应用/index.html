@@ -1,0 +1,627 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  
+    <meta name="description" content="达摩院特别版-视觉AI训练营">
+  
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+  <title>Class 4 车辆保险应用 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.1.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.8.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":200}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>白小飞のBlog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20201127163148.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Class 4 车辆保险应用">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-11-30 11:11" pubdate>
+        2020年11月30日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      17
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Class 4 车辆保险应用</h1>
+            
+            <div class="markdown-body">
+              <h1 id="实施前准备工作"><a href="#实施前准备工作" class="headerlink" title="实施前准备工作"></a>实施前准备工作</h1><h2 id="一、本地图片上传为OSS"><a href="#一、本地图片上传为OSS" class="headerlink" title="一、本地图片上传为OSS"></a>一、本地图片上传为OSS</h2><p>1.开通oss<br><img src="https://gitee.com/bai_xiao_fei/picture/raw/master/2020-11-30/1606722326491-2020061516095134.png" srcset="/img/loading.gif" alt=""></p>
+<p>2.创建Bucket</p>
+<p><img src="https://gitee.com/bai_xiao_fei/picture/raw/master/2020-11-30/1606722343394-20200615160951329.png" srcset="/img/loading.gif" alt=""></p>
+<p><img src="https://gitee.com/bai_xiao_fei/picture/raw/master/2020-11-30/1606722363856-20200615160951505.png" srcset="/img/loading.gif" alt=""></p>
+<h2 id="二、开通目标检测服务"><a href="#二、开通目标检测服务" class="headerlink" title="二、开通目标检测服务"></a>二、开通目标检测服务</h2><p><img src="https://gitee.com/bai_xiao_fei/picture/raw/master/2020-11-30/1606722388611-20200615160952519.png" srcset="/img/loading.gif" alt=""></p>
+<h2 id="三、查看所需API"><a href="#三、查看所需API" class="headerlink" title="三、查看所需API"></a>三、查看所需API</h2><p>这里我们用到阿里云视觉智能开放平台提供的三个功能：</p>
+<ul>
+<li>车辆部件识别</li>
+<li>车辆损伤识别</li>
+<li>车险图片分类</li>
+</ul>
+<p>1.车辆部件识别<br>检测图片中车辆部件的位置以及名称。</p>
+<p>2.车辆损伤识别<br>针对常见小汽车车型，识别车辆外观受损部件及损伤类型，可识别数十种车辆部件、五大类外观损伤。（刮擦、凹陷、开裂、褶皱、穿孔）</p>
+<p>3.车险图片分类<br>对输入的车险图片进行分类。</p>
+<h1 id="具体实施"><a href="#具体实施" class="headerlink" title="具体实施"></a>具体实施</h1><h2 id="一、本地图片上传至OSS的upload-py"><a href="#一、本地图片上传至OSS的upload-py" class="headerlink" title="一、本地图片上传至OSS的upload.py"></a>一、本地图片上传至OSS的upload.py</h2><p>1.示例代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># -*- coding: utf-8 -*-</span><br><br><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> random<br><span class="hljs-keyword">import</span> string<br><span class="hljs-keyword">import</span> oss2<br><br><br><span class="hljs-comment"># 以下代码展示了文件上传的高级用法，如断点续传、分片上传等。</span><br><span class="hljs-comment"># 基本的文件上传如上传普通文件、追加文件，请参见object_basic.py</span><br><br><br><span class="hljs-comment"># 首先初始化AccessKeyId、AccessKeySecret、Endpoint等信息。</span><br><span class="hljs-comment"># 通过环境变量获取，或者把诸如“&lt;你的AccessKeyId&gt;”替换成真实的AccessKeyId等。</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># 以杭州区域为例，Endpoint可以是：</span><br><span class="hljs-comment">#   http://oss-cn-hangzhou.aliyuncs.com</span><br><span class="hljs-comment">#   https://oss-cn-hangzhou.aliyuncs.com</span><br><span class="hljs-comment"># 分别以HTTP、HTTPS协议访问。</span><br>access_key_id = os.getenv(<span class="hljs-string">&#x27;OSS_TEST_ACCESS_KEY_ID&#x27;</span>, <span class="hljs-string">&#x27;&lt;你的AccessKeyId&gt;&#x27;</span>)<br>access_key_secret = os.getenv(<span class="hljs-string">&#x27;OSS_TEST_ACCESS_KEY_SECRET&#x27;</span>, <span class="hljs-string">&#x27;&lt;你的AccessKeySecret&gt;&#x27;</span>)<br>bucket_name = os.getenv(<span class="hljs-string">&#x27;OSS_TEST_BUCKET&#x27;</span>, <span class="hljs-string">&#x27;&lt;你的Bucket&gt;&#x27;</span>)<br>endpoint = os.getenv(<span class="hljs-string">&#x27;OSS_TEST_ENDPOINT&#x27;</span>, <span class="hljs-string">&#x27;&lt;你的访问域名&gt;&#x27;</span>)<br><br><br><span class="hljs-comment"># 确认上面的参数都填写正确了</span><br><span class="hljs-keyword">for</span> param <span class="hljs-keyword">in</span> (access_key_id, access_key_secret, bucket_name, endpoint):<br>    <span class="hljs-keyword">assert</span> <span class="hljs-string">&#x27;&lt;&#x27;</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> param, <span class="hljs-string">&#x27;请设置参数：&#x27;</span> + param<br><br><br><span class="hljs-comment"># 创建Bucket对象，所有Object相关的接口都可以通过Bucket对象来进行</span><br>bucket = oss2.Bucket(oss2.Auth(access_key_id, access_key_secret), endpoint, bucket_name)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">random_string</span>(<span class="hljs-params">n</span>):</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&#x27;</span>.join(random.choice(string.ascii_lowercase) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n))<br><br><span class="hljs-comment"># 生成一个本地文件用于测试。文件内容是bytes类型。</span><br>filename = random_string(<span class="hljs-number">32</span>) + <span class="hljs-string">&#x27;.txt&#x27;</span><br>content = oss2.to_bytes(random_string(<span class="hljs-number">1024</span> * <span class="hljs-number">1024</span>))<br><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(filename, <span class="hljs-string">&#x27;wb&#x27;</span>) <span class="hljs-keyword">as</span> fileobj:<br>    fileobj.write(content)<br><br><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">断点续传上传</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br><span class="hljs-comment"># 断点续传一：因为文件比较小（小于oss2.defaults.multipart_threshold），</span><br><span class="hljs-comment"># 所以实际上用的是oss2.Bucket.put_object</span><br>oss2.resumable_upload(bucket, <span class="hljs-string">&#x27;remote-normal.txt&#x27;</span>, filename)<br><br><span class="hljs-comment"># 断点续传二：为了展示的需要，我们指定multipart_threshold可选参数，确保使用分片上传</span><br>oss2.resumable_upload(bucket, <span class="hljs-string">&#x27;remote-multipart.txt&#x27;</span>, filename, multipart_threshold=<span class="hljs-number">100</span> * <span class="hljs-number">1024</span>)<br><br><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">分片上传</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br><span class="hljs-comment"># 也可以直接调用分片上传接口。</span><br><span class="hljs-comment"># 首先可以用帮助函数设定分片大小，设我们期望的分片大小为128KB</span><br>total_size = os.path.getsize(filename)<br>part_size = oss2.determine_part_size(total_size, preferred_size=<span class="hljs-number">128</span> * <span class="hljs-number">1024</span>)<br><br><span class="hljs-comment"># 初始化分片上传，得到Upload ID。接下来的接口都要用到这个Upload ID。</span><br>key = <span class="hljs-string">&#x27;remote-multipart2.txt&#x27;</span><br>upload_id = bucket.init_multipart_upload(key).upload_id<br><br><span class="hljs-comment"># 逐个上传分片</span><br><span class="hljs-comment"># 其中oss2.SizedFileAdapter()把fileobj转换为一个新的文件对象，新的文件对象可读的长度等于size_to_upload</span><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(filename, <span class="hljs-string">&#x27;rb&#x27;</span>) <span class="hljs-keyword">as</span> fileobj:<br>    parts = []<br>    part_number = <span class="hljs-number">1</span><br>    offset = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">while</span> offset &lt; total_size:<br>        size_to_upload = <span class="hljs-built_in">min</span>(part_size, total_size - offset)<br>        result = bucket.upload_part(key, upload_id, part_number,<br>                                    oss2.SizedFileAdapter(fileobj, size_to_upload))<br>        parts.append(oss2.models.PartInfo(part_number, result.etag, size = size_to_upload, part_crc = result.crc))<br><br>        offset += size_to_upload<br>        part_number += <span class="hljs-number">1</span><br><br>    <span class="hljs-comment"># 完成分片上传</span><br>    bucket.complete_multipart_upload(key, upload_id, parts)<br><br><span class="hljs-comment"># 验证一下</span><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(filename, <span class="hljs-string">&#x27;rb&#x27;</span>) <span class="hljs-keyword">as</span> fileobj:<br>    <span class="hljs-keyword">assert</span> bucket.get_object(key).read() == fileobj.read()<br><br><br>os.remove(filename)<br></code></pre></td></tr></table></figure>
+<h2 id="二、车辆部件识别"><a href="#二、车辆部件识别" class="headerlink" title="二、车辆部件识别"></a>二、车辆部件识别</h2><p>1.请求参数</p>
+<p>ImageURL：图片URL</p>
+<p>2.示例代码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/env python</span><br><span class="hljs-comment">#coding=utf-8</span><br><br><span class="hljs-keyword">from</span> aliyunsdkcore.client <span class="hljs-keyword">import</span> AcsClient<br><span class="hljs-keyword">from</span> aliyunsdkcore.acs_exception.exceptions <span class="hljs-keyword">import</span> ClientException<br><span class="hljs-keyword">from</span> aliyunsdkcore.acs_exception.exceptions <span class="hljs-keyword">import</span> ServerException<br><span class="hljs-keyword">from</span> aliyunsdkobjectdet.request.v20191230.RecognizeVehiclePartsRequest <span class="hljs-keyword">import</span> RecognizeVehiclePartsRequest<br><br>client = AcsClient(<span class="hljs-string">&#x27;&lt;accessKeyId&gt;&#x27;</span>, <span class="hljs-string">&#x27;&lt;accessSecret&gt;&#x27;</span>, <span class="hljs-string">&#x27;cn-shanghai&#x27;</span>)<br><br>request = RecognizeVehiclePartsRequest()<br>request.set_accept_format(<span class="hljs-string">&#x27;json&#x27;</span>)<br><br>request.set_ImageURL(<span class="hljs-string">&quot;http://viapi-test.oss-cn-shanghai.aliyuncs.com/RecognizeVehicleParts.jpg&quot;</span>)<br><br>response = client.do_action_with_exception(request)<br><span class="hljs-comment"># python2:  print(response) </span><br>print(<span class="hljs-built_in">str</span>(response, encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>))<br><br></code></pre></td></tr></table></figure></p>
+<h2 id="三、车辆损坏识别类"><a href="#三、车辆损坏识别类" class="headerlink" title="三、车辆损坏识别类"></a>三、车辆损坏识别类</h2><p>1.请求参数</p>
+<p>ImageURL：图片URL</p>
+<p>2.示例代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/env python</span><br><span class="hljs-comment">#coding=utf-8</span><br><br><span class="hljs-keyword">from</span> aliyunsdkcore.client <span class="hljs-keyword">import</span> AcsClient<br><span class="hljs-keyword">from</span> aliyunsdkcore.acs_exception.exceptions <span class="hljs-keyword">import</span> ClientException<br><span class="hljs-keyword">from</span> aliyunsdkcore.acs_exception.exceptions <span class="hljs-keyword">import</span> ServerException<br><span class="hljs-keyword">from</span> aliyunsdkobjectdet.request.v20191230.RecognizeVehicleDamageRequest <span class="hljs-keyword">import</span> RecognizeVehicleDamageRequest<br><br>client = AcsClient(<span class="hljs-string">&#x27;&lt;accessKeyId&gt;&#x27;</span>, <span class="hljs-string">&#x27;&lt;accessSecret&gt;&#x27;</span>, <span class="hljs-string">&#x27;cn-shanghai&#x27;</span>)<br><br>request = RecognizeVehicleDamageRequest()<br>request.set_accept_format(<span class="hljs-string">&#x27;json&#x27;</span>)<br><br>request.set_ImageURL(<span class="hljs-string">&quot;http://viapi-test.oss-cn-shanghai.aliyuncs.com/sanjiye-meizi/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/%E8%BD%A6%E8%BE%86%E6%8D%9F%E4%BC%A4%E8%AF%86%E5%88%AB%20.jpg&quot;</span>)<br><br>response = client.do_action_with_exception(request)<br><span class="hljs-comment"># python2:  print(response) </span><br>print(<span class="hljs-built_in">str</span>(response, encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>))<br></code></pre></td></tr></table></figure>
+<h2 id="四、车险图片分类"><a href="#四、车险图片分类" class="headerlink" title="四、车险图片分类"></a>四、车险图片分类</h2><p>1.请求参数</p>
+<p>ImageURL：图片URL</p>
+<p>2.示例代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/env python</span><br><span class="hljs-comment">#coding=utf-8</span><br><br><span class="hljs-keyword">from</span> aliyunsdkcore.client <span class="hljs-keyword">import</span> AcsClient<br><span class="hljs-keyword">from</span> aliyunsdkcore.acs_exception.exceptions <span class="hljs-keyword">import</span> ClientException<br><span class="hljs-keyword">from</span> aliyunsdkcore.acs_exception.exceptions <span class="hljs-keyword">import</span> ServerException<br><span class="hljs-keyword">from</span> aliyunsdkobjectdet.request.v20191230.ClassifyVehicleInsuranceRequest <span class="hljs-keyword">import</span> ClassifyVehicleInsuranceRequest<br><br>client = AcsClient(<span class="hljs-string">&#x27;&lt;accessKeyId&gt;&#x27;</span>, <span class="hljs-string">&#x27;&lt;accessSecret&gt;&#x27;</span>, <span class="hljs-string">&#x27;cn-shanghai&#x27;</span>)<br><br>request = ClassifyVehicleInsuranceRequest()<br>request.set_accept_format(<span class="hljs-string">&#x27;json&#x27;</span>)<br><br>request.set_ImageURL(<span class="hljs-string">&quot;http://viapi-test.oss-cn-shanghai.aliyuncs.com/sanjiye-meizi/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/%E8%BD%A6%E9%99%A9%E5%9B%BE%E7%89%87.jpg&quot;</span>)<br><br>response = client.do_action_with_exception(request)<br><span class="hljs-comment"># python2:  print(response) </span><br>print(<span class="hljs-built_in">str</span>(response, encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>))<br></code></pre></td></tr></table></figure>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://developer.aliyun.com/adc/student/bootcamp/ai/2?spm=a2c6h.13788107.J_3120529270.4.450750a3fjp2m1&amp;accounttraceid=9cafb5972ade4cb484e00857d47625bbdkwh">达摩院特别版-视觉AI训练营</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%AD%A6%E4%B9%A0/%E9%98%BF%E9%87%8C%E4%BA%91/">阿里云</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%98%BF%E9%87%8C%E4%BA%91/">阿里云</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%BE%BE%E6%91%A9%E9%99%A2/">达摩院</a>
+                    
+                      <a class="hover-with-bg" href="/tags/AI/">AI</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%BA%94%E7%94%A8/">应用</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%A7%86%E8%A7%89/">视觉</a>
+                    
+                      <a class="hover-with-bg" href="/tags/oss%E5%AD%98%E5%82%A8/">oss存储</a>
+                    
+                      <a class="hover-with-bg" href="/tags/API/">API</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%BD%A6%E8%BE%86%E9%83%A8%E4%BB%B6%E8%AF%86%E5%88%AB/">车辆部件识别</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%BD%A6%E8%BE%86%E6%8D%9F%E4%BC%A4%E8%AF%86%E5%88%AB/">车辆损伤识别</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%BD%A6%E9%99%A9%E5%9B%BE%E7%89%87%E5%88%86%E7%B1%BB/">车险图片分类</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/11/30/%E9%98%BF%E9%87%8C%E4%BA%91/Class%204%20%E4%BD%BF%E7%94%A8PolarDB%E5%92%8CECS%E6%90%AD%E5%BB%BA%E9%97%A8%E6%88%B7%E7%BD%91%E7%AB%99/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Class 4 使用PolarDB和ECS搭建门户网站</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/11/29/%E9%98%BF%E9%87%8C%E4%BA%91/Class%203%20SLB%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%AE%9E%E8%B7%B5/">
+                        <span class="hidden-mobile">Class 3 SLB负载均衡实践</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                  
+                
+                
+  <div id="vcomments"></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('vcomments', function() {
+      Fluid.utils.createScript('https://cdn.staticfile.org/valine/1.4.14/Valine.min.js', function () {
+        new Valine({
+          el: "#vcomments",
+          app_id: "gn6pMOQ2Y8601y9txmR9s4DN-gzGzoHsz",
+          app_key: "KYnH8MyyiQBXK8hMwO7HevEw",
+          placeholder: "说点什么",
+          path: window.location.pathname,
+          avatar: "retro",
+          meta: ["nick","mail","link"],
+          pageSize: "10",
+          lang: "zh-CN",
+          highlight: false,
+          recordIP: false,
+          serverURLs: "",
+        });
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the
+    <a target="_blank" href="https://valine.js.org" rel="nofollow noopener noopener">comments powered by Valine.</a>
+  </noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://ghchart.rshah.org/409ba5/baixf-xyz" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:826px;background-color: #A9C9FF;background-image: linear-gradient(180deg, #A9C9FF 0%, #FFBBEC 100%);max-width:100%;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":200})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.12.0/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script defer type="text/javascript" src="//js.users.51.la/21061303.js"></script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script defer src="//s4.cnzz.com/z_stat.php?id=1279684341&show=pic"
+            type="text/javascript"></script>
+  
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

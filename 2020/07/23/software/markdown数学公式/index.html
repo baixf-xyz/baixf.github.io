@@ -1,0 +1,743 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  
+    <meta name="description" content="反正latex也要学这些~">
+  
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+  <title>markdown数学公式 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.1.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.8.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":200}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>白小飞のBlog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/src=http___inews.gtimg.com_newsapp_bt_0_11690530144_1000.jpg&refer=http___inews.gtimg.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="markdown数学公式">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-07-23 11:11" pubdate>
+        2020年7月23日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      494 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      8
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">markdown数学公式</h1>
+            
+            <div class="markdown-body">
+              <blockquote>
+<p>作为理工男，数学公式的编辑在所难免。<br>  在这里埋个坑。最近在准备数学建模，准备开辟一个每日一题栏目。</p>
+</blockquote>
+<h3 id="1-分类"><a href="#1-分类" class="headerlink" title="1 分类"></a>1 分类</h3><h4 id="1-1-行内公式"><a href="#1-1-行内公式" class="headerlink" title="1.1 行内公式"></a>1.1 行内公式</h4><p>$a=b+c$<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">$a=b+c$<br></code></pre></td></tr></table></figure></p>
+<h4 id="1-2-独行公式"><a href="#1-2-独行公式" class="headerlink" title="1.2 独行公式"></a>1.2 独行公式</h4><script type="math/tex; mode=display">a=b+c</script><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">$$a=b+c$$<br></code></pre></td></tr></table></figure>
+<h3 id="2-上下标"><a href="#2-上下标" class="headerlink" title="2 上下标"></a>2 上下标</h3><h4 id="2-1-上标"><a href="#2-1-上标" class="headerlink" title="2.1 上标"></a>2.1 上标</h4><script type="math/tex; mode=display">a^2+b^2=c^2</script><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">$a^2+b^2=c^2$<br></code></pre></td></tr></table></figure>
+<h4 id="2-2-下标"><a href="#2-2-下标" class="headerlink" title="2.2 下标"></a>2.2 下标</h4><script type="math/tex; mode=display">x_1+x_2=x_3</script><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">$x<span class="hljs-emphasis">_1+x_</span>2=x<span class="hljs-emphasis">_3$</span><br></code></pre></td></tr></table></figure>
+<h4 id="2-3-实例"><a href="#2-3-实例" class="headerlink" title="2.3 实例"></a>2.3 实例</h4><script type="math/tex; mode=display">y=e^{cosx+sinx}+a^{12}tanx</script><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">$y=e^&#123;cosx+sinx&#125;+a^&#123;12&#125;tanx$<br></code></pre></td></tr></table></figure>
+<h3 id="3-常见运算符"><a href="#3-常见运算符" class="headerlink" title="3 常见运算符"></a>3 常见运算符</h3><table>
+    <thead>
+    <tr>
+      <th>符号</th>
+      <th>表达式</th>
+      <th>符号</th>
+      <th>表达式</th>
+      <th>符号</th>
+      <th>表达式</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>$\times$</td>
+      <td>\time</td>
+      <td>$\div$</td>
+      <td>\div</td>
+      <td>$\pm$</td>
+      <td>\pm</td>
+    </tr>
+    <tr>
+      <td>$\neq$</td>
+      <td>\neq</td>
+      <td>$\geq$</td>
+      <td>\geq</td>
+      <td>$\leq$</td>
+      <td>\leq</td>
+    </tr>
+    <tr>
+      <td>$\in$</td>
+      <td>\in</td>
+      <td>$\notin$</td>
+      <td>\notin</td>
+      <td>$\cdot$</td>
+      <td>\cdot</td>
+    </tr>
+    <tr>
+      <td>$\supset$</td>
+      <td>\supset</td>
+      <td>$\subset$</td>
+      <td>\subset</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>$\bigcap$</td>
+      <td>\bigcap</td>
+      <td>$\bigcup$</td>
+      <td>\bigcup</td>
+      <td></td>
+      <td></td>
+    </tr>
+    </tbody>
+</table>
+
+<h3 id="4-特殊符号"><a href="#4-特殊符号" class="headerlink" title="4 特殊符号"></a>4 特殊符号</h3><table>
+    <thead>
+    <tr>
+      <th>符号</th>
+      <th>表达式</th>
+      <th>文字描述</th>
+      <th>实例</th>
+      <th>表达式</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>$\sum$</td>
+      <td>\sum</td>
+      <td>累加</td>
+      <td>$\sum_{m=1}^{\infty}$</td>
+      <td>\sum_{m=1}^{\infty}</td>
+    </tr>
+    <tr>
+      <td>$\int_a^bx^2dx$</td>
+      <td>\intx^2dx</td>
+      <td>积分</td>
+      <td>$\int_0^1x^2dx$</td>
+      <td>\int_0^1x^2dx</td>
+    </tr>
+    <tr>
+      <td>$\lim_{a \to b}x^2$</td>
+      <td>lim_{a \to b}x^2</td>
+      <td>极限</td>
+      <td>$\lim_{0 \to 1}x^2$</td>
+      <td>\lim_{0 \to 1}x^2</td>
+    </tr>
+    <tr>
+      <td>$\vec{a}$</td>
+      <td>\vec{a}</td>
+      <td>向量</td>
+      <td>$\vec{a}+\vec{b}$</td>
+      <td>\vec{a}+\vec{b}</td>
+    </tr>
+    </tbody>
+</table>
+
+<h3 id="5-注释"><a href="#5-注释" class="headerlink" title="5 注释"></a>5 注释</h3><h4 id="5-1-普通注释"><a href="#5-1-普通注释" class="headerlink" title="5.1 普通注释"></a>5.1 普通注释</h4><script type="math/tex; mode=display">\text{I Love CHINA}</script><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">$$\text&#123;I Love CHINA&#125;$$<br></code></pre></td></tr></table></figure>
+<h4 id="5-2-用法"><a href="#5-2-用法" class="headerlink" title="5.2 用法"></a>5.2 用法</h4><script type="math/tex; mode=display">a^2+b^2=c^2 \, \text{(勾股定理)}</script><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">$$a^2+b^2=c^2 \, \text&#123;(勾股定理)&#125;$$<br></code></pre></td></tr></table></figure>
+<h4 id="5-3-高级注释"><a href="#5-3-高级注释" class="headerlink" title="5.3 高级注释"></a>5.3 高级注释</h4><script type="math/tex; mode=display">\color{red}{I Love CHINA}</script><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">$$\color&#123;red&#125;&#123;I Love CHINA&#125;$$<br></code></pre></td></tr></table></figure>
+<h3 id="6-分数"><a href="#6-分数" class="headerlink" title="6 分数"></a>6 分数</h3><script type="math/tex; mode=display">-\frac{\infty}{0}</script><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">$$-\frac&#123;\infty&#125;&#123;0&#125;$$<br></code></pre></td></tr></table></figure>
+<h3 id="7-分隔符"><a href="#7-分隔符" class="headerlink" title="7 分隔符"></a>7 分隔符</h3><script type="math/tex; mode=display">\frac{du}{dx}\mid_{x=0}</script><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">$$\frac&#123;du&#125;&#123;dx&#125;\mid<span class="hljs-emphasis">_&#123;x=0&#125;$$</span><br></code></pre></td></tr></table></figure>
+<h3 id="8-上划线、下划线"><a href="#8-上划线、下划线" class="headerlink" title="8 上划线、下划线"></a>8 上划线、下划线</h3><script type="math/tex; mode=display">\overline{a+b+c}</script><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">$$\overline&#123;a+b+c&#125;$$<br></code></pre></td></tr></table></figure>
+<script type="math/tex; mode=display">\underline{a+b+c}</script><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">$$\underline&#123;a+b+c&#125;$$<br></code></pre></td></tr></table></figure>
+<h3 id="9-根号"><a href="#9-根号" class="headerlink" title="9 根号"></a>9 根号</h3><script type="math/tex; mode=display">\sqrt{16}</script><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash">$\sqrt&#123;16&#125;$$</span><br></code></pre></td></tr></table></figure>
+<script type="math/tex; mode=display">\sqrt[3]{16}</script><figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-symbol">$</span><span class="hljs-symbol">$</span>\<span class="hljs-built_in">sqrt</span>[<span class="hljs-number">3</span>]&#123;<span class="hljs-number">16</span>&#125;<span class="hljs-symbol">$</span><span class="hljs-symbol">$</span><br></code></pre></td></tr></table></figure>
+<h3 id="10-方程组"><a href="#10-方程组" class="headerlink" title="10 方程组"></a>10 方程组</h3><script type="math/tex; mode=display">\begin{cases}
+ax^2+bx+c=0\
+ax^2+bx+c=0\
+\end{cases}</script><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">$$\begin&#123;cases&#125;ax^2+bx+c=0\\ax^2+bx+c=0\end&#123;cases&#125;$$<br></code></pre></td></tr></table></figure>
+<h3 id="11-空格"><a href="#11-空格" class="headerlink" title="11 空格"></a>11 空格</h3><script type="math/tex; mode=display">ax^2+bx+c=0 \,\,\,\,\,\, \text{(我是注释)}</script><script type="math/tex; mode=display">ax^2+bx+c=0 \;\;\;\;\;\; \text{(我是注释)}</script><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs markdown">$$ax^2+bx+c=0 \,\,\,\,\,\, \text&#123;(我是注释)&#125;$$<br>$$ax^2+bx+c=0 \;\;\;\;\;\; \text&#123;(我是注释)&#125;$$<br></code></pre></td></tr></table></figure>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/life/">life</a>
+                    
+                      <a class="hover-with-bg" href="/categories/life/software/">software</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/markdown/">markdown</a>
+                    
+                      <a class="hover-with-bg" href="/tags/latex/">latex</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F/">数学公式</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/07/24/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200807%E3%80%91/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">每日一题【20200807】</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/07/23/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200723%E3%80%91/">
+                        <span class="hidden-mobile">每日一题【20200723】</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                  
+                
+                
+  <div id="vcomments"></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('vcomments', function() {
+      Fluid.utils.createScript('https://cdn.staticfile.org/valine/1.4.14/Valine.min.js', function () {
+        new Valine({
+          el: "#vcomments",
+          app_id: "gn6pMOQ2Y8601y9txmR9s4DN-gzGzoHsz",
+          app_key: "KYnH8MyyiQBXK8hMwO7HevEw",
+          placeholder: "说点什么",
+          path: window.location.pathname,
+          avatar: "retro",
+          meta: ["nick","mail","link"],
+          pageSize: "10",
+          lang: "zh-CN",
+          highlight: false,
+          recordIP: false,
+          serverURLs: "",
+        });
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the
+    <a target="_blank" href="https://valine.js.org" rel="nofollow noopener noopener">comments powered by Valine.</a>
+  </noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://ghchart.rshah.org/409ba5/baixf-xyz" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:826px;background-color: #A9C9FF;background-image: linear-gradient(180deg, #A9C9FF 0%, #FFBBEC 100%);max-width:100%;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":200})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.12.0/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.1.2/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script defer type="text/javascript" src="//js.users.51.la/21061303.js"></script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script defer src="//s4.cnzz.com/z_stat.php?id=1279684341&show=pic"
+            type="text/javascript"></script>
+  
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

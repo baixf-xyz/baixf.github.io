@@ -1,0 +1,592 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  
+    <meta name="description" content="python爬虫小作业2.0">
+  
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+  <title>python词云剔除非有效词 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.1.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.8.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":200}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>白小飞のBlog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://api.ixiaowai.cn/mcapi/mcapi.php') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="python词云剔除非有效词">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-07-20 11:11" pubdate>
+        2020年7月20日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      23
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">python词云剔除非有效词</h1>
+            
+            <div class="markdown-body">
+              <h2 id="一、Why"><a href="#一、Why" class="headerlink" title="一、Why!"></a>一、Why!</h2><p><img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20201123205628.png" srcset="/img/loading.gif" alt=""></p>
+<p>  之前做了基于python的青少年沉迷网络调查报告，最后用的是jieba分词和wordcloud进行可视化分析，但是结果图由于爬取的内容不精确，有一些不相关词也被放入可视化中，所以此次想把那个内容再重新可视化词云分析，剔除参杂其中的无用词！</p>
+<h2 id="二、What"><a href="#二、What" class="headerlink" title="二、What!"></a>二、What!</h2><p>原源码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 导入词云制作库wordcloud和中文分词库jieba</span><br><span class="hljs-keyword">import</span> jieba<br><span class="hljs-keyword">import</span> wordcloud<br><span class="hljs-comment"># 导入imageio库中的imread函数，并用这个函数读取本地图片，作为词云形状图片</span><br><span class="hljs-keyword">import</span> imageio<br>mk = imageio.imread(<span class="hljs-string">&quot;未标题-1.png&quot;</span>)<br><span class="hljs-comment"># 构建并配置词云对象w，注意要加scale参数，提高清晰度</span><br>w = wordcloud.WordCloud(width=<span class="hljs-number">1000</span>,<br>                        height=<span class="hljs-number">700</span>,<br>                        background_color=<span class="hljs-string">&#x27;white&#x27;</span>,<br>                        font_path=<span class="hljs-string">&#x27;msyh.ttc&#x27;</span>,<br>                        mask=mk,<br>                        scale=<span class="hljs-number">15</span>)<br><span class="hljs-comment"># 对来自外部文件的文本进行中文分词，得到string</span><br>f = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;提取到的第五列数据.txt&#x27;</span>,encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>txt = f.read()<br>txtlist = jieba.lcut(txt)<br>string = <span class="hljs-string">&quot; &quot;</span>.join(txtlist)<br><span class="hljs-comment"># 将string变量传入w的generate()方法，给词云输入文字</span><br>w.generate(string)<br><span class="hljs-comment"># 将词云图片导出到当前文件夹</span><br>w.to_file(<span class="hljs-string">&#x27;青少年沉迷网络01.png&#x27;</span>)<br></code></pre></td></tr></table></figure><br><span class="label label-primary"><br>对上方源码分析得17-21行为数据读取分词操作<br>具体步骤如下：<br>18行：以utf-8读取文件<br>19行：将读取的内容赋值给txt<br>20行：利用jieba库进行分词，以列表形式存储<br>21行：以空格连接列表内的每一个元素<br>所以可以在第20-21行之间添加一个方法进行剔除
+</span></p>
+<h2 id="三、How"><a href="#三、How" class="headerlink" title="三、How!"></a>三、How!</h2><p><span class="label label-primary">test.py</span><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> jieba<br><span class="hljs-built_in">list</span>=[]<br>txt=<span class="hljs-string">&quot;我们总是在意别人的言论，不敢做自己喜欢的事情，害怕淹没在飞短流长之中。其实没有人真的在乎你在想什么，不要过高估量自己在他人心目中的地位。被别人议论甚至误解都没啥，谁人不被别人说，谁人背后不说人，你生活在别人的眼神里，就迷失在自己的心路上。人和人之间就是一份情，一份缘，你珍惜我，我会加倍奉还，你不在意我，就让一切归零！&quot;</span><br>txtlist = jieba.lcut(txt)<br>print(txtlist)<br>words=[<span class="hljs-string">&quot;你&quot;</span>,<span class="hljs-string">&quot;人&quot;</span>,<span class="hljs-string">&quot;我&quot;</span>,<span class="hljs-string">&quot;,&quot;</span>,<span class="hljs-string">&quot;。&quot;</span>,<span class="hljs-string">&quot;的&quot;</span>,<span class="hljs-string">&quot;，&quot;</span>]<br><span class="hljs-keyword">for</span> word <span class="hljs-keyword">in</span> txtlist:<br>   <span class="hljs-keyword">if</span> word <span class="hljs-keyword">in</span> words:<br>      <span class="hljs-keyword">continue</span><br>   <span class="hljs-keyword">else</span>:<br>      <span class="hljs-built_in">list</span>.append(word)<br>print(<span class="hljs-built_in">list</span>)<br>string = <span class="hljs-string">&quot; &quot;</span>.join(<span class="hljs-built_in">list</span>)<br>print(string)<br></code></pre></td></tr></table></figure><br><span class="label label-primary">结果如下：</span><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>========= RESTART: D:\桌面\Python\拓展\weiboSpider-master\关键词爬取\剔除词test.py =========<br>Building prefix <span class="hljs-built_in">dict</span> <span class="hljs-keyword">from</span> the default dictionary ...<br>Loading model <span class="hljs-keyword">from</span> cache C:\Users\Bai\AppData\Local\Temp\jieba.cache<br>Loading model cost <span class="hljs-number">0.594</span> seconds.<br>Prefix <span class="hljs-built_in">dict</span> has been built successfully.<br>[<span class="hljs-string">&#x27;我们&#x27;</span>, <span class="hljs-string">&#x27;总是&#x27;</span>, <span class="hljs-string">&#x27;在意&#x27;</span>, <span class="hljs-string">&#x27;别人&#x27;</span>, <span class="hljs-string">&#x27;的&#x27;</span>, <span class="hljs-string">&#x27;言论&#x27;</span>, <span class="hljs-string">&#x27;，&#x27;</span>, <span class="hljs-string">&#x27;不敢&#x27;</span>, <span class="hljs-string">&#x27;做&#x27;</span>, <span class="hljs-string">&#x27;自己&#x27;</span>, <span class="hljs-string">&#x27;喜欢&#x27;</span>, <span class="hljs-string">&#x27;的&#x27;</span>, <span class="hljs-string">&#x27;事情&#x27;</span>, <span class="hljs-string">&#x27;，&#x27;</span>, <span class="hljs-string">&#x27;害怕&#x27;</span>, <span class="hljs-string">&#x27;淹没&#x27;</span>, <span class="hljs-string">&#x27;在&#x27;</span>, <span class="hljs-string">&#x27;飞短流长&#x27;</span>, <span class="hljs-string">&#x27;之中&#x27;</span>, <span class="hljs-string">&#x27;。&#x27;</span>, <span class="hljs-string">&#x27;其实&#x27;</span>, <span class="hljs-string">&#x27;没有&#x27;</span>, <span class="hljs-string">&#x27;人&#x27;</span>, <span class="hljs-string">&#x27;真的&#x27;</span>, <span class="hljs-string">&#x27;在乎&#x27;</span>, <span class="hljs-string">&#x27;你&#x27;</span>, <span class="hljs-string">&#x27;在&#x27;</span>, <span class="hljs-string">&#x27;想&#x27;</span>, <span class="hljs-string">&#x27;什么&#x27;</span>, <span class="hljs-string">&#x27;，&#x27;</span>, <span class="hljs-string">&#x27;不要&#x27;</span>, <span class="hljs-string">&#x27;过高&#x27;</span>, <span class="hljs-string">&#x27;估量&#x27;</span>, <span class="hljs-string">&#x27;自己&#x27;</span>, <span class="hljs-string">&#x27;在&#x27;</span>, <span class="hljs-string">&#x27;他人&#x27;</span>, <span class="hljs-string">&#x27;心目&#x27;</span>, <span class="hljs-string">&#x27;中&#x27;</span>, <span class="hljs-string">&#x27;的&#x27;</span>, <span class="hljs-string">&#x27;地位&#x27;</span>, <span class="hljs-string">&#x27;。&#x27;</span>, <span class="hljs-string">&#x27;被&#x27;</span>, <span class="hljs-string">&#x27;别人&#x27;</span>, <span class="hljs-string">&#x27;议论&#x27;</span>, <span class="hljs-string">&#x27;甚至&#x27;</span>, <span class="hljs-string">&#x27;误解&#x27;</span>, <span class="hljs-string">&#x27;都&#x27;</span>, <span class="hljs-string">&#x27;没&#x27;</span>, <span class="hljs-string">&#x27;啥&#x27;</span>, <span class="hljs-string">&#x27;，&#x27;</span>, <span class="hljs-string">&#x27;谁&#x27;</span>, <span class="hljs-string">&#x27;人&#x27;</span>, <span class="hljs-string">&#x27;不&#x27;</span>, <span class="hljs-string">&#x27;被&#x27;</span>, <span class="hljs-string">&#x27;别人&#x27;</span>, <span class="hljs-string">&#x27;说&#x27;</span>, <span class="hljs-string">&#x27;，&#x27;</span>, <span class="hljs-string">&#x27;谁&#x27;</span>, <span class="hljs-string">&#x27;人&#x27;</span>, <span class="hljs-string">&#x27;背后&#x27;</span>, <span class="hljs-string">&#x27;不&#x27;</span>, <span class="hljs-string">&#x27;说&#x27;</span>, <span class="hljs-string">&#x27;人&#x27;</span>, <span class="hljs-string">&#x27;，&#x27;</span>, <span class="hljs-string">&#x27;你&#x27;</span>, <span class="hljs-string">&#x27;生活&#x27;</span>, <span class="hljs-string">&#x27;在&#x27;</span>, <span class="hljs-string">&#x27;别人&#x27;</span>, <span class="hljs-string">&#x27;的&#x27;</span>, <span class="hljs-string">&#x27;眼神&#x27;</span>, <span class="hljs-string">&#x27;里&#x27;</span>, <span class="hljs-string">&#x27;，&#x27;</span>, <span class="hljs-string">&#x27;就&#x27;</span>, <span class="hljs-string">&#x27;迷失&#x27;</span>, <span class="hljs-string">&#x27;在&#x27;</span>, <span class="hljs-string">&#x27;自己&#x27;</span>, <span class="hljs-string">&#x27;的&#x27;</span>, <span class="hljs-string">&#x27;心&#x27;</span>, <span class="hljs-string">&#x27;路上&#x27;</span>, <span class="hljs-string">&#x27;。&#x27;</span>, <span class="hljs-string">&#x27;人&#x27;</span>, <span class="hljs-string">&#x27;和&#x27;</span>, <span class="hljs-string">&#x27;人&#x27;</span>, <span class="hljs-string">&#x27;之间&#x27;</span>, <span class="hljs-string">&#x27;就是&#x27;</span>, <span class="hljs-string">&#x27;一份&#x27;</span>, <span class="hljs-string">&#x27;情&#x27;</span>, <span class="hljs-string">&#x27;，&#x27;</span>, <span class="hljs-string">&#x27;一份&#x27;</span>, <span class="hljs-string">&#x27;缘&#x27;</span>, <span class="hljs-string">&#x27;，&#x27;</span>, <span class="hljs-string">&#x27;你&#x27;</span>, <span class="hljs-string">&#x27;珍惜&#x27;</span>, <span class="hljs-string">&#x27;我&#x27;</span>, <span class="hljs-string">&#x27;，&#x27;</span>, <span class="hljs-string">&#x27;我会&#x27;</span>, <span class="hljs-string">&#x27;加倍&#x27;</span>, <span class="hljs-string">&#x27;奉还&#x27;</span>, <span class="hljs-string">&#x27;，&#x27;</span>, <span class="hljs-string">&#x27;你&#x27;</span>, <span class="hljs-string">&#x27;不在意&#x27;</span>, <span class="hljs-string">&#x27;我&#x27;</span>, <span class="hljs-string">&#x27;，&#x27;</span>, <span class="hljs-string">&#x27;就让&#x27;</span>, <span class="hljs-string">&#x27;一切&#x27;</span>, <span class="hljs-string">&#x27;归零&#x27;</span>, <span class="hljs-string">&#x27;！&#x27;</span>]<br>[<span class="hljs-string">&#x27;我们&#x27;</span>, <span class="hljs-string">&#x27;总是&#x27;</span>, <span class="hljs-string">&#x27;在意&#x27;</span>, <span class="hljs-string">&#x27;别人&#x27;</span>, <span class="hljs-string">&#x27;言论&#x27;</span>, <span class="hljs-string">&#x27;不敢&#x27;</span>, <span class="hljs-string">&#x27;做&#x27;</span>, <span class="hljs-string">&#x27;自己&#x27;</span>, <span class="hljs-string">&#x27;喜欢&#x27;</span>, <span class="hljs-string">&#x27;事情&#x27;</span>, <span class="hljs-string">&#x27;害怕&#x27;</span>, <span class="hljs-string">&#x27;淹没&#x27;</span>, <span class="hljs-string">&#x27;在&#x27;</span>, <span class="hljs-string">&#x27;飞短流长&#x27;</span>, <span class="hljs-string">&#x27;之中&#x27;</span>, <span class="hljs-string">&#x27;其实&#x27;</span>, <span class="hljs-string">&#x27;没有&#x27;</span>, <span class="hljs-string">&#x27;真的&#x27;</span>, <span class="hljs-string">&#x27;在乎&#x27;</span>, <span class="hljs-string">&#x27;在&#x27;</span>, <span class="hljs-string">&#x27;想&#x27;</span>, <span class="hljs-string">&#x27;什么&#x27;</span>, <span class="hljs-string">&#x27;不要&#x27;</span>, <span class="hljs-string">&#x27;过高&#x27;</span>, <span class="hljs-string">&#x27;估量&#x27;</span>, <span class="hljs-string">&#x27;自己&#x27;</span>, <span class="hljs-string">&#x27;在&#x27;</span>, <span class="hljs-string">&#x27;他人&#x27;</span>, <span class="hljs-string">&#x27;心目&#x27;</span>, <span class="hljs-string">&#x27;中&#x27;</span>, <span class="hljs-string">&#x27;地位&#x27;</span>, <span class="hljs-string">&#x27;被&#x27;</span>, <span class="hljs-string">&#x27;别人&#x27;</span>, <span class="hljs-string">&#x27;议论&#x27;</span>, <span class="hljs-string">&#x27;甚至&#x27;</span>, <span class="hljs-string">&#x27;误解&#x27;</span>, <span class="hljs-string">&#x27;都&#x27;</span>, <span class="hljs-string">&#x27;没&#x27;</span>, <span class="hljs-string">&#x27;啥&#x27;</span>, <span class="hljs-string">&#x27;谁&#x27;</span>, <span class="hljs-string">&#x27;不&#x27;</span>, <span class="hljs-string">&#x27;被&#x27;</span>, <span class="hljs-string">&#x27;别人&#x27;</span>, <span class="hljs-string">&#x27;说&#x27;</span>, <span class="hljs-string">&#x27;谁&#x27;</span>, <span class="hljs-string">&#x27;背后&#x27;</span>, <span class="hljs-string">&#x27;不&#x27;</span>, <span class="hljs-string">&#x27;说&#x27;</span>, <span class="hljs-string">&#x27;生活&#x27;</span>, <span class="hljs-string">&#x27;在&#x27;</span>, <span class="hljs-string">&#x27;别人&#x27;</span>, <span class="hljs-string">&#x27;眼神&#x27;</span>, <span class="hljs-string">&#x27;里&#x27;</span>, <span class="hljs-string">&#x27;就&#x27;</span>, <span class="hljs-string">&#x27;迷失&#x27;</span>, <span class="hljs-string">&#x27;在&#x27;</span>, <span class="hljs-string">&#x27;自己&#x27;</span>, <span class="hljs-string">&#x27;心&#x27;</span>, <span class="hljs-string">&#x27;路上&#x27;</span>, <span class="hljs-string">&#x27;和&#x27;</span>, <span class="hljs-string">&#x27;之间&#x27;</span>, <span class="hljs-string">&#x27;就是&#x27;</span>, <span class="hljs-string">&#x27;一份&#x27;</span>, <span class="hljs-string">&#x27;情&#x27;</span>, <span class="hljs-string">&#x27;一份&#x27;</span>, <span class="hljs-string">&#x27;缘&#x27;</span>, <span class="hljs-string">&#x27;珍惜&#x27;</span>, <span class="hljs-string">&#x27;我会&#x27;</span>, <span class="hljs-string">&#x27;加倍&#x27;</span>, <span class="hljs-string">&#x27;奉还&#x27;</span>, <span class="hljs-string">&#x27;不在意&#x27;</span>, <span class="hljs-string">&#x27;就让&#x27;</span>, <span class="hljs-string">&#x27;一切&#x27;</span>, <span class="hljs-string">&#x27;归零&#x27;</span>, <span class="hljs-string">&#x27;！&#x27;</span>]<br>我们 总是 在意 别人 言论 不敢 做 自己 喜欢 事情 害怕 淹没 在 飞短流长 之中 其实 没有 真的 在乎 在 想 什么 不要 过高 估量 自己 在 他人 心目 中 地位 被 别人 议论 甚至 误解 都 没 啥 谁 不 被 别人 说 谁 背后 不 说 生活 在 别人 眼神 里 就 迷失 在 自己 心 路上 和 之间 就是 一份 情 一份 缘 珍惜 我会 加倍 奉还 不在意 就让 一切 归零 ！<br></code></pre></td></tr></table></figure></p>
+<h2 id="四、result"><a href="#四、result" class="headerlink" title="四、result!"></a>四、result!</h2><p><span class="label label-primary">源码如下：</span><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 导入词云制作库wordcloud和中文分词库jieba</span><br><span class="hljs-keyword">import</span> jieba<br><span class="hljs-keyword">import</span> wordcloud<br><span class="hljs-comment"># 导入imageio库中的imread函数，并用这个函数读取本地图片，作为词云形状图片</span><br><span class="hljs-keyword">import</span> imageio<br>mk = imageio.imread(<span class="hljs-string">&quot;未标题-1.png&quot;</span>)<br><span class="hljs-built_in">list</span>=[]<br><span class="hljs-comment"># 构建并配置词云对象w，注意要加stopwords集合参数，将不想展示在词云中的词放在stopwords集合里，这里去掉“曹操”和“孔明”两个词</span><br>w = wordcloud.WordCloud(width=<span class="hljs-number">1000</span>,<br>                        height=<span class="hljs-number">700</span>,<br>                        background_color=<span class="hljs-string">&#x27;white&#x27;</span>,<br>                        font_path=<span class="hljs-string">&#x27;msyh.ttc&#x27;</span>,<br>                        mask=mk,<br>                        scale=<span class="hljs-number">5</span>,<br>                        <span class="hljs-comment">#contour_width=1,</span><br>                        <span class="hljs-comment">#contour_color=&quot;black&quot;</span><br>                        )<br><span class="hljs-comment"># 对来自外部文件的文本进行中文分词，得到string</span><br>f = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;提取到的第五列数据.txt&#x27;</span>,encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>txt = f.read()<br>txtlist = jieba.lcut(txt)<br>words=[<span class="hljs-string">&quot;收起&quot;</span>,<span class="hljs-string">&quot;全文&quot;</span>,<span class="hljs-string">&quot;所以&quot;</span>,<span class="hljs-string">&quot;多少&quot;</span>,<span class="hljs-string">&quot;路过&quot;</span>,<span class="hljs-string">&quot;,&quot;</span>,<span class="hljs-string">&quot;，&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;。&quot;</span>,<span class="hljs-string">&quot;[&quot;</span>,<span class="hljs-string">&quot;]&quot;</span>,<span class="hljs-string">&quot;【&quot;</span>,<span class="hljs-string">&quot;】&quot;</span>]<br><span class="hljs-keyword">for</span> word <span class="hljs-keyword">in</span> txtlist:<br>   <span class="hljs-keyword">if</span> word <span class="hljs-keyword">in</span> words:<br>      <span class="hljs-keyword">continue</span><br>   <span class="hljs-keyword">else</span>:<br>      <span class="hljs-built_in">list</span>.append(word)<br>print(<span class="hljs-built_in">list</span>)<br>string = <span class="hljs-string">&quot; &quot;</span>.join(<span class="hljs-built_in">list</span>)<br><span class="hljs-comment"># 将string变量传入w的generate()方法，给词云输入文字</span><br>w.generate(string)<br><span class="hljs-comment"># 将词云图片导出到当前文件夹</span><br>w.to_file(<span class="hljs-string">&#x27;不信你不出来.png&#x27;</span>)<br>print(<span class="hljs-string">&quot;finish&quot;</span>)<br></code></pre></td></tr></table></figure><br><span class="label label-primary">结果对比：<br>很容易看出：收起全文没了</span><br><img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20201123205628.png" srcset="/img/loading.gif" alt=""><br><img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20201123212010.png" srcset="/img/loading.gif" alt=""></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span>[NULL]
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%AD%A6%E4%B9%A0/python/">python</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/python/">python</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%AF%8D%E4%BA%91/">词云</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%88%AC%E8%99%AB/">爬虫</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/07/21/Linux/shell%E7%BC%96%E7%A8%8B/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">shell编程</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/07/19/python/%E5%9F%BA%E4%BA%8EPython%E7%9A%84%E9%98%B2%E7%BD%91%E7%BB%9C%E6%B2%89%E8%BF%B7%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96/">
+                        <span class="hidden-mobile">基于Python的防网络沉迷相关信息获取</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                  
+                
+                
+  <div id="vcomments"></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('vcomments', function() {
+      Fluid.utils.createScript('https://cdn.staticfile.org/valine/1.4.14/Valine.min.js', function () {
+        new Valine({
+          el: "#vcomments",
+          app_id: "gn6pMOQ2Y8601y9txmR9s4DN-gzGzoHsz",
+          app_key: "KYnH8MyyiQBXK8hMwO7HevEw",
+          placeholder: "说点什么",
+          path: window.location.pathname,
+          avatar: "retro",
+          meta: ["nick","mail","link"],
+          pageSize: "10",
+          lang: "zh-CN",
+          highlight: false,
+          recordIP: false,
+          serverURLs: "",
+        });
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the
+    <a target="_blank" href="https://valine.js.org" rel="nofollow noopener noopener">comments powered by Valine.</a>
+  </noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://ghchart.rshah.org/409ba5/baixf-xyz" srcset="/img/loading.gif" class="rounded mx-auto d-block mt-5" style="width:826px;background-color: #A9C9FF;background-image: linear-gradient(180deg, #A9C9FF 0%, #FFBBEC 100%);max-width:100%;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":200})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.12.0/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script defer type="text/javascript" src="//js.users.51.la/21061303.js"></script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script defer src="//s4.cnzz.com/z_stat.php?id=1279684341&show=pic"
+            type="text/javascript"></script>
+  
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

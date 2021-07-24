@@ -1,0 +1,1095 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  
+    <meta name="description" content="">
+  
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+  <title>白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/css/bootstrap.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.8.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":200}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>白小飞のBlog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://api.yimian.xyz/img?type=moe&size=1920x1080') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Welcome To My Blog">
+              
+            </span>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div class="py-5" id="board"
+          style=margin-top:0>
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2020/07/31/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200731%E3%80%91/" target="_self">
+          <img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20201129201333.jpg" srcset="/img/loading.gif" alt="每日一题【20200731】">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/07/31/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200731%E3%80%91/">每日一题【20200731】</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/31/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200731%E3%80%91/">
+          
+          
+            
+          
+          第十天建模打卡
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-31 11:11" pubdate>
+              2020-07-31
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+            
+              <a href="/tags/%E7%9B%B8%E5%AF%B9%E8%AF%AF%E5%B7%AE/">相对误差</a>
+            
+              <a href="/tags/%E6%AE%8B%E5%B7%AE/">残差</a>
+            
+              <a href="/tags/%E7%81%B0%E8%89%B2%E7%B3%BB%E7%BB%9F/">灰色系统</a>
+            
+              <a href="/tags/%E9%A2%84%E6%B5%8B/">预测</a>
+            
+              <a href="/tags/%E5%90%8E%E6%A3%80%E9%AA%8C%E6%A3%80%E9%AA%8C%E6%95%B0/">后检验检验数</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2020/07/30/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200730%E3%80%91/" target="_self">
+          <img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20201129201333.jpg" srcset="/img/loading.gif" alt="每日一题【20200730】">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/07/30/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200730%E3%80%91/">每日一题【20200730】</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/30/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200730%E3%80%91/">
+          
+          
+            
+          
+          第九天建模打卡
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-30 11:11" pubdate>
+              2020-07-30
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+            
+              <a href="/tags/%E7%81%B0%E8%89%B2%E7%B3%BB%E7%BB%9F%E9%A2%84%E6%B5%8B/">灰色系统预测</a>
+            
+              <a href="/tags/GM11/">GM11</a>
+            
+              <a href="/tags/%E5%90%8E%E6%A3%80%E9%AA%8C/">后检验</a>
+            
+              <a href="/tags/%E5%90%8E%E9%AA%8C%E5%B7%AE%E6%A3%80%E9%AA%8C%E6%95%B0/">后验差检验数</a>
+            
+              <a href="/tags/%E7%9B%B8%E5%AF%B9%E8%AF%AF%E5%B7%AE/">相对误差</a>
+            
+              <a href="/tags/%E6%AE%8B%E5%B7%AE/">残差</a>
+            
+              <a href="/tags/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95/">最小二乘法</a>
+            
+              <a href="/tags/%E9%A2%84%E6%B5%8B%E5%BA%8F%E5%88%97/">预测序列</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2020/07/29/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200729%E3%80%91/" target="_self">
+          <img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20201129201333.jpg" srcset="/img/loading.gif" alt="每日一题【20200729】">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/07/29/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200729%E3%80%91/">每日一题【20200729】</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/29/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200729%E3%80%91/">
+          
+          
+            
+          
+          第八天建模打卡
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-29 11:11" pubdate>
+              2020-07-29
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E5%88%86%E6%9E%90/">时间序列分析</a>
+            
+              <a href="/tags/%E5%B9%B3%E7%A8%B3%E6%80%A7%E6%A3%80%E9%AA%8C/">平稳性检验</a>
+            
+              <a href="/tags/%E7%99%BD%E5%99%AA%E5%A3%B0%E6%A3%80%E9%AA%8C/">白噪声检验</a>
+            
+              <a href="/tags/adftest/">adftest</a>
+            
+              <a href="/tags/lbqtest/">lbqtest</a>
+            
+              <a href="/tags/%E8%87%AA%E7%9B%B8%E5%85%B3/">自相关</a>
+            
+              <a href="/tags/%E9%9A%8F%E6%9C%BA%E6%80%A7%E6%A3%80%E9%AA%8C/">随机性检验</a>
+            
+              <a href="/tags/%E4%B8%80%E9%98%B6%E5%B7%AE%E5%88%86/">一阶差分</a>
+            
+              <a href="/tags/autocoor/">autocoor</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2020/07/27/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200727%E3%80%91/" target="_self">
+          <img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20201129201333.jpg" srcset="/img/loading.gif" alt="每日一题【20200727】">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/07/27/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200727%E3%80%91/">每日一题【20200727】</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/27/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200727%E3%80%91/">
+          
+          
+            
+          
+          第六天建模打卡
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-27 11:11" pubdate>
+              2020-07-27
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+            
+              <a href="/tags/%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92/">线性规划</a>
+            
+              <a href="/tags/intlinprog/">intlinprog</a>
+            
+              <a href="/tags/0-1%E8%A7%84%E5%88%92/">0-1规划</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2020/07/26/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200726%E3%80%91/" target="_self">
+          <img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20201129201333.jpg" srcset="/img/loading.gif" alt="每日一题【20200726】">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/07/26/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200726%E3%80%91/">每日一题【20200726】</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/26/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200726%E3%80%91/">
+          
+          
+            
+          
+          第五天建模打卡
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-26 11:11" pubdate>
+              2020-07-26
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+            
+              <a href="/tags/%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92/">线性规划</a>
+            
+              <a href="/tags/intlinprog/">intlinprog</a>
+            
+              <a href="/tags/0-1%E8%A7%84%E5%88%92/">0-1规划</a>
+            
+              <a href="/tags/%E5%8C%88%E7%89%99%E5%88%A9%E7%AE%97%E6%B3%95/">匈牙利算法</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2020/07/25/Linux/%E4%BD%BF%E7%94%A8Termux%E7%8E%A9%E8%BD%ACAndroid%E6%89%8B%E6%9C%BA/" target="_self">
+          <img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/u=122502969,404724061&fm=15&gp=0.jpg" srcset="/img/loading.gif" alt="使用Termux玩转Android手机">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/07/25/Linux/%E4%BD%BF%E7%94%A8Termux%E7%8E%A9%E8%BD%ACAndroid%E6%89%8B%E6%9C%BA/">使用Termux玩转Android手机</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/25/Linux/%E4%BD%BF%E7%94%A8Termux%E7%8E%A9%E8%BD%ACAndroid%E6%89%8B%E6%9C%BA/">
+          
+          
+            
+          
+          破手机的新玩法~
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-25 11:11" pubdate>
+              2020-07-25
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/Linux/">Linux</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/linux/">linux</a>
+            
+              <a href="/tags/Android/">Android</a>
+            
+              <a href="/tags/%E6%97%A7%E6%89%8B%E6%9C%BA/">旧手机</a>
+            
+              <a href="/tags/termux/">termux</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2020/07/25/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200725%E3%80%91/" target="_self">
+          <img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20201129201333.jpg" srcset="/img/loading.gif" alt="每日一题【20200725】">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/07/25/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200725%E3%80%91/">每日一题【20200725】</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/25/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200725%E3%80%91/">
+          
+          
+            
+          
+          第四天建模打卡
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-25 11:11" pubdate>
+              2020-07-25
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+            
+              <a href="/tags/%E9%9D%9E%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92/">非线性规划</a>
+            
+              <a href="/tags/fmincon/">fmincon</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2020/07/24/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200724%E3%80%91/" target="_self">
+          <img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20201129201333.jpg" srcset="/img/loading.gif" alt="每日一题【20200723】">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/07/24/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200724%E3%80%91/">每日一题【20200723】</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/24/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200724%E3%80%91/">
+          
+          
+            
+          
+          第三天建模打卡
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-24 11:11" pubdate>
+              2020-07-24
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+            
+              <a href="/tags/%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92/">线性规划</a>
+            
+              <a href="/tags/intlinprog/">intlinprog</a>
+            
+              <a href="/tags/0-1%E8%A7%84%E5%88%92/">0-1规划</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2020/07/24/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200728%E3%80%91/" target="_self">
+          <img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20201129201333.jpg" srcset="/img/loading.gif" alt="每日一题【20200728】">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/07/24/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200728%E3%80%91/">每日一题【20200728】</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/24/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200728%E3%80%91/">
+          
+          
+            
+          
+          第七天建模打卡
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-24 11:11" pubdate>
+              2020-07-24
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+            
+              <a href="/tags/%E8%87%AA%E7%9B%B8%E5%85%B3%E6%80%A7/">自相关性</a>
+            
+              <a href="/tags/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E5%88%86%E6%9E%90/">时间序列分析</a>
+            
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86/">数据预处理</a>
+            
+              <a href="/tags/%E5%B9%B3%E7%A8%B3%E6%80%A7%E6%A3%80%E9%AA%8C/">平稳性检验</a>
+            
+              <a href="/tags/%E4%B8%80%E7%BB%B4%E9%99%8D%E9%98%B6/">一维降阶</a>
+            
+              <a href="/tags/%E7%99%BD%E5%99%AA%E5%A3%B0%E6%A3%80%E9%AA%8C/">白噪声检验</a>
+            
+              <a href="/tags/autocorr/">autocorr</a>
+            
+              <a href="/tags/adftest/">adftest</a>
+            
+              <a href="/tags/lbqtest/">lbqtest</a>
+            
+              <a href="/tags/diff/">diff</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2020/07/24/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200801%E3%80%91/" target="_self">
+          <img src="https://gitee.com/bai_xiao_fei/picture/raw/master/PicGo/20201129201333.jpg" srcset="/img/loading.gif" alt="每日一题【20200725】">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/07/24/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200801%E3%80%91/">每日一题【20200725】</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/07/24/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200801%E3%80%91/">
+          
+          
+            
+          
+          第十一天建模打卡
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-24 11:11" pubdate>
+              2020-07-24
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
+            
+              <a href="/categories/%E5%AD%A6%E4%B9%A0/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a>
+            
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86/">数据预处理</a>
+            
+              <a href="/tags/%E7%99%BD%E5%99%AA%E5%A3%B0%E6%A3%80%E9%AA%8C/">白噪声检验</a>
+            
+              <a href="/tags/%E9%A2%84%E6%B5%8B/">预测</a>
+            
+              <a href="/tags/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97/">时间序列</a>
+            
+              <a href="/tags/ARIMA/">ARIMA</a>
+            
+              <a href="/tags/%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE/">读取数据</a>
+            
+              <a href="/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7%E6%A3%80%E9%AA%8C/">稳定性检验</a>
+            
+              <a href="/tags/%E6%8B%9F%E5%90%88/">拟合</a>
+            
+              <a href="/tags/AIC/">AIC</a>
+            
+              <a href="/tags/BIC/">BIC</a>
+            
+              <a href="/tags/%E5%8D%A1%E6%96%B9%E7%BB%9F%E8%AE%A1/">卡方统计</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/page/7/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/#board">6</a><a class="page-number" href="/page/7/#board">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/#board">9</a><a class="page-number" href="/page/10/#board">10</a><a class="page-number" href="/page/11/#board">11</a><a class="extend next" rel="next" href="/page/9/#board"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":200})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script defer type="text/javascript" src="//js.users.51.la/21061303.js"></script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script defer src="//s4.cnzz.com/z_stat.php?id=1279684341&show=pic"
+            type="text/javascript"></script>
+  
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
