@@ -1,0 +1,1189 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="数据结构知识点及题目汇总~">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A1-数据结构">
+<meta property="og:url" content="https://blog.baixf.tk/2022/08/28/Data%20Structure/A1-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="数据结构知识点及题目汇总~">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220828113638503.png">
+<meta property="article:published_time" content="2022-08-28T11:30:11.000Z">
+<meta property="article:modified_time" content="2023-01-12T14:08:04.359Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="code">
+<meta property="article:tag" content="c&#x2F;c++">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220828113638503.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>A1-数据结构 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220828110929895.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="A1-数据结构"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-28 11:30" pubdate>
+          2022年8月28日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          10 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">A1-数据结构</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>暑假结束，数据结构强化告一段落。</p>
+<p>乾坤未定，你我皆是黑马。加油上岸！</p>
+</blockquote>
+<h4 id="知识点汇总"><a href="#知识点汇总" class="headerlink" title="知识点汇总"></a>知识点汇总</h4><ol>
+<li>时间复杂度</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image002.gif" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image004.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="2">
+<li>算法的原地工作</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image006.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="3">
+<li>值传递与引用传递</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image008.gif" srcset="/img/loading.gif" lazyload alt="表格  描述已自动生成"></p>
+<ol start="4">
+<li>顺序表随机存取体现：下标与位序；loa(A)</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image010.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image012.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="5">
+<li>顺序表插入删除的i取值</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image014.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="6">
+<li>顺序表的时间复杂度问题</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image016.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="7">
+<li>线性表的顺序存储（静态分配、动态分配）</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image018.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="8">
+<li>顺序存储两种定义（sqlist l与sqlist *l）</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image020.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="9">
+<li>单链表的头插尾插与序列逆序</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image022.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image024.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="10">
+<li>单链表的插入删除顺序问题</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image026.gif" srcset="/img/loading.gif" lazyload alt="文本, 信件  描述已自动生成"></p>
+<ol start="11">
+<li>单链表是否带头节点区别</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image028.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image030.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image032.gif" srcset="/img/loading.gif" lazyload alt="图片包含 "></p>
+<ol start="12">
+<li>单链表时间复杂度问题</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image034.gif" srcset="/img/loading.gif" lazyload alt="图片包含 "></p>
+<ol start="13">
+<li>双链表的插入删除顺序问题</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image036.gif" srcset="/img/loading.gif" lazyload alt="文本, 信件  描述已自动生成"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image038.gif" srcset="/img/loading.gif" lazyload></p>
+<ol start="14">
+<li>空循环单链表和空循环双链表</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image040.gif" srcset="/img/loading.gif" lazyload alt="文本, 信件  描述已自动生成"></p>
+<ol start="15">
+<li>静态链表</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image042.gif" srcset="/img/loading.gif" lazyload alt="表格  描述已自动生成"></p>
+<ol start="16">
+<li>针对需求设计线性表结构</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image044.gif" srcset="/img/loading.gif" lazyload alt="图片包含 "></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image046.gif" srcset="/img/loading.gif" lazyload alt="手机屏幕截图  描述已自动生成"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image048.gif" srcset="/img/loading.gif" lazyload alt="文本, 信件  描述已自动生成"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image050.gif" srcset="/img/loading.gif" lazyload alt="文本  中度可信度描述已自动生成"></p>
+<ol start="17">
+<li>合法出栈序列，出栈序列判断</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image052.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image054.gif" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image056.gif" srcset="/img/loading.gif" lazyload alt="文本, 信件  描述已自动生成"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image058.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="18">
+<li>卡特兰数</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image060.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image062.gif" srcset="/img/loading.gif" lazyload alt="文本  低可信度描述已自动生成"></p>
+<ol start="19">
+<li>不同初始情况的判空入栈出栈栈满</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image064.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image066.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="20">
+<li>栈的顺序存储需要判满链式就不需要</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image068.gif" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image070.gif" srcset="/img/loading.gif" lazyload></p>
+<ol start="21">
+<li>链栈栈顶设置在表头</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image072.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="22">
+<li>普通队列的上溢出、假溢出</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image074.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="23">
+<li>顺序队列的环形与非环形区别</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image076.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image078.gif" srcset="/img/loading.gif" lazyload></p>
+<ol start="24">
+<li>环形队列的本质：顺序存储</li>
+</ol>
+<blockquote>
+<p><em>将顺序队列臆造为一个环状的空间，即把存储队列元素的表从逻辑上视为一个环，称为循环队列。</em></p>
+</blockquote>
+<ol start="25">
+<li>环形队列的初始化判空入队出队判满队长</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image080.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image082.gif" srcset="/img/loading.gif" lazyload alt="文本, 信件  描述已自动生成"></p>
+<ol start="26">
+<li>队列不同初始情况对应的操作的改变</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image084.gif" srcset="/img/loading.gif" lazyload alt="图片包含 箱线图  描述已自动生成"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image086.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image088.gif" srcset="/img/loading.gif" lazyload alt="文本, 信件  描述已自动生成"></p>
+<ol start="27">
+<li>链式队列的队头队尾的设计选择</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image090.gif" srcset="/img/loading.gif" lazyload></p>
+<ol start="28">
+<li>为什么链队的入队不需要判满</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image092.gif" srcset="/img/loading.gif" lazyload alt="图形用户界面, "></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image094.gif" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image096.gif" srcset="/img/loading.gif" lazyload alt="图片包含 "></p>
+<ol start="29">
+<li>双端队列入队出队的合法判断</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image098.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image100.gif" srcset="/img/loading.gif" lazyload alt="文本, 信件  描述已自动生成"></p>
+<ol start="30">
+<li>栈的应用：括号匹配、迷宫、后缀表达式、递归调用栈</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image102.jpg" srcset="/img/loading.gif" lazyload alt="文本  低可信度描述已自动生成"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image104.jpg" srcset="/img/loading.gif" lazyload alt="图形用户界面  描述已自动生成"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image106.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image108.gif" srcset="/img/loading.gif" lazyload alt="图片包含 "></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image110.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="31">
+<li>队列应用：树图层次遍历、迷宫、打印缓冲区、进程调用序列</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image112.gif" srcset="/img/loading.gif" lazyload alt="文本  中度可信度描述已自动生成"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image114.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image116.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="32">
+<li>压缩矩阵的存储：对称、对角、三对角矩阵以及变形</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image118.gif" srcset="/img/loading.gif" lazyload alt="文本, 信件  描述已自动生成"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image120.gif" srcset="/img/loading.gif" lazyload alt="文本, 信件  描述已自动生成"></p>
+<ol start="33">
+<li>稀疏矩阵存储</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image122.gif" srcset="/img/loading.gif" lazyload alt="文本, 信件  描述已自动生成"></p>
+<ol start="34">
+<li>空格串与空串</li>
+</ol>
+<blockquote>
+<p><em>串中字符的个数“称为串的长度。n &#x3D;0时的串称为空串。由一个或多个空格（空格是特殊字符）组成的串称为空格串（注意，空格串不是空串），其长度为串中空格字符的个数。</em></p>
+</blockquote>
+<ol start="35">
+<li><p>顺序串连接删除插入替换</p>
+</li>
+<li><p>链串连接删除插入替换</p>
+</li>
+<li><p>朴素匹配算法</p>
+</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image124.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="38">
+<li>KMP求数组以及KMP算法;KMP的优化算法求next数组</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image126.gif" srcset="/img/loading.gif" lazyload alt="文本  中度可信度描述已自动生成"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image128.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="39">
+<li>树的性质</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image130.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image132.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="40">
+<li>度为2的树与二叉树</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image134.gif" srcset="/img/loading.gif" lazyload alt="文本, 信件  描述已自动生成"></p>
+<ol start="41">
+<li>给定n求完全二叉树叶子节点个数</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image136.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="42">
+<li>给定第h层叶子节点个数求总结点个数最小最大值</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image138.gif" srcset="/img/loading.gif" lazyload alt="img"><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image140.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="43">
+<li>树的顺序存储与链式存储优缺点</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image142.gif" srcset="/img/loading.gif" lazyload alt="图片包含 "></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image144.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="44">
+<li>二叉树先中后层次序遍历及代码</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image146.gif" srcset="/img/loading.gif" lazyload alt="手机屏幕截图  描述已自动生成"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image148.gif" srcset="/img/loading.gif" lazyload alt="手机屏幕截图  描述已自动生成"></p>
+<ol start="45">
+<li>先中后序遍历递归非递归函数调用栈</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image150.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="46">
+<li>两种遍历求树</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image152.gif" srcset="/img/loading.gif" lazyload alt="文本  中度可信度描述已自动生成"></p>
+<ol start="47">
+<li>二叉树的线索化</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image154.jpg" srcset="/img/loading.gif" lazyload alt="图示, "></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image156.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image158.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image160.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="48">
+<li>树的表示形式</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image162.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image164.gif" srcset="/img/loading.gif" lazyload alt="图示  描述已自动生成"></p>
+<ol start="49">
+<li>树森林二叉树转换</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image166.gif" srcset="/img/loading.gif" lazyload alt="文本, 信件  描述已自动生成"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image168.gif" srcset="/img/loading.gif" lazyload alt="文本  中度可信度描述已自动生成"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image170.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="50">
+<li>树先根后根森林先序后序二叉树先序中序遍历关系</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image172.gif" srcset="/img/loading.gif" lazyload alt="文本, 表格, 信件  描述已自动生成"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image174.gif" srcset="/img/loading.gif" lazyload alt="文本, 信件  描述已自动生成"></p>
+<ol start="51">
+<li>哈夫曼树与哈夫曼编码</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image176.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image178.gif" srcset="/img/loading.gif" lazyload alt="文本, 信件  描述已自动生成"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image180.gif" srcset="/img/loading.gif" lazyload alt="文本  中度可信度描述已自动生成"></p>
+<ol start="52">
+<li>并查集</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image182.gif" srcset="/img/loading.gif" lazyload alt="图片包含 工程绘图  描述已自动生成"></p>
+<ol start="53">
+<li>图的定义及性质：连通分量；生成图</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image184.gif" srcset="/img/loading.gif" lazyload alt="文本  中度可信度描述已自动生成"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image186.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image188.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image190.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image192.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="54">
+<li>邻接矩阵、邻接表性质</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image194.gif" srcset="/img/loading.gif" lazyload alt="表格  低可信度描述已自动生成"></p>
+<ol start="55">
+<li>十字链表、邻接多重表的设计原因</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image196.gif" srcset="/img/loading.gif" lazyload alt="表格  描述已自动生成"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image198.gif" srcset="/img/loading.gif" lazyload alt="图片包含 "></p>
+<ol start="56">
+<li>广度优先BFS、深度优先DFS与连通分量个数的关系</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image200.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="57">
+<li>广度优先、深度优先实现过程</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image202.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image204.gif" srcset="/img/loading.gif" lazyload alt="手机屏幕截图  中度可信度描述已自动生成"></p>
+<ol start="58">
+<li>广度优先、深度优先时间空间复杂度</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image206.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="59">
+<li>最小生成树</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image208.gif" srcset="/img/loading.gif" lazyload alt="文本, 信件  描述已自动生成"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image210.gif" srcset="/img/loading.gif" lazyload alt="图示  描述已自动生成"></p>
+<ol start="60">
+<li>最短路径问题</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image212.gif" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image214.gif" srcset="/img/loading.gif" lazyload alt="图示  描述已自动生成"></p>
+<ol start="61">
+<li>表达式的有向无环图表示</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image216.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="62">
+<li>AOG网有向无环图</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image218.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="63">
+<li>拓扑排序及dfs逆拓扑排序</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image220.gif" srcset="/img/loading.gif" lazyload alt="文本  中度可信度描述已自动生成"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image222.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image224.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="64">
+<li>AOE网与关键路径</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image226.gif" srcset="/img/loading.gif" lazyload alt="文本, 信件  描述已自动生成"></p>
+<ol start="65">
+<li>顺序查找</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image228.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="66">
+<li>折半查找</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image230.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image232.gif" srcset="/img/loading.gif" lazyload alt="手机屏幕截图  中度可信度描述已自动生成"></p>
+<ol start="67">
+<li>分块查找</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image234.gif" srcset="/img/loading.gif" lazyload alt="文本  低可信度描述已自动生成"></p>
+<ol start="68">
+<li>二叉排序树</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image236.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image238.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image240.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image242.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image244.gif" srcset="/img/loading.gif" lazyload alt="文本, 信件  描述已自动生成"></p>
+<ol start="69">
+<li>平衡二叉树</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image246.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image248.gif" srcset="/img/loading.gif" lazyload alt="图示  描述已自动生成"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image250.gif" srcset="/img/loading.gif" lazyload alt="文本, 信件  描述已自动生成"></p>
+<ol start="70">
+<li>B树</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image252.gif" srcset="/img/loading.gif" lazyload alt="图示  描述已自动生成"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image254.gif" srcset="/img/loading.gif" lazyload alt="图片包含 形状  描述已自动生成"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image256.gif" srcset="/img/loading.gif" lazyload alt="图示  描述已自动生成"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image258.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image260.gif" srcset="/img/loading.gif" lazyload alt="图示, 示意图  描述已自动生成"></p>
+<ol start="71">
+<li>B+树</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image262.gif" srcset="/img/loading.gif" lazyload alt="图片包含 "></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image264.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image266.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="72">
+<li>散列表</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image268.gif" srcset="/img/loading.gif" lazyload alt="图片包含 "></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image270.gif" srcset="/img/loading.gif" lazyload alt="图片包含 "></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image272.gif" srcset="/img/loading.gif" lazyload alt="图片包含 图表  描述已自动生成"></p>
+<ol start="73">
+<li>直接插入排序</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image274.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image276.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="74">
+<li>折半插入排序</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image278.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="75">
+<li>希尔排序</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image280.gif" srcset="/img/loading.gif" lazyload alt="文本, 信件  描述已自动生成"></p>
+<ol start="76">
+<li>冒泡排序</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image282.gif" srcset="/img/loading.gif" lazyload alt="文本  中度可信度描述已自动生成"></p>
+<ol start="77">
+<li>快速排序</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image284.gif" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image286.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image288.gif" srcset="/img/loading.gif" lazyload alt="表格  低可信度描述已自动生成"></p>
+<ol start="78">
+<li>简单选择排序</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image290.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image292.gif" srcset="/img/loading.gif" lazyload alt="图片包含 "></p>
+<ol start="79">
+<li>堆排序</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image294.gif" srcset="/img/loading.gif" lazyload></p>
+<ol start="80">
+<li>归并排序</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image296.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image298.gif" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image300.gif" srcset="/img/loading.gif" lazyload alt="文本  中度可信度描述已自动生成"></p>
+<ol start="81">
+<li>基数排序</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image302.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image304.gif" srcset="/img/loading.gif" lazyload alt="图片包含 "></p>
+<ol start="82">
+<li>各种排序算法的性质</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image306.gif" srcset="/img/loading.gif" lazyload alt="表格  描述已自动生成"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image308.gif" srcset="/img/loading.gif" lazyload alt="图片包含 "></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image310.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image312.gif" srcset="/img/loading.gif" lazyload alt="文本  中度可信度描述已自动生成"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image314.gif" srcset="/img/loading.gif" lazyload alt="图片包含 "></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image316.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image318.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="83">
+<li>外部排序</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image320.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image322.gif" srcset="/img/loading.gif" lazyload alt="文本, 信件  描述已自动生成"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image324.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/clip_image326.gif" srcset="/img/loading.gif" lazyload alt="文本  中度可信度描述已自动生成"></p>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span>李春葆. 数据结构与算法教程[M]. 清华大学出版社, 2005.
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span>2023年王道考研数据结构复习指导[M]. 中国工信出版集团.
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/Data-Structure/" class="category-chain-item">Data Structure</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/code/">#code</a>
+      
+        <a href="/tags/c-c/">#c/c++</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>A1-数据结构</div>
+      <div>https://blog.baixf.tk/2022/08/28/Data Structure/A1-数据结构知识点总结/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月28日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/28/Data%20Structure/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%BF%9B%E9%98%B6/" title="数据结构进阶">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">数据结构进阶</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/25/Data%20Structure/Q3-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="Q3-数据结构">
+                        <span class="hidden-mobile">Q3-数据结构</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

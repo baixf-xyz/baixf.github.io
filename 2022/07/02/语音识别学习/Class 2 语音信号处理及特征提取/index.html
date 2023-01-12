@@ -1,0 +1,937 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="FBANK MFCC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Class 2 语音信号处理及特征提取">
+<meta property="og:url" content="https://blog.baixf.tk/2022/07/02/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E5%AD%A6%E4%B9%A0/Class%202%20%E8%AF%AD%E9%9F%B3%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E5%8F%8A%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="FBANK MFCC">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog屏幕截图 2022-06-25 213320.jpg">
+<meta property="article:published_time" content="2022-07-02T21:28:11.000Z">
+<meta property="article:modified_time" content="2023-01-12T14:08:04.375Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="语音识别">
+<meta property="article:tag" content="ASR">
+<meta property="article:tag" content="FBANK">
+<meta property="article:tag" content="MFCC">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog屏幕截图 2022-06-25 213320.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>Class 2 语音信号处理及特征提取 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog屏幕截图 2022-06-25 213133.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Class 2 语音信号处理及特征提取"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-02 21:28" pubdate>
+          2022年7月2日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          38 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Class 2 语音信号处理及特征提取</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一、数字信号处理基础"><a href="#一、数字信号处理基础" class="headerlink" title="一、数字信号处理基础"></a>一、数字信号处理基础</h2><ul>
+<li>模拟信号到数字信号转换(ADC,analog to digital conversion)</li>
+</ul>
+<blockquote>
+<p>why:生活中遇到的大多数信号都是连续的模拟信号，而计算机只能处理离散的信号，因此，必须对这些连续的模拟信号进行转化，通过采样和量化，转换成数字信号。</p>
+</blockquote>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202022-07-02%20103152.jpg" srcset="/img/loading.gif" lazyload alt="屏幕截图 2022-07-02 103152"></p>
+<ul>
+<li><p>离散信号中的定义</p>
+<ul>
+<li><p>x(t) &#x3D; sin(2πf0t) </p>
+<p>其中f0表示信号本身的频率，单位为Hz</p>
+</li>
+</ul>
+<p>如果我们对此正弦波进行采样，每隔ts秒进行一次采样，并使用一定范围的离散数值表示采样值,则可以得到采样后的离散信号。</p>
+<ul>
+<li><p>x(n) &#x3D; sin(2πf0nts) </p>
+<p>其中 ts为采样周期； fs &#x3D; 1&#x2F;ts,为采样频率，或采样率，表示1s内采样的 点数， ts 为采样周期； n &#x3D; 0,1, … … 为离散整数序列</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>问题：如果给定一个正弦波采样后的序列，如（b）， 可以唯一的恢复出一个连续的正弦波吗？</p>
+<ul>
+<li>频率混叠</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220702104344934.png" srcset="/img/loading.gif" lazyload alt="image-20220702104344934"></p>
+<p>结论：如上所示原始信号频率是f0，(5)中对应的信号频率是 **f0+kfs(整数倍的信号采样频率)**，两者得到的离散序列一样。即若以同样采样周期进行采样，得到的离散序列完全一致，这种现象就叫做“频率混叠”。</p>
+<ul>
+<li>奈奎斯特采样定律</li>
+</ul>
+<p>采样频率大于信号中最大频率的两倍！fs&#x2F;2 ≥ fmax  </p>
+<p>即在原始信号的一个周期内，至少要采样两个点，才能有效杜绝频率混叠问题。</p>
+<ul>
+<li>傅里叶变换</li>
+</ul>
+<blockquote>
+<p>一个非周期的信号是不存在频率的，因为频率是周期的倒数，也就是说大部分函数应该是不存在所谓的周期和频率的，然而，伟大的傅里叶证明了一个东西：任何连续的函数可以分解为很多个周期信号的线性组合。广义一点来讲就是，任意函数可表示为周期函数的线性组合，那么每个周期函数都有各自的周期，也都有各自周期的倒数（频率），傅里叶变换的工作就是把一个信号中每个周期信号通过频率展现出来。</p>
+</blockquote>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202022-07-02%20113439.png" srcset="/img/loading.gif" lazyload alt="屏幕截图 2022-07-02 113439"></p>
+<ul>
+<li>傅里叶家族</li>
+</ul>
+<p>只有DFT是在时域和频域上都具有离散和周期的特点， 因此，也只有DFT可以用计算机来处理。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220702112959599.png" srcset="/img/loading.gif" lazyload alt="image-20220702112959599"></p>
+<p>上图结论：时域上的采样（离散化），导致了频域上的周期；时域上的周期，导致了频域上的离散。</p>
+<ul>
+<li>离散傅里叶变换</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220702115116880.png" srcset="/img/loading.gif" lazyload alt="image-20220702115116880"></p>
+<p>why:离散傅里叶变换(DFT,Discrete Fourier Transform)将时域信号变换到频域，在信号处理的过程中一般在频域处理更加方便，用于分析信号中频率成分。</p>
+<p>p.s 时域离散且周期的信号才可以进行DFT；非周期离散信号需要进行周期延拓才可以进行DFT。</p>
+<p>e.g可类比于光通过三棱镜转换为频率不同的颜色。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogv2-bb1427097bb4a91d4a78e384641ab8fa_720w.webp" srcset="/img/loading.gif" lazyload alt="动图"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogv2-cd80709d745e3acda83b0ae2e800e405_1440w.jpg" srcset="/img/loading.gif" lazyload alt="离散傅立叶变换"></p>
+<blockquote>
+<p>时域其实就是信号的波形随时间的变化，说通俗一点是一个自变量为时间，因变量为振幅的函数。频域也称频谱，简单来说就是自变量为频率，因变量为振幅的函数。</p>
+</blockquote>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220702115523863.png" srcset="/img/loading.gif" lazyload alt="image-20220702115523863"></p>
+<ul>
+<li>DFT的性质</li>
+</ul>
+<p>性质1. 对称性 X(m) &#x3D; X*(N − m)</p>
+<blockquote>
+<p>此性质很重要，如上图所示，DFT之后的离散频 率序列的幅度具有对称性，因此，在进行N点 DFT之后，只需要保留前N&#x2F;2+1个点。语音信号特征提取时，一般使用512点DFT，由于对称性， 我们只需要前257个有效点。</p>
+</blockquote>
+<p>性质2：M &#x3D; A&#x2F;(2&#x2F;N) &#x3D; AN&#x2F;2</p>
+<p>X(m)实际上表示的是“谱密度”（spectral density），即单位带 宽上有多少信号存在。如果对 一个幅度为A实正弦波进行N点DFT，则DFT之后，对应频率上的幅度 M和A之间的关系为： M &#x3D; A&#x2F;(2&#x2F;N) &#x3D; AN&#x2F;2。</p>
+<p>性质3：DFT的线性</p>
+<p>如果x_sum(n) &#x3D; x1(n) + x2(n) ，则对应的频域上有：X_sum(m) &#x3D; X1 (m) + X2 (m)</p>
+<p>性质4：时移性</p>
+<p>对x(n)左移k个采样点，得到x_shift(n) &#x3D; x(n − k)，对x_shift(n)进行 DFT，有</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220702123304427.png" srcset="/img/loading.gif" lazyload alt="image-20220702123304427"></p>
+<ul>
+<li><p>DFT的频率轴</p>
+<p>频率分辨率：f_s&#x2F;N，表示最小的频率间隔。当N越大时，频率分辨率越高。</p>
+<p>在频域上，第m个点所表示的分析频率为：f_analysis(m) &#x3D; m✖(f_s&#x2F;N)。</p>
+<p>从这个角度，我们可以理解为X(m)的幅值，体现了原信号中频率成分为m * (f_s&#x2F;N)HZ的信号的强弱。</p>
+</li>
+</ul>
+<p>为了提高DFT频率轴的分辨率，而不会影响原始信号的频率成分。我们可以将时域长度为N的信号 x(n) 补0，增加信号的长度，从而提高频率轴分辨率。对信号进行补0的操作，不会影响DFT的结果， 这在FFT（快速傅里叶变换）中和语音信号分析中非常常见。</p>
+<ul>
+<li>快速傅里叶变换（FFT)</li>
+</ul>
+<p>FFT的基本思想是把原始的N点序列，依次分解成一系列的短序列。充分利用DFT 计算式中指数因子 所具有的对称性质和周期性质，进而求出这些短序列相应的 DFT并进行适当组合，达到删除重复计算，减少乘法运算和简化结构的目的。</p>
+<h2 id="二、特征提取流程"><a href="#二、特征提取流程" class="headerlink" title="二、特征提取流程"></a>二、特征提取流程</h2><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202022-07-02%20132520.png" srcset="/img/loading.gif" lazyload alt="屏幕截图 2022-07-02 132520"></p>
+<p>Fbank和MFCC(Mel-Frequency Cepstral Coefficients)特征目前仍是主要使用的特征，虽然有工作尝试直接使用波形建模，但是效果并没有超越基于频域的特征。</p>
+<h3 id="Step1-预加重（pre-emphasis）"><a href="#Step1-预加重（pre-emphasis）" class="headerlink" title="Step1  预加重（pre-emphasis）"></a>Step1  预加重（pre-emphasis）</h3><blockquote>
+<p>why:提高信号高频部分的能量，高频信号在传递过程中，衰减较快，但是高频部分又蕴含很多对语音识别有利的特征，因此，在特征提取部分，需要提高高频部分能量。</p>
+</blockquote>
+<p>预加重滤波器实质上是一个一阶高通滤波器，低频 信号（即时域上信号变换慢的信号）将被抑制。给定时域输入信号𝑥[𝑛]，预加重之后的信号为 𝑦[𝑛] &#x3D; 𝑥 [𝑛]− 𝛼x[𝑛 − 1],其中，0.9 ≤ 𝛼 ≤ 1.0</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220702140934941.png" srcset="/img/loading.gif" lazyload alt="image-20220702140934941"></p>
+<h3 id="Step2-加窗（windowing）分帧"><a href="#Step2-加窗（windowing）分帧" class="headerlink" title="Step2  加窗（windowing）分帧"></a>Step2  加窗（windowing）分帧</h3><blockquote>
+<p>why:语音信号为非平稳信号，其统计属性是随着时间变化的；语音信号又具有短时平稳的属性,在一个发音单元里，语音信号表现出明显的稳定性，规律性;在进行语音识别的时候，对于一句话，识别的过程也是以较小的发音单元 （音素、字、字节）为单位进行识别，因此用滑动窗来提取短时片段。</p>
+</blockquote>
+<p>分帧的过程，在时域上，即用一个窗函数和原始信号进行相乘 y[n] &#x3D; w[n]x[n] </p>
+<p>w[n] 称为窗函数，常用的窗函数有 矩形窗， 汉明窗 (Hamming)</p>
+<p><strong>加窗主要是为了使时域信号似乎更好地满足 FFT 处理的周期性要求，减少泄漏。</strong></p>
+<h3 id="Step3-傅里叶变换"><a href="#Step3-傅里叶变换" class="headerlink" title="Step3  傅里叶变换"></a>Step3  傅里叶变换</h3><p>将上一步分帧之后的语音帧，由时域变换到 频域，取DFT系数的模，得到谱特征。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202022-07-02%20143152.png" srcset="/img/loading.gif" lazyload alt="屏幕截图 2022-07-02 143152"></p>
+<h3 id="Step4-梅尔滤波器组和对数操作"><a href="#Step4-梅尔滤波器组和对数操作" class="headerlink" title="Step4  梅尔滤波器组和对数操作"></a>Step4  梅尔滤波器组和对数操作</h3><ul>
+<li>DFT得到了每个频带上信号的能量，但是人耳对频率的感知不是等间隔的，近似于对数函数</li>
+<li>将线性频率转换为梅尔频率，梅尔频率和线性频率转换关系</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220702144129891.png" srcset="/img/loading.gif" lazyload alt="image-20220702144129891"></p>
+<ul>
+<li>梅尔三角滤波器组：根据起始频率、中间频率和截止频率，确定各滤波器系数</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220702144146286.png" srcset="/img/loading.gif" lazyload alt="image-20220702144146286"></p>
+<ul>
+<li><p>梅尔滤波器组设计</p>
+<ul>
+<li>确定滤波器组个数P </li>
+<li>根据采样率fs，DFT点数N，滤波器个数P，在梅尔域上等间隔的产生每个滤波器的起始频率、中间频率和截至频率，注意，上一个滤波器的中间频率为下一个滤波器的起始频率（存在overlap） </li>
+<li>将梅尔域上每个三角滤波器的起始、中间和截止频率转换线性频率域，并对DFT之后的谱特征 进行滤波，得到P个滤波器组能量，进行log 操作，得到Fbank特征</li>
+</ul>
+</li>
+<li><p>MFCC特征在Fbank特征基础上继续进行IDFT变换等操作</p>
+<ul>
+<li>倒谱分析</li>
+</ul>
+<p>FBank 特征的频谱图大概长下面这个样子，图中四个红点表示的是共振峰，是频谱图的主要频率，在语音识别中，根据共振峰来区分不同的音素（phone），所以我们可以把图中红线表示的特征提取出来就行，移除蓝色的影响部分。其中红色平滑曲线将各个共振峰连接起来，这条红线，称为谱包络（Spectral Envelope），蓝色上下震荡比较多的线条称为谱细节（Spectral details）。</p>
+<p>频域信号可以分解成谱包络(Envelope)和谱细节的乘积，不同音素的谱包络和共振峰具有区分性。</p>
+</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220702144631929.png" srcset="/img/loading.gif" lazyload alt="image-20220702144631929"></p>
+<ul>
+<li>IDFT，逆傅里叶变换</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220702145236191.png" srcset="/img/loading.gif" lazyload alt="image-20220702145236191"></p>
+<ol>
+<li>|𝑋[𝑚]| &#x3D; |𝐻[𝑚]| |𝐸M| </li>
+<li>log |𝑋[m]| &#x3D; log |𝐻[𝑚]| + log |𝐸[𝑚]| </li>
+<li>两边进行IDFT </li>
+<li>IDFT之后的第1~K个点，为 K 维MFCC特征</li>
+</ol>
+<blockquote>
+<p>取log有两个目的： </p>
+<ol>
+<li>人耳对信号感知是近似对数的 </li>
+<li>对数使特征对输入信号的扰动不敏感</li>
+</ol>
+</blockquote>
+<h3 id="Step5-动态特征计算"><a href="#Step5-动态特征计算" class="headerlink" title="Step5  动态特征计算"></a>Step5  动态特征计算</h3><ul>
+<li>一阶差分（Delta, Δ），类比速度，最简单的一阶差分计算方法</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220702143811275.png" srcset="/img/loading.gif" lazyload alt="image-20220702143811275"></p>
+<ul>
+<li>二阶差分（Delta delta, ΔΔ），类比加速度，简单计算方法</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220702143821956.png" srcset="/img/loading.gif" lazyload alt="image-20220702143821956"></p>
+<h3 id="Step6-能量计算"><a href="#Step6-能量计算" class="headerlink" title="Step6 能量计算"></a>Step6 能量计算</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220702143835996.png" srcset="/img/loading.gif" lazyload alt="image-20220702143835996"></p>
+<h2 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h2><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220705010032733.png" srcset="/img/loading.gif" lazyload alt="image-20220705010032733"></p>
+<ul>
+<li><p>一帧信号，通常为20 ～ 50 ms</p>
+<p>微观上足够长:至少包含2~3个周期</p>
+<p>宏观上足够短:在一个音素之内</p>
+</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220705010057831.png" srcset="/img/loading.gif" lazyload alt="image-20220705010057831"></p>
+<ul>
+<li><p>频谱具有精细结构和包络</p>
+<p>精细结构反映音高，用处较小（次要）</p>
+<p>包络反映音色，是主要信息</p>
+</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220705010214162.png" srcset="/img/loading.gif" lazyload alt="image-20220705010214162"></p>
+<ul>
+<li><p>三角滤波的结果Fbank</p>
+<p>将精细结构做了平均</p>
+<p>计算每个三角形内部总幅度（能量）</p>
+</li>
+<li><p>三角形左密右疏</p>
+<p>人耳👂的频率特性，人耳对低频信号敏感，分辨率比较高</p>
+<p>高频则分辨率较低，三角形比较细</p>
+</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220705010242153.png" srcset="/img/loading.gif" lazyload alt="image-20220705010242153"></p>
+<ul>
+<li><p>得到MFCC</p>
+<p>Fbank基本可以作为语音识别的特征，进一步进行数学变换，即取对数和离散余弦变换，将filterbank压缩成更小规模，得到13维向量的MFCC</p>
+</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220705010321599.png" srcset="/img/loading.gif" lazyload alt="image-20220705010321599"></p>
+<ul>
+<li><p>MFCC序列是最常用的特征</p>
+</li>
+<li><p>主要描述频谱包络</p>
+<p>优点:排除基频，符合听觉，维度低</p>
+<p>缺点:视野小，受噪声、回声、滤波影响严重</p>
+<p>改进:加入一阶（视野小，上下文）、二阶差分；各种归一化（回声滤波）</p>
+</li>
+</ul>
+<h2 id="四、实践作业"><a href="#四、实践作业" class="headerlink" title="四、实践作业"></a>四、实践作业</h2><p>Q1: 如果对语音模拟信号进行采样率为16khz对采样，得到的离散信号中包含的最大频率是多少？<br>A：8khz</p>
+<p>Q2: 对一个采样率为16k的离散信号进行下采样，下采样到8k，为什么要先进行低通滤波？<br>A：因为根据奈奎斯特采样定律，采样率为16k的离散信号中可能存在频率不超过8k的信号；下采样到8k，音频中只允许存在最大频率不超过4khz的信号，所以需要首先进行低通滤波过滤掉其中超过4khz的高频信号。</p>
+<p>Q3: 时域上的采样（离散化），导致了频域上的周期，为什么？<br>A：频域的周期性本质是高低频之间频谱混叠的一种表现。在时域上确定一组采样点后，可以通过提高频率使无穷多组信号波通过这些采样点，通过傅里叶变换不同区分这些不同频率的信号，这在频率上就体现为高频信号和低频信号的幅值相同，从而表现出周期性。</p>
+<p>Q4: 时域上的周期，导致了频域上的离散，为什么？<br>A：频域的离散本质是只有有限个频率有信号输出。时域上周期性的信号可以由有限个正弦波组成，由傅里叶变换的性质可知，信号在频域上频率值和幅值是这些正弦波的频率和幅值分别决定，有限个正弦波映射到频域上，表现为频率信号为离散的。</p>
+<p>Q5: 编程题：给定一段音频，请提取12维MFCC特征，阅读代码预加重、分帧、加窗部分，完善作业代码中 fbank和mfcc部分，并给出最终的Fbank和MFCC特征，用默认的配置参数，无需进行修改。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_51674913/article/details/121865356">数字信号处理前瞻（note1）：奈奎斯特与折叠频率</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/33523996">从傅立叶变换到盲水印（上）——离散傅立叶变换 - 知乎 </a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/19763358?from=singlemessage&isappinstalled=1">傅里叶分析之掐死教程（完整版）更新于2014.06.06</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/24342192/answer/225984574">如何入门语音识别？ - 王赟 Maigo的回答 - 知乎</a>
+<a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:5" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/147386972">语音识别之特征提取 - ASR PUB的文章 - 知乎</a>
+<a href="#fnref:5" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:6" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://haythamfayek.com/2016/04/21/speech-processing-for-machine-learning.html">Speech Processing for Machine Learning: Filter banks, Mel-Frequency Cepstral Coefficients (MFCCs) and What’s In-Between</a>
+<a href="#fnref:6" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/" class="category-chain-item">语音识别</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/">#语音识别</a>
+      
+        <a href="/tags/ASR/">#ASR</a>
+      
+        <a href="/tags/FBANK/">#FBANK</a>
+      
+        <a href="/tags/MFCC/">#MFCC</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Class 2 语音信号处理及特征提取</div>
+      <div>https://blog.baixf.tk/2022/07/02/语音识别学习/Class 2 语音信号处理及特征提取/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年7月2日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/05/c/%E7%90%86%E8%A7%A3%E6%8C%87%E9%92%88/" title="理解指针">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">理解指针</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/06/30/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E5%AD%A6%E4%B9%A0/Class0%20kaldi%E5%AE%89%E8%A3%85/" title="kaldi安装">
+                        <span class="hidden-mobile">kaldi安装</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

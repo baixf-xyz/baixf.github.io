@@ -1,0 +1,931 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="万物皆可DNN🆒">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Class 6 基于DNN-HMM的语音识别系统">
+<meta property="og:url" content="https://blog.baixf.tk/2022/07/31/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E5%AD%A6%E4%B9%A0/Class%206%20%E5%9F%BA%E4%BA%8EDNN-HMM%E7%9A%84%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="万物皆可DNN🆒">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog屏幕截图 2022-06-25 213320.jpg">
+<meta property="article:published_time" content="2022-07-31T15:47:11.000Z">
+<meta property="article:modified_time" content="2023-01-12T14:08:04.375Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="LSTM">
+<meta property="article:tag" content="语音识别">
+<meta property="article:tag" content="ASR">
+<meta property="article:tag" content="HMM">
+<meta property="article:tag" content="GMM">
+<meta property="article:tag" content="DNN">
+<meta property="article:tag" content="NN">
+<meta property="article:tag" content="DNN-HMM">
+<meta property="article:tag" content="RNN">
+<meta property="article:tag" content="TNN">
+<meta property="article:tag" content="LSTMP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog屏幕截图 2022-06-25 213320.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>Class 6 基于DNN-HMM的语音识别系统 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog屏幕截图 2022-06-25 213133.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Class 6 基于DNN-HMM的语音识别系统"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-31 15:47" pubdate>
+          2022年7月31日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          69 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Class 6 基于DNN-HMM的语音识别系统</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="GMM-HMM语音识别系统"><a href="#GMM-HMM语音识别系统" class="headerlink" title="GMM-HMM语音识别系统"></a>GMM-HMM语音识别系统</h2><h4 id="建模训练"><a href="#建模训练" class="headerlink" title="建模训练"></a>建模训练</h4><p>对于每一个语音序列先进行特征提取，得到每一个特征序列，再通过HMM-GMM建模。</p>
+<p>对于每个状态有一个GMM模型，对于每个词有一个HMM模型，当一段语音输入后，根据Viterbi算法得到一个序列在GMM-HMM上的概率，然后通过Viterbi回溯得到每帧属于HMM的哪个状态（对齐）。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202207302144068.png" srcset="/img/loading.gif" lazyload alt="image-20220730214358882"></p>
+<h4 id="解码"><a href="#解码" class="headerlink" title="解码"></a>解码</h4><p>对于任何一个特征序列，我们都可以通过GMM-HMM模型得到在任意时刻任意状态上的一个观测的概率，应用Veterbi算法结合HMM的转移概率和观测序列就可以进行解码。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202207302156228.png" srcset="/img/loading.gif" lazyload alt="image-20220730215633177"></p>
+<p>问题:GMM对概率密度进行建模的话，也可以使用DNN来实现，本质上就是一个分类的模型。假设整个系统有如上图的特征向量和三个状态，我们就可以建立一个输出为3的神经网络，这里GMM就替换成了DNN。</p>
+<h2 id="DNN-HMM语音识别系统"><a href="#DNN-HMM语音识别系统" class="headerlink" title="DNN-HMM语音识别系统"></a>DNN-HMM语音识别系统</h2><h4 id="建模训练-1"><a href="#建模训练-1" class="headerlink" title="建模训练"></a>建模训练</h4><p>原始语音经过特征提取以后得到相应的13维的频谱特征(Fbank or MFCC)，频谱特征经过神经网络DNN做一个状态上的分类模型，对于任何一段语音的训练数据来讲，我们有语音和其对应的label，对齐以后，我们可以得到这段语音对应状态的序列，然后我们就得到新的label和对应的原始语音，就可以通过DNN来训练了。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202207310917577.png" srcset="/img/loading.gif" lazyload alt="image-20220731091724455"></p>
+<p>DNN三要素：</p>
+<ul>
+<li>输入是什么？频谱特征</li>
+<li>输出是什么？频谱特征所对应的状态label</li>
+<li>损失函数是什么？分类问题CrossEntropy</li>
+</ul>
+<p>然后，<strong>硬train一发</strong> 就可以了</p>
+<h4 id="解码-1"><a href="#解码-1" class="headerlink" title="解码"></a>解码</h4><p>同上HMM-GMM模型，对于任何一个特征序列，我们都可以通过DNN-HMM模型得到在任意时刻任意状态上的一个观测的概率，应用Veterbi算法结合HMM的转移概率和观测序列就可以进行解码。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202207310926983.png" srcset="/img/loading.gif" lazyload alt="image-20220731092642934"></p>
+<h4 id="整体流程"><a href="#整体流程" class="headerlink" title="整体流程"></a>整体流程</h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202207310928997.png" srcset="/img/loading.gif" lazyload alt="image-20220731092812963"></p>
+<p><strong>Kaldi中AISHELL: egs&#x2F;aishell&#x2F;s5&#x2F;run.sh</strong></p>
+<p>1.数据准备</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">数据下载</span><br>local/download_and_untar.sh $data $data_url data_aishell || exit 1;<br>local/download_and_untar.sh $data $data_url resource_aishell || exit 1;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Lexicon Preparation,词典准备</span><br>local/aishell_prepare_dict.sh $data/resource_aishell || exit 1;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Data Preparation,kaldi所需要的数据格式的准备</span><br>local/aishell_data_prep.sh $data/data_aishell/wav $data/data_aishell/transcript || exit 1;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Phone Sets, questions, L compilation，准备音素集，问题集，?</span><br>utils/prepare_lang.sh --position-dependent-phones false data/local/dict \<br>    &quot;&lt;SPOKEN_NOISE&gt;&quot; data/local/lang data/lang || exit 1;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">LM training，language model?</span><br>local/aishell_train_lms.sh || exit 1;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">G compilation, check LG composition,fft的知识?</span><br>utils/format_lm.sh data/lang data/local/lm/3gram-mincount/lm_unpruned.gz \<br>    data/local/dict/lexicon.txt data/lang_test || exit 1;<br></code></pre></td></tr></table></figure>
+
+<p>2.特征提取</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">Now make MFCC plus pitch features.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">mfccdir should be some place with a largish disk <span class="hljs-built_in">where</span> you</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">want to store MFCC features.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">使用的是MFCC + 基频的特征</span><br>mfccdir=mfcc<br>for x in train dev test; do<br>  steps/make_mfcc_pitch.sh --cmd &quot;$train_cmd&quot; --nj 10 data/$x exp/make_mfcc/$x $mfccdir || exit 1;<br>  steps/compute_cmvn_stats.sh data/$x exp/make_mfcc/$x $mfccdir || exit 1;<br>  utils/fix_data_dir.sh data/$x || exit 1;<br>done<br></code></pre></td></tr></table></figure>
+<p>3.单音素训练</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">Train a monophone model on delta features.</span><br>steps/train_mono.sh --cmd &quot;$train_cmd&quot; --nj 10 \<br>  data/train data/lang exp/mono || exit 1;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Decode with the monophone model.解码相关，对单音素模型进行一个评估，计算其识别率</span><br>utils/mkgraph.sh data/lang_test exp/mono exp/mono/graph || exit 1;<br>steps/decode.sh --cmd &quot;$decode_cmd&quot; --config conf/decode.config --nj 10 \<br>  exp/mono/graph data/dev exp/mono/decode_dev<br>steps/decode.sh --cmd &quot;$decode_cmd&quot; --config conf/decode.config --nj 10 \<br>  exp/mono/graph data/test exp/mono/decode_test<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Get alignments from monophone system.使用单音素来做一个对齐操作，为下一步Veterbi做准备</span><br>steps/align_si.sh --cmd &quot;$train_cmd&quot; --nj 10 \<br>  data/train data/lang exp/mono exp/mono_ali || exit 1;<br></code></pre></td></tr></table></figure>
+
+<p>4.三音素训练</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">进行了多次训练，每一次都有训练+解码+对齐</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Train the first triphone pass model tri1 on delta + delta-delta features.</span><br>steps/train_deltas.sh --cmd &quot;$train_cmd&quot; \<br> 2500 20000 data/train data/lang exp/mono_ali exp/tri1 || exit 1;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">decode tri1</span><br>utils/mkgraph.sh data/lang_test exp/tri1 exp/tri1/graph || exit 1;<br>steps/decode.sh --cmd &quot;$decode_cmd&quot; --config conf/decode.config --nj 10 \<br>  exp/tri1/graph data/dev exp/tri1/decode_dev<br>steps/decode.sh --cmd &quot;$decode_cmd&quot; --config conf/decode.config --nj 10 \<br>  exp/tri1/graph data/test exp/tri1/decode_test<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">align tri1</span><br>steps/align_si.sh --cmd &quot;$train_cmd&quot; --nj 10 \<br>  data/train data/lang exp/tri1 exp/tri1_ali || exit 1;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">train tri2 [delta+delta-deltas]</span><br>steps/train_deltas.sh --cmd &quot;$train_cmd&quot; \<br> 2500 20000 data/train data/lang exp/tri1_ali exp/tri2 || exit 1;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">decode tri2</span><br>utils/mkgraph.sh data/lang_test exp/tri2 exp/tri2/graph<br>steps/decode.sh --cmd &quot;$decode_cmd&quot; --config conf/decode.config --nj 10 \<br>  exp/tri2/graph data/dev exp/tri2/decode_dev<br>steps/decode.sh --cmd &quot;$decode_cmd&quot; --config conf/decode.config --nj 10 \<br>  exp/tri2/graph data/test exp/tri2/decode_test<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Align training data with the tri2 model.</span><br>steps/align_si.sh --cmd &quot;$train_cmd&quot; --nj 10 \<br>  data/train data/lang exp/tri2 exp/tri2_ali || exit 1;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Train the second triphone pass model tri3a on LDA+MLLT features.</span><br>steps/train_lda_mllt.sh --cmd &quot;$train_cmd&quot; \<br> 2500 20000 data/train data/lang exp/tri2_ali exp/tri3a || exit 1;<br><span class="hljs-meta prompt_"> </span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Run a <span class="hljs-built_in">test</span> decode with the tri3a model.</span><br>utils/mkgraph.sh data/lang_test exp/tri3a exp/tri3a/graph || exit 1;<br>steps/decode.sh --cmd &quot;$decode_cmd&quot; --nj 10 --config conf/decode.config \<br>  exp/tri3a/graph data/dev exp/tri3a/decode_dev<br>steps/decode.sh --cmd &quot;$decode_cmd&quot; --nj 10 --config conf/decode.config \<br>  exp/tri3a/graph data/test exp/tri3a/decode_test<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">align tri3a with fMLLR</span><br><br>steps/align_fmllr.sh --cmd &quot;$train_cmd&quot; --nj 10 \<br>  data/train data/lang exp/tri3a exp/tri3a_ali || exit 1;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Train the third triphone pass model tri4a on LDA+MLLT+SAT features.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">From now on, we start building a more serious system with Speaker</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Adaptive Training (SAT).</span><br>steps/train_sat.sh --cmd &quot;$train_cmd&quot; \<br>  2500 20000 data/train data/lang exp/tri3a_ali exp/tri4a || exit 1;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">decode tri4a</span><br>utils/mkgraph.sh data/lang_test exp/tri4a exp/tri4a/graph<br>steps/decode_fmllr.sh --cmd &quot;$decode_cmd&quot; --nj 10 --config conf/decode.config \<br>  exp/tri4a/graph data/dev exp/tri4a/decode_dev<br>steps/decode_fmllr.sh --cmd &quot;$decode_cmd&quot; --nj 10 --config conf/decode.config \<br>  exp/tri4a/graph data/test exp/tri4a/decode_test<br><span class="hljs-meta prompt_">  </span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">align tri4a with fMLLR</span><br>steps/align_fmllr.sh  --cmd &quot;$train_cmd&quot; --nj 10 \<br>  data/train data/lang exp/tri4a exp/tri4a_ali<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Train tri5a, <span class="hljs-built_in">which</span> is LDA+MLLT+SAT</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Building a larger SAT system. You can see the num-leaves is 3500 and tot-gauss is 100000</span><br><br>steps/train_sat.sh --cmd &quot;$train_cmd&quot; \<br>  3500 100000 data/train data/lang exp/tri4a_ali exp/tri5a || exit 1;<br><span class="hljs-meta prompt_">  </span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">decode tri5a</span><br>utils/mkgraph.sh data/lang_test exp/tri5a exp/tri5a/graph || exit 1;<br>steps/decode_fmllr.sh --cmd &quot;$decode_cmd&quot; --nj 10 --config conf/decode.config \<br>   exp/tri5a/graph data/dev exp/tri5a/decode_dev || exit 1;<br>steps/decode_fmllr.sh --cmd &quot;$decode_cmd&quot; --nj 10 --config conf/decode.config \<br>   exp/tri5a/graph data/test exp/tri5a/decode_test || exit 1;<br>   <br><span class="hljs-meta prompt_"># </span><span class="language-bash">align tri5a with fMLLR</span><br>steps/align_fmllr.sh --cmd &quot;$train_cmd&quot; --nj 10 \<br>  data/train data/lang exp/tri5a exp/tri5a_ali || exit 1;<br></code></pre></td></tr></table></figure>
+<p>5.DNN的训练</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">nnet3,TDNN是DNN的一种变种，以tri5a的输出作为输入</span><br>local/nnet3/run_tdnn.sh<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">chain</span><br>local/chain/run_tdnn.sh<br></code></pre></td></tr></table></figure>
+
+<h2 id="深度神经网络"><a href="#深度神经网络" class="headerlink" title="深度神经网络"></a>深度神经网络</h2><h4 id="语音识别数据集"><a href="#语音识别数据集" class="headerlink" title="语音识别数据集"></a>语音识别数据集</h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202207310949044.png" srcset="/img/loading.gif" lazyload alt="image-20220731094925998"></p>
+<p>语音开源数据汇总：<a target="_blank" rel="noopener" href="http://openslr.org/resources.php">Open Speech and Language Resources</a></p>
+<h4 id="语音领域学术会议"><a href="#语音领域学术会议" class="headerlink" title="语音领域学术会议"></a>语音领域学术会议</h4><ul>
+<li>InterSpeech</li>
+<li>ICASSP</li>
+<li>ASRU</li>
+</ul>
+<h4 id="ASR性能指标"><a href="#ASR性能指标" class="headerlink" title="ASR性能指标"></a>ASR性能指标</h4><ul>
+<li>句错误率(SER，Sentence Error Rate)</li>
+</ul>
+<p>$$<br>\text { Sentence Error Rate }&#x3D;100 \times \frac{\ \text { of sentences with at least one word error }}{\text { total  of sentences }}<br>$$</p>
+<ul>
+<li><p>词错率（WER，Word error rate）</p>
+<ul>
+<li>Total Words 为（S替换+ D删除+ H正确）的字数</li>
+</ul>
+</li>
+</ul>
+<p>$$<br>\text { Word Error Rate }&#x3D;100 \times \frac{\text { Insertions }+\text { Substitutions }+\text { Deletions }}{\text { Total Words in Correct Transcript }}<br>$$</p>
+<ul>
+<li>字错误率（CER，Character Error Rate）</li>
+</ul>
+<h4 id="FNN-Feedforward-Neural-Network"><a href="#FNN-Feedforward-Neural-Network" class="headerlink" title="FNN(Feedforward Neural Network)"></a>FNN(Feedforward Neural Network)</h4><p>$$<br>y_{l}&#x3D;f\left(\boldsymbol{W}<em>{l} x+\boldsymbol{b}</em>{l}\right)<br>$$</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202207311005083.png" srcset="/img/loading.gif" lazyload alt="image-20220731100517986"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202207311118779.png" srcset="/img/loading.gif" lazyload alt="image-20220731111844706"></p>
+<h4 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h4><p>f是一种激活函数，常见的激活函数有：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202207311006202.png" srcset="/img/loading.gif" lazyload alt="image-20220731100621160"></p>
+<h4 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h4><p>NN分类问题的损失函数：</p>
+<ul>
+<li>Softmax概率归一化</li>
+</ul>
+<blockquote>
+<p>归一化是把数据压缩到[0,1]，把量纲转为无量纲的过程，方便计算、比较。softmax是依赖于交叉熵设计的，因为交叉熵在计算的时候需要用到反向传播机制，反向传播对应的就是链式求导，如果用softmax的话就刚好和交叉熵求导的分母抵消掉，从而减小误差。</p>
+</blockquote>
+<p>$$<br>y_{k}&#x3D;\frac{\exp \left(a_{k}\right)}{\sum_{j&#x3D;1}^{K} \exp \left(a_{j}\right)}<br>$$</p>
+<ul>
+<li>交叉熵CE(Cross Entropy)损失函数</li>
+</ul>
+<blockquote>
+<p>相对熵描述的是两个概率分布分布之间的差异，所以本应该是使用相对熵来计算真实分布与预测分布之间的差异。但是，相对熵 &#x3D; 交叉熵 - 信息熵，而信息熵描述的是消除 p pp (即真实分布) 的不确定性所需信息量，是个固定值，因此优化相对熵可以简化为优化交叉熵，故机器学习中使用交叉熵作为损失函数</p>
+</blockquote>
+<p>$$<br>L&#x3D;-\sum_{n&#x3D;1}^{N} \sum_{k&#x3D;1}^{K} t_{n k} \ln \left(y_{n k}\right)<br>$$</p>
+<h4 id="梯度下降"><a href="#梯度下降" class="headerlink" title="梯度下降"></a>梯度下降</h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202207311103519.png" srcset="/img/loading.gif" lazyload alt="image-20220731110309459"><br>$$<br>\begin{aligned}<br>&amp;\theta&#x3D;\left{W_{1}, b_{1}, W_{2}, b_{2}, \ldots, W_{N}, b_{N}\right} \<br>&amp;\theta^{*}&#x3D;\theta-\alpha \frac{\partial L}{\partial \theta}, \alpha \text { : 学习率 }<br>\end{aligned}<br>$$</p>
+<h4 id="反向传播（BackPropagation）"><a href="#反向传播（BackPropagation）" class="headerlink" title="反向传播（BackPropagation）"></a>反向传播（BackPropagation）</h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202207311102589.png" srcset="/img/loading.gif" lazyload alt="image-20220731110212526"></p>
+<p>$$<br>链式求导法则: y&#x3D;f(x), z&#x3D;g(y), 则 \frac{d z}{d x}&#x3D;\frac{d z}{d y} \frac{d y}{d x}<br>$$</p>
+<h4 id="训练流程"><a href="#训练流程" class="headerlink" title="训练流程"></a>训练流程</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#model: NN model，such as DNN# theta: NN parameters</span><br><span class="hljs-comment">#lr: learning rate</span><br>init_model_with_parameter_theta(model，theta)<br><span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(max_epoch) :<br>    <span class="hljs-keyword">for</span> minibatch <span class="hljs-keyword">in</span> data:<br>        <span class="hljs-comment"># Get minibatch data，include input feature and label</span><br>        <span class="hljs-built_in">input</span>,label = minibatch<br>        output = model.forward(<span class="hljs-built_in">input</span>)<br>        loss = compute_loss(output,label)<br>        delta = model.backward(loss)<br>        theta = theta - lr * delta<br></code></pre></td></tr></table></figure>
+
+<h4 id="其他NN必备知识"><a href="#其他NN必备知识" class="headerlink" title="其他NN必备知识"></a>其他NN必备知识</h4><ul>
+<li>Optimizer(SGD&#x2F;Momentum&#x2F;Adam …)</li>
+<li>Dropout</li>
+<li>Regularization（正则化）</li>
+<li>ResidualConnection</li>
+<li>BatchNormalization</li>
+</ul>
+<h4 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h4><blockquote>
+<p>Convolution(卷积，特征提取) + Pooling(池化层，降维)</p>
+</blockquote>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202207311118722.png" srcset="/img/loading.gif" lazyload alt="image-20220731111814609"></p>
+<h4 id="TDNN"><a href="#TDNN" class="headerlink" title="TDNN"></a>TDNN</h4><ul>
+<li>仅时域卷积，没有pooling</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202207311117936.png" srcset="/img/loading.gif" lazyload alt="image-20220731111754871"></p>
+<h4 id="RNN-Recurrent-Neural-Network"><a href="#RNN-Recurrent-Neural-Network" class="headerlink" title="RNN(Recurrent Neural Network)"></a>RNN(Recurrent Neural Network)</h4><blockquote>
+<p>网络结构有记忆的功能，因此适合基于时序的建模。</p>
+</blockquote>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202207311134426.png" srcset="/img/loading.gif" lazyload alt="image-20220731113440361"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202207311134361.png" srcset="/img/loading.gif" lazyload alt="image-20220731113458311"></p>
+<h4 id="LSTM-Long-Short-Term-Memory"><a href="#LSTM-Long-Short-Term-Memory" class="headerlink" title="LSTM (Long Short Term Memory)"></a>LSTM (Long Short Term Memory)</h4><blockquote>
+<p>RNN特别不稳定，容易出现梯度弥散或者梯度爆炸的问题，所以模型训练效果不好。</p>
+</blockquote>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202207311453345.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202207311453458.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h4 id="LSTMP-LSTM-with-projection"><a href="#LSTMP-LSTM-with-projection" class="headerlink" title="LSTMP(LSTM with projection)"></a>LSTMP(LSTM with projection)</h4><blockquote>
+<p>该变种的主要目的是<strong>为了减小模型参数</strong>。与传统的LSTM相比，LSTMP在记忆块(memory blocks)与模型的输出层之间引入了映射层。通过加入了映射层，模型参数能得到有效减少。</p>
+</blockquote>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202207311541089.png" srcset="/img/loading.gif" lazyload alt="image-20220731154137012"></p>
+<h4 id="混合神经网络-CLDNN"><a href="#混合神经网络-CLDNN" class="headerlink" title="混合神经网络(CLDNN)"></a>混合神经网络(CLDNN)</h4><ul>
+<li>FNN<ul>
+<li>全局特征抽取</li>
+</ul>
+</li>
+<li>CNN<ul>
+<li>局部特征抽取</li>
+<li>Invariance</li>
+<li>有限时序建模能力</li>
+</ul>
+</li>
+<li>RNN<ul>
+<li>记忆</li>
+<li>时序建模能力</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>复杂网络基本是以上三种网络的组合</p>
+</blockquote>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202207311543828.png" srcset="/img/loading.gif" lazyload alt="image-20220731154310752"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_41967600/article/details/113839165">秒懂Softmax归一化</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/40403377?sort=created">多类分类下为什么用softmax而不是用其他归一化方法?</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/orangerfun/article/details/108346979">分类问题为什么要用交叉熵</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1JE411g7XF?p=1">李宏毅老师的深度学习课程</a>
+<a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:5" class="footnote-text"><span><a href="https://blog.baixf.tk/2022/06/09/Machine%20Learning/%E8%AE%BA%E6%96%87/#2-2%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0">基于 LSTM 神经网络的股票价格趋势预测的研究与实现 </a>
+<a href="#fnref:5" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:6" class="footnote-text"><span><a target="_blank" rel="noopener" href="http://bitjoy.net/2019/08/01/cs224n%ef%bc%881-29%ef%bc%89vanishing-gradients-fancy-rnns/">CS224N（1.29）Vanishing Gradients, Fancy RNNs</a>
+<a href="#fnref:6" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:7" class="footnote-text"><span><a target="_blank" rel="noopener" href="http://bitjoy.net/2019/07/31/cs224n%ef%bc%881-24%ef%bc%89language-models-and-rnns/">RNN为什么容易产生梯度消失或梯度爆炸的问题</a>
+<a href="#fnref:7" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:8" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/71679700">语音识别中声学建模的各种lstm变种</a>
+<a href="#fnref:8" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/" class="category-chain-item">语音识别</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/LSTM/">#LSTM</a>
+      
+        <a href="/tags/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/">#语音识别</a>
+      
+        <a href="/tags/ASR/">#ASR</a>
+      
+        <a href="/tags/HMM/">#HMM</a>
+      
+        <a href="/tags/GMM/">#GMM</a>
+      
+        <a href="/tags/DNN/">#DNN</a>
+      
+        <a href="/tags/NN/">#NN</a>
+      
+        <a href="/tags/DNN-HMM/">#DNN-HMM</a>
+      
+        <a href="/tags/RNN/">#RNN</a>
+      
+        <a href="/tags/TNN/">#TNN</a>
+      
+        <a href="/tags/LSTMP/">#LSTMP</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Class 6 基于DNN-HMM的语音识别系统</div>
+      <div>https://blog.baixf.tk/2022/07/31/语音识别学习/Class 6 基于DNN-HMM的语音识别系统/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年7月31日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/05/Data%20Structure/Q1-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="Q1-数据结构">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Q1-数据结构</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/29/%E6%9D%82%E8%B0%88/%E6%AF%95%E4%B8%9Aor%E6%9A%91%E5%81%87/" title="嗄ㄖ滭鄴凲轵鎬僟">
+                        <span class="hidden-mobile">嗄ㄖ滭鄴凲轵鎬僟</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

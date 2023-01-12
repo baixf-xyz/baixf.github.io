@@ -1,0 +1,766 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="云上实践 云上成长 ECS 7天实践训练营">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Class 5 搭建个人Leanote云笔记本">
+<meta property="og:url" content="https://blog.baixf.tk/2020/12/01/%E9%98%BF%E9%87%8C%E4%BA%91/Class%205%20%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BALeanote%E4%BA%91%E7%AC%94%E8%AE%B0%E6%9C%AC/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="云上实践 云上成长 ECS 7天实践训练营">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201127154937.png">
+<meta property="article:published_time" content="2020-12-01T03:11:11.000Z">
+<meta property="article:modified_time" content="2022-06-20T09:42:49.904Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="阿里云">
+<meta property="article:tag" content="在家学习">
+<meta property="article:tag" content="进阶班">
+<meta property="article:tag" content="云笔记本">
+<meta property="article:tag" content="Leanote，网站搭建">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201127154937.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>Class 5 搭建个人Leanote云笔记本 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201127154939.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Class 5 搭建个人Leanote云笔记本"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-12-01 03:11" pubdate>
+          2020年12月1日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          15 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Class 5 搭建个人Leanote云笔记本</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="一、创建资源"><a href="#一、创建资源" class="headerlink" title="一、创建资源"></a>一、创建资源</h1><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201127193126.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="二、连接ECS服务器"><a href="#二、连接ECS服务器" class="headerlink" title="二、连接ECS服务器"></a>二、连接ECS服务器</h1><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201127193316.png" srcset="/img/loading.gif" lazyload><br><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201127193348.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="三、MongoDB简介"><a href="#三、MongoDB简介" class="headerlink" title="三、MongoDB简介"></a>三、MongoDB简介</h1><p>MongoDB（来自于英文单词“Humongous”，中文含义为“庞大”）是可以应用于各种规模的企业、各个行业以及各类应用程序的开源数据库。作为一个适用于敏捷开发的数据库，MongoDB的数据模式可以随着应用程序的发展而灵活地更新。与此同时，它也为开发人员 提供了传统数据库的功能：二级索引，完整的查询系统以及严格一致性等等。 MongoDB能够使企业更加具有敏捷性和可扩展性，各种规模的企业都可以通过使用MongoDB来创建新的应用，提高与客户之间的工作效率，加快产品上市时间，以及降低企业成本。</p>
+<p>MongoDB是专为可扩展性，高性能和高可用性而设计的数据库。它可以从单服务器部署扩展到大型、复杂的多数据中心架构。利用内存计算的优势，MongoDB能够提供高性能的数据读写操作。 MongoDB的本地复制和自动故障转移功能使您的应用程序具有企业级的可靠性和操作灵活性。</p>
+<h1 id="四、安装MongoDB"><a href="#四、安装MongoDB" class="headerlink" title="四、安装MongoDB"></a>四、安装MongoDB</h1><p>Leanote云笔记使用MongoDB作为后端数据库，安装MongoDB数据库。</p>
+<h2 id="1-执行以下命令，安装MongoDB。"><a href="#1-执行以下命令，安装MongoDB。" class="headerlink" title="1.  执行以下命令，安装MongoDB。"></a>1.  执行以下命令，安装MongoDB。</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">yum -y install mongodb mongodb-server.x86_64 mariadb-devel.i686<br></code></pre></td></tr></table></figure>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201127193711.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="2-执行以下命令，启动MongoDB服务。"><a href="#2-执行以下命令，启动MongoDB服务。" class="headerlink" title="2.  执行以下命令，启动MongoDB服务。"></a>2.  执行以下命令，启动MongoDB服务。</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl start mongod<br></code></pre></td></tr></table></figure>
+<p>启动遇到如图所示问题：<br><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201127194402.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs markdown">1.配置MongoDB的yum源<br>复制代码<br>复制代码<br>vim /etc/yum.repos.d/mongodb-org-3.4.repo<br><span class="hljs-section">#添加以下内容：</span><br>[mongodb-org-3.4]  <br>name=MongoDB Repository  <br>baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/3.4/x86<span class="hljs-emphasis">_64/  </span><br><span class="hljs-emphasis">gpgcheck=1  </span><br><span class="hljs-emphasis">enabled=1  </span><br><span class="hljs-emphasis">gpgkey=https://www.mongodb.org/static/pgp/server-3.4.asc</span><br><span class="hljs-emphasis">#这里可以修改 gpgcheck=0, 省去gpg验证</span><br><span class="hljs-emphasis">[root@localhost ~]# yum makecache      </span><br><span class="hljs-emphasis">复制代码</span><br><span class="hljs-emphasis">复制代码</span><br><span class="hljs-emphasis">2.安装MongoDB</span><br><span class="hljs-emphasis">安装命令：</span><br><span class="hljs-emphasis">yum -y install mongodb-org</span><br></code></pre></td></tr></table></figure>
+<p>如图所示，启动成功，如下图所示：<br><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201127194610.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="3-查看MongoDB运行状态。"><a href="#3-查看MongoDB运行状态。" class="headerlink" title="3.  查看MongoDB运行状态。"></a>3.  查看MongoDB运行状态。</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl status mongod<br></code></pre></td></tr></table></figure>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201127194657.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="五、安装Leanote"><a href="#五、安装Leanote" class="headerlink" title="五、安装Leanote"></a>五、安装Leanote</h1><h2 id="1-下载Leanote二进制安装包。"><a href="#1-下载Leanote二进制安装包。" class="headerlink" title="1.  下载Leanote二进制安装包。"></a>1.  下载Leanote二进制安装包。</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">wget https://nchc.dl.sourceforge.net/project/leanote-bin/2.6.1/leanote-linux-amd64-v2.6.1.bin.tar.gz<br></code></pre></td></tr></table></figure>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201127195301.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="2-解压安装包。"><a href="#2-解压安装包。" class="headerlink" title="2.  解压安装包。"></a>2.  解压安装包。</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">tar -zxvf leanote-linux-amd64-v2.6.1.bin.tar.gz<br></code></pre></td></tr></table></figure>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201127195302.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="3-编辑文件leanote-x2F-conf-x2F-app-conf，在文件中找到app-secret项，将该项的值改为任意字符串。（如不修改将会有安全风险）。"><a href="#3-编辑文件leanote-x2F-conf-x2F-app-conf，在文件中找到app-secret项，将该项的值改为任意字符串。（如不修改将会有安全风险）。" class="headerlink" title="3.  编辑文件leanote&#x2F;conf&#x2F;app.conf，在文件中找到app.secret项，将该项的值改为任意字符串。（如不修改将会有安全风险）。"></a>3.  编辑文件leanote&#x2F;conf&#x2F;app.conf，在文件中找到app.secret项，将该项的值改为任意字符串。（如不修改将会有安全风险）。</h2><p>说明： 根据Leanote官方文档，如不修改app.secret项的值，将会有安全隐患。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">vim leanote/conf/app.conf<br></code></pre></td></tr></table></figure>
+<p>输入:&#x2F;app.secret&#x3D;并按下回车查找app.secret位置。修改该项的值为任意字符串。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201127195303.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="4-初始化数据库。"><a href="#4-初始化数据库。" class="headerlink" title="4.  初始化数据库。"></a>4.  初始化数据库。</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">mongorestore -h localhost -d leanote --dir /root/leanote/mongodb_backup/leanote_install_data/<br></code></pre></td></tr></table></figure>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201127195408.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="5-启动服务。"><a href="#5-启动服务。" class="headerlink" title="5.  启动服务。"></a>5.  启动服务。</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">nohup bash /root/leanote/bin/run.sh &gt; /root/leanote/run.log 2&gt;&amp;1 &amp;<br></code></pre></td></tr></table></figure>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201127195436.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="6-访问云笔记。"><a href="#6-访问云笔记。" class="headerlink" title="6.  访问云笔记。"></a>6.  访问云笔记。</h2><p>在浏览器中访问<a target="_blank" rel="noopener" href="http://101.132.44.137:9000/">http://101.132.44.137:9000</a></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201127195528.png" srcset="/img/loading.gif" lazyload></p>
+<p>默认管理用户为admin，密码为abc123。登录成功后如下图所示。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201127195635.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://developer.aliyun.com/adc/student/bootcamp/?spm=a2c6h.13788107.J_3120529270.3.450750a3CaVHui">云上实践 云上成长 ECS 7天实践训练营</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/%E9%98%BF%E9%87%8C%E4%BA%91/" class="category-chain-item">阿里云</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E9%98%BF%E9%87%8C%E4%BA%91/">#阿里云</a>
+      
+        <a href="/tags/%E5%9C%A8%E5%AE%B6%E5%AD%A6%E4%B9%A0/">#在家学习</a>
+      
+        <a href="/tags/%E8%BF%9B%E9%98%B6%E7%8F%AD/">#进阶班</a>
+      
+        <a href="/tags/%E4%BA%91%E7%AC%94%E8%AE%B0%E6%9C%AC/">#云笔记本</a>
+      
+        <a href="/tags/Leanote%EF%BC%8C%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA/">#Leanote，网站搭建</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Class 5 搭建个人Leanote云笔记本</div>
+      <div>https://blog.baixf.tk/2020/12/01/阿里云/Class 5 搭建个人Leanote云笔记本/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年12月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/12/01/%E9%98%BF%E9%87%8C%E4%BA%91/Class%205%20%E5%9E%83%E5%9C%BE%E5%88%86%E7%B1%BB%E8%AF%86%E5%88%AB/" title="Class 5 垃圾分类识别">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Class 5 垃圾分类识别</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/11/30/%E9%98%BF%E9%87%8C%E4%BA%91/Class%204%20%E4%BD%BF%E7%94%A8PolarDB%E5%92%8CECS%E6%90%AD%E5%BB%BA%E9%97%A8%E6%88%B7%E7%BD%91%E7%AB%99/" title="Class 4 使用PolarDB和ECS搭建门户网站">
+                        <span class="hidden-mobile">Class 4 使用PolarDB和ECS搭建门户网站</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

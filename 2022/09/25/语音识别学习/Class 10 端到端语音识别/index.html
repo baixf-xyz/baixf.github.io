@@ -1,0 +1,1012 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="基于神经网络的直接映射">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Class 10 端到端语音识别">
+<meta property="og:url" content="https://blog.baixf.tk/2022/09/25/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E5%AD%A6%E4%B9%A0/Class%2010%20%E7%AB%AF%E5%88%B0%E7%AB%AF%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="基于神经网络的直接映射">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog屏幕截图 2022-06-25 213320.jpg">
+<meta property="article:published_time" content="2022-09-25T12:24:11.000Z">
+<meta property="article:modified_time" content="2023-01-12T14:08:04.375Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="语音识别">
+<meta property="article:tag" content="ASR">
+<meta property="article:tag" content="Seq2Seq">
+<meta property="article:tag" content="Attention">
+<meta property="article:tag" content="LAS">
+<meta property="article:tag" content="Transformer">
+<meta property="article:tag" content="CTC">
+<meta property="article:tag" content="RNN-Transducer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog屏幕截图 2022-06-25 213320.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>Class 10 端到端语音识别 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220925121801114.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Class 10 端到端语音识别"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-09-25 12:24" pubdate>
+          2022年9月25日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          25 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Class 10 端到端语音识别</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220925123534270.png" srcset="/img/loading.gif" lazyload alt="image-20220925123534270"></p>
+<h2 id="一、端到端语音识别的动机"><a href="#一、端到端语音识别的动机" class="headerlink" title="一、端到端语音识别的动机"></a>一、端到端语音识别的动机</h2><ul>
+<li>传统语音识别整体流程</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220923141514116.png" srcset="/img/loading.gif" lazyload alt="image-20220923141514116"></p>
+<ul>
+<li>传统语音识别声学模型训练</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220923141600743.png" srcset="/img/loading.gif" lazyload alt="image-20220923141600743"></p>
+<ul>
+<li>传统语音识别语言模型训练</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220923141624744.png" srcset="/img/loading.gif" lazyload alt="image-20220923141624744"></p>
+<ul>
+<li>传统语音识别缺点<ul>
+<li>流程非常的多而繁杂</li>
+<li>入门门槛非常高</li>
+<li>大多数传统语音识别系统包含声学模型、语言模型和发音模型，每个模型都分开训练</li>
+<li>若使用区分性训练，上述模型翻倍</li>
+<li>对特定的语言定义发音字典、音素集需要专业知识，并且非常耗时</li>
+</ul>
+</li>
+<li>什么是端到端语音识别？</li>
+</ul>
+<p>使用<strong>单个序列到序列模型，直接将输入声学特征序列映射到文本</strong></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220923141848155.png" srcset="/img/loading.gif" lazyload alt="image-20220923141848155"></p>
+<h2 id="二、Sequence-to-Sequence-amp-Attention"><a href="#二、Sequence-to-Sequence-amp-Attention" class="headerlink" title="二、Sequence-to-Sequence &amp; Attention"></a>二、Sequence-to-Sequence &amp; Attention</h2><h3 id="Sequence-to-Sequence"><a href="#Sequence-to-Sequence" class="headerlink" title="Sequence-to-Sequence"></a>Sequence-to-Sequence</h3><ul>
+<li>什么是机器翻译？</li>
+</ul>
+<p>机器翻译(Machine Translation, MT)，是把一种语言（源语言）的句子 x 翻译成另一种语言 （目标语言）的句子 y 的任务</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220923141959299.png" srcset="/img/loading.gif" lazyload alt="image-20220923141959299"></p>
+<ul>
+<li><p>什么是神经机器翻译？</p>
+<ul>
+<li>神经机器翻译(Neural Machine Translation, NMT)，是通过单个神经网络实现机器翻译的方法</li>
+<li>这种神经网络框架称作Sequence-to-Sequence (Seq2Seq) 或者encoder-decoder，其包含两个RNN</li>
+<li>Seq2Seq框架的优点是：输入输出不需要等长，而且两者长度不固定<ul>
+<li>当使用一个RNN时，输入输出一般等长</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>什么是Sequence-to-Sequence？</p>
+</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220923150433455.png" srcset="/img/loading.gif" lazyload alt="image-20220923150433455"></p>
+<blockquote>
+<p>Problems : Encoding of the source sentence. This needs to capture all information about the source sentence. Information bottleneck.</p>
+</blockquote>
+<h3 id="Attention"><a href="#Attention" class="headerlink" title="Attention"></a>Attention</h3><p>Attention函数的本质可以被描述为<code>一个查询（query）到一系列（键key-值value）对的映射</code>，如下图。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/20180614214048507" srcset="/img/loading.gif" lazyload alt="这里写图片描述"></p>
+<p>在计算attention时主要分为三步:</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/20180614214547645" srcset="/img/loading.gif" lazyload alt="这里写图片描述"></p>
+<ul>
+<li>第一步是将<code>query和每个key进行相似度计算得到权重</code>，常用的相似度函数有点积，拼接，感知机等；</li>
+<li>第二步一般是<code>使用一个softmax函数对这些权重进行归一化</code>；</li>
+<li>最后将<code>权重和相应的键值value进行加权求和得到最后的attention</code>。</li>
+</ul>
+<p>ticks:</p>
+<ul>
+<li>目前在NLP研究中，key和value常常都是同一个，即key&#x3D;value。</li>
+<li>Attention在NLP中其实我觉得可以看成是一种自动加权，它可以把两个你想要联系起来的不同模块，通过加权的形式进行联系。目前<code>主流的计算公式</code>有以下几种:</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/670089-20161012111511390-885545526.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ul>
+<li>它有一个很大的优点就是可以可视化attention矩阵来告诉大家神经网络在进行任务时关注了哪些部分。不过在NLP中的attention机制和人类的attention机制还是有所区别，它基本还是需要<code>计算所有要处理的对象</code>，并额外用一个矩阵去存储其权重，其实增加了开销。而不是像人类一样可以忽略不想关注的部分，只去处理关注的部分。</li>
+</ul>
+<h4 id="Seq2Seq-with-Attention"><a href="#Seq2Seq-with-Attention" class="headerlink" title="Seq2Seq with Attention"></a>Seq2Seq with Attention</h4><blockquote>
+<p>关键点：在decoder的每一步，只关注源句子的特定部分</p>
+</blockquote>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220923155354252.png" srcset="/img/loading.gif" lazyload alt="image-20220923155354252"></p>
+<h4 id="Self-Attention"><a href="#Self-Attention" class="headerlink" title="Self-Attention"></a>Self-Attention</h4><ul>
+<li>values and query come from the same layer</li>
+<li>优点：<ul>
+<li>能够替换RNN，对时序进行建模</li>
+<li>易并行，计算快</li>
+</ul>
+</li>
+</ul>
+<h4 id="Scaled-Dot-Product-Attention"><a href="#Scaled-Dot-Product-Attention" class="headerlink" title="Scaled Dot-Product Attention"></a>Scaled Dot-Product Attention</h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220925012901756.png" srcset="/img/loading.gif" lazyload alt="image-20220925012901756"></p>
+<ul>
+<li>K 和 V 一般是同一个向量或矩阵</li>
+<li>当Q、K、V 是同一个向量或矩阵时，即是self-attention</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220925012739290.png" srcset="/img/loading.gif" lazyload alt="image-20220925012739290"></p>
+<h4 id="Multi-head-Attention-MHA"><a href="#Multi-head-Attention-MHA" class="headerlink" title="Multi-head Attention (MHA)"></a>Multi-head Attention (MHA)</h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220925012847316.png" srcset="/img/loading.gif" lazyload alt="image-20220925012847316"></p>
+<ul>
+<li>K 和 V 一般是同一个向量或矩阵</li>
+<li>当Q、K、V 是同一个向量或矩阵时，即是self-attention</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220925012830110.png" srcset="/img/loading.gif" lazyload alt="image-20220925012830110"></p>
+<h3 id="Sequence-to-Sequence-amp-Attention-总结"><a href="#Sequence-to-Sequence-amp-Attention-总结" class="headerlink" title="Sequence-to-Sequence &amp; Attention 总结"></a>Sequence-to-Sequence &amp; Attention 总结</h3><ul>
+<li>在Seq2Seq中，输入输出可以不等长</li>
+<li>Seq2Seq通过单个模型直接将输入映射成输出</li>
+<li>Seq2Seq单个模型一般由两个RNN组成：Encoder和Decoder</li>
+<li>通过Attention机制，使得输出的每一步可以只关注部分输入</li>
+</ul>
+<h2 id="三、端到短语音识别系统"><a href="#三、端到短语音识别系统" class="headerlink" title="三、端到短语音识别系统"></a>三、端到短语音识别系统</h2><h3 id="1-Listen-Attend-and-Spell-LAS"><a href="#1-Listen-Attend-and-Spell-LAS" class="headerlink" title="1.Listen, Attend and Spell(LAS)"></a>1.Listen, Attend and Spell(LAS)</h3><p>LAS：把Seq2Seq的输入换成语音特征序列 X&#x3D; x1, … , xT) ，输出换成文本序列Y &#x3D; y1, … , yU，可直接将 X映射成 Y，从而实现了端到端语音识别。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220925012214310.png" srcset="/img/loading.gif" lazyload alt="image-20220925012214310"></p>
+<ul>
+<li>不同论文用的Encoder RNN、Decoder RNN、Attention有所不同，但整体框架不变。</li>
+<li>其他文献中对于LAS或Seq2Seq也有不同的画法，但本质相同。</li>
+</ul>
+<h3 id="2-Speech-Transformer"><a href="#2-Speech-Transformer" class="headerlink" title="2.Speech Transformer"></a>2.Speech Transformer</h3><h4 id="Transformer-A-High-Level-Look"><a href="#Transformer-A-High-Level-Look" class="headerlink" title="Transformer: A High-Level Look"></a>Transformer: A High-Level Look</h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220925014128494.png" srcset="/img/loading.gif" lazyload alt="image-20220925014128494"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220925013200978.png" srcset="/img/loading.gif" lazyload alt="image-20220925013200978"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/2021052223091261.PNG" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h4 id="Speech-Transformer"><a href="#Speech-Transformer" class="headerlink" title="Speech Transformer"></a>Speech Transformer</h4><ul>
+<li><p>输入是语音特征序列，输出是文本序列</p>
+</li>
+<li><p>实现了端到端语音识别</p>
+</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220925110101093.png" srcset="/img/loading.gif" lazyload alt="image-20220925110101093"></p>
+<h3 id="3-CTC"><a href="#3-CTC" class="headerlink" title="3.CTC"></a>3.CTC</h3><ul>
+<li><p>给定语音特征序列 X &#x3D; x1, x2,, … , xT)和文本序列 Y &#x3D; y1, y2,, … , yU</p>
+</li>
+<li><p>在Seq2Seq框架中，通过两个RNN直接将语音特征序列 X 映射到文本序列Y</p>
+</li>
+<li><p>想训练单个RNN，直接将语音特征序列 X 映射到文本序列 Y</p>
+<ul>
+<li>使用RNN时，其输出序列 Y 与输入序列 X 等长,但是文本序列 Y 一般与特征序列 X 不等长</li>
+</ul>
+</li>
+</ul>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p>  在输出集合中引入表示空的符号 blank(ε)</p>
+<ul>
+<li>合并重复的字符</li>
+</ul>
+<ol start="2">
+<li>移除 ε 符号</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220925014948939.png" srcset="/img/loading.gif" lazyload alt="image-20220925014948939"></p>
+<ul>
+<li>优点：<ul>
+<li>同个 Y 对应多个对齐！</li>
+<li>对齐具有单调性</li>
+<li>引入 ε 后，不需要预先知道特征序列 X 的对齐也可以得到输出序列</li>
+</ul>
+</li>
+</ul>
+<h4 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220925111623564.png" srcset="/img/loading.gif" lazyload alt="image-20220925111623564"></p>
+<p>每个 A 相当于一条可以得到 Y 的路径，上式相当于对多条可以得到 Y 的路径进行求和</p>
+<h4 id="解码"><a href="#解码" class="headerlink" title="解码"></a>解码</h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220925111746706.png" srcset="/img/loading.gif" lazyload alt="image-20220925111746706"></p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220925111819233.png" srcset="/img/loading.gif" lazyload alt="image-20220925111819233"></p>
+<h4 id="外接语言模型"><a href="#外接语言模型" class="headerlink" title="外接语言模型"></a>外接语言模型</h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220925112032235.png" srcset="/img/loading.gif" lazyload alt="image-20220925112032235"></p>
+<h3 id="4-RNN-Transducer"><a href="#4-RNN-Transducer" class="headerlink" title="4.RNN-Transducer"></a>4.RNN-Transducer</h3><blockquote>
+<p>本质：对 CTC 进行增强</p>
+</blockquote>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220925113148351.png" srcset="/img/loading.gif" lazyload alt="image-20220925113148351"></p>
+<ul>
+<li>Encoder<ul>
+<li>和CTC一样，可以是任何RNN类的网络</li>
+<li>将声学特征 X &#x3D; x1, … , xT) 映射到隐向量 h &#x3D; ℎ1, … , ℎT)</li>
+<li>像声学模型一样</li>
+</ul>
+</li>
+<li>+ Prediction Network<ul>
+<li>对输出的依赖关系进行建模，可以是任何单向RNN类网络</li>
+<li>把前一时刻的RNN-T输出y_u-1作为输入，预测下一个输出Pu</li>
+<li>像语言模型一样</li>
+</ul>
+</li>
+<li>+ Joint Network<ul>
+<li>用MLP把Encoder和Prediction Network的输出结合在一起，预测最终的网络输出</li>
+<li>把声学信息和语言信息集合在一起</li>
+</ul>
+</li>
+<li>Softmax计算输出概率，RNN-T Loss[1][2]和CTC Loss类似，用前向后向算法进行计算</li>
+<li>各部分联合在一起进行训练，是单个模型</li>
+</ul>
+<h4 id="RNN-T相比其他E2E模型的优点"><a href="#RNN-T相比其他E2E模型的优点" class="headerlink" title="RNN-T相比其他E2E模型的优点"></a>RNN-T相比其他E2E模型的优点</h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220925114012206.png" srcset="/img/loading.gif" lazyload alt="image-20220925114012206"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220925114023254.png" srcset="/img/loading.gif" lazyload alt="image-20220925114023254"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220925114033924.png" srcset="/img/loading.gif" lazyload alt="image-20220925114033924"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220925114049366.png" srcset="/img/loading.gif" lazyload alt="image-20220925114049366"></p>
+<blockquote>
+<p>P.S.每一帧解码结束后一般会转到下一帧的处理，因为一帧实在太小了，除非极特殊情况某一帧处于两个音节交界处。</p>
+</blockquote>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220925114057996.png" srcset="/img/loading.gif" lazyload alt="image-20220925114057996"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220925114108660.png" srcset="/img/loading.gif" lazyload alt="image-20220925114108660"></p>
+<ul>
+<li>使用单向Encoder时，可以进行流式语音识别</li>
+<li>也就是拿到一帧就可以解码一步LAS</li>
+<li>Speech Transformer等必须等到一句话说完才可以解码</li>
+</ul>
+<h3 id="总结小记"><a href="#总结小记" class="headerlink" title="总结小记"></a>总结小记</h3><ul>
+<li><p>Listen, Attend and Spell</p>
+<ul>
+<li><p>特点：encoder-RNN and decoder-RNN</p>
+</li>
+<li><p>优点：没有输出独立性假设</p>
+</li>
+<li><p>缺点：无法直接支持流式语音识别、RNN难以并行</p>
+</li>
+</ul>
+</li>
+<li><p>Speech Transformer</p>
+<ul>
+<li><p>特点：self-attention替代RNN</p>
+</li>
+<li><p>优点：self-attention易并行、训练速度快、效果好</p>
+</li>
+<li><p>缺点：有时对超参很敏感</p>
+</li>
+</ul>
+</li>
+<li><p>CTC</p>
+<ul>
+<li><p>特点：只有一个RNN</p>
+</li>
+<li><p>优点：输入与输出具有单调关系</p>
+</li>
+<li><p>缺点：输出独立性假设、好性能需要LM</p>
+</li>
+</ul>
+</li>
+<li><p>RNN-Transducer</p>
+<ul>
+<li>加入额外LM的单RNN系统</li>
+<li>优点：天然支持流式语音识别</li>
+<li>缺点：Loss计算不易实现，一般用开源库</li>
+</ul>
+</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41058526/article/details/80783925">attention各种形式总结</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.cnblogs.com/robert-dlut/p/5952032.html">注意力机制（Attention Mechanism）在自然语言处理中的应用</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32599109/article/details/117755495">李宏毅-人类语言处理(三)：语音识别-LAS</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/liu1073811240/article/details/110700251#t5">RNN输入输出序列等长理解</a>
+<a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/" class="category-chain-item">语音识别</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/">#语音识别</a>
+      
+        <a href="/tags/ASR/">#ASR</a>
+      
+        <a href="/tags/Seq2Seq/">#Seq2Seq</a>
+      
+        <a href="/tags/Attention/">#Attention</a>
+      
+        <a href="/tags/LAS/">#LAS</a>
+      
+        <a href="/tags/Transformer/">#Transformer</a>
+      
+        <a href="/tags/CTC/">#CTC</a>
+      
+        <a href="/tags/RNN-Transducer/">#RNN-Transducer</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Class 10 端到端语音识别</div>
+      <div>https://blog.baixf.tk/2022/09/25/语音识别学习/Class 10 端到端语音识别/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年9月25日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/11/Machine%20Learning/BP%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="BP神经网络">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">BP神经网络</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/09/18/software/%E8%AE%BE%E7%BD%AE%20SSH%20%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E7%99%BB%E5%BD%95/" title="设置 SSH 通过密钥登录">
+                        <span class="hidden-mobile">设置 SSH 通过密钥登录</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

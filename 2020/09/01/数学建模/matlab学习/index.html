@@ -1,0 +1,1215 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="记录自己一个暑假的建模学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="matlab学习">
+<meta property="og:url" content="https://blog.baixf.tk/2020/09/01/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/matlab%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="记录自己一个暑假的建模学习">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/shujian.jpg">
+<meta property="article:published_time" content="2020-09-01T14:29:11.000Z">
+<meta property="article:modified_time" content="2022-06-20T09:42:49.959Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="数学建模">
+<meta property="article:tag" content="matlab">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/shujian.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>matlab学习 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/acdOVf.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="matlab学习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-09-01 14:29" pubdate>
+          2020年9月1日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          18k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          150 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">matlab学习</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一-函数intlinprog的使用"><a href="#一-函数intlinprog的使用" class="headerlink" title="一.函数intlinprog的使用"></a>一.函数intlinprog的使用</h2><h3 id="1-intlinprog介绍"><a href="#1-intlinprog介绍" class="headerlink" title="1. intlinprog介绍"></a>1. intlinprog介绍</h3><blockquote>
+<p>intlinprog是matlab中用于求解混合整数线性规划(Mixed-integer linear programming)的一个函数，用法基本和linprog差不多。</p>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20190904121312375.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZfaF9o,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" lazyload></p>
+<h4 id="intlinprog函数有九个参数"><a href="#intlinprog函数有九个参数" class="headerlink" title="intlinprog函数有九个参数"></a>intlinprog函数有九个参数</h4><blockquote>
+<p>大多数求解线性规划问题时，只用到前面8个参数，所以这里，我就详细的讲解前面8个参数的含义</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">     f ：目标函数的系数矩阵<br>intcon ：整数所在位置<br>     A ：不等式约束的变量系数矩阵<br>     b ：不等式约束的资源数<br>   Aeq ：等式约束的变量系数矩阵<br>   beq ：等式约束的资源数<br>    lb ：变量约束下限<br>    ub ：变量约束上限<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-实例和代码"><a href="#2-实例和代码" class="headerlink" title="2. 实例和代码"></a>2. 实例和代码</h3><h4 id="例1"><a href="#例1" class="headerlink" title="例1:"></a>例1:</h4><p><img src="https://img-blog.csdnimg.cn/20190904123701805.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>根据函数的使用要求；</li>
+<li>求最大值，首先要把目标函数转化为最小值，即min z &#x3D; - (2x+3y)；</li>
+<li>要把大于等于转换为小于等于，即在有 “≥” 符号式子两边同时乘以-1；</li>
+</ul>
+<h5 id="代码如下："><a href="#代码如下：" class="headerlink" title="代码如下："></a>代码如下：</h5><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs matlab">f = [<span class="hljs-number">-2</span> <span class="hljs-number">-3</span>];                        <span class="hljs-comment">% 目标函数的系数矩阵</span><br>intcon = [];                        <span class="hljs-comment">% 整数所在位置，题目没有要求，所以是空</span><br>A = [<span class="hljs-number">2</span>,<span class="hljs-number">-1</span>;<span class="hljs-number">-1</span>,<span class="hljs-number">1</span>;<span class="hljs-number">-1</span>,<span class="hljs-number">-1</span>];              <span class="hljs-comment">% 不等式约束的变量系数矩阵</span><br>b = [<span class="hljs-number">2</span>;<span class="hljs-number">1</span>;<span class="hljs-number">-1</span>];                       <span class="hljs-comment">% 不等式约束的资源数</span><br>[x,fval] = intlinprog(f,intcon,A,b);    <span class="hljs-comment">% fval代表最优解处的函数值</span><br>x,fval = -fval                      <span class="hljs-comment">% 返回最大值的结果</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="运行结果如下；"><a href="#运行结果如下；" class="headerlink" title="运行结果如下；"></a>运行结果如下；</h5><p><img src="https://img-blog.csdnimg.cn/20190904130117912.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="例2"><a href="#例2" class="headerlink" title="例2:"></a>例2:</h4><p><img src="https://img-blog.csdnimg.cn/20190904130812503.png" srcset="/img/loading.gif" lazyload><br><img src="https://img-blog.csdnimg.cn/20190904130818930.png" srcset="/img/loading.gif" lazyload><br>该问题是个0-1规划问题，加上限制条件即可，代码如下：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs matlab">c = [<span class="hljs-number">7</span> <span class="hljs-number">5</span> <span class="hljs-number">9</span> <span class="hljs-number">6</span> <span class="hljs-number">3</span>];<br>intcon = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>];<br>a = [<span class="hljs-number">56</span>,<span class="hljs-number">20</span>,<span class="hljs-number">54</span>,<span class="hljs-number">42</span>,<span class="hljs-number">15</span>;<span class="hljs-number">1</span>,<span class="hljs-number">4</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>;<span class="hljs-number">-1</span>,<span class="hljs-number">-2</span>,<span class="hljs-number">0</span>,<span class="hljs-number">-1</span>,<span class="hljs-number">-2</span>];<br>b = [<span class="hljs-number">100</span>;<span class="hljs-number">4</span>;<span class="hljs-number">-2</span>];<br>aeq=[];<br>beq=[];<br>lb = <span class="hljs-built_in">zeros</span>(<span class="hljs-number">1</span>,<span class="hljs-number">5</span>);        <span class="hljs-comment">% 生成1×5的 0 矩阵</span><br>ub = <span class="hljs-built_in">ones</span>(<span class="hljs-number">1</span>,<span class="hljs-number">5</span>);         <span class="hljs-comment">% 生成1×5的 1 矩阵</span><br>[x,fval]=intlinprog(c,intcon,a,b,aeq,beq,lb,ub)<br><span class="hljs-comment">%变量的下限是0，上限是1，同时限制了变量是整数。这就是0-1整数规划。同理，其他的规划，可以自己推。</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs matlab">matlab结果如下：<br>    x =<br>         <span class="hljs-number">0</span><br>         <span class="hljs-number">0</span><br>         <span class="hljs-number">0</span><br>         <span class="hljs-number">0</span><br>         <span class="hljs-number">1</span><br>    fval =<br>         <span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
+<h3 id="3-补充说明："><a href="#3-补充说明：" class="headerlink" title="3.补充说明："></a>3.补充说明：</h3><blockquote>
+<p>使用intlinprog函数时，如果没有该参数所对应的限制条件，是用 [] 符号代替，不可以不写（在不打乱intlinprog函数参数顺序的前提下，如果后面都是[],可以省略不写）</p>
+</blockquote>
+<h2 id="二-函数fmincon的使用"><a href="#二-函数fmincon的使用" class="headerlink" title="二.函数fmincon的使用"></a>二.函数fmincon的使用</h2><h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h3><p>在matlab中，fmincon函数可以求解带约束的非线性多变量函数(Constrained nonlinear multivariable function)的最小值,即可以用来求解非线性规划问题<br>matlab中，非线性规划模型的写法如下<br><img src="https://s1.ax1x.com/2020/07/25/UzeDXR.png" srcset="/img/loading.gif" lazyload alt="UzeDXR.png"></p>
+<h3 id="2-基本语法"><a href="#2-基本语法" class="headerlink" title="2. 基本语法"></a>2. 基本语法</h3><p><strong>[x,fval]&#x3D;fmincon(fun,x0,A,b,Aeq,beq,lb,ub,nonlcon,options)</strong></p>
+<p>参数介绍：</p>
+<ul>
+<li><p>x的返回值是决策向量x的取值，fval的返回值是目标函数f(x)的取值</p>
+</li>
+<li><p>fun是用M文件定义的函数f(x),代表了(非)线性目标函数</p></p>
+</li>
+<li><p>x0是x的初始值</p></p>
+</li>
+<li><p>A,b,Aeq,beq定义了线性约束 ,如果没有线性约束，则A&#x3D;[],b&#x3D;[],Aeq&#x3D;[],beq&#x3D;[]</p>
+</li>
+<li><p>lb和ub是变量x的下界和上界，如果下界和上界没有约束，则lb&#x3D;[],ub&#x3D;[],也可以写成lb的各分量都为 -inf,ub的各分量都为inf</p>
+</li>
+<li><p>nonlcon是用M文件定义的非线性向量函数约束</p>
+</li>
+<li><p>options定义了优化参数，不填写表示使用Matlab默认的参数设置</p>
+</li>
+</ul>
+<h3 id="3-实例"><a href="#3-实例" class="headerlink" title="3.实例"></a>3.实例</h3><p>求下列非线性规划：</p>
+<p><img src="https://s1.ax1x.com/2020/07/25/UzmdVP.png" srcset="/img/loading.gif" lazyload alt="UzmdVP.png"></p>
+<p>(1)编写fun.m文件存储参数f</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs matlab"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span>=<span class="hljs-title">fun</span><span class="hljs-params">(x)</span></span><br>f=x(<span class="hljs-number">1</span>)^<span class="hljs-number">2</span>+x(<span class="hljs-number">2</span>)^<span class="hljs-number">2</span>+x(<span class="hljs-number">3</span>)^<span class="hljs-number">2</span>+<span class="hljs-number">8</span>;<br></code></pre></td></tr></table></figure>
+<p>(2)编写nonlcon.m文件</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs matlab"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">[c,ceq]</span>=<span class="hljs-title">nonlcon</span><span class="hljs-params">(x)</span></span><br>c=[-x(<span class="hljs-number">1</span>)^<span class="hljs-number">2</span>+x(<span class="hljs-number">2</span>)-x(<span class="hljs-number">3</span>)^<span class="hljs-number">2</span><br>x(<span class="hljs-number">1</span>)+x(<span class="hljs-number">2</span>)^<span class="hljs-number">2</span>+x(<span class="hljs-number">3</span>)^<span class="hljs-number">2</span><span class="hljs-number">-20</span>];<br>ceq=[-x(<span class="hljs-number">1</span>)^<span class="hljs-number">2</span>-x(<span class="hljs-number">2</span>)^<span class="hljs-number">2</span>+<span class="hljs-number">2</span><br>x(<span class="hljs-number">2</span>)+<span class="hljs-number">2</span>*x(<span class="hljs-number">3</span>)^<span class="hljs-number">2</span><span class="hljs-number">-3</span>];<br></code></pre></td></tr></table></figure>
+<p>(3)执行fmincon()函数</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs matlab">a=[];<br>b=[];<br>aeq=[];<br>beq=[];<br>lb=<span class="hljs-built_in">zeros</span>(<span class="hljs-number">1</span>,<span class="hljs-number">3</span>);<br>ub=[];<br>[x,val]=fmincon(<span class="hljs-string">&#x27;fun&#x27;</span>,[<span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span>],a,b,aeq,beq,lb,ub,<span class="hljs-string">&#x27;nonlcon&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<p><strong>⚠注意事项：</strong></p>
+<ol>
+<li>在书写[c,ceq]&#x3D;nonlcon(x)函数时，c和ceq中若存在$2x_i^2$时，✖需要用 $*$ 表示出来。</li>
+<li>$x_0$的值必须要写！</li>
+<li>matlab中函数文件名必须要和对应的函数调用时的名字一样。<br>(4)运行结果<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs matlab">x =<br>        <span class="hljs-number">0.6312</span>    <span class="hljs-number">1.2656</span>    <span class="hljs-number">0.9312</span><br>val =<br>       <span class="hljs-number">10.8672</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="三-函数fmbnd-fminunc-fminsearch-与fmincon"><a href="#三-函数fmbnd-fminunc-fminsearch-与fmincon" class="headerlink" title="三.函数fmbnd()  fminunc() fminsearch() 与fmincon()"></a>三.函数fmbnd()  fminunc() fminsearch() 与fmincon()</h2><p><img src="https://s1.ax1x.com/2020/08/06/acdOVf.jpg" srcset="/img/loading.gif" lazyload alt="acdOVf.jpg"></p>
+<h3 id="1-求解一元无约束规划"><a href="#1-求解一元无约束规划" class="headerlink" title="1.求解一元无约束规划"></a>1.求解一元无约束规划</h3><p>[x, fval]&#x3D; fminbnd (f,x1,x2）其中fun为目标函数，支持字符串，inline函数，句柄函数，[x1,x2]为优化区间。输出x为最优解，fval为最优值。</p>
+<h4 id="1-1-例1-求解一元非线性无约束函数"><a href="#1-1-例1-求解一元非线性无约束函数" class="headerlink" title="1.1 例1 求解一元非线性无约束函数"></a>1.1 例1 求解一元非线性无约束函数</h4><p>求函数$y&#x3D;2e^{-x}sin(x)$在区间【0，8】上的最大值、最小值。</p>
+<h5 id="1-1-1-画图"><a href="#1-1-1-画图" class="headerlink" title="1.1.1 画图"></a>1.1.1 画图</h5><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs matlab">matlab代码如下:<br>x=<span class="hljs-number">0</span>:<span class="hljs-number">0.01</span>:<span class="hljs-number">8</span>;<br>y=<span class="hljs-number">2</span>*<span class="hljs-built_in">exp</span>(-x).*<span class="hljs-built_in">sin</span>(x);<br><span class="hljs-built_in">plot</span>(x,y)<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://s1.ax1x.com/2020/07/26/apDcLj.png" srcset="/img/loading.gif" lazyload alt="apDcLj.png"></p>
+<h5 id="1-1-2-求最大值"><a href="#1-1-2-求最大值" class="headerlink" title="1.1.2 求最大值"></a>1.1.2 求最大值</h5><p>代码 如下</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs matlab">ymax=<span class="hljs-string">&#x27;2*exp(-x)*sin(x)&#x27;</span>;<br>[xmin,fmin]=fminbnd(ymax,<span class="hljs-number">0</span>,<span class="hljs-number">8</span>)<br></code></pre></td></tr></table></figure>
+<p>答案是</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs matlab">xmin =<br>        <span class="hljs-number">3.9270</span><br>fmin =<br>       <span class="hljs-number">-0.0279</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="1-1-3-求最小值"><a href="#1-1-3-求最小值" class="headerlink" title="1.1.3 求最小值"></a>1.1.3 求最小值</h5><p>tip:$fminbnd(y,start,end)$函数默认是求函数$y$的最大值，所以求最小值时我们需要将y函数变号。<br>matlab代码如下</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs matlab">ymin=<span class="hljs-string">&#x27;-2*exp(-x)*sin(x)&#x27;</span><br>[xmax,fmax]=fminbnd(ymin,<span class="hljs-number">0</span>,<span class="hljs-number">8</span>)<br></code></pre></td></tr></table></figure>
+<p>答案是</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs matlab">xmax =<br>        <span class="hljs-number">0.7854</span><br>    fmax =<br>       <span class="hljs-number">-0.6448</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-多元无约束优化"><a href="#2-多元无约束优化" class="headerlink" title="2 多元无约束优化"></a>2 多元无约束优化</h3><p>[x, fval]&#x3D; fminunc(fun,x0)<br>[x, fval]&#x3D; fminsearch(fun,x0)</p>
+<p>其中：输入参数fun为目标函数，支持字符串，inline函数、句柄函数，x0为初值，必须得有<br>注意：fminunc，fminsearch只支持函数fun自变量单变量符号，如x(1),x(2)等</p>
+<h4 id="2-1-例2-求解多元非线性无约束函数"><a href="#2-1-例2-求解多元非线性无约束函数" class="headerlink" title="2.1 例2 求解多元非线性无约束函数"></a>2.1 例2 求解多元非线性无约束函数</h4><p>$$min \ z&#x3D;100(x-y^2)^2+(1-y)^2$$</p>
+<h5 id="2-1-1-画图"><a href="#2-1-1-画图" class="headerlink" title="2.1.1 画图"></a>2.1.1 画图</h5><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs matlab">x=<span class="hljs-number">-1000</span>:<span class="hljs-number">1</span>:<span class="hljs-number">1000</span>;<br>y=x;<br>z=<span class="hljs-number">100</span>(x-y.^<span class="hljs-number">2</span>).^<span class="hljs-number">2</span>+(<span class="hljs-number">1</span>-y).^<span class="hljs-number">2</span>;<br><span class="hljs-built_in">plot3</span>(x,y,z)<br></code></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/07/26/aphCCj.png" srcset="/img/loading.gif" lazyload alt="aphCCj.png"></p>
+<h5 id="2-1-2-求解最小值"><a href="#2-1-2-求解最小值" class="headerlink" title="2.1.2 求解最小值"></a>2.1.2 求解最小值</h5><p>matlab代码如下：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs matlab">f=<span class="hljs-string">&#x27;100*(x(1)-x(2)^2)^2+(1-x(2))^2&#x27;</span>;<br>[x,fval]=fminunc(f,[<span class="hljs-number">0</span>,<span class="hljs-number">0</span>])<br>[x_1,fval_1]=fminsearch(f,[<span class="hljs-number">0</span>,<span class="hljs-number">0</span>])<br></code></pre></td></tr></table></figure>
+<p>答案是</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs matlab">x =<br>        <span class="hljs-number">1.0000</span>    <span class="hljs-number">1.0000</span><br>fval =<br>       <span class="hljs-number">1.9474e-11</span><br>x_1 =<br>        <span class="hljs-number">1.0000</span>    <span class="hljs-number">1.0000</span><br>fval_1 =<br>       <span class="hljs-number">3.6862e-10</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="2-1-3-区别"><a href="#2-1-3-区别" class="headerlink" title="2.1.3 区别"></a>2.1.3 区别</h5><p>我们可以看到上面的结果是不同的，我们可以大胆猜一下可能是每个方法实现的算法不同。</p>
+<blockquote>
+<p>知乎：fminunc与fminsearch函数的区别是什么?<br>      两个都是求极小值，有区别吗？<br>      张国王 中科院人工智能研究人员，主攻大规模遥感图像智能化解译<br>      共同点：<br>      算法属性：局部最优化算法<br>      适用范围：无约束多变量最优化问题<br>      不同点：两个函数使用的方法不一样<br>      fminunc 采用拟牛顿法(QN)，是一种使用导数的算法。参见拟牛顿法 分析与推导<br>      fminsearch 采用Nelder-Mead单纯形法，是一种直接搜索法。参考单纯形法、Simplex Method</p>
+</blockquote>
+<h3 id="3-有约束优化"><a href="#3-有约束优化" class="headerlink" title="3.有约束优化"></a>3.有约束优化</h3><blockquote>
+<p>这就是我们前几天一直做的问题。<br>[x, fval]&#x3D; fmincon(fun,x0,A,b,Aeq,beq,lb,ub,nonlcon)<br>参数解释:fun为目标函数，支持字符串、inline函数，句柄函数，x0初值，A线性不等式约束系数、b线性不等式约束常数项、Aeq线性等式约束系数，线性beq等式约束常数，nonlcon非线性约束，支持句柄函数。</p>
+</blockquote>
+<h4 id="3-1-例3-求解非线性有约束函数"><a href="#3-1-例3-求解非线性有约束函数" class="headerlink" title="3.1 例3 求解非线性有约束函数"></a>3.1 例3 求解非线性有约束函数</h4><p>$$min \ f &#x3D;x_1^2+4x_2^2+x_3^2$$<br>$$s.t. \ 3x_1+4x_2+x_3\geq13$$<br>$$x_1^2+x_2^2-x_3\leq100$$<br>$$3x_1^2+x_2^2-10\sqrt{x_3}\geq20$$<br>$$3x_1-x_2^2+x_3&#x3D;50$$<br>$$x_1,x_2,x_3\geq0$$</p>
+<h5 id="3-1-1-画图"><a href="#3-1-1-画图" class="headerlink" title="3.1.1 画图"></a>3.1.1 画图</h5><h5 id="3-1-2-求最小值"><a href="#3-1-2-求最小值" class="headerlink" title="3.1.2 求最小值"></a>3.1.2 求最小值</h5><p>matlab代码如下</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs matlab"><span class="hljs-comment">%(1)编写fun.m函数</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span>=<span class="hljs-title">fun</span><span class="hljs-params">(x)</span></span><br>f=x(<span class="hljs-number">1</span>).^<span class="hljs-number">2</span>+<span class="hljs-number">4</span>*(<span class="hljs-number">2</span>).^<span class="hljs-number">2</span>+x(<span class="hljs-number">3</span>).^<span class="hljs-number">2</span><br><span class="hljs-comment">%(2)编写nonlcon.m函数</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">[c,ceq]</span>=<span class="hljs-title">nonlcon</span><span class="hljs-params">(x)</span></span><br>c=[x(<span class="hljs-number">1</span>).^<span class="hljs-number">2</span>+x(<span class="hljs-number">2</span>).^<span class="hljs-number">2</span>-x(<span class="hljs-number">3</span>)<span class="hljs-number">-100</span><br>  <span class="hljs-number">-3</span>*x(<span class="hljs-number">1</span>).^<span class="hljs-number">3</span>-x(<span class="hljs-number">2</span>).^<span class="hljs-number">2</span>+<span class="hljs-number">10</span>*x(<span class="hljs-number">3</span>).^<span class="hljs-number">0.5</span>+<span class="hljs-number">20</span>]<br>  ceq=[<span class="hljs-number">3</span>*x(<span class="hljs-number">1</span>)-x(<span class="hljs-number">2</span>).^<span class="hljs-number">2</span>+x(<span class="hljs-number">3</span>)<span class="hljs-number">-50</span>]<br><span class="hljs-comment">%(3)执行matlab</span><br>x0=<span class="hljs-built_in">zeros</span>(<span class="hljs-number">1</span>,<span class="hljs-number">3</span>)<br>a=[<span class="hljs-number">-3</span> <span class="hljs-number">-4</span> <span class="hljs-number">-1</span>]<br>b=[<span class="hljs-number">-13</span>]<br>aeq=[]<br>beq=[]<br>lb=<span class="hljs-built_in">zeros</span>(<span class="hljs-number">1</span>,<span class="hljs-number">3</span>)<br>ub=[]<br>[x,val]=fmincon(<span class="hljs-string">&#x27;fun&#x27;</span>,x0,a,b,aeq,beq,lb,ub,<span class="hljs-string">&#x27;nonlcon&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<p>答案是</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs matlab">x =<br>       <span class="hljs-number">10.8390</span>    <span class="hljs-number">0.0005</span>   <span class="hljs-number">17.4831</span><br>val =<br>      <span class="hljs-number">439.1423</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="四-关于统计学的一些函数"><a href="#四-关于统计学的一些函数" class="headerlink" title="四.关于统计学的一些函数"></a>四.关于统计学的一些函数</h2><p><img src="https://s1.ax1x.com/2020/07/27/aFVnf0.png" srcset="/img/loading.gif" lazyload alt="aFVnf0.png"></p>
+<h3 id="1-标准正态分布"><a href="#1-标准正态分布" class="headerlink" title="1. 标准正态分布"></a>1. 标准正态分布</h3><h4 id="1-1-概率密度函数图像"><a href="#1-1-概率密度函数图像" class="headerlink" title="1.1 概率密度函数图像"></a>1.1 概率密度函数图像</h4><p>$$y&#x3D;normpdf(x,mu,sigma)$$</p>
+<h5 id="1-1-1-参数说明"><a href="#1-1-1-参数说明" class="headerlink" title="1.1.1 参数说明"></a>1.1.1 参数说明</h5><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs matlab">mu：均值<br>sigma：标准差<br>y：正态概率密度函数在x处的值<br></code></pre></td></tr></table></figure>
+
+<h5 id="1-1-2-例1"><a href="#1-1-2-例1" class="headerlink" title="1.1.2 例1"></a>1.1.2 例1</h5><p>绘制标准正态分布的概率密度图像。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs matlab">x=<span class="hljs-number">-10</span>:<span class="hljs-number">0.01</span>:<span class="hljs-number">10</span><br>mu=<span class="hljs-number">0</span><br>sigma=<span class="hljs-number">1</span><br>y=normpdf(x,mu,sigma)<br><span class="hljs-built_in">plot</span>(x,y)<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://s1.ax1x.com/2020/07/27/aiXbfs.png" srcset="/img/loading.gif" lazyload alt="aiXbfs.png"></p>
+<h4 id="1-2-分布函数图像"><a href="#1-2-分布函数图像" class="headerlink" title="1.2 分布函数图像"></a>1.2 分布函数图像</h4><p>$$y&#x3D;normcdf(x,mu,signma)$$</p>
+<h5 id="1-2-1-参数说明"><a href="#1-2-1-参数说明" class="headerlink" title="1.2.1 参数说明"></a>1.2.1 参数说明</h5><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs matlab">mu：均值<br>sigma：标准差<br>y：正态概率函数在x处的值<br></code></pre></td></tr></table></figure>
+
+<h5 id="1-2-2-例2"><a href="#1-2-2-例2" class="headerlink" title="1.2.2 例2"></a>1.2.2 例2</h5><p>绘制标准正态分布的分布函数图像。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs matlab">x=<span class="hljs-number">-10</span>:<span class="hljs-number">0.01</span>:<span class="hljs-number">10</span><br>mu=<span class="hljs-number">0</span><br>sigma=<span class="hljs-number">1</span><br>y=normcdf(x,mu,sigma)<br><span class="hljs-built_in">plot</span>(x,y)<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://s1.ax1x.com/2020/07/27/aijYB8.png" srcset="/img/loading.gif" lazyload alt="aijYB8.png"></p>
+<h4 id="1-3-标准正态分布求分位数"><a href="#1-3-标准正态分布求分位数" class="headerlink" title="1.3 标准正态分布求分位数"></a>1.3 标准正态分布求分位数</h4><p>概率密度函数求分位数：</p>
+<p>$$norminv(α,mu,sigma)$$</p>
+<p>概率分布函数求分位数：</p>
+<p>$$norcdf(α,mu,sigma)$$</p>
+<h5 id="1-3-1-参数说明"><a href="#1-3-1-参数说明" class="headerlink" title="1.3.1 参数说明"></a>1.3.1 参数说明</h5><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs matlab">mu：均值<br>sigma：标准差<br><span class="hljs-built_in">ans</span>：α的分位数（即横坐标上的值）<br></code></pre></td></tr></table></figure>
+
+<h5 id="1-3-2-求解标准正态分布α-x3D-0-5的分位数"><a href="#1-3-2-求解标准正态分布α-x3D-0-5的分位数" class="headerlink" title="1.3.2 求解标准正态分布α&#x3D;0.5的分位数"></a>1.3.2 求解标准正态分布α&#x3D;0.5的分位数</h5><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs matlab">mu=<span class="hljs-number">0</span><br>sigma=<span class="hljs-number">1</span><br>norminv(<span class="hljs-number">0.5</span>,mu,sigma)<br>normcdf(<span class="hljs-number">0.5</span>,mu,sigma)<br></code></pre></td></tr></table></figure>
+
+<p>答案是</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs matlab"><span class="hljs-built_in">ans</span> =<br>         <span class="hljs-number">0</span><br><span class="hljs-built_in">ans</span> =<br>        <span class="hljs-number">0.6915</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-卡方分布"><a href="#2-卡方分布" class="headerlink" title="2. 卡方分布"></a>2. 卡方分布</h3><h4 id="2-1-概率密度函数图像"><a href="#2-1-概率密度函数图像" class="headerlink" title="2.1 概率密度函数图像"></a>2.1 概率密度函数图像</h4><p>$$y&#x3D;chi2pdf(x,n)$$</p>
+<h5 id="2-1-1-参数说明"><a href="#2-1-1-参数说明" class="headerlink" title="2.1.1 参数说明"></a>2.1.1 参数说明</h5><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs matlab">n：卡方分布的自由度<br>y：卡方概率密度函数在x处的值<br></code></pre></td></tr></table></figure>
+
+<h5 id="1-1-2-例1-1"><a href="#1-1-2-例1-1" class="headerlink" title="1.1.2 例1"></a>1.1.2 例1</h5><p>绘制自由度n&#x3D;2的卡方分布的概率密度图像。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs matlab">x=<span class="hljs-number">-10</span>:<span class="hljs-number">0.01</span>:<span class="hljs-number">10</span><br>n=<span class="hljs-number">2</span><br>y=chi2pdf(x,<span class="hljs-number">2</span>)<br><span class="hljs-built_in">plot</span>(x,y)<br></code></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/07/27/aFSvo8.png" srcset="/img/loading.gif" lazyload alt="aFSvo8.png"></p>
+<h4 id="2-2-分布函数图像"><a href="#2-2-分布函数图像" class="headerlink" title="2.2 分布函数图像"></a>2.2 分布函数图像</h4><p>$$y&#x3D;chi2cdf(x,n)$$</p>
+<h5 id="2-2-1-参数说明"><a href="#2-2-1-参数说明" class="headerlink" title="2.2.1 参数说明"></a>2.2.1 参数说明</h5><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs matlab">n：卡方分布的自由度<br>y：卡方概率分布函数在x处的值<br></code></pre></td></tr></table></figure>
+
+<h5 id="1-1-2-例1-2"><a href="#1-1-2-例1-2" class="headerlink" title="1.1.2 例1"></a>1.1.2 例1</h5><p>绘制自由度n&#x3D;2的卡方分布的概率分布图像。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs matlab">x=<span class="hljs-number">-10</span>:<span class="hljs-number">0.01</span>:<span class="hljs-number">10</span><br>n=<span class="hljs-number">2</span><br>y=chi2cdf(x,<span class="hljs-number">2</span>)<br><span class="hljs-built_in">plot</span>(x,y)<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://s1.ax1x.com/2020/07/27/aFpRpQ.png" srcset="/img/loading.gif" lazyload alt="aFpRpQ.png"></p>
+<h4 id="2-3-卡方分布求分位数"><a href="#2-3-卡方分布求分位数" class="headerlink" title="2.3 卡方分布求分位数"></a>2.3 卡方分布求分位数</h4><p>概率密度函数求分位数：</p>
+<p>$$chi2inv(α,n)$$</p>
+<p>概率分布函数求分位数：</p>
+<p>$$chi2cdf(α,n)$$</p>
+<h5 id="2-3-1-参数说明"><a href="#2-3-1-参数说明" class="headerlink" title="2.3.1 参数说明"></a>2.3.1 参数说明</h5><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs matlab">n：卡方分布的自由度<br><span class="hljs-built_in">ans</span>：α的分位数（即横坐标上的值）<br></code></pre></td></tr></table></figure>
+
+<h5 id="2-3-2-求解标准正态分布α-x3D-0-5的分位数"><a href="#2-3-2-求解标准正态分布α-x3D-0-5的分位数" class="headerlink" title="2.3.2 求解标准正态分布α&#x3D;0.5的分位数"></a>2.3.2 求解标准正态分布α&#x3D;0.5的分位数</h5><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs matlab">n=<span class="hljs-number">2</span><br>chi2inv(<span class="hljs-number">0.5</span>,n)<br>chi2cdf(<span class="hljs-number">0.5</span>,n)<br></code></pre></td></tr></table></figure>
+<p>答案是</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs matlab"><span class="hljs-built_in">ans</span> =<br>        <span class="hljs-number">1.3863</span><br><span class="hljs-built_in">ans</span> =<br>        <span class="hljs-number">0.2212</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="3-K-S检验"><a href="#3-K-S检验" class="headerlink" title="3.K-S检验"></a>3.K-S检验</h3><p><img src="https://s1.ax1x.com/2020/07/27/aFPDmR.png" srcset="/img/loading.gif" lazyload alt="aFPDmR.png"></p>
+<p><img src="https://s1.ax1x.com/2020/07/27/aFPL9S.png" srcset="/img/loading.gif" lazyload alt="aFPL9S.png"></p>
+<h4 id="3-1-正态分布的K-S检验"><a href="#3-1-正态分布的K-S检验" class="headerlink" title="3.1 正态分布的K-S检验"></a>3.1 正态分布的K-S检验</h4><p>$$H &#x3D; kstest(X)$$</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs matlab">测试向量X是否服从标准正态分布，测试水平为 <span class="hljs-number">5</span><span class="hljs-comment">%。</span><br></code></pre></td></tr></table></figure>
+
+<p>$$H &#x3D; kstest(X,cdf)$$</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs matlab">指定累积分布函数为cdf的测试(cdf=[ ]时表示标准正态分布)，测试水平为<span class="hljs-number">5</span><span class="hljs-comment">%</span><br></code></pre></td></tr></table></figure>
+
+<p>$$H &#x3D; kstest(X,cdf,alpha)$$</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs matlab">alpha为指定测试水平<br></code></pre></td></tr></table></figure>
+
+<p>$$H&#x3D;kstest(X,cdf,alpha,tail) $$</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs matlab">tail=<span class="hljs-number">0</span>为双侧检验, tail=<span class="hljs-number">1</span>单侧(&lt;)检验， tail=<span class="hljs-number">-1</span>单侧(&gt;) 检验<br></code></pre></td></tr></table></figure>
+
+<p>$$[H,P,KSSTAT,CV] &#x3D; kstest(X,cdf,alpha)$$</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><code class="hljs matlab">P为原假设成立的概率;<br>KSSTAT为测试统计量的值;<br>CV为是否接受假设的临界值。<br><br>#### <span class="hljs-number">3.2</span> 其他分布的K-S检验<br><br>![QQ图片<span class="hljs-number">20200727181059</span>](https://s1.ax1x.com/<span class="hljs-number">2020</span>/<span class="hljs-number">07</span>/<span class="hljs-number">27</span>/aFitHI.png)<br><br>#### <span class="hljs-number">3.3</span> 其他检验方法<br><br>lillietest检测方法较为严格，容错率低，但参数少。<br>&gt; chi2gof适合大样本，一般要求<span class="hljs-number">50</span>个以上<br>&gt;   kstest适于小样本，<br>&gt;   lillietest用于正态分布，与kstest类似，适用于小样本<br>&gt;   jbtest,是通过峰度、偏度检测正态分布的，适用用大样本。<br><br>### <span class="hljs-number">4.</span> 求解分布函数置信区间<br><br>![<span class="hljs-number">20200727164241</span>](https://s1.ax1x.com/<span class="hljs-number">2020</span>/<span class="hljs-number">07</span>/<span class="hljs-number">27</span>/aFiaUP.png)<br><br>### <span class="hljs-number">5.</span>参考文章<br><br>[^<span class="hljs-number">1</span>]: [matlab中kstest用法详解](https://blog.csdn.net/WUDIPIPIXIA/article/details/<span class="hljs-number">101939085</span>)<br>[^<span class="hljs-number">2</span>]: [kstest官方文档](https://ww2.mathworks.cn/help/stats/kstest.html?s_tid=srchtitle)<br><br>## 五.函数adftest()<br><br>### <span class="hljs-number">1.</span> 函数调用<br><br>$h = adftest(x)$<br>$[h,pValue,stat,cValue,reg] = adftest(x) $<br><br>### <span class="hljs-number">2.</span> 功能介绍<br><br>**检验时间序列的稳定性。**<br>h = adftest(x)通过对单变量时间序列中的单位根进行增强的Dickey-Fuller测试来返回具有拒绝决策的逻辑值Y。<br><br>### <span class="hljs-number">3.</span> 参数介绍<br><br>​```shell<br>h—测试拒绝决策(符合逻辑| 逻辑向量)<br>测试拒绝决策，以逻辑值或逻辑值向量的形式返回，其长度等于执行的测试次数。<br>* h = <span class="hljs-number">1</span> 表示拒绝使用单位根null表示支持替代模型。<br>* h = <span class="hljs-number">0</span> 表示无法拒绝单位根null。<br><br>pValue—测试统计p值(标量| 向量)<br>测试统计p值，以标量或向量的形式返回，其长度等于执行的测试次数。<br><br>* 如果检验统计量为<span class="hljs-string">&#x27;t1&#x27;</span>或<span class="hljs-string">&#x27;t2&#x27;</span>，则p值为左尾概率。<br><br>* 如果检验统计量为<span class="hljs-string">&#x27;F&#x27;</span>，则p值为右尾概率。<br><br>stat—统计检验(标量| 向量)<br><br>测试统计信息，以标量或向量的形式返回，其长度等于执行的测试次数。adftest使用替代模型中系数的普通最小二乘（OLS）估计来计算测试统计量。<br><br>cValue—临界值(标量| 向量)<br><br>临界值，以标量或向量的形式返回，长度等于执行的测试次数。<br><br>* 如果测试统计量为<span class="hljs-string">&#x27;t1&#x27;</span>或<span class="hljs-string">&#x27;t2&#x27;</span>，则临界值针对左尾概率。<br><br>* 如果检验统计量为<span class="hljs-string">&#x27;F&#x27;</span>，则临界值适用于右尾概率。<br><br>x— 单变量时间序列(单变量时间序列，指定为列向量。最后一个元素是最近的观察。adftest忽略由NaNs 表示的缺失观测值。)<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-例"><a href="#4-例" class="headerlink" title="4. 例"></a>4. 例</h3><h4 id="4-1-绘制y1-y2数据时序图"><a href="#4-1-绘制y1-y2数据时序图" class="headerlink" title="4.1 绘制y1,y2数据时序图"></a>4.1 绘制y1,y2数据时序图</h4><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs matlab">t=(<span class="hljs-number">1</span>:<span class="hljs-number">100</span>)&#x27;<br>y1=<span class="hljs-built_in">randn</span>(<span class="hljs-number">100</span>,<span class="hljs-number">1</span>)<br>y2=<span class="hljs-built_in">randn</span>(<span class="hljs-number">100</span>,<span class="hljs-number">1</span>)+<span class="hljs-number">2</span>*t<br><span class="hljs-built_in">plot</span>(t,y1,t,y2)<br></code></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2020/07/28/aErkcR.png" srcset="/img/loading.gif" lazyload alt="aErkcR.png"></p>
+<h4 id="4-2-绘制y1-y2自相关图像"><a href="#4-2-绘制y1-y2自相关图像" class="headerlink" title="4.2 绘制y1,y2自相关图像"></a>4.2 绘制y1,y2自相关图像</h4><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs matlab">t=(<span class="hljs-number">1</span>:<span class="hljs-number">100</span>)&#x27;<br>y1=<span class="hljs-built_in">randn</span>(<span class="hljs-number">100</span>,<span class="hljs-number">1</span>)<br>y2=<span class="hljs-built_in">randn</span>(<span class="hljs-number">100</span>,<span class="hljs-number">1</span>)+<span class="hljs-number">2</span>*t<br>subplot(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">1</span>)<br>autocorr(y1)<br>xlabel(<span class="hljs-string">&#x27;t&#x27;</span>)<br>ylabel(<span class="hljs-string">&#x27;y1&#x27;</span>)<br>title(<span class="hljs-string">&#x27;y1自相关图像&#x27;</span>)<br>subplot(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">2</span>)<br>autocorr(y2)<br>xlabel(<span class="hljs-string">&#x27;t&#x27;</span>)<br>ylabel(<span class="hljs-string">&#x27;y2&#x27;</span>)<br>title(<span class="hljs-string">&#x27;y2自相关图像&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/aERsW8"><img src="https://s1.ax1x.com/2020/07/28/aERsW8.png" srcset="/img/loading.gif" lazyload alt="aERsW8.png"></a></p>
+<h4 id="4-3-用adftest求解稳定性"><a href="#4-3-用adftest求解稳定性" class="headerlink" title="4.3 用adftest求解稳定性"></a>4.3 用adftest求解稳定性</h4><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs matlab">t=(<span class="hljs-number">1</span>:<span class="hljs-number">100</span>)&#x27;<br>y1=<span class="hljs-built_in">randn</span>(<span class="hljs-number">100</span>,<span class="hljs-number">1</span>)<br>y2=<span class="hljs-built_in">randn</span>(<span class="hljs-number">100</span>,<span class="hljs-number">1</span>)+<span class="hljs-number">2</span>*t<br><span class="hljs-built_in">plot</span>(t,y1,t,y2)<br>[h,p,s,cv]=adftest(y1)<br>[h,p,s,cv]=adftest(y2)<br></code></pre></td></tr></table></figure>
+
+<p>答案是</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs matlab">h =<br>   logical<br>   <span class="hljs-number">1</span><br>p =<br>   <span class="hljs-number">1.0000e-03</span><br>s =<br>   <span class="hljs-number">-10.6932</span><br>cv =<br>    <span class="hljs-number">-1.9444</span><br>h =<br>   logical<br>    <span class="hljs-number">0</span><br>p =<br>   <span class="hljs-number">0.9990</span><br>s =<br>    <span class="hljs-number">8.8428</span><br>cv =<br>    <span class="hljs-number">-1.9444</span><br></code></pre></td></tr></table></figure>
+
+
+<h2 id="五-函数eig-eigs"><a href="#五-函数eig-eigs" class="headerlink" title="五.函数eig() eigs()"></a>五.函数eig() eigs()</h2><h3 id="1-异同点"><a href="#1-异同点" class="headerlink" title="1.异同点"></a>1.异同点</h3><h4 id="1-1-相同点"><a href="#1-1-相同点" class="headerlink" title="1.1 相同点"></a>1.1 相同点</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">都可以求解矩阵的特征值和特征向量<br></code></pre></td></tr></table></figure>
+
+<h4 id="1-2-不同点"><a href="#1-2-不同点" class="headerlink" title="1.2 不同点"></a>1.2 不同点</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">eig函数主要是给出矩阵的特征值和特征向量<br>eigs函数主要是通过迭代法来求解矩阵特征值和特征向量<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-函数语法"><a href="#2-函数语法" class="headerlink" title="2.函数语法"></a>2.函数语法</h3><p><img src="https://s1.ax1x.com/2020/07/29/aenwMd.png" srcset="/img/loading.gif" lazyload alt="aenwMd.png"></p>
+<p>$lambda &#x3D; eig(A)$</p>
+<p>$[V,D] &#x3D; eig(A)$</p>
+<p>$[V,D,P] &#x3D; eig(A)$</p>
+<p>$lambda &#x3D; eig(vpa(A))$</p>
+<p>$[V,D] &#x3D; eig(vpa(A))$</p>
+<p><img src="https://s1.ax1x.com/2020/07/29/aZv0zD.png" srcset="/img/loading.gif" lazyload alt="aZv0zD.png"></p>
+<h3 id="3-描述"><a href="#3-描述" class="headerlink" title="3. 描述"></a>3. 描述</h3><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs matlab">lambda = eig(A)返回包含方形符号矩阵特征值的符号向量A。<br>[V,D] = eig(A)返回矩阵V和D。的V当前特征向量的列A。对角矩阵D包含特征值。如果所得结果V的大小与相同A，则矩阵A具有满足的整套线性独立特征向量A*V = V*D。<br>[V,D,P] = eig(A)返回索引向量 P。的长度P等于线性独立的特征向量的总数，因此A*V = V*D(P,P)。<br>lambda = eig(vpa(A)) 使用变量精度算法返回数字特征值。<br>[V,D] = eig(vpa(A)) 还返回数字特征向量。<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-输入参数"><a href="#4-输入参数" class="headerlink" title="4.输入参数"></a>4.输入参数</h3><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs matlab">A— 矩阵，指定为符号矩阵。<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-例"><a href="#5-例" class="headerlink" title="5.例"></a>5.例</h3><p><img src="https://s1.ax1x.com/2020/07/29/aZbma8.png" srcset="/img/loading.gif" lazyload alt="aZbma8.png"></p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs matlab">A=[<span class="hljs-number">-2</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span>;<span class="hljs-number">0</span> <span class="hljs-number">2</span> <span class="hljs-number">0</span>;<span class="hljs-number">-4</span> <span class="hljs-number">1</span> <span class="hljs-number">3</span>]<br>[v,d]=eig(A)<br>[v,d]=eigs(A)<br></code></pre></td></tr></table></figure>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs matlab">结果是：<br>    v =<br>       <span class="hljs-number">-0.7071</span>   <span class="hljs-number">-0.2425</span>    <span class="hljs-number">0.3015</span><br>             <span class="hljs-number">0</span>         <span class="hljs-number">0</span>    <span class="hljs-number">0.9045</span><br>       <span class="hljs-number">-0.7071</span>   <span class="hljs-number">-0.9701</span>    <span class="hljs-number">0.3015</span><br>    d =<br>        <span class="hljs-number">-1</span>     <span class="hljs-number">0</span>     <span class="hljs-number">0</span><br>         <span class="hljs-number">0</span>     <span class="hljs-number">2</span>     <span class="hljs-number">0</span><br>         <span class="hljs-number">0</span>     <span class="hljs-number">0</span>     <span class="hljs-number">2</span><br>    v =<br>       <span class="hljs-number">-0.2425</span>    <span class="hljs-number">0.3015</span>   <span class="hljs-number">-0.7071</span><br>             <span class="hljs-number">0</span>    <span class="hljs-number">0.9045</span>         <span class="hljs-number">0</span><br>       <span class="hljs-number">-0.9701</span>    <span class="hljs-number">0.3015</span>   <span class="hljs-number">-0.7071</span><br>    d =<br>         <span class="hljs-number">2</span>     <span class="hljs-number">0</span>     <span class="hljs-number">0</span><br>         <span class="hljs-number">0</span>     <span class="hljs-number">2</span>     <span class="hljs-number">0</span><br>         <span class="hljs-number">0</span>     <span class="hljs-number">0</span>    <span class="hljs-number">-1</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="六-内联函数、匿名函数和函数函数"><a href="#六-内联函数、匿名函数和函数函数" class="headerlink" title="六.内联函数、匿名函数和函数函数"></a>六.内联函数、匿名函数和函数函数</h2><p><a target="_blank" rel="noopener" href="http://www.baixf.xyz/index.php/2020/07/25/%e3%80%90matlab%e3%80%91%e5%87%bd%e6%95%b0fmincon%e7%9a%84%e4%bd%bf%e7%94%a8/">题目相关链接</a></p>
+<h3 id="1-字符串函数"><a href="#1-字符串函数" class="headerlink" title="1. 字符串函数"></a>1. 字符串函数</h3><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs matlab">s=<span class="hljs-string">&#x27;x(1)^2+x(2)^2+8&#x27;</span><br>f=sym(s)<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-字符串转化为内联函数"><a href="#2-字符串转化为内联函数" class="headerlink" title="2. 字符串转化为内联函数"></a>2. 字符串转化为内联函数</h3><ul>
+<li>可类似于写在html文件的css样式</li>
+</ul>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs matlab">s=<span class="hljs-string">&#x27;x(1)^2+x(2)^2+8&#x27;</span><br>f=inline(s)<br>x=[<span class="hljs-number">8</span> <span class="hljs-number">9</span>]<br>f(x)<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-字符串转化为匿名函数"><a href="#3-字符串转化为匿名函数" class="headerlink" title="3. 字符串转化为匿名函数"></a>3. 字符串转化为匿名函数</h3><ul>
+<li>直接转化为匿名函数，直接调用</li>
+</ul>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs matlab">s=<span class="hljs-string">&#x27;x(1)^2+x(2)^2+8&#x27;</span><br>x=[<span class="hljs-number">8</span> <span class="hljs-number">9</span>]<br>f=eval(s)<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-字符串转化为句柄函数"><a href="#4-字符串转化为句柄函数" class="headerlink" title="4. 字符串转化为句柄函数"></a>4. 字符串转化为句柄函数</h3><ul>
+<li>需编写function.m函数并调用函数</li>
+</ul>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs matlab"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span>=<span class="hljs-title">fun</span><span class="hljs-params">(x)</span></span><br>f=x(<span class="hljs-number">1</span>)^<span class="hljs-number">2</span>+x(<span class="hljs-number">2</span>)^<span class="hljs-number">2</span>+<span class="hljs-number">8</span>;<br><span class="hljs-keyword">end</span><br><span class="hljs-comment">%调用规则：</span><br>x=[<span class="hljs-number">8</span> <span class="hljs-number">9</span>]<br>fun(x)<br></code></pre></td></tr></table></figure>
+
+<h2 id="七-函数fprintf"><a href="#七-函数fprintf" class="headerlink" title="七.函数fprintf()"></a>七.函数fprintf()</h2><blockquote>
+<p>将数据写入文本文件</p>
+</blockquote>
+<h3 id="1-句法"><a href="#1-句法" class="headerlink" title="1.句法"></a>1.句法</h3><p>$fprintf(fileID,formatSpec,A1,…,An)$<br>$fprintf(formatSpec,A1,…,An)$<br>$nbytes &#x3D; fprintf( )$</p>
+<h3 id="2-描述"><a href="#2-描述" class="headerlink" title="2.描述"></a>2.描述</h3><ol>
+<li>fprintf(fileID,formatSpec,A1,…,An)按列顺序将应用于formatSpec数组的所有元素A1,…An，并将数据写入文本文件。fprintf使用对的调用中指定的编码方案fopen。</p></li>
+<li>fprintf(formatSpec,A1,…,An) 格式化数据并在屏幕上显示结果。</p></li>
+<li>nbytes &#x3D; fprintf(___)fprintf使用前面语法中的任何输入参数，返回写入的字节数。</li>
+</ol>
+<h3 id="3-输入参数"><a href="#3-输入参数" class="headerlink" title="3.输入参数"></a>3.输入参数</h3><ol>
+<li>fileID— 文件标识符<br>1（默认）| 2| 标量</li>
+<li>formatSpec— 输出字段<br>格式的格式运算符</li>
+<li>A1,…,An— 数字或字符数组<br>标量 | 向量 | 矩阵 | 多维数组</li>
+</ol>
+<h3 id="4-输出参数"><a href="#4-输出参数" class="headerlink" title="4.输出参数"></a>4.输出参数</h3><ul>
+<li>nbytes— 标量的字节数</li>
+</ul>
+<h3 id="5-例-1"><a href="#5-例-1" class="headerlink" title="5.例"></a>5.例</h3><h5 id="打印文字文本和数组值"><a href="#打印文字文本和数组值" class="headerlink" title="打印文字文本和数组值"></a>打印文字文本和数组值</h5><blockquote>
+<p>在屏幕上打印多个数值和文字文本。</p>
+</blockquote>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs matlab">A1 = [<span class="hljs-number">9.9</span>，<span class="hljs-number">9900</span>];<br>A2 = [<span class="hljs-number">8.8</span>，<span class="hljs-number">7.7</span>; ...<br>      <span class="hljs-number">8800</span>，<span class="hljs-number">7700</span>];<br>formatSpec = <span class="hljs-string">&#x27;X为％4.2f米或％8.3f毫米\ n&#x27;</span> ;<br>fprintf（formatSpec，A1，A2）<br>X是<span class="hljs-number">9.90</span>米或<span class="hljs-number">9900.000</span>毫米<br>X是<span class="hljs-number">8.80</span>米或<span class="hljs-number">8800.000</span>毫米<br>X是<span class="hljs-number">7.70</span>米或<span class="hljs-number">7700.000</span>毫米<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>%4.2f在formatSpec输入规定，在输出的每一行的第一个值是与四位数字，包括小数点后两位数字的字段宽度的浮点数。%8.3f在formatSpec输入规定，在输出的每一行的第二个值是具有8位，包括小数点后三位数字的字段宽度的浮点数。\n是开始新行的控制字符。</p>
+</blockquote>
+<h5 id="将双精度值打印为整数"><a href="#将双精度值打印为整数" class="headerlink" title="将双精度值打印为整数"></a>将双精度值打印为整数</h5><p>将带分数的双精度值显式转换为整数值。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs matlab">a = [<span class="hljs-number">1.02</span> <span class="hljs-number">3.04</span> <span class="hljs-number">5.06</span>];<br>fprintf（<span class="hljs-string">&#x27;％d \ n&#x27;</span>，<span class="hljs-built_in">round</span>（a））;<br><span class="hljs-number">1</span>个<br><span class="hljs-number">3</span><br><span class="hljs-number">5</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>%d在formatSpec输入中，将向量中的每个值打印round(a)为有符号整数。\n是开始新行的控制字符。</p>
+</blockquote>
+<h5 id="将表格数据写入文本文件"><a href="#将表格数据写入文本文件" class="headerlink" title="将表格数据写入文本文件"></a>将表格数据写入文本文件</h5><p>将指数函数的简短表写入名为的文本文件exp.txt。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs matlab">x = <span class="hljs-number">0</span>：<span class="hljs-number">.1</span>：<span class="hljs-number">1</span>;<br>A = [x; <span class="hljs-built_in">exp</span>（x）];<br>fileID = fopen（<span class="hljs-string">&#x27;exp.txt&#x27;</span>，<span class="hljs-string">&#x27;w&#x27;</span>）;<br>fprintf（fileID，<span class="hljs-string">&#x27;％6s％12s \ n&#x27;</span>，<span class="hljs-string">&#x27;x&#x27;</span>，<span class="hljs-string">&#x27;exp（x）&#x27;</span>）;<br>fprintf（fileID，<span class="hljs-string">&#x27;％6.2f％12.8f \ n&#x27;</span>，A）;<br>fclose（fileID）;<br></code></pre></td></tr></table></figure>
+
+<p>到第一个呼叫fprintf打印头文本x和exp(x)，并且所述第二呼叫从可变打印中的值A。<br>如果您打算读取该文件的Microsoft ®记事本，使用’\r\n’，而不是’\n’移动到一个新行。例如，将调用替换fprintf为以下内容：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs matlab">fprintf（fileID，<span class="hljs-string">&#x27;％6s％12s \ r \ n&#x27;</span>，<span class="hljs-string">&#x27;x&#x27;</span>，<span class="hljs-string">&#x27;exp（x）&#x27;</span>）;<br>fprintf（fileID，<span class="hljs-string">&#x27;％6.2f％12.8f \ r \ n&#x27;</span>，A）;<br></code></pre></td></tr></table></figure>
+
+<p>MATLAB ®导入功能，所有的UNIX ®应用程序，和微软的Word和写字板识别’\n’为一个换行符指标。</p>
+<p>使用type命令查看文件的内容。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs matlab">输入<span class="hljs-built_in">exp</span>.txt<br></code></pre></td></tr></table></figure>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs matlab">x <span class="hljs-built_in">exp</span>（x）<br><br><span class="hljs-number">0.00</span> <span class="hljs-number">1.00000000</span><br><span class="hljs-number">0.10</span> <span class="hljs-number">1.10517092</span><br><span class="hljs-number">0.20</span> <span class="hljs-number">1.22140276</span><br><span class="hljs-number">0.30</span> <span class="hljs-number">1.34985881</span><br><span class="hljs-number">0.40</span> <span class="hljs-number">1.49182470</span><br><span class="hljs-number">0.50</span> <span class="hljs-number">1.64872127</span><br><span class="hljs-number">0.60</span> <span class="hljs-number">1.82211880</span><br><span class="hljs-number">0.70</span> <span class="hljs-number">2.01375271</span><br><span class="hljs-number">0.80</span> <span class="hljs-number">2.22554093</span><br><span class="hljs-number">0.90</span> <span class="hljs-number">2.45960311</span><br><span class="hljs-number">1.00</span> <span class="hljs-number">2.71828183</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="获取写入文件的字节数"><a href="#获取写入文件的字节数" class="headerlink" title="获取写入文件的字节数"></a>获取写入文件的字节数</h5><p>将数据写入文件并返回写入的字节数。<br>将数据数组写入A文件，并获取fprintf写入的字节数。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs matlab">A =魔法（<span class="hljs-number">4</span>）;<br>fileID = fopen（<span class="hljs-string">&#x27;myfile.txt&#x27;</span>，<span class="hljs-string">&#x27;w&#x27;</span>）;<br>nbytes = fprintf（fileID，<span class="hljs-string">&#x27;％5d％5d％5d％5d \ n&#x27;</span>，A）<br></code></pre></td></tr></table></figure>
+
+<p>字节&#x3D; 96<br>该fprintf函数将96字节写入文件。<br>关闭文件。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs matlab">fclose（fileID）;<br></code></pre></td></tr></table></figure>
+
+<p>使用type命令查看文件的内容。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs matlab">类型（<span class="hljs-string">&#x27;myfile.txt&#x27;</span>）<br></code></pre></td></tr></table></figure>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs matlab"><span class="hljs-number">16</span> <span class="hljs-number">5</span> <span class="hljs-number">9</span> <span class="hljs-number">4</span><br><span class="hljs-number">2</span> <span class="hljs-number">11</span> <span class="hljs-number">7</span> <span class="hljs-number">14</span><br><span class="hljs-number">3</span> <span class="hljs-number">10</span> <span class="hljs-number">6</span> <span class="hljs-number">15</span><br><span class="hljs-number">13</span> <span class="hljs-number">8</span> <span class="hljs-number">12</span> <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="在命令窗口中显示超链接"><a href="#在命令窗口中显示超链接" class="headerlink" title="在命令窗口中显示超链接"></a>在命令窗口中显示超链接</h5><p>在屏幕上显示超链接（MathWorks网站）。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs matlab">url = <span class="hljs-string">&#x27;https://www.mathworks.com&#x27;</span> ;<br>sitename = <span class="hljs-string">&#x27;The MathWorks网站&#x27;</span> ;<br>fprintf（<span class="hljs-string">&#x27;[％s ](%s) \ n&#x27;</span>，网址，站点名称）<br><span class="hljs-comment">%s在formatSpec输入指示变量的值url和sitename，应打印为文本。</span><br></code></pre></td></tr></table></figure>
+
+
+<h2 id="八-数学上的常见基本函数-1"><a href="#八-数学上的常见基本函数-1" class="headerlink" title="八.数学上的常见基本函数[1]"></a>八.数学上的常见基本函数[1]</h2><h3 id="1-绝对值和复数幅度"><a href="#1-绝对值和复数幅度" class="headerlink" title="1.绝对值和复数幅度"></a>1.绝对值和复数幅度</h3><h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><p>$$Y &#x3D; abs(X)$$</p>
+<h3 id="2-取模"><a href="#2-取模" class="headerlink" title="2.取模"></a>2.取模</h3><p>除法（模运算）之后的余数。</p>
+<h4 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h4><p>$$Y &#x3D; mod(X)$$</p>
+<h4 id="例"><a href="#例" class="headerlink" title="例"></a>例</h4><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs matlab">&gt;&gt; <span class="hljs-built_in">mod</span>(<span class="hljs-number">5</span>,<span class="hljs-number">2</span>)<br><span class="hljs-built_in">ans</span> =<span class="hljs-number">1</span>                   <span class="hljs-comment">%“除数”是正，“余数”就是正</span><br>&gt;&gt; <span class="hljs-built_in">mod</span>(<span class="hljs-number">-5</span>,<span class="hljs-number">2</span>)<br><span class="hljs-built_in">ans</span> =<span class="hljs-number">1</span><br>&gt;&gt; <span class="hljs-built_in">mod</span>(<span class="hljs-number">5</span>,<span class="hljs-number">-2</span>)<br><span class="hljs-built_in">ans</span> =<span class="hljs-number">-1</span>                  <span class="hljs-comment">%“除数”是负，“余数‘就是负</span><br>&gt;&gt; <span class="hljs-built_in">mod</span>(<span class="hljs-number">-5</span>,<span class="hljs-number">-2</span>)<br><span class="hljs-built_in">ans</span> =<span class="hljs-number">-1</span>                  <span class="hljs-comment">%用rem时，不管“除数”是正是负，“余数”的符号与“被除数”的符号相同</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="3-取余"><a href="#3-取余" class="headerlink" title="3.取余"></a>3.取余</h3><p>除后余数。</p>
+<h4 id="语法-2"><a href="#语法-2" class="headerlink" title="语法"></a>语法</h4><p>$$Y &#x3D; rem(X)$$</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs matlab">&gt;&gt; <span class="hljs-built_in">rem</span>(<span class="hljs-number">5</span>,<span class="hljs-number">2</span>)<br><span class="hljs-built_in">ans</span> =<span class="hljs-number">1</span>                   <span class="hljs-comment">%“被除数”是正，“余数”就是正</span><br>&gt;&gt; <span class="hljs-built_in">rem</span>(<span class="hljs-number">5</span>,<span class="hljs-number">-2</span>)<br><span class="hljs-built_in">ans</span> =<span class="hljs-number">1</span><br>&gt;&gt; <span class="hljs-built_in">rem</span>(<span class="hljs-number">-5</span>,<span class="hljs-number">2</span>)<br><span class="hljs-built_in">ans</span> =<span class="hljs-number">-1</span>                 <span class="hljs-comment">%“被除数”是负，“余数”就是负</span><br>&gt;&gt; <span class="hljs-built_in">rem</span>(<span class="hljs-number">-5</span>,<span class="hljs-number">-2</span>)<br><span class="hljs-built_in">ans</span> =<span class="hljs-number">-1</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="4-高斯取整函数"><a href="#4-高斯取整函数" class="headerlink" title="4.高斯取整函数"></a>4.高斯取整函数</h3><p>向零舍入。</p>
+<h4 id="语法-3"><a href="#语法-3" class="headerlink" title="语法"></a>语法</h4><p>$$Y &#x3D; fix(x)$$</p>
+<h4 id="例-1"><a href="#例-1" class="headerlink" title="例"></a>例</h4><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs matlab"><span class="hljs-built_in">fix</span>([<span class="hljs-number">2.4</span>,<span class="hljs-number">3.7</span>,<span class="hljs-number">-1.4</span>,<span class="hljs-number">-4.7</span>])<br><span class="hljs-built_in">ans</span> =<br>    <span class="hljs-number">2</span>     <span class="hljs-number">3</span>    <span class="hljs-number">-1</span>    <span class="hljs-number">-4</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="5-四舍五入函数"><a href="#5-四舍五入函数" class="headerlink" title="5.四舍五入函数"></a>5.四舍五入函数</h3><p>四舍五入到最接近的十进制或整数.</p>
+<p>$$Y &#x3D; round(x)$$</p>
+<h4 id="例-2"><a href="#例-2" class="headerlink" title="例"></a>例</h4><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs matlab"><span class="hljs-built_in">round</span>([<span class="hljs-number">2.4</span>,<span class="hljs-number">3.7</span>,<span class="hljs-number">-1.4</span>,<span class="hljs-number">-4.7</span>])<br><span class="hljs-built_in">ans</span> =<br>   <span class="hljs-number">2</span>     <span class="hljs-number">4</span>    <span class="hljs-number">-1</span>    <span class="hljs-number">-5</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="6-返回不大于x的最大整数值"><a href="#6-返回不大于x的最大整数值" class="headerlink" title="6.返回不大于x的最大整数值"></a>6.返回不大于x的最大整数值</h3><p>向负无穷大舍入。</p>
+<p>$$Y &#x3D; floor(x)$$</p>
+<h4 id="例-3"><a href="#例-3" class="headerlink" title="例"></a>例</h4><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs matlab"><span class="hljs-built_in">floor</span>([<span class="hljs-number">2.4</span>,<span class="hljs-number">3.7</span>,<span class="hljs-number">-1.4</span>,<span class="hljs-number">-4.7</span>])<br><span class="hljs-built_in">ans</span> =<br>         <span class="hljs-number">2</span>     <span class="hljs-number">3</span>    <span class="hljs-number">-2</span>    <span class="hljs-number">-5</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="7-返回不小于x的最小整数值"><a href="#7-返回不小于x的最小整数值" class="headerlink" title="7.返回不小于x的最小整数值"></a>7.返回不小于x的最小整数值</h3><p>向正无穷大方向舍入.</p>
+<p>$$Y &#x3D; ceil(x)$$</p>
+<h4 id="例-4"><a href="#例-4" class="headerlink" title="例"></a>例</h4><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs matlab"><span class="hljs-built_in">ceil</span>([<span class="hljs-number">2.4</span>,<span class="hljs-number">3.7</span>,<span class="hljs-number">-1.4</span>,<span class="hljs-number">-4.7</span>])<br><span class="hljs-built_in">ans</span> =<br>    <span class="hljs-number">3</span>     <span class="hljs-number">4</span>    <span class="hljs-number">-1</span>    <span class="hljs-number">-4</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="九-format-函数"><a href="#九-format-函数" class="headerlink" title="九.format()函数"></a>九.format()函数</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs matlab">data1.txt:<br>    <span class="hljs-number">0</span> <span class="hljs-number">3886.162</span> <span class="hljs-number">2200.938</span> <span class="hljs-number">141.240</span><br>    <span class="hljs-number">1</span> <span class="hljs-number">3721.139</span> <span class="hljs-number">2208.475</span> <span class="hljs-number">141.152</span><br>    <span class="hljs-number">2</span> <span class="hljs-number">3866.200</span> <span class="hljs-number">2198.936</span> <span class="hljs-number">141.126</span><br>    <span class="hljs-number">3</span> <span class="hljs-number">3678.048</span> <span class="hljs-number">2199.191</span> <span class="hljs-number">141.250</span><br>    <span class="hljs-number">4</span> <span class="hljs-number">3685.453</span> <span class="hljs-number">2203.726</span> <span class="hljs-number">141.241</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs matlab">读取数据：<br>data=load(<span class="hljs-string">&#x27;data1.txt&#x27;</span>)<br>dat1 =<br>    <span class="hljs-number">1.0e+03</span> *<br>             <span class="hljs-number">0</span>    <span class="hljs-number">3.8862</span>    <span class="hljs-number">2.2009</span>    <span class="hljs-number">0.1412</span><br>        <span class="hljs-number">0.0010</span>    <span class="hljs-number">3.7211</span>    <span class="hljs-number">2.2085</span>    <span class="hljs-number">0.1412</span><br>        <span class="hljs-number">0.0020</span>    <span class="hljs-number">3.8662</span>    <span class="hljs-number">2.1989</span>    <span class="hljs-number">0.1411</span><br>        <span class="hljs-number">0.0030</span>    <span class="hljs-number">3.6780</span>    <span class="hljs-number">2.1992</span>    <span class="hljs-number">0.1412</span><br>        <span class="hljs-number">0.0040</span>    <span class="hljs-number">3.6855</span>    <span class="hljs-number">2.2037</span>    <span class="hljs-number">0.1412</span><br></code></pre></td></tr></table></figure>
+
+<p>1.format short：默认格式，小数点后保留4位</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs matlab">dat1 =<br>       <span class="hljs-number">1.0e+03</span> *<br>             <span class="hljs-number">0</span>    <span class="hljs-number">3.8862</span>    <span class="hljs-number">2.2009</span>    <span class="hljs-number">0.1412</span><br>        <span class="hljs-number">0.0010</span>    <span class="hljs-number">3.7211</span>    <span class="hljs-number">2.2085</span>    <span class="hljs-number">0.1412</span><br>        <span class="hljs-number">0.0020</span>    <span class="hljs-number">3.8662</span>    <span class="hljs-number">2.1989</span>    <span class="hljs-number">0.1411</span><br>        <span class="hljs-number">0.0030</span>    <span class="hljs-number">3.6780</span>    <span class="hljs-number">2.1992</span>    <span class="hljs-number">0.1412</span><br>        <span class="hljs-number">0.0040</span>    <span class="hljs-number">3.6855</span>    <span class="hljs-number">2.2037</span>    <span class="hljs-number">0.1412</span><br></code></pre></td></tr></table></figure>
+
+<p>2.format long：有效数字16位</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs matlab">dat1 =<br>       <span class="hljs-number">1.0e+03</span> *<br>      列 <span class="hljs-number">1</span> 至 <span class="hljs-number">3</span><br>                       <span class="hljs-number">0</span>   <span class="hljs-number">3.886162000000000</span>   <span class="hljs-number">2.200938000000000</span><br>       <span class="hljs-number">0.001000000000000</span>   <span class="hljs-number">3.721139000000000</span>   <span class="hljs-number">2.208475000000000</span><br>       <span class="hljs-number">0.002000000000000</span>   <span class="hljs-number">3.866200000000000</span>   <span class="hljs-number">2.198936000000000</span><br>       <span class="hljs-number">0.003000000000000</span>   <span class="hljs-number">3.678048000000000</span>   <span class="hljs-number">2.199191000000000</span><br>       <span class="hljs-number">0.004000000000000</span>   <span class="hljs-number">3.685453000000000</span>   <span class="hljs-number">2.203726000000000</span><br>      列 <span class="hljs-number">4</span><br>       <span class="hljs-number">0.141240000000000</span><br>       <span class="hljs-number">0.141152000000000</span><br>       <span class="hljs-number">0.141126000000000</span><br>       <span class="hljs-number">0.141250000000000</span><br>       <span class="hljs-number">0.141241000000000</span><br></code></pre></td></tr></table></figure>
+
+<p>3.format long e：有效数字16位加3位指数</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs matlab">dat1 =<br>      列 <span class="hljs-number">1</span> 至 <span class="hljs-number">2</span><br>                             <span class="hljs-number">0</span>     <span class="hljs-number">3.886162000000000e+03</span><br>         <span class="hljs-number">1.000000000000000e+00</span>     <span class="hljs-number">3.721139000000000e+03</span><br>         <span class="hljs-number">2.000000000000000e+00</span>     <span class="hljs-number">3.866200000000000e+03</span><br>         <span class="hljs-number">3.000000000000000e+00</span>     <span class="hljs-number">3.678048000000000e+03</span><br>         <span class="hljs-number">4.000000000000000e+00</span>     <span class="hljs-number">3.685453000000000e+03</span><br>      列 <span class="hljs-number">3</span> 至 <span class="hljs-number">4</span><br>         <span class="hljs-number">2.200938000000000e+03</span>     <span class="hljs-number">1.412400000000000e+02</span><br>         <span class="hljs-number">2.208475000000000e+03</span>     <span class="hljs-number">1.411520000000000e+02</span><br>         <span class="hljs-number">2.198936000000000e+03</span>     <span class="hljs-number">1.411260000000000e+02</span><br>         <span class="hljs-number">2.199191000000000e+03</span>     <span class="hljs-number">1.412500000000000e+02</span><br>         <span class="hljs-number">2.203726000000000e+03</span>     <span class="hljs-number">1.412410000000000e+02</span><br></code></pre></td></tr></table></figure>
+
+<p>4.format short e：有效数字5位加3位指数</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs matlab">dat1 =<br>                <span class="hljs-number">0</span>   <span class="hljs-number">3.8862e+03</span>   <span class="hljs-number">2.2009e+03</span>   <span class="hljs-number">1.4124e+02</span><br>       <span class="hljs-number">1.0000e+00</span>   <span class="hljs-number">3.7211e+03</span>   <span class="hljs-number">2.2085e+03</span>   <span class="hljs-number">1.4115e+02</span><br>       <span class="hljs-number">2.0000e+00</span>   <span class="hljs-number">3.8662e+03</span>   <span class="hljs-number">2.1989e+03</span>   <span class="hljs-number">1.4113e+02</span><br>       <span class="hljs-number">3.0000e+00</span>   <span class="hljs-number">3.6780e+03</span>   <span class="hljs-number">2.1992e+03</span>   <span class="hljs-number">1.4125e+02</span><br>       <span class="hljs-number">4.0000e+00</span>   <span class="hljs-number">3.6855e+03</span>   <span class="hljs-number">2.2037e+03</span>   <span class="hljs-number">1.4124e+02</span><br></code></pre></td></tr></table></figure>
+
+<p>5.format bank：保留两位小数位</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs matlab">dat1 =<br>                 <span class="hljs-number">0</span>       <span class="hljs-number">3886.16</span>       <span class="hljs-number">2200.94</span>        <span class="hljs-number">141.24</span><br>              <span class="hljs-number">1.00</span>       <span class="hljs-number">3721.14</span>       <span class="hljs-number">2208.47</span>        <span class="hljs-number">141.15</span><br>              <span class="hljs-number">2.00</span>       <span class="hljs-number">3866.20</span>       <span class="hljs-number">2198.94</span>        <span class="hljs-number">141.13</span><br>              <span class="hljs-number">3.00</span>       <span class="hljs-number">3678.05</span>       <span class="hljs-number">2199.19</span>        <span class="hljs-number">141.25</span><br>              <span class="hljs-number">4.00</span>       <span class="hljs-number">3685.45</span>       <span class="hljs-number">2203.73</span>        <span class="hljs-number">141.24</span><br></code></pre></td></tr></table></figure>
+
+<p>6.format +：只给出正负</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs matlab">dat1 =<br>     +++<br>    ++++<br>    ++++<br>    ++++<br>    ++++<br></code></pre></td></tr></table></figure>
+
+<p>7.format rational：以分数的形式表示</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs matlab">dat1 =<br>           <span class="hljs-number">0</span>         <span class="hljs-number">143788</span>/<span class="hljs-number">37</span>       <span class="hljs-number">35215</span>/<span class="hljs-number">16</span>        <span class="hljs-number">3531</span>/<span class="hljs-number">25</span><br>           <span class="hljs-number">1</span>         <span class="hljs-number">133961</span>/<span class="hljs-number">36</span>       <span class="hljs-number">41961</span>/<span class="hljs-number">19</span>       <span class="hljs-number">17644</span>/<span class="hljs-number">125</span><br>           <span class="hljs-number">2</span>          <span class="hljs-number">19331</span>/<span class="hljs-number">5</span>        <span class="hljs-number">35183</span>/<span class="hljs-number">16</span>       <span class="hljs-number">17923</span>/<span class="hljs-number">127</span><br>           <span class="hljs-number">3</span>          <span class="hljs-number">77239</span>/<span class="hljs-number">21</span>       <span class="hljs-number">46183</span>/<span class="hljs-number">21</span>         <span class="hljs-number">565</span>/<span class="hljs-number">4</span><br>           <span class="hljs-number">4</span>          <span class="hljs-number">40540</span>/<span class="hljs-number">11</span>       <span class="hljs-number">24241</span>/<span class="hljs-number">11</span>       <span class="hljs-number">11723</span>/<span class="hljs-number">83</span><br></code></pre></td></tr></table></figure>
+
+<p>8.format hex：以16进制数表示</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs matlab">dat1 =<br>      列 <span class="hljs-number">1</span> 至 <span class="hljs-number">3</span><br>       <span class="hljs-number">0000000000000000</span>   <span class="hljs-number">40</span>ae5c52f1a9fbe7   <span class="hljs-number">40</span>a131e04189374c<br>       <span class="hljs-number">3</span>ff0000000000000   <span class="hljs-number">40</span>ad12472b020c4a   <span class="hljs-number">40</span>a140f333333333<br>       <span class="hljs-number">4000000000000000</span>   <span class="hljs-number">40</span>ae346666666666   <span class="hljs-number">40</span>a12ddf3b645a1d<br>       <span class="hljs-number">4008000000000000</span>   <span class="hljs-number">40</span>acbc189374bc6a   <span class="hljs-number">40</span>a12e61cac08312<br>       <span class="hljs-number">4010000000000000</span>   <span class="hljs-number">40</span>accae7ef9db22d   <span class="hljs-number">40</span>a13773b645a1cb<br>      列 <span class="hljs-number">4</span><br>       <span class="hljs-number">4061</span>a7ae147ae148<br>       <span class="hljs-number">4061</span>a4dd2f1a9fbe<br>       <span class="hljs-number">4061</span>a4083126e979<br>       <span class="hljs-number">4061</span>a80000000000<br>       <span class="hljs-number">4061</span>a7b645a1cac1<br></code></pre></td></tr></table></figure>
+
+<p>9.format long g：15位有效数</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs matlab">dat1 =<br>      列 <span class="hljs-number">1</span> 至 <span class="hljs-number">2</span><br>                             <span class="hljs-number">0</span>                  <span class="hljs-number">3886.162</span><br>                             <span class="hljs-number">1</span>                  <span class="hljs-number">3721.139</span><br>                             <span class="hljs-number">2</span>                    <span class="hljs-number">3866.2</span><br>                             <span class="hljs-number">3</span>                  <span class="hljs-number">3678.048</span><br>                             <span class="hljs-number">4</span>                  <span class="hljs-number">3685.453</span><br>      列 <span class="hljs-number">3</span> 至 <span class="hljs-number">4</span><br>                      <span class="hljs-number">2200.938</span>                    <span class="hljs-number">141.24</span><br>                      <span class="hljs-number">2208.475</span>                   <span class="hljs-number">141.152</span><br>                      <span class="hljs-number">2198.936</span>                   <span class="hljs-number">141.126</span><br>                      <span class="hljs-number">2199.191</span>                    <span class="hljs-number">141.25</span><br>                      <span class="hljs-number">2203.726</span>                   <span class="hljs-number">141.241</span><br></code></pre></td></tr></table></figure>
+
+<p>10.format short g：5位有效数</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs matlab">dat1 =<br>                <span class="hljs-number">0</span>       <span class="hljs-number">3886.2</span>       <span class="hljs-number">2200.9</span>       <span class="hljs-number">141.24</span><br>                <span class="hljs-number">1</span>       <span class="hljs-number">3721.1</span>       <span class="hljs-number">2208.5</span>       <span class="hljs-number">141.15</span><br>                <span class="hljs-number">2</span>       <span class="hljs-number">3866.2</span>       <span class="hljs-number">2198.9</span>       <span class="hljs-number">141.13</span><br>                <span class="hljs-number">3</span>         <span class="hljs-number">3678</span>       <span class="hljs-number">2199.2</span>       <span class="hljs-number">141.25</span><br>                <span class="hljs-number">4</span>       <span class="hljs-number">3685.5</span>       <span class="hljs-number">2203.7</span>       <span class="hljs-number">141.24</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="十-数据文件读取"><a href="#十-数据文件读取" class="headerlink" title="十.数据文件读取"></a>十.数据文件读取</h2><h3 id="1-text文件"><a href="#1-text文件" class="headerlink" title="1.text文件"></a>1.text文件</h3><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs matlab">data1.txt:<br>    <span class="hljs-number">0</span> <span class="hljs-number">3886.162</span> <span class="hljs-number">2200.938</span> <span class="hljs-number">141.240</span><br>     <span class="hljs-number">1</span> <span class="hljs-number">3721.139</span> <span class="hljs-number">2208.475</span> <span class="hljs-number">141.152</span><br>     <span class="hljs-number">2</span> <span class="hljs-number">3866.200</span> <span class="hljs-number">2198.936</span> <span class="hljs-number">141.126</span><br>     <span class="hljs-number">3</span> <span class="hljs-number">3678.048</span> <span class="hljs-number">2199.191</span> <span class="hljs-number">141.250</span><br>     <span class="hljs-number">4</span> <span class="hljs-number">3685.453</span> <span class="hljs-number">2203.726</span> <span class="hljs-number">141.241</span><br></code></pre></td></tr></table></figure>
+
+<p>1.dat1&#x3D;load()</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs matlab">dat1=load(<span class="hljs-string">&#x27;data1.txt&#x27;</span>)<br>    dat1 =<br>       <span class="hljs-number">1.0e+03</span> *<br>             <span class="hljs-number">0</span>    <span class="hljs-number">3.8862</span>    <span class="hljs-number">2.2009</span>    <span class="hljs-number">0.1412</span><br>        <span class="hljs-number">0.0010</span>    <span class="hljs-number">3.7211</span>    <span class="hljs-number">2.2085</span>    <span class="hljs-number">0.1412</span><br>        <span class="hljs-number">0.0020</span>    <span class="hljs-number">3.8662</span>    <span class="hljs-number">2.1989</span>    <span class="hljs-number">0.1411</span><br>        <span class="hljs-number">0.0030</span>    <span class="hljs-number">3.6780</span>    <span class="hljs-number">2.1992</span>    <span class="hljs-number">0.1412</span><br>        <span class="hljs-number">0.0040</span>    <span class="hljs-number">3.6855</span>    <span class="hljs-number">2.2037</span>    <span class="hljs-number">0.1412</span><br></code></pre></td></tr></table></figure>
+
+<p>2.dat2&#x3D;importdata()</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs matlab">dat2=importdata(<span class="hljs-string">&#x27;data1.txt&#x27;</span>)<br><br>dat2 =<br>      列 <span class="hljs-number">1</span> 至 <span class="hljs-number">2</span><br>                             <span class="hljs-number">0</span>                  <span class="hljs-number">3886.162</span><br>                             <span class="hljs-number">1</span>                  <span class="hljs-number">3721.139</span><br>                             <span class="hljs-number">2</span>                    <span class="hljs-number">3866.2</span><br>                             <span class="hljs-number">3</span>                  <span class="hljs-number">3678.048</span><br>                             <span class="hljs-number">4</span>                  <span class="hljs-number">3685.453</span><br>      列 <span class="hljs-number">3</span> 至 <span class="hljs-number">4</span><br>                      <span class="hljs-number">2200.938</span>                    <span class="hljs-number">141.24</span><br></code></pre></td></tr></table></figure>
+
+<p>3.[a,b,c,d]&#x3D;textread()</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs matlab">[a,b,c,d]=textread(<span class="hljs-string">&#x27;data1.txt&#x27;</span>,<span class="hljs-string">&#x27;%2d %8.3f %8.3f %7.3f&#x27;</span>)<br><br>a =<br>         <span class="hljs-number">0</span><br>         <span class="hljs-number">1</span><br>         <span class="hljs-number">2</span><br>         <span class="hljs-number">3</span><br>         <span class="hljs-number">4</span><br>b =<br>                      <span class="hljs-number">3886.162</span><br>                      <span class="hljs-number">3721.139</span><br>                        <span class="hljs-number">3866.2</span><br>                      <span class="hljs-number">3678.048</span><br>                      <span class="hljs-number">3685.453</span><br>c =<br>                      <span class="hljs-number">2200.938</span><br>                      <span class="hljs-number">2208.475</span><br>                      <span class="hljs-number">2198.936</span><br>                      <span class="hljs-number">2199.191</span><br>                      <span class="hljs-number">2203.726</span><br>d =<br>                        <span class="hljs-number">141.24</span><br>                       <span class="hljs-number">141.152</span><br>                       <span class="hljs-number">141.126</span><br>                        <span class="hljs-number">141.25</span><br>                       <span class="hljs-number">141.241</span><br></code></pre></td></tr></table></figure>
+
+<p>4.dat3&#x3D;dat2(m:n,p:q)%提取矩阵的指定行和列组成的新矩阵</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs matlab">dat2(<span class="hljs-number">1</span>:<span class="hljs-number">2</span>,<span class="hljs-number">1</span>:<span class="hljs-number">2</span>)<span class="hljs-comment">%提取矩阵的指定行和列组成的新矩阵</span><br><span class="hljs-built_in">ans</span> =<br>                             <span class="hljs-number">0</span>                  <span class="hljs-number">3886.162</span><br>                             <span class="hljs-number">1</span>                  <span class="hljs-number">3721.139</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-excel文件"><a href="#2-excel文件" class="headerlink" title="2. excel文件"></a>2. excel文件</h3><p>1.num&#x3D;xlsread(文件名)</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs matlab">num=xlsread(<span class="hljs-string">&#x27;移动通知户开户数.xlsx&#x27;</span>)<br>num =<br>               <span class="hljs-number">1</span>       <span class="hljs-number">57286</span><br>               <span class="hljs-number">2</span>       <span class="hljs-number">34096</span><br>               …………………………………………<br></code></pre></td></tr></table></figure>
+
+<p>2.num&#x3D;xlsread(文件名,shett号，范围1)</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs matlab">num=xlsread(<span class="hljs-string">&#x27;移动通知户开户数.xlsx&#x27;</span>,<span class="hljs-string">&#x27;A2:A67&#x27;</span>)<br>    num =<br>         <span class="hljs-number">1</span><br>         <span class="hljs-number">2</span><br>         ……<br></code></pre></td></tr></table></figure>
+
+<p>3.num&#x3D;xlsread(文件名,sheet号)</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs matlab">num=xlsread(<span class="hljs-string">&#x27;移动通知户开户数.xlsx&#x27;</span>,<span class="hljs-number">1</span>)<br>    num =<br>               <span class="hljs-number">1</span>       <span class="hljs-number">57286</span><br>               <span class="hljs-number">2</span>       <span class="hljs-number">34096</span><br>               …………………………………………<br></code></pre></td></tr></table></figure>
+
+<p>4.[x,y]&#x3D;xlsread(文件名,shett号，范围1)</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs matlab">num=xlsread(<span class="hljs-string">&#x27;移动通知户开户数.xlsx&#x27;</span>,<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;A2:A67&#x27;</span>)<br>    num =<br>         <span class="hljs-number">1</span><br>         <span class="hljs-number">2</span><br>         ……<br></code></pre></td></tr></table></figure>
+
+<p>5.num&#x3D;readtable(文件名)</p>
+<blockquote>
+<p>得到的是table类型数据</p>
+</blockquote>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs matlab">num=<span class="hljs-built_in">readtable</span>(<span class="hljs-string">&#x27;移动通知户开户数.xlsx&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs matlab">num =<br>      <span class="hljs-number">731</span>×<span class="hljs-number">2</span> <span class="hljs-built_in">table</span><br>      Var1    Var2<br>      ____    _____<br>       <span class="hljs-number">1</span>     <span class="hljs-number">57286</span><br>       <span class="hljs-number">2</span>     <span class="hljs-number">34096</span><br>       <span class="hljs-number">3</span>     <span class="hljs-number">26996</span><br>       <span class="hljs-number">4</span>     <span class="hljs-number">29552</span><br>       <span class="hljs-number">5</span>     <span class="hljs-number">27492</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="十一-函数kstest"><a href="#十一-函数kstest" class="headerlink" title="十一.函数kstest()"></a>十一.函数kstest()</h2><h3 id="1-语法"><a href="#1-语法" class="headerlink" title="1. 语法"></a>1. 语法</h3><p>$H &#x3D; kstest(X)$<br>$H &#x3D; kstest(X,cdf)$<br>$H &#x3D; kstest(X,cdf,alpha)$<br>$H&#x3D;kstest(X,cdf,alpha,tail)$<br>$[H,P,KSSTAT,CV] &#x3D; kstest(X,cdf,alpha)$</p>
+<h3 id="2-描述-1"><a href="#2-描述-1" class="headerlink" title="2. 描述"></a>2. 描述</h3><blockquote>
+<p>H &#x3D; kstest(X) %测试向量X是否服从标准正态分布，测试水平为5%。<br>  H &#x3D; kstest(X,cdf) %指定累积分布函数为cdf的测试(cdf&#x3D;[ ]时表示标准正态分布)，测试水平为5%<br>  H &#x3D; kstest(X,cdf,alpha) % alpha为指定测试水平H&#x3D;kstest(X,cdf,alpha,tail) % tail&#x3D;0为双侧检验， tail&#x3D;1单侧(&lt;)检验， tail&#x3D;-1单侧(&gt;) 检验<br>  [H,P,KSSTAT,CV] &#x3D; kstest(X,cdf,alpha) %P为原假设成立的概率，KSSTAT为测试统计量的值，CV为是否接受假设的临界值。</p>
+</blockquote>
+<h3 id="3-参数"><a href="#3-参数" class="headerlink" title="3. 参数"></a>3. 参数</h3><h4 id="3-1-输入参数"><a href="#3-1-输入参数" class="headerlink" title="3.1 输入参数"></a>3.1 输入参数</h4><ul>
+<li><p>x— 样本数据</p></p>
+</li>
+<li><p>Alpha— 重要性级别（0.05（默认）| 标量值，范围为（0,1））</p>
+</li>
+<li><p>CDF— 假设连续分布矩阵的 cdf | 概率分布对象</p>
+</li>
+<li><p>Tail— 备选假设的类型</p>
+</li>
+</ul>
+<h4 id="3-2-输出参数"><a href="#3-2-输出参数" class="headerlink" title="3.2 输出参数"></a>3.2 输出参数</h4><ul>
+<li><p>h—假设检验结果<br>如果为h &#x3D; 1，则表明在Alpha重要性级别拒绝了原假设，即不是正态分布。<br>如果为h &#x3D; 0，则表明在Alpha重要性级别上无法拒绝原假设，即是正态分布。</p>
+</li>
+<li><p>p— p值<br>较小的值对原p假设的有效性表示怀疑。</p>
+</li>
+<li><p>ksstat—测试统计<br>假设检验的检验统计量，作为非负标量值返回。</p>
+</li>
+<li><p>cv—临界值<br>临界值，作为非负标量值返回。</p>
+</li>
+</ul>
+<h3 id="4-注意"><a href="#4-注意" class="headerlink" title="4. 注意"></a>4. 注意</h3><blockquote>
+<p>kstest适用于小样本，当数据过大时，检验拒绝的临界值非常小，结果往往是拒绝原假设。<br>各种检验方法适用范围如下：</p>
+</blockquote>
+<ol>
+<li>chi2gof适合大样本，一般要求50个以上</li>
+<li>kstest适于小样本，</li>
+<li>lillietest用于正态分布，与kstest类似，适用于小样本</li>
+<li>jbtest,是通过峰度、偏度检测正态分布的，适用用大样本。</li>
+</ol>
+<h2 id="十二-函数crosstab"><a href="#十二-函数crosstab" class="headerlink" title="十二.函数crosstab()"></a>十二.函数crosstab()</h2><h3 id="1-句法-1"><a href="#1-句法-1" class="headerlink" title="1.句法"></a>1.句法</h3><p>$tbl &#x3D; crosstab(x1,x2)$<br>$tbl &#x3D; crosstab(x1,…,xn)$<br>$[tbl,chi2,p] &#x3D; crosstab()$<br>$[tbl,chi2,p,labels] &#x3D; crosstab()$</p>
+<h3 id="2-描述-2"><a href="#2-描述-2" class="headerlink" title="2.描述"></a>2.描述</h3><blockquote>
+<p>tbl &#x3D; crosstab(x1,x2) %返回一个交叉列表，tbl具有相同长度的两个向量，的，x1和x2。<br>  tbl &#x3D; crosstab(x1,…,xn) %返回一个多维交叉列表，tbl，对于多个输入向量数据，x1，x2，…， xn。<br>  [tbl,chi2,p] &#x3D; crosstab() %对于在每个维度上独立的测试，还返回卡方统计量pchi2及其p值。您可以使用任何以前的语法。ptbl<br>  [tbl,chi2,p,labels] &#x3D; crosstab() %还返回一个单元格数组，labels其中每个输入参数x1… 都包含一列标签xn。</p>
+</blockquote>
+<h3 id="3-概念"><a href="#3-概念" class="headerlink" title="3.概念"></a>3.概念</h3><blockquote>
+<p>频数（Frequency），又称“次数”。指变量值中代表某种特征的数（标志值）出现的次数;</p>
+</blockquote>
+<h3 id="4-参数"><a href="#4-参数" class="headerlink" title="4.参数"></a>4.参数</h3><h4 id="输入参数"><a href="#输入参数" class="headerlink" title="输入参数"></a>输入参数</h4><ul>
+<li>x1— 分组变量的输入向量</li>
+<li>x2— 分组变量的输入向量</li>
+<li>x1,…,xn— 输入向量</li>
+</ul>
+<h4 id="输出参数"><a href="#输出参数" class="headerlink" title="输出参数"></a>输出参数</h4><ul>
+<li>tbl— 整数值的交叉列表表（矩阵）</li>
+<li>chi2—卡方统计（正标量值）</li>
+<li>p— p -Value（标量值，范围内[0,1]）</li>
+<li>labels—数据标签（单元格数组）</li>
+</ul>
+<h3 id="5-例-2"><a href="#5-例-2" class="headerlink" title="5.例"></a>5.例</h3><p>1.tbl &#x3D; crosstab(x1,x2)</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs matlab">x = [<span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">1</span>];<br>y = [<span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">5</span> <span class="hljs-number">3</span> <span class="hljs-number">1</span>];<br>tbl = crosstab(x,y)<br><span class="hljs-comment">%行表示x中出现的三个数值</span><br><span class="hljs-comment">%列表示y中出现的四个数值</span><br><span class="hljs-comment">%得到的表表示对应值出现的次数，例（1，1）</span><br>tbl =<br>     <span class="hljs-number">2</span>     <span class="hljs-number">1</span>     <span class="hljs-number">0</span>     <span class="hljs-number">0</span><br>     <span class="hljs-number">0</span>     <span class="hljs-number">0</span>     <span class="hljs-number">0</span>     <span class="hljs-number">1</span><br>     <span class="hljs-number">0</span>     <span class="hljs-number">0</span>     <span class="hljs-number">1</span>     <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+
+<p>2.[tbl,chi2,p] &#x3D; crosstab(x,y)</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs matlab">[<span class="hljs-built_in">table</span>,chi2,p] = crosstab(x,y)<br>    <span class="hljs-built_in">table</span> =<br>         <span class="hljs-number">2</span>     <span class="hljs-number">1</span>     <span class="hljs-number">0</span>     <span class="hljs-number">0</span><br>         <span class="hljs-number">0</span>     <span class="hljs-number">0</span>     <span class="hljs-number">0</span>     <span class="hljs-number">1</span><br>         <span class="hljs-number">0</span>     <span class="hljs-number">0</span>     <span class="hljs-number">1</span>     <span class="hljs-number">0</span><br>    chi2 =<br>        <span class="hljs-number">10</span><br>    p =<br>        <span class="hljs-number">0.1247</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="十三-zscore函数-数据的标准化处理"><a href="#十三-zscore函数-数据的标准化处理" class="headerlink" title="十三.zscore函数 数据的标准化处理"></a>十三.zscore函数 数据的标准化处理</h2><p><img src="https://s1.ax1x.com/2020/08/06/agv70H.png" srcset="/img/loading.gif" lazyload alt="agv70H.png"></p>
+<h3 id="1-简介-1"><a href="#1-简介-1" class="headerlink" title="1.简介"></a>1.简介</h3><p>在数据分析之前，我们通常需要先将数据标准化（normalization），利用标准化后的数据进行数据分析。数据标准化也就是统计数据的指数化。数据标准化处理主要包括数据同趋化处理和无量纲化处理两个方面。数据同趋化处理主要解决不同性质数据问题，对不同性质指标直接加总不能正确反映不同作用力的综合结果，须先考虑改变逆指标数据性质，使所有指标对测评方案的作用力同趋化，再加总才能得出正确结果。数据无量纲化处理主要解决数据的可比性。数据标准化的方法有很多种，常用的有“最小—最大标准化”、“Z-score标准化”和“按小数定标标准化”等。经过上述标准化处理，原始数据均转换为无量纲化指标测评值，即各指标值都处于同一个数量级别上，可以进行综合测评分析。</p>
+<h3 id="2-z-score-标准化"><a href="#2-z-score-标准化" class="headerlink" title="2.z-score 标准化"></a>2.z-score 标准化</h3><p>这种方法基于原始数据的均值（mean）和标准差（standard deviation）进行数据的标准化。将A的原始值x使用z-score标准化到x’。<br>z-score标准化方法适用于属性A的最大值和最小值未知的情况，或有超出取值范围的离群数据的情况。</p>
+<h3 id="3-计算公式"><a href="#3-计算公式" class="headerlink" title="3.计算公式"></a>3.计算公式</h3><ul>
+<li>新数据&#x3D;（原数据-均值）&#x2F;标准差<br>用zscore函数可以把数据进行z-score标准化处理。</li>
+</ul>
+<h3 id="4-用法"><a href="#4-用法" class="headerlink" title="4.用法"></a>4.用法</h3><p>$Y&#x3D;zscore(X)$</p>
+<blockquote>
+<p>x为标准化之前的数据，y为标准化后的数据</p>
+</blockquote>
+<h3 id="5-特点："><a href="#5-特点：" class="headerlink" title="5.特点："></a>5.特点：</h3><ol>
+<li>样本平均值为0，方差为1；</li>
+<li>区间不确定，处理后各指标的最大值、最小值不相同；</li>
+<li>对于指标值恒定的情况不适用；</li>
+<li>对于要求标准化后数据 大于0 的评价方法（如几何加权平均法）不适用。</li>
+</ol>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/optim/ug/intlinprog.html">linprog官方文档</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/f_h_h/article/details/100537394">MATLAB中关于函数intlinprog的使用</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.cnblogs.com/goodtwo/p/11146540.html">Matlab求解非线性规划，fmincon函数的用法总结</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.cnblogs.com/cherry231/p/8426280.html">MATLAB规划问题——线性规划和非线性规划(from_CSDN_echo_hello)</a>
+<a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:5" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43264642/article/details/88949745">matlab学习——非线性规划</a>
+<a href="#fnref:5" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:6" class="footnote-text"><span><a target="_blank" rel="noopener" href="http://blog.sina.com.cn/s/blog_13e29d95e0102vmap.html">不等式最优解最小值fminbnd、fminunc、fminsearch、fmincon</a>
+<a href="#fnref:6" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:7" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/31052709/answer/74094320">fminunc与fminsearch函数的区别是什么?</a>
+<a href="#fnref:7" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:8" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://zhidao.baidu.com/question/279465310.html">怎样用matlab做时间序列平稳性检验</a>
+<a href="#fnref:8" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:9" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/econ/adftest.html?s_tid=srchtitle">adftest()官方文档</a>
+<a href="#fnref:9" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:10" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://wenku.baidu.com/view/f14c18215901020207409c97.html">特征值与特征向量的概念、性质及其求法</a>
+<a href="#fnref:10" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:11" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.cnblogs.com/MarshallL/p/4045768.html">MATLAB 函数编写方法， 浅析MATLAB中的内联函数、匿名函数和函数函数</a>
+<a href="#fnref:11" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:12" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.cnblogs.com/MarshallL/p/4047880.html">Matlab 接受字符串并转为符号表达式，inline函数，匿名函数形式的方法汇总</a>
+<a href="#fnref:12" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:13" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/peterli_xue/article/details/7577003?utm_source=blogxgwz8">matlab @函数句柄以及inline函数、匿名函数、自定义函数</a>
+<a href="#fnref:13" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:14" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.mathworks.com/help/matlab/ref/fprintf.html?s_tid=srchtitle">官方文档</a>
+<a href="#fnref:14" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:15" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.mathworks.com/help/stats/kstest.html?s_tid=srchtitle">kstest官方文档</a>
+<a href="#fnref:15" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:16" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.ilovematlab.cn/thread-171395-1-1.html">ks检验（kstest）几个参数的含义</a>
+<a href="#fnref:16" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:17" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/WUDIPIPIXIA/article/details/101939085">matlab中kstest用法详解</a>
+<a href="#fnref:17" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/" class="category-chain-item">数学建模</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">#数学建模</a>
+      
+        <a href="/tags/matlab/">#matlab</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>matlab学习</div>
+      <div>https://blog.baixf.tk/2020/09/01/数学建模/matlab学习/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年9月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/11/27/%E9%98%BF%E9%87%8C%E4%BA%91/Class%201%20%E8%BE%BE%E6%91%A9%E9%99%A2%E8%A7%86%E8%A7%89AI%E6%8A%80%E6%9C%AF%E5%BA%94%E7%94%A8%E6%8E%A2%E7%B4%A2/" title="Class 1 达摩院视觉AI技术应用探索">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Class 1 达摩院视觉AI技术应用探索</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/08/24/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/%E5%AD%A6%E4%B9%A0%E5%B8%B8%E7%94%A8%E6%A8%A1%E5%9E%8B%E5%8F%8A%E7%AE%97%E6%B3%954.%E5%85%83%E8%83%9E%E8%87%AA%E5%8A%A8%E6%9C%BA/" title="学习常用模型及算法4.元胞自动机">
+                        <span class="hidden-mobile">学习常用模型及算法4.元胞自动机</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

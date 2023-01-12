@@ -1,0 +1,812 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="python爬虫小作业~">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Python的防网络沉迷相关信息获取">
+<meta property="og:url" content="https://blog.baixf.tk/2020/07/19/python/%E5%9F%BA%E4%BA%8EPython%E7%9A%84%E9%98%B2%E7%BD%91%E7%BB%9C%E6%B2%89%E8%BF%B7%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="python爬虫小作业~">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201123205628.png">
+<meta property="article:published_time" content="2020-07-19T03:11:11.000Z">
+<meta property="article:modified_time" content="2022-06-20T09:42:50.769Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="爬虫">
+<meta property="article:tag" content="网络沉迷">
+<meta property="article:tag" content="青少年">
+<meta property="article:tag" content="调查报告">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201123205628.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>基于Python的防网络沉迷相关信息获取 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://api.ixiaowai.cn/mcapi/mcapi.php') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="基于Python的防网络沉迷相关信息获取"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-07-19 03:11" pubdate>
+          2020年7月19日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          19k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          158 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">基于Python的防网络沉迷相关信息获取</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="1-程序描述"><a href="#1-程序描述" class="headerlink" title="1.程序描述"></a>1.程序描述</h2><p class="note note-primary">基于Python网络爬虫技术，在一些门户网站或社交网站爬取一些关于网络沉迷的案例、图片，以此为例撰写一篇关于防止网络沉迷的论文，可以论述怎样借助于Python爬虫技术实现相关内容的获取，也可以基于所编写Python爬虫程序获取的图片、案例或者文字信息，撰写网络沉迷的危害，以及怎样防止网络沉迷。</p>
+
+<h2 id="2-程序设计"><a href="#2-程序设计" class="headerlink" title="2.程序设计"></a>2.程序设计</h2><h3 id="2-1-设计思路"><a href="#2-1-设计思路" class="headerlink" title="2.1 设计思路"></a>2.1 设计思路</h3><p><span class="label label-primary">1.借助 selenium 爬虫爬取网上课堂以来的微博有关“青少年沉迷网络”的话题的相关动态。</span></p>
+<p><span class="label label-primary">2.借助 xlrd 模块提取爬取的内容。</span></p>
+<p><span class="label label-primary">3.借助词云wordcloud 和 jieba 模块进行关键词分析。</span></p>
+<h3 id="2-2-程序代码"><a href="#2-2-程序代码" class="headerlink" title="2.2 程序代码"></a>2.2 程序代码</h3><p><span class="label label-primary">代码一借助 selenium 自动化提取 “青少年沉迷网络” 的动态</span>    [3]</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># -*- coding: utf-8 -*-</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">Created on 2018/11/27 下午 1:03</span><br><span class="hljs-string"></span><br><span class="hljs-string">@author: FeiTao</span><br><span class="hljs-string">@Email: feitao_sydx@163.com</span><br><span class="hljs-string">@Software: PyCharm</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">import</span> datetime<br><span class="hljs-keyword">import</span> re<br><span class="hljs-keyword">from</span> selenium <span class="hljs-keyword">import</span> webdriver<br><span class="hljs-keyword">from</span> selenium.webdriver.common.keys <span class="hljs-keyword">import</span> Keys<br><span class="hljs-keyword">import</span> xlwt<br><br><span class="hljs-comment"># 先调用无界面浏览器PhantomJS或Firefox</span><br><span class="hljs-comment"># driver = webdriver.PhantomJS()</span><br><span class="hljs-comment"># driver = webdriver.Firefox()</span><br>driver = webdriver.Chrome()<br><br><br><span class="hljs-comment"># ********************************************************************************</span><br><span class="hljs-comment">#                            第一步: 登陆login.sina.com</span><br><span class="hljs-comment">#                     这是一种很好的登陆方式，有可能有输入验证码</span><br><span class="hljs-comment">#                          登陆之后即可以登陆方式打开网页</span><br><span class="hljs-comment"># ********************************************************************************</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">LoginWeibo</span>(<span class="hljs-params">username, password</span>):<br>    <span class="hljs-keyword">try</span>:<br>        <span class="hljs-comment"># 输入用户名/密码登录</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;准备登陆Weibo.cn网站...&#x27;</span>)<br>        driver.get(<span class="hljs-string">&quot;http://login.sina.com.cn/&quot;</span>)<br>        elem_user = driver.find_element_by_name(<span class="hljs-string">&quot;username&quot;</span>)<br>        elem_user.send_keys(username)  <span class="hljs-comment"># 用户名</span><br>        elem_pwd = driver.find_element_by_name(<span class="hljs-string">&quot;password&quot;</span>)<br>        elem_pwd.send_keys(password)  <span class="hljs-comment"># 密码</span><br>        elem_sub = driver.find_element_by_xpath(<span class="hljs-string">&quot;//input[@class=&#x27;W_btn_a btn_34px&#x27;]&quot;</span>)<br>        elem_sub.click()  <span class="hljs-comment"># 点击登陆 因无name属性</span><br><br>        <span class="hljs-keyword">try</span>:<br>            <span class="hljs-comment"># 输入验证码</span><br>            time.sleep(<span class="hljs-number">10</span>)<br>            elem_sub.click()<br>        <span class="hljs-keyword">except</span>:<br>            <span class="hljs-comment"># 不用输入验证码</span><br>            <span class="hljs-keyword">pass</span><br><br>        <span class="hljs-comment"># 获取Coockie 推荐资料：http://www.cnblogs.com/fnng/p/3269450.html</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Crawl in &#x27;</span>, driver.current_url)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;输出Cookie键值对信息:&#x27;</span>)<br>        <span class="hljs-keyword">for</span> cookie <span class="hljs-keyword">in</span> driver.get_cookies():<br>            <span class="hljs-built_in">print</span>(cookie)<br>            <span class="hljs-keyword">for</span> key <span class="hljs-keyword">in</span> cookie:<br>                <span class="hljs-built_in">print</span>(key, cookie[key])<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;登陆成功...&#x27;</span>)<br>    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Error: &quot;</span>, e)<br>    <span class="hljs-keyword">finally</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;End LoginWeibo!\n&#x27;</span>)<br><br><br><span class="hljs-comment"># ********************************************************************************</span><br><span class="hljs-comment">#                  第二步: 访问http://s.weibo.com/页面搜索结果</span><br><span class="hljs-comment">#               输入关键词、时间范围，得到所有微博信息、博主信息等</span><br><span class="hljs-comment">#                     考虑没有搜索结果、翻页效果的情况</span><br><span class="hljs-comment"># ********************************************************************************</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">GetSearchContent</span>(<span class="hljs-params">key</span>):<br>    driver.get(<span class="hljs-string">&quot;http://s.weibo.com/&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;搜索热点主题：&#x27;</span>)<br><br>    <span class="hljs-comment"># 输入关键词并点击搜索</span><br>    item_inp = driver.find_element_by_xpath(<span class="hljs-string">&quot;//input[@type=&#x27;text&#x27;]&quot;</span>)<br>    <span class="hljs-comment">#item_inp = driver.find_element_by_xpath(&quot;//*[@id=&#x27;pl_homepage_search&#x27;]/div/div[2]/div/input&quot;)</span><br>    item_inp.send_keys(key)<br>    item_inp.send_keys(Keys.RETURN)  <span class="hljs-comment"># 采用点击回车直接搜索</span><br><br>    time.sleep(<span class="hljs-number">5</span>)<br>    <span class="hljs-comment"># 获取搜索词的URL，用于后期按时间查询的URL拼接</span><br>    current_url = driver.current_url<br>    current_url = current_url.split(<span class="hljs-string">&#x27;&amp;&#x27;</span>)[<span class="hljs-number">0</span>]  <span class="hljs-comment"># http://s.weibo.com/weibo/%25E7%258E%2589%25E6%25A0%2591%25E5%259C%25B0%25E9%259C%2587</span><br><br>    <span class="hljs-keyword">global</span> start_stamp<br>    <span class="hljs-keyword">global</span> page<br><br>    <span class="hljs-comment"># 需要抓取的开始和结束日期</span><br>    start_date = datetime.datetime(<span class="hljs-number">2020</span>, <span class="hljs-number">2</span>, <span class="hljs-number">25</span>)<br>    end_date = datetime.datetime(<span class="hljs-number">2020</span>, <span class="hljs-number">5</span>, <span class="hljs-number">24</span>)<br>    delta_date = datetime.timedelta(days=<span class="hljs-number">1</span>)<br>    <span class="hljs-comment"># 需要抓取的地区   37:2代表山东青岛</span><br>    <span class="hljs-comment">#region = &#x27;custom:37:2&#x27;</span><br><br>    <span class="hljs-comment"># 每次抓取一天的数据</span><br>    start_stamp = start_date<br>    end_stamp = start_date + delta_date<br><br>    <span class="hljs-keyword">global</span> outfile<br>    <span class="hljs-keyword">global</span> sheet<br><br>    outfile = xlwt.Workbook(encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br><br>    <span class="hljs-keyword">while</span> end_stamp &lt;= end_date:<br>        page = <span class="hljs-number">1</span><br><br>        <span class="hljs-comment"># 每一天使用一个sheet存储数据</span><br>        sheet = outfile.add_sheet(start_stamp.strftime(<span class="hljs-string">&quot;%Y-%m-%d-%H&quot;</span>))<br>        initXLS()<br><br>        <span class="hljs-comment"># 通过构建URL实现每一天的查询</span><br>        <span class="hljs-comment">#url = current_url + &#x27;&amp;typeall=1&amp;suball=1×cope=custom:&#x27; + start_stamp.strftime(</span><br>        <span class="hljs-comment">#    &quot;%Y-%m-%d-%H&quot;) + &#x27;:&#x27; + end_stamp.strftime(&quot;%Y-%m-%d-%H&quot;) + &#x27;®ion=&#x27;+ region + &#x27;&amp;Refer=g&#x27;</span><br>        <span class="hljs-comment">#url = &#x27;https://s.weibo.com/weibo?q=%E9%9B%BE%E9%9C%BE®ion=custom:37:2&amp;typeall=1&amp;suball=1×cope=custom:2018-01-01-17:2018-01-01-19&amp;Refer=g&#x27;</span><br>        url = current_url + <span class="hljs-string">&#x27;&amp;typeall=1&amp;suball=1×cope=custom:&#x27;</span> + start_stamp.strftime(<br>        <span class="hljs-string">&quot;%Y-%m-%d-%H&quot;</span>) + <span class="hljs-string">&#x27;:&#x27;</span> + end_stamp.strftime(<span class="hljs-string">&quot;%Y-%m-%d-%H&quot;</span>) +  <span class="hljs-string">&#x27;&amp;Refer=g&#x27;</span><br><br>        driver.get(url)<br><br>        handlePage()  <span class="hljs-comment"># 处理当前页面内容</span><br><br>        start_stamp = end_stamp<br>        end_stamp = end_stamp + delta_date<br><br><br><span class="hljs-comment"># time.sleep(1)</span><br><br><span class="hljs-comment"># ********************************************************************************</span><br><span class="hljs-comment">#                  辅助函数，考虑页面加载完成后得到页面所需要的内容</span><br><span class="hljs-comment"># ********************************************************************************</span><br><br><span class="hljs-comment"># 页面加载完成后，对页面内容进行处理</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">handlePage</span>():<br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        <span class="hljs-comment"># 之前认为可能需要sleep等待页面加载，后来发现程序执行会等待页面加载完毕</span><br>        <span class="hljs-comment"># sleep的原因是对付微博的反爬虫机制，抓取太快可能会判定为机器人，需要输入验证码</span><br>        time.sleep(<span class="hljs-number">1</span>)<br>        <span class="hljs-comment"># 先行判定是否有内容</span><br>        <span class="hljs-keyword">if</span> checkContent():<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;getContent&quot;</span>)<br>            getContent()<br>            <span class="hljs-comment"># 先行判定是否有下一页按钮</span><br>            <span class="hljs-keyword">if</span> checkNext():<br>                <span class="hljs-comment"># 拿到下一页按钮</span><br>                next_page_btn = driver.find_element_by_css_selector(<span class="hljs-string">&quot;#pl_feedlist_index &gt; div.m-page &gt; div &gt; a.next&quot;</span>)<br>                next_page_btn.click()<br>            <span class="hljs-keyword">else</span>:<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;no Next&quot;</span>)<br>                <span class="hljs-keyword">break</span><br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;no Content&quot;</span>)<br>            <span class="hljs-keyword">break</span><br><br><br><span class="hljs-comment"># 判断页面加载完成后是否有内容</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">checkContent</span>():<br>    <span class="hljs-comment"># 有内容的前提是有“导航条”？错！只有一页内容的也没有导航条</span><br>    <span class="hljs-comment"># 但没有内容的前提是有“pl_noresult”</span><br>    <span class="hljs-keyword">try</span>:<br>        driver.find_element_by_xpath(<span class="hljs-string">&quot;//div[@class=&#x27;card card-no-result s-pt20b40&#x27;]&quot;</span>)<br>        flag = <span class="hljs-literal">False</span><br>    <span class="hljs-keyword">except</span>:<br>        flag = <span class="hljs-literal">True</span><br>    <span class="hljs-keyword">return</span> flag<br><br><br><span class="hljs-comment"># 判断是否有下一页按钮</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">checkNext</span>():<br>    <span class="hljs-keyword">try</span>:<br>        driver.find_element_by_css_selector(<span class="hljs-string">&quot;#pl_feedlist_index &gt; div.m-page &gt; div &gt; a.next&quot;</span>)<br>        flag = <span class="hljs-literal">True</span><br>    <span class="hljs-keyword">except</span>:<br>        flag = <span class="hljs-literal">False</span><br>    <span class="hljs-keyword">return</span> flag<br><br><br><span class="hljs-comment"># 判断是否有展开全文按钮</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">checkqw</span>():<br>    <span class="hljs-keyword">try</span>:<br>        driver.find_element_by_xpath(<span class="hljs-string">&quot;.//div[@class=&#x27;content&#x27;]/p[@class=&#x27;txt&#x27;]/a&quot;</span>)<br>        flag = <span class="hljs-literal">True</span><br>    <span class="hljs-keyword">except</span>:<br>        flag = <span class="hljs-literal">False</span><br>    <span class="hljs-keyword">return</span> flag<br><br><br><span class="hljs-comment"># 在添加每一个sheet之后，初始化字段</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">initXLS</span>():<br>    name = [<span class="hljs-string">&#x27;博主昵称&#x27;</span>, <span class="hljs-string">&#x27;博主主页&#x27;</span>, <span class="hljs-string">&#x27;微博认证&#x27;</span>, <span class="hljs-string">&#x27;微博达人&#x27;</span>, <span class="hljs-string">&#x27;微博内容&#x27;</span>, <span class="hljs-string">&#x27;发布位置&#x27;</span>, <span class="hljs-string">&#x27;发布时间&#x27;</span>, <span class="hljs-string">&#x27;微博地址&#x27;</span>, <span class="hljs-string">&#x27;微博来源&#x27;</span>, <span class="hljs-string">&#x27;转发&#x27;</span>, <span class="hljs-string">&#x27;评论&#x27;</span>, <span class="hljs-string">&#x27;赞&#x27;</span>]<br><br>    <span class="hljs-keyword">global</span> row<br>    <span class="hljs-keyword">global</span> outfile<br>    <span class="hljs-keyword">global</span> sheet<br><br>    row = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(name)):<br>        sheet.write(row, i, name[i])<br>    row = row + <span class="hljs-number">1</span><br>    outfile.save(<span class="hljs-string">&quot;./crawl_output_YS.xls&quot;</span>)<br><br><br><span class="hljs-comment"># 将dic中的内容写入excel</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">writeXLS</span>(<span class="hljs-params">dic</span>):<br>    <span class="hljs-keyword">global</span> row<br>    <span class="hljs-keyword">global</span> outfile<br>    <span class="hljs-keyword">global</span> sheet<br><br>    <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> dic:<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(dic[k])):<br>            sheet.write(row, i, dic[k][i])<br>        row = row + <span class="hljs-number">1</span><br>    outfile.save(<span class="hljs-string">&quot;./crawl_output_YS.xls&quot;</span>)<br><br><br><span class="hljs-comment"># 在页面有内容的前提下，获取内容</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">getContent</span>():<br>    <span class="hljs-comment"># 寻找到每一条微博的class</span><br>    <span class="hljs-keyword">try</span>:<br>        <span class="hljs-comment"># nodes = driver.find_elements_by_xpath(&quot;//div[@class=&#x27;WB_cardwrap S_bg2 clearfix&#x27;]&quot;)</span><br>        <span class="hljs-comment"># nodes = driver.find_elements_by_xpath(&quot;//div[@class=&#x27;card-wrap&#x27;]&quot;)</span><br>        nodes = driver.find_elements_by_xpath(<span class="hljs-string">&quot;//div[@class=&#x27;card-wrap&#x27;]/div[@class=&#x27;card&#x27;]&quot;</span>)<br>    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>        <span class="hljs-built_in">print</span>(e)<br><br>    <span class="hljs-comment"># 在运行过程中微博数==0的情况，可能是微博反爬机制，需要输入验证码</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(nodes) == <span class="hljs-number">0</span>:<br>        <span class="hljs-built_in">input</span>(<span class="hljs-string">&quot;请在微博页面输入验证码！&quot;</span>)<br>        url = driver.current_url<br>        driver.get(url)<br>        getContent()<br>        <span class="hljs-keyword">return</span><br><br>    dic = &#123;&#125;<br><br>    <span class="hljs-keyword">global</span> page<br>    <span class="hljs-built_in">print</span>(start_stamp.strftime(<span class="hljs-string">&quot;%Y-%m-%d-%H&quot;</span>))<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;页数:&#x27;</span>, page)<br>    page = page + <span class="hljs-number">1</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;微博数量&#x27;</span>, <span class="hljs-built_in">len</span>(nodes))<br><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(nodes)):<br>        dic[i] = []<br>        <span class="hljs-keyword">try</span>:<br>            <span class="hljs-comment"># BZNC = nodes[i].find_element_by_xpath(&quot;.//div[@class=&#x27;feed_content wbcon&#x27;]/a[@class=&#x27;W_texta W_fb&#x27;]&quot;).text</span><br>            BZNC = nodes[i].find_element_by_xpath(<span class="hljs-string">&quot;.//div[@class=&#x27;content&#x27;]/p[@class=&#x27;txt&#x27;]&quot;</span>).get_attribute(<span class="hljs-string">&quot;nick-name&quot;</span>)<br>            <span class="hljs-comment"># print(nodes[2].find_element_by_xpath(&quot;.//div[@class=&#x27;content&#x27;]/p[@class=&#x27;txt&#x27;]&quot;).get_attribute(&quot;nick-name&quot;))</span><br>        <span class="hljs-keyword">except</span>:<br>            BZNC = <span class="hljs-string">&#x27;&#x27;</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;博主昵称:&#x27;</span>, BZNC)<br>        dic[i].append(BZNC)<br><br>        <span class="hljs-keyword">try</span>:<br>            BZZY = nodes[i].find_element_by_xpath(<span class="hljs-string">&quot;.//div[@class=&#x27;content&#x27;]/div[@class=&#x27;info&#x27;]/div[2]/a&quot;</span>).get_attribute(<span class="hljs-string">&quot;href&quot;</span>)<br>            <span class="hljs-comment"># print(nodes[1].find_element_by_xpath(&quot;//*[@id=&quot;pl_feedlist_index&quot;]/div[2]/div[1]/div/div[1]/div[1]/a&quot;).get_attribute(&quot;href&quot;))</span><br>            <span class="hljs-comment"># print(nodes[1].find_element_by_css_selector(&quot;#pl_feedlist_index &gt; div:nth-child(2) &gt; div:nth-child(1) &gt; div &gt; div.card-feed &gt; div.avator &gt; a&quot;).get_attribute(&quot;href&quot;))</span><br>        <span class="hljs-keyword">except</span>:<br>            BZZY = <span class="hljs-string">&#x27;&#x27;</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;博主主页:&#x27;</span>, BZZY)<br>        dic[i].append(BZZY)<br>        <span class="hljs-comment"># 微博官方认证，没有爬取</span><br>        <span class="hljs-keyword">try</span>:<br>            <span class="hljs-comment"># WBRZ = nodes[i].find_element_by_xpath(&quot;.//div[@class=&#x27;feed_content wbcon&#x27;]/a[@class=&#x27;approve_co&#x27;]&quot;).get_attribute(&#x27;title&#x27;)#若没有认证则不存在节点</span><br>            WBRZ = nodes[i].find_element_by_xpath(<span class="hljs-string">&quot;.//div[@class=&#x27;info&#x27;]/div/a[contains(@title,&#x27;微博&#x27;)]&quot;</span>).get_attribute(<span class="hljs-string">&#x27;title&#x27;</span>) <span class="hljs-comment"># 若没有认证则不存在节点</span><br>        <span class="hljs-keyword">except</span>:<br>            WBRZ = <span class="hljs-string">&#x27;&#x27;</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;微博认证:&#x27;</span>, WBRZ)<br>        dic[i].append(WBRZ)<br><br>        <span class="hljs-keyword">try</span>:<br>            <span class="hljs-comment"># WBDR = nodes[i].find_element_by_xpath(&quot;.//div[@class=&#x27;feed_content wbcon&#x27;]/a[@class=&#x27;ico_club&#x27;]&quot;).get_attribute(&#x27;title&#x27;)#若非达人则不存在节点</span><br>            WBDR = nodes[i].find_element_by_xpath(<span class="hljs-string">&quot;.//div[@class=&#x27;feed_content wbcon&#x27;]/a[@class=&#x27;ico_club&#x27;]&quot;</span>).get_attribute(<span class="hljs-string">&#x27;title&#x27;</span>)  <span class="hljs-comment"># 若非达人则不存在节点</span><br>        <span class="hljs-keyword">except</span>:<br>            WBDR = <span class="hljs-string">&#x27;&#x27;</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;微博达人:&#x27;</span>, WBDR)<br>        dic[i].append(WBDR)<br><br>        <span class="hljs-comment"># 判断展开全文和网页链接是否存在</span><br>        <span class="hljs-keyword">try</span>:<br>            nodes[i].find_element_by_xpath(<span class="hljs-string">&quot;.//div[@class=&#x27;content&#x27;]/p[@class=&#x27;txt&#x27;]/a[@action-type=&#x27;fl_unfold&#x27;]&quot;</span>).is_displayed()<br>            flag = <span class="hljs-literal">True</span><br>        <span class="hljs-keyword">except</span>:<br>            flag = <span class="hljs-literal">False</span><br>        <span class="hljs-comment"># 获取微博内容</span><br>        <span class="hljs-keyword">try</span>:<br>            <span class="hljs-keyword">if</span> flag:<br>                nodes[i].find_element_by_xpath(<span class="hljs-string">&quot;.//div[@class=&#x27;content&#x27;]/p[@class=&#x27;txt&#x27;]/a[@action-type=&#x27;fl_unfold&#x27;]&quot;</span>).click()<br>                time.sleep(<span class="hljs-number">1</span>)<br>                WBNR = nodes[i].find_element_by_xpath(<span class="hljs-string">&quot;.//div[@class=&#x27;content&#x27;]/p[2]&quot;</span>).text.replace(<span class="hljs-string">&quot;\n&quot;</span>,<span class="hljs-string">&quot;&quot;</span>)<br>                <span class="hljs-comment"># 判断发布位置是否存在</span><br>                <span class="hljs-keyword">try</span>:<br>                    nodes[i].find_element_by_xpath(<span class="hljs-string">&quot;.//div[@class=&#x27;content&#x27;]/p[@class=&#x27;txt&#x27;]/a/i[@class=&#x27;wbicon&#x27;]&quot;</span>).is_displayed()<br>                    flag = <span class="hljs-literal">True</span><br>                <span class="hljs-keyword">except</span>:<br>                    flag = <span class="hljs-literal">False</span><br>                <span class="hljs-comment"># 获取微博发布位置</span><br>                <span class="hljs-keyword">try</span>:<br>                    <span class="hljs-keyword">if</span> flag:<br>                        pattern = nodes[i].find_elements_by_xpath(<span class="hljs-string">&quot;.//div[@class=&#x27;content&#x27;]/p[2]/a[i[@class=&#x27;wbicon&#x27;]]&quot;</span>)<br>                        <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(pattern,<span class="hljs-built_in">list</span>):<br>                            text = [p.text <span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> pattern]<br>                            FBWZ = [loc <span class="hljs-keyword">for</span> loc <span class="hljs-keyword">in</span> [re.findall(<span class="hljs-string">&#x27;^2(.*$)&#x27;</span>, t) <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> text] <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(loc) &gt; <span class="hljs-number">0</span>][<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]<br>                        <span class="hljs-keyword">else</span>:<br>                            text = pattern.text<br>                            FBWZ = re.findall(<span class="hljs-string">&#x27;^2(.*$)&#x27;</span>,text)[<span class="hljs-number">0</span>]<br>                    <span class="hljs-keyword">else</span>:<br>                        FBWZ = <span class="hljs-string">&#x27;&#x27;</span><br>                <span class="hljs-keyword">except</span>:<br>                    FBWZ = <span class="hljs-string">&#x27;&#x27;</span><br>            <span class="hljs-keyword">else</span>:<br>                WBNR = nodes[i].find_element_by_xpath(<span class="hljs-string">&quot;.//div[@class=&#x27;content&#x27;]/p[@class=&#x27;txt&#x27;]&quot;</span>).text.replace(<span class="hljs-string">&quot;\n&quot;</span>,<span class="hljs-string">&quot;&quot;</span>)<br>                <span class="hljs-comment"># 判断发布位置是否存在</span><br>                <span class="hljs-keyword">try</span>:<br>                    nodes[i].find_element_by_xpath(<span class="hljs-string">&quot;.//div[@class=&#x27;content&#x27;]/p[@class=&#x27;txt&#x27;]/a/i[@class=&#x27;wbicon&#x27;]&quot;</span>).is_displayed()<br>                    flag = <span class="hljs-literal">True</span><br>                <span class="hljs-keyword">except</span>:<br>                    flag = <span class="hljs-literal">False</span><br>                <span class="hljs-comment"># 获取微博发布位置</span><br>                <span class="hljs-keyword">try</span>:<br>                    <span class="hljs-keyword">if</span> flag:<br>                        pattern = nodes[i].find_elements_by_xpath(<span class="hljs-string">&quot;.//div[@class=&#x27;content&#x27;]/p[@class=&#x27;txt&#x27;]/a[i[@class=&#x27;wbicon&#x27;]]&quot;</span>)<br>                        <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(pattern,<span class="hljs-built_in">list</span>):<br>                            text = [p.text <span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> pattern]<br>                            FBWZ = [loc <span class="hljs-keyword">for</span> loc <span class="hljs-keyword">in</span> [re.findall(<span class="hljs-string">&#x27;^2(.*$)&#x27;</span>, t) <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> text] <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(loc) &gt; <span class="hljs-number">0</span>][<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]<br>                        <span class="hljs-keyword">else</span>:<br>                            text = pattern.text<br>                            FBWZ = re.findall(<span class="hljs-string">&#x27;^2(.*$)&#x27;</span>,text)[<span class="hljs-number">0</span>]<br>                    <span class="hljs-keyword">else</span>:<br>                        FBWZ = <span class="hljs-string">&#x27;&#x27;</span><br>                <span class="hljs-keyword">except</span>:<br>                    FBWZ = <span class="hljs-string">&#x27;&#x27;</span><br>        <span class="hljs-keyword">except</span>:<br>            WBNR = <span class="hljs-string">&#x27;&#x27;</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;微博内容:&#x27;</span>, WBNR)<br>        dic[i].append(WBNR)<br><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;发布位置:&#x27;</span>, FBWZ)<br>        dic[i].append(FBWZ)<br><br>        <span class="hljs-keyword">try</span>:<br>            <span class="hljs-comment"># FBSJ = nodes[i].find_element_by_xpath(&quot;.//div[@class=&#x27;feed_from W_textb&#x27;]/a[@class=&#x27;W_textb&#x27;]&quot;).text</span><br>            FBSJ = nodes[i].find_element_by_xpath(<span class="hljs-string">&quot;.//div[@class=&#x27;content&#x27;]/p[@class=&#x27;from&#x27;]/a[1]&quot;</span>).text<br>        <span class="hljs-keyword">except</span>:<br>            FBSJ = <span class="hljs-string">&#x27;&#x27;</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;发布时间:&#x27;</span>, FBSJ)<br>        dic[i].append(FBSJ)<br><br>        <span class="hljs-keyword">try</span>:<br>            <span class="hljs-comment"># WBDZ = nodes[i].find_element_by_xpath(&quot;.//div[@class=&#x27;feed_from W_textb&#x27;]/a[@class=&#x27;W_textb&#x27;]&quot;).get_attribute(&quot;href&quot;)</span><br>            WBDZ = nodes[i].find_element_by_xpath(<span class="hljs-string">&quot;.//div[@class=&#x27;content&#x27;]/p[@class=&#x27;from&#x27;]/a[1]&quot;</span>).get_attribute(<span class="hljs-string">&quot;href&quot;</span>)<br>        <span class="hljs-keyword">except</span>:<br>            WBDZ = <span class="hljs-string">&#x27;&#x27;</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;微博地址:&#x27;</span>, WBDZ)<br>        dic[i].append(WBDZ)<br><br>        <span class="hljs-keyword">try</span>:<br>            WBLY = nodes[i].find_element_by_xpath(<span class="hljs-string">&quot;.//div[@class=&#x27;content&#x27;]/p[@class=&#x27;from&#x27;]/a[2]&quot;</span>).text<br>        <span class="hljs-keyword">except</span>:<br>            WBLY = <span class="hljs-string">&#x27;&#x27;</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;微博来源:&#x27;</span>, WBLY)<br>        dic[i].append(WBLY)<br><br>        <span class="hljs-keyword">try</span>:<br>            ZF_TEXT = nodes[i].find_element_by_xpath(<span class="hljs-string">&quot;.//a[@action-type=&#x27;feed_list_forward&#x27;]&quot;</span>).text<br>            <span class="hljs-comment">#            ZF_TEXT = nodes[10].find_element_by_xpath(&quot;.//a[@action-type=&#x27;feed_list_forward&#x27;]&quot;).text</span><br>            <span class="hljs-comment">#            ZF_TEXT.split(&#x27; &#x27;)[1]</span><br>            <span class="hljs-keyword">if</span> ZF_TEXT == <span class="hljs-string">&#x27;转发&#x27;</span>:<br>                ZF = <span class="hljs-number">0</span><br>            <span class="hljs-keyword">else</span>:<br>                ZF = <span class="hljs-built_in">int</span>(ZF_TEXT.split(<span class="hljs-string">&#x27; &#x27;</span>)[<span class="hljs-number">1</span>])<br>        <span class="hljs-keyword">except</span>:<br>            ZF = <span class="hljs-number">0</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;转发:&#x27;</span>, ZF)<br>        dic[i].append(ZF)<br><br>        <span class="hljs-keyword">try</span>:<br>            <span class="hljs-comment"># PL_TEXT = nodes[i].find_element_by_xpath(&quot;.//a[@action-type=&#x27;feed_list_comment&#x27;]//em&quot;).text#可能没有em元素</span><br>            PL_TEXT = nodes[i].find_element_by_xpath(<span class="hljs-string">&quot;.//a[@action-type=&#x27;feed_list_comment&#x27;]&quot;</span>).text  <span class="hljs-comment"># 可能没有em元素</span><br>            <span class="hljs-comment"># nodes[10].find_element_by_xpath(&quot;.//a[@action-type=&#x27;feed_list_comment&#x27;]&quot;).text</span><br>            <span class="hljs-keyword">if</span> PL_TEXT == <span class="hljs-string">&#x27;评论&#x27;</span>:<br>                PL = <span class="hljs-number">0</span><br>            <span class="hljs-keyword">else</span>:<br>                PL = <span class="hljs-built_in">int</span>(PL_TEXT.split(<span class="hljs-string">&#x27; &#x27;</span>)[<span class="hljs-number">1</span>])<br>        <span class="hljs-keyword">except</span>:<br>            PL = <span class="hljs-number">0</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;评论:&#x27;</span>, PL)<br>        dic[i].append(PL)<br><br>        <span class="hljs-keyword">try</span>:<br>            ZAN_TEXT = nodes[i].find_element_by_xpath(<span class="hljs-string">&quot;.//a[@action-type=&#x27;feed_list_like&#x27;]//em&quot;</span>).text  <span class="hljs-comment"># 可为空</span><br>            <span class="hljs-comment"># ZAN_TEXT = nodes[10].find_element_by_xpath(&quot;.//a[@action-type=&#x27;feed_list_like&#x27;]&quot;).text #可为空</span><br>            <span class="hljs-keyword">if</span> ZAN_TEXT == <span class="hljs-string">&#x27;&#x27;</span>:<br>                ZAN = <span class="hljs-number">0</span><br>            <span class="hljs-keyword">else</span>:<br>                ZAN = <span class="hljs-built_in">int</span>(ZAN_TEXT)<br>        <span class="hljs-keyword">except</span>:<br>            ZAN = <span class="hljs-number">0</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;赞:&#x27;</span>, ZAN)<br>        dic[i].append(ZAN)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;\n&#x27;</span>)<br><br>    <span class="hljs-comment"># 写入Excel</span><br>    writeXLS(dic)<br><br><br><span class="hljs-comment"># *******************************************************************************</span><br><span class="hljs-comment">#                                程序入口</span><br><span class="hljs-comment"># *******************************************************************************</span><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    <span class="hljs-comment"># 定义变量</span><br>    username = <span class="hljs-string">&#x27;*************&#x27;</span>  <span class="hljs-comment"># 输入你的用户名</span><br>    password = <span class="hljs-string">&#x27;*************&#x27;</span>  <span class="hljs-comment"># 输入你的密码</span><br><br>    <span class="hljs-comment"># 操作函数</span><br>    LoginWeibo(username, password)  <span class="hljs-comment"># 登陆微博</span><br><br>    <span class="hljs-comment"># 搜索热点微博 爬取评论</span><br>    key = <span class="hljs-string">&#x27;青少年沉迷网络&#x27;</span><br>    GetSearchContent(key)<br><br></code></pre></td></tr></table></figure>
+
+<p><span class="label label-primary">代码二借助 xlrd 模块提取 xls 的动态栏数据至 txt</span></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># -*- coding: UTF-8 -*-</span><br><span class="hljs-keyword">import</span> xlrd<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">extract</span>(<span class="hljs-params">inpath,f</span>):<br><br>    date = xlrd.open_workbook(inpath, encoding_override=<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>    sheets = date.nsheets<br>    <span class="hljs-built_in">print</span>(sheets)<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,sheets):<br>        table = date.sheets()[i]<span class="hljs-comment">#选定表</span><br>        nrows = table.nrows<span class="hljs-comment">#获取行号</span><br>        ncols = table.ncols<span class="hljs-comment">#获取列号</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, nrows):<br>            alldate = table.row_values(i)<span class="hljs-comment">#循环输出excel表中每一行，即所有数据</span><br>            result = alldate[<span class="hljs-number">4</span>]<span class="hljs-comment">#取出表中第4列数据</span><br>            <span class="hljs-built_in">print</span>(result)<br>            f.write(result+<span class="hljs-string">&quot;\n&quot;</span>)<br><br>inpath = <span class="hljs-string">&#x27;D:\桌面\Python\拓展\weiboSpider-master\关键词爬取\crawl_output_YS.xls&#x27;</span><span class="hljs-comment">#excel文件所在路径</span><br>f=<span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;提取到的第二列数据.txt&quot;</span>,<span class="hljs-string">&quot;w&quot;</span>,encoding=<span class="hljs-string">&quot;utf-8&quot;</span>)<br>extract(inpath,f)<br>f.close()<br></code></pre></td></tr></table></figure>
+
+<p><span class="label label-primary">代码三借助  jieba 和  wordcloud  模块将提取的动态数据进行分词、可视化操作</span>  [5]</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> jieba<br><span class="hljs-keyword">import</span> wordcloud<br><br><br><span class="hljs-comment"># 导入imageio库中的imread函数，并用这个函数读取本地图片，作为词云形状图片</span><br><span class="hljs-keyword">import</span> imageio<br>mk = imageio.imread(<span class="hljs-string">&quot;未标题-1.png&quot;</span>)<br><br><span class="hljs-comment"># 构建并配置词云对象w，注意要加stopwords集合参数，将不想展示在词云中的词放在stopwords集合里，这里去掉“曹操”和“孔明”两个词</span><br>w = wordcloud.WordCloud(width=<span class="hljs-number">1000</span>,<br>                        height=<span class="hljs-number">700</span>,<br>                        background_color=<span class="hljs-string">&#x27;white&#x27;</span>,<br>                        font_path=<span class="hljs-string">&#x27;msyh.ttc&#x27;</span>,<br>                        mask=mk,<br>                        scale=<span class="hljs-number">5</span><br>                        )<br><br><span class="hljs-comment"># 对来自外部文件的文本进行中文分词，得到string</span><br>f = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;提取到的第五列数据.txt&#x27;</span>,encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br><br>txt = f.read()<br>txtlist = jieba.lcut(txt)<br>string = <span class="hljs-string">&quot; &quot;</span>.join(txtlist)<br><br><span class="hljs-comment"># 将string变量传入w的generate()方法，给词云输入文字</span><br>w.generate(string)<br><br><br><span class="hljs-comment"># 将词云图片导出到当前文件夹</span><br>w.to_file(<span class="hljs-string">&#x27;青少年沉迷网络01.png&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-3-运行结果示例"><a href="#2-3-运行结果示例" class="headerlink" title="2.3 运行结果示例"></a>2.3 运行结果示例</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201123205744.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201123205628.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201123205835.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201123205838.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="3-论文主体"><a href="#3-论文主体" class="headerlink" title="3.论文主体"></a>3.论文主体</h2><p>通过爬取以及可视化之后我们发现爬取数据中出现频率较高的一些词汇包含以下内容： <strong>青少年沉迷网络<br>收起全文（忽略） 网络 网路 游戏机  光盘 净空法师 阿弥陀佛 毒药 害人 网络游戏 侵蚀 荒废 杀人 荒废学业 色情 害人 祸害 法身 山东 临沂 杨氏模 机构 CCTV 今日说法 焦点访谈 救治 担心 孩子 挽回 千家万户 家长 民族 儿女 中国 文明 健康 强大  必须 严厉 监管 有关部门  腾讯 网吧 政府 支持 推广 公立  时间 观察 请问 央视 新闻 爱</strong></p>
+<p>接下来我将从家庭社会对青少年沉迷网络的态度做法来分析当前未成年人沉迷网络现状，由当前现状来分析为什么青少年会沉迷于网络，最后根据一些自己以及网络上的看法来分析如何做到防止青少年沉迷网络。</p>
+<h3 id="3-1-当前未成年人沉迷网络现状"><a href="#3-1-当前未成年人沉迷网络现状" class="headerlink" title="3.1 当前未成年人沉迷网络现状"></a>3.1 当前未成年人沉迷网络现状</h3><p>当看到上面提取的关键词的时候，我的内心是极其欢喜的，因为在这些关键词里面我感觉到互联网的奇妙，互联网涵盖了几乎这个问问题的所有社会观点，于是我将这些关键词进行分类处理得到以下几类：</p>
+<span class="label label-primary">
+青少年沉迷网络
+收起全文（忽略）
+网络 网路 游戏机 光盘 腾讯 网络游戏 色情
+净空法师 阿弥陀佛
+毒药  侵蚀 杀人 荒废学业 害人 祸害
+法身 山东 临沂 杨氏模 机构 CCTV 今日说法 焦点访谈 救治
+担心 孩子 挽回 千家万户 家长
+民族 儿女 中国 文明 健康 强大
+必须 严厉 监管 有关部门  腾讯 网吧 政府 支持 推广 公立
+时间 观察 请问 央视 新闻 爱
+</span>
+
+<p><span class="label label-primary">对以上词汇分析可得到一下几点内容：<br>当前青少年沉迷于网络多半是因为网络游戏，随着互联网的普及，各种互联网衍生品也层出不穷，例如色情、网络游戏等，互联网游戏公司也如雨后春笋般的蓬勃发展，也正是因为游戏的不断创作导致很多自制力还不健全的青少年沉浸其中。</span><br><span class="label label-primary">随着青少年沉迷网络的数目不断变大，社会中讨伐互联网的舆论也不断上升，主要表现为：<br>互联网荒废青少年的学业<br>互联网就是毒药，祸害人。<br>互联很多是竞技比赛，打打杀杀导致社会犯罪率增加。</span></p>
+<p><span class="label label-primary">针对青少年沉迷网络，引发社会各种舆论对策：</span></p>
+<p><span class="label label-primary">家长对子女的担心、忧虑。</span><br><span class="label label-primary">以山东临沂戒网中心为代表的所谓”杨氏模救治“机构的建立。</span><br><span class="label label-primary">CCTV、焦点访谈针对未成年人沉迷网络的相关报道。</span><br><span class="label label-primary">政府考虑社会热点以及民族未来开展“健康中国”“文明中国”活动。</span><br><span class="label label-primary">政府推进对网吧、腾讯等平台的监管力度。</span><br><span class="label label-primary">还有一部分人不反对青少年合理利用网络，认为互联网更像是七八十年代的摇滚乐，只是还没有被人们认可，暂时地认为是腐朽青年一代的产品。在他们看来，青少年沉迷网络的根本原因是由于家庭中缺少爱。</span></p>
+<h3 id="3-2-为什么青少年会沉迷网络"><a href="#3-2-为什么青少年会沉迷网络" class="headerlink" title="3.2 为什么青少年会沉迷网络"></a>3.2 为什么青少年会沉迷网络</h3><span class="label label-primary">
+  知乎问题：青少年为何会对网络成瘾？[6]
+
+
+<p>  孩子没有获得足够的陪伴。<br>  孩子没有获得尊重。<br>  青少年的发展特点 根据马斯洛需求层次理论，人底层的需求被满足后，便会产生高层次的需。如果心理需求不能得到满足的话，会产生焦虑，孤独等心理问题。青少面时期是个体由不成熟过渡的重要时期，心理状态不稳定，情绪起伏大，自制力相对较差，心理需要比成年人强烈而明显。<br></span></p>
+<p>从社会角度考虑，当今社会是互联网社会，随着笔记本电脑、平板、智能手机等互联网产品种类以及支付宝、淘宝、QQ、微信等软件的开发利用，涵盖人们生活的各个领域，娱乐作为人们日常生活重要的一部分，游戏行业蓬勃发展，也逐渐赢得了青少年的喜爱。再加上当今社会重功利化，家庭赋予太大的学习压力，游戏也顺势站在了学习的对立面；从青少年人群分析我们知道青少年自制力稍欠，并且获取信息的欲望很强，很难在网络中辨别是非，误入歧途；站在游戏的角度考虑，为什么会受到那么多人的喜爱。我想他们正是抓住了很多人在生活中没有存在感，缺少父母的陪伴，于是在网络中提供了一个可以有存在感的空间；但是最重要的一点还是家庭原因，青少年在家轻重缺少陪伴与关爱，再加上对现实生活的不满，他们不得不选择去互联网去释放压力寻求慰藉。</p>
+<h3 id="3-3-怎样才能做到防青少年沉迷网络"><a href="#3-3-怎样才能做到防青少年沉迷网络" class="headerlink" title="3.3 怎样才能做到防青少年沉迷网络"></a>3.3 怎样才能做到防青少年沉迷网络</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201123210526.jpg" srcset="/img/loading.gif" lazyload><br><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201123210527.jpg" srcset="/img/loading.gif" lazyload></p>
+<p class="note note-primary">
+  朱永新建议，从网络游戏类别、认证、时长、充值方面建立网络游戏强制分级制度，并由相关政府部门审核监管。根据目前社会发展客观实际和网络游戏内容，比如是否包含暴力内容、不良语言、性内容等，可从早教类、管控类、限制类、禁止类等方面划分，对不同年龄段的未成年人建立网络游戏产品分级制度，其中包括实行用户注册登录实名认证分级，通过未成年人及其监护人身份证信息、手机号或人脸识别等方式实行未成年人登录网游时段、时长监管分级，实行游戏充值限额分级等。
+
+<p>  朱永新还建议，建立网络游戏分级监管与评价机制，并修订完善网络游戏法律法规，对《未成年保护法》《网络安全法》《出版管理条例》《网络游戏管理暂行办法》进行修订，增加“基于未成年人保护的网络游戏分级”相关内容。[6]</p>
+</p>
+
+<p>在今年两会上，也有关于青少年沉迷网络的声音，因为目前我国尚没有全国性的行业协会，相关法律法规及管理条例内容宏观，缺少具体的细则和分级方案，执行效果不明显。全国政协委员、民进中央副主席朱永新呼吁建立网络游戏分级制度，通过人脸识别等技术实行未成年人登入网游时段、时长监管分级，防止青少年沉迷网络游戏。因此，政府还应该完善相关法律制度，建立健全相关法律规章制度，企业也应做好对未成年人的监督，在技术层面上做到硬核防沉迷。</p>
+<p class="note note-primary">
+从家庭教育关注未成年人权益保护，是一个很重要的角度。家庭是青少年成长的第一环境，是预防青少年走向犯罪歧路的第一道防线。孩子出了问题，多数情况下说明家庭教育出了问题。现在正大修的未成年人保护法和预防未成年人犯罪法，都把家庭教育作为了发力点之一。但相对来说，这都是一些原则性规定，效力十分有限。制定专门的“家庭教育法”，是在更高维度上唤起社会重视：家庭教育是不是一门专门的学问？家长需不需要接受专门的教育？答案是肯定的。</p>
+
+<p class="note note-primary">这次疫情期间，让近2亿中小学生迎来史无前例的在线教育，同时也凸显了青少年沉迷网络的问题。许多家长惊奇地发现，以前总是把问题归咎为“没时间照顾孩子”，但现在陪孩子的时间多了，却发现不了解他们，甚至无法沟通交流。这种尴尬指向的是，大多数人结婚生子后就无师自通，不需要学习就当上了家长。这实际是不够的，正如蒙台梭利所说，“儿童是成人之父”。和孩子相处是个学习和成长过程，家长们不应把教育看得太简单。</p>
+
+  <p class="note note-primary">以“沉迷游戏”为例。调查显示，有4种青少年特别容易出现游戏成瘾现象，分别是家庭条件较差的；隔代教育下的；家庭关系差、亲子互动少的；家长对子女游戏行为没有限制的。它的心理机制是：亲子互动不足，只好到游戏里找补偿。家长需要反思的是，如果只生不养、只养不教，一下班自己也玩游戏，将孩子丢给别人看护，甚至拿手机当“电子保姆”，孩子很可能产生心理偏差。可见，家长需要接受教育，思考怎样正确爱孩子，让孩子健康成长。</p>
+
+  <p class="note note-primary">进一步，“家庭教育法”有助于厘清家庭教育和学校教育的责任边界。学校、社会、家庭教育三者为一体，学校教育负责传道授业，社会教育重在历事练心，家庭教育关心爱和成长，三者互为犄角，谁也取代不了谁。但在现实中，人们常常把孩子的希望寄托在学校，过分夸大学校教育的作用，轻视自己的责任，这是一种失职渎职。进一步明确家庭教育的定位和功能，有利于家长看到自身责任，从而合力探讨家庭教育怎么做，它的着力点、抓手在哪里。</span>
+
+  <p class="note note-primary">“天下之本在国，国之本在家。”习近平总书记多次强调要“注重家庭、注重家教、注重家风”，强调家长要给孩子讲好“人生第一课”，帮助扣好人生第一粒扣子，并强调要认真研究家庭领域出现的新情况新问题，把推进家庭工作作为一项长期任务抓实抓好。长期以来，家庭教育被认为是私领域的事，没有引起足够重视。人大代表的立法建议，有利于提升家庭教育地位、规范家庭教育行为。就目前来讲，如果能引起家庭的反思，也是件十分有益的事。</p>[7]
+
+
+<p class="note note-primary">当然最重要的还是家庭层面，有时候孩子需要的不是锦衣玉食、而是陪伴。现代生活中，人们的生活逐渐碎片化，家长们越来越忙，家里买台电脑、买个平板可以让孩子在网上学习，但是对于孩子来说，他们尚未形成良好的自制能力，对网络繁杂的信息，没有辨别好坏的能力，他会忍不住玩游戏或者浏览色情网站，从而潜移默化的影响着他们的生活习惯甚至一生。因此，家长应该正视互联网或者游戏，不是上网就是有“网瘾”，应该重视与孩子的沟通，寓教于乐，多关注孩子的动态以及上网习惯、及时对孩子进行正面指导[8]。学校社会媒体也应该正视网络，不要妖魔化网络，积极宣传正能量，引导青少年健康文明上网。</p>
+
+<p class="note note-primary">正如上文所说，此次疫情“网上课堂”凸显了这个问题，我们就应该全民正视这个问题，不要推脱责任给任何不良机构或者控诉某些企业，多从自己方面找原因，这一点，我认为家长、学校、社会三方都应该做好反思。</p>
+
+<h2 id="4-结论"><a href="#4-结论" class="headerlink" title="4 结论"></a>4 结论</h2><p>网络上对互联网的夸赞不胜其属，其中就有人认为互联网解放了青少年的思想，固然他拓宽了人们获取知识的渠道，当然随着生活水平的提高，互联网的确给生活带来了极大的便利，但是这仍然无法掩盖互联网是把双刃剑的事实。在这里，最主要的还是家长需要接受教育，思考怎样正确爱孩子，让孩子健康成长。请不要绑架互联网，互联网只是工具，说白了，没有上瘾与不上瘾，只有失败和不失败。这不应该是家长掩盖教育失败这个事实而冠冕堂皇的理由。当然，政府企业也应该重视青少年的发展。建立健全相关法律法规，完善监管制度，让祖国的下一代能够健康成长。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xifengmo/p/10989565.html">解决python中’chromedriver’ executable needs to be in PATH报错</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41429288/article/details/80472064">关于Chromedriver如何配置环境变量问题解决</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/princewen/python3_crawl/blob/master/%E7%88%AC%E8%99%AB%E5%AE%9E%E6%88%98/%E4%BD%BF%E7%94%A8selenium%E7%88%AC%E5%8F%96%E6%8C%89%E5%85%B3%E9%94%AE%E8%AF%8D%E6%90%9C%E7%B4%A2%E7%9A%84%E5%BE%AE%E5%8D%9A.py](https://github.com/princewen/python3_crawl/blob/master/%E7%88%AC%E8%99%AB%E5%AE%9E%E6%88%98/%E4%BD%BF%E7%94%A8selenium%E7%88%AC%E5%8F%96%E6%8C%89%E5%85%B3%E9%94%AE%E8%AF%8D%E6%90%9C%E7%B4%A2%E7%9A%84%E5%BE%AE%E5%8D%9A.py">使用selenium爬取按关键词搜索的微博.py</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a target="_blank" rel="noopener" href="http://www.chenxm.cc/article/882.html">python xlrd读取excel(表格)详解</a>
+<a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:5" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41822781/article/details/90671050">词云可视化：四行Python代码轻松上手到精通</a>
+<a href="#fnref:5" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:6" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://ie.bjd.com.cn/5b165687a010550e5ddc0e6a/contentApp/5b16573ae4b02a9fe2d558f9/AP5ecb00b6e4b0be621cbdc2d0.html">朱永新委员：建立网络游戏分级制 人脸识别防未成年人沉迷</a>
+<a href="#fnref:6" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:7" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://static.nfapp.southcn.com/content/202005/21/c3560548.html?from=timeline&date=ZjNhZWVlMTEtZGU0MS00MmM1LWFmOWItM2EyODIwYjMzYjk2&layer=4">叮咚看两会|制定“家庭教育法”很有必要</a>
+<a href="#fnref:7" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:8" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/35749013">如何减少互联网带给孩子的危害</a>
+<a href="#fnref:8" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/python/" class="category-chain-item">python</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/python/">#python</a>
+      
+        <a href="/tags/%E7%88%AC%E8%99%AB/">#爬虫</a>
+      
+        <a href="/tags/%E7%BD%91%E7%BB%9C%E6%B2%89%E8%BF%B7/">#网络沉迷</a>
+      
+        <a href="/tags/%E9%9D%92%E5%B0%91%E5%B9%B4/">#青少年</a>
+      
+        <a href="/tags/%E8%B0%83%E6%9F%A5%E6%8A%A5%E5%91%8A/">#调查报告</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>基于Python的防网络沉迷相关信息获取</div>
+      <div>https://blog.baixf.tk/2020/07/19/python/基于Python的防网络沉迷相关信息获取/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年7月19日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/07/20/python/python%E8%AF%8D%E4%BA%91%E5%89%94%E9%99%A4%E9%9D%9E%E6%9C%89%E6%95%88%E8%AF%8D/" title="python词云剔除非有效词">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">python词云剔除非有效词</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/07/18/raspberry/%E7%8E%A9%E8%BD%AC%E6%A0%91%E8%8E%93%E6%B4%BE%5B11%E9%9D%A2%E5%90%91%E5%88%9D%E5%AD%A6%E8%80%85%E7%9A%8420%E4%B8%AA%E6%A0%91%E8%8E%93%E6%B4%BE%E5%91%BD%E4%BB%A4%5D/" title="玩转树莓派[11:面向初学者的20个树莓派命令]">
+                        <span class="hidden-mobile">玩转树莓派[11:面向初学者的20个树莓派命令]</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

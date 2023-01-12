@@ -1,0 +1,823 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="详情见 https:&#x2F;&#x2F;github.com&#x2F;baixf-xyz&#x2F;ASR_work&#x2F;tree&#x2F;master&#x2F;07-LM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Class7 LM作业-基于srilm的语言模型训练">
+<meta property="og:url" content="https://blog.baixf.tk/2022/09/01/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E5%AD%A6%E4%B9%A0/Class7%20LM%E4%BD%9C%E4%B8%9A-%E5%9F%BA%E4%BA%8Esrilm%E7%9A%84%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="详情见 https:&#x2F;&#x2F;github.com&#x2F;baixf-xyz&#x2F;ASR_work&#x2F;tree&#x2F;master&#x2F;07-LM">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/v2-9d3f45a6c2193f1b4d62c0d845cc13d3_1440w.jpg">
+<meta property="article:published_time" content="2022-09-01T13:59:11.000Z">
+<meta property="article:modified_time" content="2023-01-12T14:08:04.375Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="语音识别">
+<meta property="article:tag" content="ASR">
+<meta property="article:tag" content="kaldi">
+<meta property="article:tag" content="thchs30">
+<meta property="article:tag" content="srilm">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/v2-9d3f45a6c2193f1b4d62c0d845cc13d3_1440w.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>Class7 LM作业-基于srilm的语言模型训练 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220901092503075.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Class7 LM作业-基于srilm的语言模型训练"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-09-01 13:59" pubdate>
+          2022年9月1日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          70 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Class7 LM作业-基于srilm的语言模型训练</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="零、SRILM安装与使用"><a href="#零、SRILM安装与使用" class="headerlink" title="零、SRILM安装与使用"></a>零、SRILM安装与使用</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/DataBaker/article/details/122855207">srilm的安装与使用（标贝科技）</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42069606/article/details/120951302">SRILM安装教程</a></p>
+<p>kaldi&#x2F;tools&#x2F;install_srilm.sh</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/usr/bin/env bash</span><br><br>current_path=`pwd`<br>current_dir=`basename &quot;$current_path&quot;`<br><br>if [ &quot;tools&quot; != &quot;$current_dir&quot; ]; then<br>    echo &quot;You should run this script in tools/ directory!!&quot;<br>    exit 1<br>fi<br><br>if [ ! -d liblbfgs-1.10 ]; then<br>    echo Installing libLBFGS library to support MaxEnt LMs<br>    bash extras/install_liblbfgs.sh || exit 1<br>fi<br><br>! command -v gawk &gt; /dev/null &amp;&amp; \<br>   echo &quot;GNU awk is not installed so SRILM will probably not work correctly: refusing to install&quot; &amp;&amp; exit 1;<br><br>if [ $# -ne 3 ]; then<br>    echo &quot;SRILM download requires some information about you&quot;<br>    echo<br>    echo &quot;Usage: $0 &lt;name&gt; &lt;organization&gt; &lt;email&gt;&quot;<br>    exit 1<br>fi<br><br>srilm_url=&quot;http://www.speech.sri.com/projects/srilm/srilm_download.php&quot;<br>post_data=&quot;WWW_file=srilm-1.7.3.tar.gz&amp;WWW_name=$1&amp;WWW_org=$2&amp;WWW_email=$3&quot;<br><br>if ! wget --post-data &quot;$post_data&quot; -O ./srilm.tar.gz &quot;$srilm_url&quot;; then<br>    echo &#x27;There was a problem downloading the file.&#x27;<br>    echo &#x27;Check you internet connection and try again.&#x27;<br>    exit 1<br>fi<br><br>mkdir -p srilm<br>cd srilm<br><br><br>if [ -f ../srilm.tgz ]; then<br>    tar -xvzf ../srilm.tgz # Old SRILM format<br>elif [  -f ../srilm.tar.gz ]; then<br>    tar -xvzf ../srilm.tar.gz # Changed format type from tgz to tar.gz<br>fi<br><br>major=`gawk -F. &#x27;&#123; print $1 &#125;&#x27; RELEASE`<br>minor=`gawk -F. &#x27;&#123; print $2 &#125;&#x27; RELEASE`<br>micro=`gawk -F. &#x27;&#123; print $3 &#125;&#x27; RELEASE`<br><br>if [ $major -le 1 ] &amp;&amp; [ $minor -le 7 ] &amp;&amp; [ $micro -le 1 ]; then<br>  echo &quot;Detected version 1.7.1 or earlier. Applying patch.&quot;<br>  patch -p0 &lt; ../extras/srilm.patch<br>fi<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-built_in">set</span> the SRILM variable <span class="hljs-keyword">in</span> the top-level Makefile to this directory.</span><br>cp Makefile tmpf<br><br>cat tmpf | gawk -v pwd=`pwd` &#x27;/SRILM =/&#123;printf(&quot;SRILM = %s\n&quot;, pwd); next;&#125; &#123;print;&#125;&#x27; \<br><span class="hljs-meta prompt_">  &gt; </span><span class="language-bash">Makefile || <span class="hljs-built_in">exit</span> 1</span><br>rm tmpf<br><br>mtype=`sbin/machine-type`<br><br>echo HAVE_LIBLBFGS=1 &gt;&gt; common/Makefile.machine.$mtype<br>grep ADDITIONAL_INCLUDES common/Makefile.machine.$mtype | \<br>    sed &#x27;s|$| -I$(SRILM)/../liblbfgs-1.10/include|&#x27; \<br>    &gt;&gt; common/Makefile.machine.$mtype<br><br>grep ADDITIONAL_LDFLAGS common/Makefile.machine.$mtype | \<br>    sed &#x27;s|$| -L$(SRILM)/../liblbfgs-1.10/lib/ -Wl,-rpath -Wl,$(SRILM)/../liblbfgs-1.10/lib/|&#x27; \<br>    &gt;&gt; common/Makefile.machine.$mtype<br><br>make || exit<br><br>cd ..<br>(<br>  [ ! -z &quot;$&#123;SRILM&#125;&quot; ] &amp;&amp; \<br>    echo &gt;&amp;2 &quot;SRILM variable is aleady defined. Undefining...&quot; &amp;&amp; \<br>    unset SRILM<br><br>  [ -f ./env.sh ] &amp;&amp; . ./env.sh<br><br>  [ ! -z &quot;$&#123;SRILM&#125;&quot; ] &amp;&amp; \<br>    echo &gt;&amp;2 &quot;SRILM config is already in env.sh&quot; &amp;&amp; exit<br><br>  wd=`pwd`<br>  wd=`readlink -f $wd || pwd`<br><br>  echo &quot;export SRILM=$wd/srilm&quot;<br>  dirs=&quot;\$&#123;PATH&#125;&quot;<br>  for directory in $(cd srilm &amp;&amp; find bin -type d ) ; do<br>    dirs=&quot;$dirs:\$&#123;SRILM&#125;/$directory&quot;<br>  done<br>  echo &quot;export PATH=$dirs&quot;<br>) &gt;&gt; env.sh<br><br>echo &gt;&amp;2 &quot;Installation of SRILM finished successfully&quot;<br>echo &gt;&amp;2 &quot;Please source the tools/env.sh in your path.sh to enable it&quot;<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="一、准备"><a href="#一、准备" class="headerlink" title="一、准备"></a>一、准备</h3><p>srilm是一个语言模型训练工具，SRILM的主要目标是支持语言模型的估计和评测。估计是从训练数据（训练集）中得到一个模型，包括最大似然估计及相应的平滑算法；而评测则是从测试集中计算其困惑度。其最基础和最核心的模块是n-gram模块，这也是最早实现的模块，包括两个工 具：ngram-count和ngram，相应的被用来估计语言模型和计算语言模型的困惑度。</p>
+<p>在训练模型之前需要对文本数据进行处理，得到<strong>分好词的文本数据</strong>。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220901131647911.png" srcset="/img/loading.gif" lazyload alt="image-20220901131647911"></p>
+<p>同时，我们还需要准备一个词典lexicon.txt，大家可以自行建立自己的词典或者获取其他已经建立好的词典作为lexicon。词典在这里的作用是我们在训练模型之前需要对文本数据中出现的词进行一个统计。统计每一个词在文本中出现的频率。</p>
+<p>然后我们还需要测试数据集，我们需要准备一些测试数据集用于测试我们训练的模型性能。</p>
+<h3 id="二、词频统计"><a href="#二、词频统计" class="headerlink" title="二、词频统计"></a>二、词频统计</h3><p>在得到了分好词的文本后，需要对文本中的每个词进行一个词频统计，具体的步骤如下：</p>
+<p>1.处理输入文本：将输入文本（分好词）中没有出现在lexicon中的词替换成，然后生成文件text.no_oov。生成的文本大概如下图。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220901131647911.png" srcset="/img/loading.gif" lazyload></p>
+<p>实现这一步所需要的shell代码：<code>$text</code>代表我们的文本数据的路径，<code>$lexicon</code>是词典的路径。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">cat $text | awk -v lex=$lexicon &#x27;BEGIN&#123;while((getline&lt;lex) &gt;0)&#123; seen[$1]=1; &#125; &#125;<br>  &#123;for(n=1; n&lt;=NF;n++) &#123;  if (seen[$n]) &#123; printf(&quot;%s &quot;, $n); &#125; else &#123;printf(&quot;&lt;UNK&gt; &quot;);&#125; &#125; printf(&quot;\n&quot;);&#125;&#x27; &gt; $cleantext || exit 1;<br></code></pre></td></tr></table></figure>
+
+<p>2.统计text.no_oov (cleantxt)中出现的词的词频并按词频降序排列，生成word.counts。结果如下图：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220901131744993.png" srcset="/img/loading.gif" lazyload alt="image-20220901131744993"></p>
+<p>从图中可以看到第一列为我们的词频，第二列为文本中所有出现过的词。都已经按照降序排好顺序了。代码如下，这步我指定了一个临时文件夹$tmp, 用于存储中间过程的临时文件，使用之前需要创建。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cat $cleantext | awk &#x27;&#123;for(n=1;n&lt;=NF;n++) print $n; &#125;&#x27; | sort -T $tmp | uniq -c | sort -T $tmp -nr &gt; $dir/word.counts || exit 1;<br></code></pre></td></tr></table></figure>
+
+<p>3.把text.no_oov（cleantext）中的所有词和lexicon中的非静音词合并，统计词频，按照词频降序排列，生成unigram.counts。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220901131754862.png" srcset="/img/loading.gif" lazyload alt="image-20220901131754862"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cat $cleantext | awk &#x27;&#123;for(n=1;n&lt;=NF;n++) print $n; &#125;&#x27; | cat - &lt;(grep -w -v &#x27;!SIL&#x27; $lexicon | awk &#x27;&#123;print $1&#125;&#x27;) | sort -T $tmp | uniq -c | sort -nr &gt; $dir/unigram.counts || exit 1;<br></code></pre></td></tr></table></figure>
+
+<p>4.用kaldi&#x2F;tools&#x2F;kaldi_lm中的get_word_map.pl工具将unigram.counts中的词改成一种简短的形式，生成word_map</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220901131728763.png" srcset="/img/loading.gif" lazyload alt="image-20220901131728763"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cat $dir/unigram.counts  | awk &#x27;&#123;print $2&#125;&#x27; | kaldi/tools/kaldi_lm/get_word_map.pl &quot;&lt;s&gt;&quot; &quot;&lt;/s&gt;&quot; &quot;&lt;UNK&gt;&quot; &gt; $dir/word_map || exit 1;<br></code></pre></td></tr></table></figure>
+
+<p>至此我们就得到了word_map，可以用它来进行ngram语言模型的训练了。</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/usr/bin/env bash</span><br><br>text=./data/train/word.txt<br>lexicon=./data/train/lexicon.txt<br>dir=srilm<br>mkdir $dir<br>cleantext=$dir/text.no_oov<br><br>cat $text | awk -v lex=$lexicon &#x27;BEGIN&#123;while((getline&lt;lex) &gt;0)&#123; seen[$1]=1; &#125; &#125;<br>  &#123;for(n=1; n&lt;=NF;n++) &#123;  if (seen[$n]) &#123; printf(&quot;%s &quot;, $n); &#125; else &#123;printf(&quot;&lt;UNK&gt; &quot;);&#125; &#125; printf(&quot;\n&quot;);&#125;&#x27; &gt; $cleantext || exit 1;<br>  <br>cat $cleantext | awk &#x27;&#123;for(n=2;n&lt;=NF;n++) print $n; &#125;&#x27; | sort | uniq -c | sort -nr &gt; $dir/word.counts || exit 1;<br><br>cat $cleantext | awk &#x27;&#123;for(n=2;n&lt;=NF;n++) print $n; &#125;&#x27; | \<br>  cat - &lt;(grep -w -v &#x27;!SIL&#x27; $lexicon | awk &#x27;&#123;print $1&#125;&#x27;) | \<br>   sort | uniq -c | sort -nr &gt; $dir/unigram.counts || exit 1;<br><br>cat $dir/unigram.counts  | awk &#x27;&#123;print $2&#125;&#x27; | get_word_map.pl &quot;&lt;s&gt;&quot; &quot;&lt;/s&gt;&quot; &quot;&lt;UNK&gt;&quot; &gt; $dir/word_map || exit 1;<br><br>cat $cleantext | awk -v wmap=$dir/word_map &#x27;BEGIN&#123;while((getline&lt;wmap)&gt;0)map[$1]=$2;&#125;<br>  &#123; for(n=2;n&lt;=NF;n++) &#123; printf map[$n]; if(n&lt;NF)&#123; printf &quot; &quot;; &#125; else &#123; print &quot;&quot;; &#125;&#125;&#125;&#x27; | gzip -c &gt;$dir/train.gz \<br>   || exit 1;<br></code></pre></td></tr></table></figure>
+
+<h3 id="三、训练"><a href="#三、训练" class="headerlink" title="三、训练"></a>三、训练</h3><blockquote>
+<p>详情代码见github:<a target="_blank" rel="noopener" href="https://github.com/baixf-xyz/ASR_work/tree/master/07-LM">https://github.com/baixf-xyz/ASR_work/tree/master/07-LM</a></p>
+</blockquote>
+<p>在针对小文本数据量的语言模型训练中，我们可以直接调用srilm中的n-gram-count工具进行训练，但针对大数据量文本数据进行训练时，可能会造成内存溢出的问题，所以针对这个问题，srilm工具箱同时集成了另一个工具make-big-lm，它可以达到把文本数据分块进行处理的功能，节省了内存空间提升了训练效率。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs text">ngram-count<br>##功能<br>#读取分词后的text文件或者count文件，然后用来输出最后汇总的count文件或者语言模型<br>##参数<br>#输入文本：<br>#  -read 读取count文件<br>#  -text 读取分词后的文本文件<br>#词典文件：<br>#  -vocab 限制text和count文件的单词，没有出现在词典的单词替换为&lt;unk&gt;；<br>#         如果没有加该选项，所有的单词将会被自动加入词典<br>#  -limit-vocab 只限制count文件的单词（对text文件无效）；<br>#               没有出现在词典里面的count将会被丢弃<br>#  -write-vocab 输出词典<br>#语言模型：<br>#  -lm 输出语言模型<br>#  -write-binary-lm 输出二进制的语言模型<br>#  -sort 输出语言模型gram排序<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs text">ngram<br>##功能<br>#用于评估语言模型的好坏，或者是计算特定句子的得分，用于语音识别的识别结果分析。<br>##参数<br>#计算得分：<br>#  -order 模型阶数，默认使用3阶<br>#  -lm 使用的语言模型<br>#  -ppl 后跟需要打分的句子（一行一句，已经分词），ppl表示所有单词，ppl1表示除了&lt;/s&gt;以外的单词<br>#    -debug 0 只输出整体情况<br>#    -debug 1 具体到句子<br>#    -debug 2 具体每个词的概率<br>#产生句子：<br>#  -gen 产生句子的个数<br>#  -seed 产生句子用到的random seed<br>ngram -lm $&#123;lm&#125; -order 3 -ppl $&#123;file&#125; -debug 1 &gt; $&#123;ppl&#125;<br></code></pre></td></tr></table></figure>
+
+<p>运行THCHS30的kaldi 代码，在数据准备阶段，data&#x2F;train 和 test文件夹中会生成 word.txt 文件，去除第一列 id 标识，使用train作LM model的计数和训练文件，Test做测试。</p>
+<ul>
+<li>问题1：使用SRILM 获得经过 interpolation 式的 Kneser Ney 平滑的 3gram 以上的语言模型执行</li>
+</ul>
+<blockquote>
+<p>共有两种训练方法:</p>
+<ol>
+<li>训练文本 ——&gt; count文件 ——&gt; lm模型</li>
+<li>训练文本——&gt; lm模型</li>
+</ol>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">计数功能——生成计数文件</span><br>ngram-count -text -order 3 newtrainword.txt -limit-vocab lexicon.txt -no-sos -no-eos -write trainword.text.count –debug 1<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">从计数文件构建语言模型</span><br>ngram-count -read trainword.text.count -order 3 -lm LM_train -interpolate –kndiscount –debug 1<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">直接结合上面两步，接利用训练语料构建语言模型</span><br>ngram-count -text newtrainword.txt -order 3  -lm train.lm -interpolate –kndiscount –debug 1<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220901180504596.png" srcset="/img/loading.gif" lazyload alt="image-20220901180504596"></p>
+<ul>
+<li>问题2：使用 SRILM SRILM 计算在识别测试集上计算计算在识别测试集上计算 PPL&#x3D;32266.1</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ngram -ppl testword.text.count -order 3 -lm train.lm <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">file testword.text.count: 12025 sentences, 37441 words, 22213 OOVs<br>2577 zeroprobs, logprob= -111258 ppl= 32266.1 ppl1= 6.22859e+08<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220901180528370.png" srcset="/img/loading.gif" lazyload alt="image-20220901180528370"></p>
+<h3 id="四、Tips"><a href="#四、Tips" class="headerlink" title="四、Tips"></a>四、Tips</h3><p>使用nrgam-count，主要是三要素：训练文件，计数文件，语言模型，流程都是“训练文件–&gt;计数文件–&gt;语言模型”。</p>
+<blockquote>
+<p>先将训练文件进行计数，通过-gtnmin    mincount来控制哪些计数丢弃，即计数为0，然后再得到中间计数文件，再针对中间计数文件进行折扣算法，得到最终的语言模型。计数文件是一个中间文件，可以通过-write    count_file来输出保存。</p>
+</blockquote>
+<p>较为常用的使用方法如下：</p>
+<ul>
+<li>最简单(Good-Turing折扣算法)<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ngram-count -text train -lm LM.ARPA<br></code></pre></td></tr></table></figure></li>
+<li>输出词典和计数文件：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ngram-count -text train -write-vocab VOCAB -write COUNT -lm LM.ARPA<br></code></pre></td></tr></table></figure></li>
+<li>对语言模型剪枝：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ngram-count -text train -prune 0.2 -lm LM.ARPA<br></code></pre></td></tr></table></figure></li>
+<li>设置计数最小阈值：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ngram-count -text train -gt1min 1 -gt2min 1 -gt3min 2 -lm LM.ARPA<br></code></pre></td></tr></table></figure></li>
+<li>使用经过插值的修正Kneser-Ney折扣算法：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ngram-count -text train -kndiscount -interpolate -lm LM.ARPA<br></code></pre></td></tr></table></figure></li>
+<li>将debug信息输出来：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ngram-count -text train -kndiscount -interpolate -lm LM.ARPA -debug 1 2&gt;DEBUG<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/baidu_38903149/article/details/105141431">【srilm语言模型训练】基于srilm的语言模型训练</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/asdfjkl1234156/article/details/103242962">利用Srilm简单进行语言模型估计并进行困惑度测试</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.cnblogs.com/whuqin/p/7286807.html">用srilm生成语言模型 </a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/GavinLiu1990/article/details/81363936">SRILM使用之ngram-count</a>
+<a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:5" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-comm-awk.html">Linux awk 命令</a>
+<a href="#fnref:5" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:6" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.cnblogs.com/dahu-daqing/p/9759978.html">SRILM Ngram 折扣平滑算法 </a>
+<a href="#fnref:6" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:7" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/kaldi-asr/kaldi/blob/master/egs/aishell/s5/local/aishell_train_lms.sh">kaldi-asr</a>
+<a href="#fnref:7" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:8" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/273606445">简话语音识别 语言模型（一）ngram基础 - Manto的文章 - 知乎</a>
+<a href="#fnref:8" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/" class="category-chain-item">语音识别</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/">#语音识别</a>
+      
+        <a href="/tags/ASR/">#ASR</a>
+      
+        <a href="/tags/kaldi/">#kaldi</a>
+      
+        <a href="/tags/thchs30/">#thchs30</a>
+      
+        <a href="/tags/srilm/">#srilm</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Class7 LM作业-基于srilm的语言模型训练</div>
+      <div>https://blog.baixf.tk/2022/09/01/语音识别学习/Class7 LM作业-基于srilm的语言模型训练/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年9月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/09/03/Data%20Structure/A2-%E5%88%86%E6%B2%BB%E6%80%9D%E6%83%B3%E4%B8%8E%E9%80%92%E5%BD%92/" title="A2-分治思想与递归">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">A2-分治思想与递归</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/31/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E5%AD%A6%E4%B9%A0/Class6%20%E4%BD%9C%E4%B8%9A-Kaldi%E7%9A%84thchs30%E5%AE%9E%E4%BE%8B/" title="Class6 作业-Kaldi的thchs30实例">
+                        <span class="hidden-mobile">Class6 作业-Kaldi的thchs30实例</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

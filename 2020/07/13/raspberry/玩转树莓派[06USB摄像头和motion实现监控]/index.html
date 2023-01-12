@@ -1,0 +1,795 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="智慧家庭第二弹~">
+<meta property="og:type" content="article">
+<meta property="og:title" content="玩转树莓派[06:USB摄像头和motion实现监控]">
+<meta property="og:url" content="https://blog.baixf.tk/2020/07/13/raspberry/%E7%8E%A9%E8%BD%AC%E6%A0%91%E8%8E%93%E6%B4%BE[06USB%E6%91%84%E5%83%8F%E5%A4%B4%E5%92%8Cmotion%E5%AE%9E%E7%8E%B0%E7%9B%91%E6%8E%A7]/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="智慧家庭第二弹~">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201122214500.jpg">
+<meta property="article:published_time" content="2020-07-13T03:11:11.000Z">
+<meta property="article:modified_time" content="2022-06-20T09:42:49.959Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="raspberry">
+<meta property="article:tag" content="基地2.0">
+<meta property="article:tag" content="实时">
+<meta property="article:tag" content="监控">
+<meta property="article:tag" content="网页">
+<meta property="article:tag" content="树莓派">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201122214500.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>玩转树莓派[06:USB摄像头和motion实现监控] - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://api.ixiaowai.cn/mcapi/mcapi.php') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="玩转树莓派[06:USB摄像头和motion实现监控]"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-07-13 03:11" pubdate>
+          2020年7月13日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          27k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          228 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">玩转树莓派[06:USB摄像头和motion实现监控]</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <span class="label label-primary">
+  这篇文章主要为大家详细介绍了树莓派使用USB摄像头和motion实现监控，具有一定的参考价值，感兴趣的小伙伴们可以参考一下。
+</span>
+
+<p>本文实例为大家分享了树莓派使用USB摄像头和motion实现监控的具体代码，供大家参考，具体内容如下</p>
+<h2 id="一、工具"><a href="#一、工具" class="headerlink" title="一、工具"></a>一、工具</h2><p>1、树莓派<br>2、USB摄像头</p>
+<h2 id="二、操作步骤"><a href="#二、操作步骤" class="headerlink" title="二、操作步骤"></a>二、操作步骤</h2><h3 id="0、连接并测试USB摄像头"><a href="#0、连接并测试USB摄像头" class="headerlink" title="0、连接并测试USB摄像头"></a>0、连接并测试USB摄像头</h3><p>树莓派接USB摄像头十分简单，毕竟树莓派是Linux系统的卡片电脑，将买来的USB摄像头直接连在树莓派的USB口上，然后我们看看摄像头是否被识别，有两种方法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">1. 使用lsusb命令<br><br>pi@raspbian:~$ lsusb<br>Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub<br>Bus 001 Device 003: ID 1871:0101 Aveo Technology Corp. UVC camera (Bresser microscope)<br>Bus 001 Device 002: ID 2109:3431 VIA Labs, Inc. Hub<br>Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub<br></code></pre></td></tr></table></figure>
+
+<p>SSH终端会显示树莓派当前接入的USB设备列表，我们可以先不插摄像头，lsusb，然后插上摄像头lsusb，就可以看到USB摄像头对应的是哪个设备了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">2. 查看设备文件<br><br><br>也可以查看设备文件，输入命令：<br><br>pi@raspbian:~$ ls /dev/video*<br>/dev/video0  /dev/video1  /dev/video10  /dev/video11  /dev/video12  /dev/video13  /dev/video14  /dev/video15  /dev/video16<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">3、本人实测摄像画面。<br><br>安装mplayer，终端运行：<br><br>sudo apt-get install mplayer<br>sudo mplayer tv://<br></code></pre></td></tr></table></figure>
+
+<p><span class="label label-primary">注意事项：须在安装vnc桌面情况下查看⚠</span></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201122214638.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="1、安装motion"><a href="#1、安装motion" class="headerlink" title="1、安装motion"></a>1、安装motion</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt-get install motion<br></code></pre></td></tr></table></figure>
+
+<h3 id="2、配置motion"><a href="#2、配置motion" class="headerlink" title="2、配置motion"></a>2、配置motion</h3><p>(1)让motion可以一直在后台运行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo nano /etc/default/motion<br></code></pre></td></tr></table></figure>
+
+<p>将里面的no修改成yes，让motion可以一直在后台运行：start_motion_daemon&#x3D;yes</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201122214717.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>(2)修改其他配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">一些常见参数：<br>daemon on                        #开启守护进程（选配）<br>target_dir /home/pi/motion-images    #图片保存的路径<br><span class="hljs-meta prompt_">#</span><span class="language-bash">videodevice /dev/video0            <span class="hljs-comment">#摄像头设备（默认）可修改</span></span>            <br>stream_localhost off                 #允许通过网页查看摄像头<br>stream_auth_method 2               #开启密码认证<br>stream_authentication 用户名:密码    #网页查看摄像头的用户名和密码<br><br></code></pre></td></tr></table></figure>
+
+<p>具体修改如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo nano /etc/motion/motion.conf<br></code></pre></td></tr></table></figure>
+
+<p>修改配置文件，这个文件比较长，请确保一下参数的配置。在nano编辑器下，可以使用^w快速查找到如下配置内容。也可以使用^v向下翻页。</p>
+<h4 id="开启终端启动和后台模式"><a href="#开启终端启动和后台模式" class="headerlink" title="开启终端启动和后台模式"></a>开启终端启动和后台模式</h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201122214900.jpg" srcset="/img/loading.gif" lazyload></p>
+<h4 id="网页端口"><a href="#网页端口" class="headerlink" title="网页端口"></a>网页端口</h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201122214917.jpg" srcset="/img/loading.gif" lazyload></p>
+<h4 id="监控宽度高度"><a href="#监控宽度高度" class="headerlink" title="监控宽度高度"></a>监控宽度高度</h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201122214933.jpg" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201122214948.jpg" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201122215002.jpg" srcset="/img/loading.gif" lazyload></p>
+<h3 id="3、启动motion"><a href="#3、启动motion" class="headerlink" title="3、启动motion"></a>3、启动motion</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo motion<br></code></pre></td></tr></table></figure>
+
+<h3 id="4、查看视频数据"><a href="#4、查看视频数据" class="headerlink" title="4、查看视频数据"></a>4、查看视频数据</h3><p>在局域网内的设备，不管是手机还是电脑，均可打开浏览器访问树莓派IP:8081</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201122215035.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="5、退出motion"><a href="#5、退出motion" class="headerlink" title="5、退出motion"></a>5、退出motion</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">killall -TERM motion<br></code></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">service motion stop<br></code></pre></td></tr></table></figure>
+
+<h3 id="6、-设置为开机运行（选配）"><a href="#6、-设置为开机运行（选配）" class="headerlink" title="6、 设置为开机运行（选配）"></a>6、 设置为开机运行（选配）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo vim /etc/rc.local<br></code></pre></td></tr></table></figure>
+
+<p>在exit 0前添加 motion , 保存，就会开机自动运行了。</p>
+<h3 id="附件一-motion-conf"><a href="#附件一-motion-conf" class="headerlink" title="附件一 motion.conf"></a>附件一 motion.conf</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br><span class="line">519</span><br><span class="line">520</span><br><span class="line">521</span><br><span class="line">522</span><br><span class="line">523</span><br><span class="line">524</span><br><span class="line">525</span><br><span class="line">526</span><br><span class="line">527</span><br><span class="line">528</span><br><span class="line">529</span><br><span class="line">530</span><br><span class="line">531</span><br><span class="line">532</span><br><span class="line">533</span><br><span class="line">534</span><br><span class="line">535</span><br><span class="line">536</span><br><span class="line">537</span><br><span class="line">538</span><br><span class="line">539</span><br><span class="line">540</span><br><span class="line">541</span><br><span class="line">542</span><br><span class="line">543</span><br><span class="line">544</span><br><span class="line">545</span><br><span class="line">546</span><br><span class="line">547</span><br><span class="line">548</span><br><span class="line">549</span><br><span class="line">550</span><br><span class="line">551</span><br><span class="line">552</span><br><span class="line">553</span><br><span class="line">554</span><br><span class="line">555</span><br><span class="line">556</span><br><span class="line">557</span><br><span class="line">558</span><br><span class="line">559</span><br><span class="line">560</span><br><span class="line">561</span><br><span class="line">562</span><br><span class="line">563</span><br><span class="line">564</span><br><span class="line">565</span><br><span class="line">566</span><br><span class="line">567</span><br><span class="line">568</span><br><span class="line">569</span><br><span class="line">570</span><br><span class="line">571</span><br><span class="line">572</span><br><span class="line">573</span><br><span class="line">574</span><br><span class="line">575</span><br><span class="line">576</span><br><span class="line">577</span><br><span class="line">578</span><br><span class="line">579</span><br><span class="line">580</span><br><span class="line">581</span><br><span class="line">582</span><br><span class="line">583</span><br><span class="line">584</span><br><span class="line">585</span><br><span class="line">586</span><br><span class="line">587</span><br><span class="line">588</span><br><span class="line">589</span><br><span class="line">590</span><br><span class="line">591</span><br><span class="line">592</span><br><span class="line">593</span><br><span class="line">594</span><br><span class="line">595</span><br><span class="line">596</span><br><span class="line">597</span><br><span class="line">598</span><br><span class="line">599</span><br><span class="line">600</span><br><span class="line">601</span><br><span class="line">602</span><br><span class="line">603</span><br><span class="line">604</span><br><span class="line">605</span><br><span class="line">606</span><br><span class="line">607</span><br><span class="line">608</span><br><span class="line">609</span><br><span class="line">610</span><br><span class="line">611</span><br><span class="line">612</span><br><span class="line">613</span><br><span class="line">614</span><br><span class="line">615</span><br><span class="line">616</span><br><span class="line">617</span><br><span class="line">618</span><br><span class="line">619</span><br><span class="line">620</span><br><span class="line">621</span><br><span class="line">622</span><br><span class="line">623</span><br><span class="line">624</span><br><span class="line">625</span><br><span class="line">626</span><br><span class="line">627</span><br><span class="line">628</span><br><span class="line">629</span><br><span class="line">630</span><br><span class="line">631</span><br><span class="line">632</span><br><span class="line">633</span><br><span class="line">634</span><br><span class="line">635</span><br><span class="line">636</span><br><span class="line">637</span><br><span class="line">638</span><br><span class="line">639</span><br><span class="line">640</span><br><span class="line">641</span><br><span class="line">642</span><br><span class="line">643</span><br><span class="line">644</span><br><span class="line">645</span><br><span class="line">646</span><br><span class="line">647</span><br><span class="line">648</span><br><span class="line">649</span><br><span class="line">650</span><br><span class="line">651</span><br><span class="line">652</span><br><span class="line">653</span><br><span class="line">654</span><br><span class="line">655</span><br><span class="line">656</span><br><span class="line">657</span><br><span class="line">658</span><br><span class="line">659</span><br><span class="line">660</span><br><span class="line">661</span><br><span class="line">662</span><br><span class="line">663</span><br><span class="line">664</span><br><span class="line">665</span><br><span class="line">666</span><br><span class="line">667</span><br><span class="line">668</span><br><span class="line">669</span><br><span class="line">670</span><br><span class="line">671</span><br><span class="line">672</span><br><span class="line">673</span><br><span class="line">674</span><br><span class="line">675</span><br><span class="line">676</span><br><span class="line">677</span><br><span class="line">678</span><br><span class="line">679</span><br><span class="line">680</span><br><span class="line">681</span><br><span class="line">682</span><br><span class="line">683</span><br><span class="line">684</span><br><span class="line">685</span><br><span class="line">686</span><br><span class="line">687</span><br><span class="line">688</span><br><span class="line">689</span><br><span class="line">690</span><br><span class="line">691</span><br><span class="line">692</span><br><span class="line">693</span><br><span class="line">694</span><br><span class="line">695</span><br><span class="line">696</span><br><span class="line">697</span><br><span class="line">698</span><br><span class="line">699</span><br><span class="line">700</span><br><span class="line">701</span><br><span class="line">702</span><br><span class="line">703</span><br><span class="line">704</span><br><span class="line">705</span><br><span class="line">706</span><br><span class="line">707</span><br><span class="line">708</span><br><span class="line">709</span><br><span class="line">710</span><br><span class="line">711</span><br><span class="line">712</span><br><span class="line">713</span><br><span class="line">714</span><br><span class="line">715</span><br><span class="line">716</span><br><span class="line">717</span><br><span class="line">718</span><br><span class="line">719</span><br><span class="line">720</span><br><span class="line">721</span><br><span class="line">722</span><br><span class="line">723</span><br><span class="line">724</span><br><span class="line">725</span><br><span class="line">726</span><br><span class="line">727</span><br><span class="line">728</span><br><span class="line">729</span><br><span class="line">730</span><br><span class="line">731</span><br><span class="line">732</span><br><span class="line">733</span><br><span class="line">734</span><br><span class="line">735</span><br><span class="line">736</span><br><span class="line">737</span><br><span class="line">738</span><br><span class="line">739</span><br><span class="line">740</span><br><span class="line">741</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">Rename this distribution example file to motion.conf</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"></span><br><span class="language-bash"><span class="hljs-comment"># This config file was generated by motion 4.1.1</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Documentation:  /usr/share/doc/motion/motion_guide.html</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">###########################################################</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Daemon</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">###########################################################</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Start <span class="hljs-keyword">in</span> daemon (background) mode and release terminal (default: off)</span><br>daemon on<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">File to store the process ID, also called pid file. (default: not defined)</span><br>process_id_file /var/run/motion/motion.pid<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">###########################################################</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Basic Setup Mode</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">###########################################################</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Start <span class="hljs-keyword">in</span> Setup-Mode, daemon disabled. (default: off)</span><br>setup_mode off<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Use a file to save logs messages, <span class="hljs-keyword">if</span> not defined stderr and syslog is used. (default: not defined)</span><br>logfile /var/log/motion/motion.log<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Level of <span class="hljs-built_in">log</span> messages [1..9] (EMG, ALR, CRT, ERR, WRN, NTC, INF, DBG, ALL). (default: 6 / NTC)</span><br>log_level 6<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Filter to <span class="hljs-built_in">log</span> messages by <span class="hljs-built_in">type</span> (COR, STR, ENC, NET, DBL, EVT, TRK, VID, ALL). (default: ALL)</span><br>log_type all<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">##########################################################</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Capture device options</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">###########################################################</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Videodevice to be used <span class="hljs-keyword">for</span> capturing  (default /dev/video0)</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-keyword">for</span> FreeBSD default is /dev/bktr0</span><br>videodevice /dev/video0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">v4l2_palette allows one to choose preferable palette to be use by motion</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">See motion_guide.html <span class="hljs-keyword">for</span> the valid options and values.  (default: 17)</span><br>v4l2_palette 17<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Tuner device to be used <span class="hljs-keyword">for</span> capturing using tuner as <span class="hljs-built_in">source</span> (default /dev/tuner0)</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">This is ONLY used <span class="hljs-keyword">for</span> FreeBSD. Leave it commented out <span class="hljs-keyword">for</span> Linux</span><br>; tunerdevice /dev/tuner0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">The video input to be used (default: -1)</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Should normally be <span class="hljs-built_in">set</span> to 0 or 1 <span class="hljs-keyword">for</span> video/TV cards, and -1 <span class="hljs-keyword">for</span> USB cameras</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Set to 0 <span class="hljs-keyword">for</span> uvideo(4) on OpenBSD</span><br>input -1<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">The video norm to use (only <span class="hljs-keyword">for</span> video capture and TV tuner cards)</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Values: 0 (PAL), 1 (NTSC), 2 (SECAM), 3 (PAL NC no colour). Default: 0 (PAL)</span><br>norm 0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">The frequency to <span class="hljs-built_in">set</span> the tuner to (kHz) (only <span class="hljs-keyword">for</span> TV tuner cards) (default: 0)</span><br>frequency 0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Override the power line frequency <span class="hljs-keyword">for</span> the webcam. (normally not necessary)</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Values:</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">-1 : Do not modify device setting</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">0  : Power line frequency Disabled</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">1  : 50hz</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">2  : 60hz</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">3  : Auto</span><br>power_line_frequency -1<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Rotate image this number of degrees. The rotation affects all saved images as</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">well as movies. Valid values: 0 (default = no rotation), 90, 180 and 270.</span><br>rotate 0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Flip image over a given axis (vertical or horizontal), vertical means from left to right</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">horizontal means top to bottom. Valid values: none, v and h.</span><br>flip_axis none<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Image width (pixels). Valid range: Camera dependent, default: 320</span><br>width 800<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Image height (pixels). Valid range: Camera dependent, default: 240</span><br>height 600<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Maximum number of frames to be captured per second.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Valid range: 2-100. Default: 100 (almost no <span class="hljs-built_in">limit</span>).</span><br>framerate 2<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Minimum time <span class="hljs-keyword">in</span> seconds between capturing picture frames from the camera.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Default: 0 = disabled - the capture rate is given by the camera framerate.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">This option is used when you want to capture images at a rate lower than 2 per second.</span><br>minimum_frame_time 0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Full Network Camera URL.  Valid Services: http:// ftp:// mjpg:// rtsp:// mjpeg:// file:// rtmp://</span><br>; netcam_url value<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Username and password <span class="hljs-keyword">for</span> network camera <span class="hljs-keyword">if</span> required. Syntax is user:password</span><br>; netcam_userpass value<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">The setting <span class="hljs-keyword">for</span> keep-alive of network socket, should improve performance on compatible net cameras.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">off:   The historical implementation using HTTP/1.0, closing the socket after each http request.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">force: Use HTTP/1.0 requests with keep alive header to reuse the same connection.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">on:    Use HTTP/1.1 requests that support keep alive as default.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Default: off</span><br>netcam_keepalive off<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">URL to use <span class="hljs-keyword">for</span> a netcam proxy server, <span class="hljs-keyword">if</span> required, e.g. <span class="hljs-string">&quot;http://myproxy&quot;</span>.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">If a port number other than 80 is needed, use <span class="hljs-string">&quot;http://myproxy:1234&quot;</span>.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Default: not defined</span><br>; netcam_proxy value<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Set less strict jpeg checks <span class="hljs-keyword">for</span> network cameras with a poor/buggy firmware.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Default: off</span><br>netcam_tolerant_check off<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">RTSP connection uses TCP to communicate to the camera. Can prevent image corruption.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Default: on</span><br>rtsp_uses_tcp on<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Name of camera to use <span class="hljs-keyword">if</span> you are using a camera accessed through OpenMax/MMAL</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Default: Not defined</span><br>; mmalcam_name vc.ril.camera<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Camera control parameters (see raspivid/raspistill tool documentation)</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Default: Not defined</span><br>; mmalcam_control_params -hf<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Let motion regulate the brightness of a video device (default: off).</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">The auto_brightness feature uses the brightness option as its target value.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">If brightness is zero auto_brightness will adjust to average brightness value 128.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Only recommended <span class="hljs-keyword">for</span> cameras without auto brightness</span><br>auto_brightness off<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Set the initial brightness of a video device.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">If auto_brightness is enabled, this value defines the average brightness level</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-built_in">which</span> Motion will try and adjust to.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Valid range 0-255, default 0 = disabled</span><br>brightness 0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Set the contrast of a video device.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Valid range 0-255, default 0 = disabled</span><br>contrast 0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Set the saturation of a video device.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Valid range 0-255, default 0 = disabled</span><br>saturation 0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Set the hue of a video device (NTSC feature).</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Valid range 0-255, default 0 = disabled</span><br>hue 0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">###########################################################</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Round Robin (multiple inputs on same video device name)</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">###########################################################</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Number of frames to capture <span class="hljs-keyword">in</span> each roundrobin step (default: 1)</span><br>roundrobin_frames 1<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Number of frames to skip before each roundrobin step (default: 1)</span><br>roundrobin_skip 1<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Try to filter out noise generated by roundrobin (default: off)</span><br>switchfilter off<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">###########################################################</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Motion Detection Settings:</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">###########################################################</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Threshold <span class="hljs-keyword">for</span> number of changed pixels <span class="hljs-keyword">in</span> an image that</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">triggers motion detection (default: 1500)</span><br>threshold 1500<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Automatically tune the threshold down <span class="hljs-keyword">if</span> possible (default: off)</span><br>threshold_tune off<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Noise threshold <span class="hljs-keyword">for</span> the motion detection (default: 32)</span><br>noise_level 32<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Automatically tune the noise threshold (default: on)</span><br>noise_tune on<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Despeckle motion image using (e)rode or (d)ilate or (l)abel (Default: not defined)</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Recommended value is EedDl. Any combination (and number of) of E, e, d, and D is valid.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">(l)abeling must only be used once and the <span class="hljs-string">&#x27;l&#x27;</span> must be the last letter.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Comment out to <span class="hljs-built_in">disable</span></span><br>despeckle_filter EedDl<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Detect motion <span class="hljs-keyword">in</span> predefined areas (1 - 9). Areas are numbered like that:  1 2 3</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">A script (on_area_detected) is started immediately when motion is         4 5 6</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">detected <span class="hljs-keyword">in</span> one of the given areas, but only once during an event.        7 8 9</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">One or more areas can be specified with this option. Take care: This option</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">does NOT restrict detection to these areas! (Default: not defined)</span><br>; area_detect value<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">PGM file to use as a sensitivity mask.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Full path name to. (Default: not defined)</span><br>; mask_file value<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">PGM file to completely mask out a area of image.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Full path name to. (Default: not defined)</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">mask_privacy value</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Dynamically create a mask file during operation (default: 0)</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Adjust speed of mask changes from 0 (off) to 10 (fast)</span><br>smart_mask_speed 0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Ignore sudden massive light intensity changes given as a percentage of the picture</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">area that changed intensity. Valid range: 0 - 100 , default: 0 = disabled</span><br>lightswitch 0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Picture frames must contain motion at least the specified number of frames</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-keyword">in</span> a row before they are detected as <span class="hljs-literal">true</span> motion. At the default of 1, all</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">motion is detected. Valid range: 1 to thousands, recommended 1-5</span><br>minimum_motion_frames 1<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Specifies the number of pre-captured (buffered) pictures from before motion</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">was detected that will be output at motion detection.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Recommended range: 0 to 5 (default: 0)</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Do not use large values! Large values will cause Motion to skip video frames and</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">cause unsmooth movies. To smooth movies use larger values of post_capture instead.</span><br>pre_capture 0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Number of frames to capture after motion is no longer detected (default: 0)</span><br>post_capture 0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Event Gap is the seconds of no motion detection that triggers the end of an event.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">An event is defined as a series of motion images taken within a short timeframe.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Recommended value is 60 seconds (Default). The value -1 is allowed and disables</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">events causing all Motion to be written to one single movie file and no pre_capture.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">If <span class="hljs-built_in">set</span> to 0, motion is running <span class="hljs-keyword">in</span> gapless mode. Movies don<span class="hljs-string">&#x27;t have gaps anymore. An</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">event ends right after no more motion is detected and post_capture is over.</span></span><br>event_gap 60<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Maximum length in seconds of a movie</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">When value is exceeded a new movie file is created. (Default: 0 = infinite)</span></span><br>max_movie_time 0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Always save images even if there was no motion (default: off)</span></span><br>emulate_motion off<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">###########################################################</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Image File Output</span></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">###########################################################</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Output &#x27;</span>normal<span class="hljs-string">&#x27; pictures when motion is detected (default: off)</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Valid values: on, off, first, best, center</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">When set to &#x27;</span>first<span class="hljs-string">&#x27;, only the first picture of an event is saved.</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Picture with most motion of an event is saved when set to &#x27;</span>best<span class="hljs-string">&#x27;.</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Picture with motion nearest center of picture is saved when set to &#x27;</span>center<span class="hljs-string">&#x27;.</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Can be used as preview shot for the corresponding movie.</span></span><br>output_pictures off<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Output pictures with only the pixels moving object (ghost images) (default: off)</span></span><br>output_debug_pictures off<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">The quality (in percent) to be used by the jpeg and webp compression (default: 75)</span></span><br>quality 75<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Type of output images</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Valid values: jpeg, ppm or webp (default: jpeg)</span></span><br>picture_type jpeg<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">###########################################################</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Use ffmpeg to encode videos of motion (default: off)</span></span><br>ffmpeg_output_movies on<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Use ffmpeg to make videos showing the moving pixels (ghost images) (default: off)</span></span><br>ffmpeg_output_debug_movies off<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Bitrate to be used by the ffmpeg encoder (default: 400000)</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">This option is ignored if ffmpeg_variable_bitrate is not 0 (disabled)</span></span><br>ffmpeg_bps 400000<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Enables and defines variable bitrate for the ffmpeg encoder.</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">ffmpeg_bps is ignored if variable bitrate is enabled.</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Valid values: 0 (default) = fixed bitrate defined by ffmpeg_bps,</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">or the range 1 - 100 where 1 means worst quality and 100 is best.</span></span><br>ffmpeg_variable_bitrate 0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Container/Codec output videos</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Valid values: mpeg4, msmpeg4, swf,flv, ffv1, mov, mp4, mkv, hevc</span></span><br>ffmpeg_video_codec mkv<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">When creating videos, should frames be duplicated in order</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">to keep up with the requested frames per second</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">(default: true)</span></span><br>ffmpeg_duplicate_frames true<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Interval in seconds between timelapse captures.  Default: 0 = off</span></span><br>timelapse_interval 0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Timelapse file rollover mode. See motion_guide.html for options and uses.</span></span><br>timelapse_mode daily<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Frame rate for timelapse playback</span></span><br>timelapse_fps 30<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Container/Codec for timelapse video. Valid values: mpg or mpeg4</span></span><br>timelapse_codec mpg<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">###########################################################</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">External pipe to video encoder</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Replacement for FFMPEG builtin encoder for ffmpeg_output_movies only.</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">The options movie_filename and timelapse_filename are also used</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">by the ffmpeg feature</span></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">############################################################</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Bool to enable or disable extpipe (default: off)</span></span><br>use_extpipe off<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">External program (full path and opts) to pipe raw video to</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Generally, use &#x27;</span>-<span class="hljs-string">&#x27; for STDIN...</span></span><br>;extpipe mencoder -demuxer rawvideo -rawvideo w=%w:h=%h:i420 -ovc x264 -x264encopts bframes=4:frameref=1:subq=1:scenecut=-1:nob_adapt:threads=1:keyint=1000:8x8dct:vbv_bufsize=4000:crf=24:partitions=i8x8,i4x4:vbv_maxrate=800:no-chroma-me -vf denoise3d=16:12:48:4,pp=lb -of   avi -o %f.avi - -fps %fps<br>;extpipe x264 - --input-res %wx%h --fps %fps --bitrate 2000 --preset ultrafast --quiet -o %f.mp4<br>;extpipe mencoder -demuxer rawvideo -rawvideo w=%w:h=%h:fps=%fps -ovc x264 -x264encopts preset=ultrafast -of lavf -o %f.mp4 - -fps %fps<br>;extpipe ffmpeg -y -f rawvideo -pix_fmt yuv420p -video_size %wx%h -framerate %fps -i pipe:0 -vcodec libx264 -preset ultrafast -f mp4 %f.mp4<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">###########################################################</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Snapshots (Traditional Periodic Webcam File Output)</span></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">###########################################################</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Make automated snapshot every N seconds (default: 0 = disabled)</span></span><br>snapshot_interval 0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">###########################################################</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Text Display</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">%Y = year, %m = month, %d = date,</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">%H = hour, %M = minute, %S = second, %T = HH:MM:SS,</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">%v = event, %q = frame number, %t = camera id number,</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">%D = changed pixels, %N = noise level, \n = new line,</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">%i and %J = width and height of motion area,</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">%K and %L = X and Y coordinates of motion center</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">%C = value defined by text_event - do not use with text_event!</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">You can put quotation marks around the text to allow</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">leading spaces</span></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">###########################################################</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Locate and draw a box around the moving object.</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Valid values: on, off, preview (default: off)</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Set to &#x27;</span>preview<span class="hljs-string">&#x27; will only draw a box in preview_shot pictures.</span></span><br>locate_motion_mode off<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Set the look and style of the locate box if enabled.</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Valid values: box, redbox, cross, redcross (default: box)</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Set to &#x27;</span>box<span class="hljs-string">&#x27; will draw the traditional box.</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Set to &#x27;</span>redbox<span class="hljs-string">&#x27; will draw a red box.</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Set to &#x27;</span>cross<span class="hljs-string">&#x27; will draw a little cross to mark center.</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Set to &#x27;</span>redcross<span class="hljs-string">&#x27; will draw a little red cross to mark center.</span></span><br>locate_motion_style box<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Draws the timestamp using same options as C function strftime(3)</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Default: %Y-%m-%d\n%T = date in ISO format and time in 24 hour clock</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Text is placed in lower right corner</span></span><br>text_right %Y-%m-%d\n%T-%q<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Draw a user defined text on the images using same options as C function strftime(3)</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Default: Not defined = no text</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Text is placed in lower left corner</span></span><br>; text_left CAMERA %t<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Draw the number of changed pixed on the images (default: off)</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Will normally be set to off except when you setup and adjust the motion settings</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Text is placed in upper right corner</span></span><br>text_changes off<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">This option defines the value of the special event conversion specifier %C</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">You can use any conversion specifier in this option except %C. Date and time</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">values are from the timestamp of the first image in the current event.</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Default: %Y%m%d%H%M%S</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">The idea is that %C can be used filenames and text_left/right for creating</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">a unique identifier for each event.</span></span><br>text_event %Y%m%d%H%M%S<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Draw characters at twice normal size on images. (default: off)</span></span><br>text_double off<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Text to include in a JPEG EXIF comment</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">May be any text, including conversion specifiers.</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">The EXIF timestamp is included independent of this text.</span></span><br>;exif_text %i%J/%K%L<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">###########################################################</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Target Directories and filenames For Images And Films</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">For the options snapshot_, picture_, movie_ and timelapse_filename</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">you can use conversion specifiers</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">%Y = year, %m = month, %d = date,</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">%H = hour, %M = minute, %S = second,</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">%v = event, %q = frame number, %t = camera id number,</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">%D = changed pixels, %N = noise level,</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">%i and %J = width and height of motion area,</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">%K and %L = X and Y coordinates of motion center</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">%C = value defined by text_event</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Quotation marks round string are allowed.</span></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">###########################################################</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Target base directory for pictures and films</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Recommended to use absolute path. (Default: current working directory)</span></span><br>target_dir /var/lib/motion<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">File path for snapshots (jpeg, ppm or webp) relative to target_dir</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Default: %v-%Y%m%d%H%M%S-snapshot</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Default value is equivalent to legacy oldlayout option</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">For Motion 3.0 compatible mode choose: %Y/%m/%d/%H/%M/%S-snapshot</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">File extension .jpg, .ppm or .webp is automatically added so do not include this.</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Note: A symbolic link called lastsnap.jpg created in the target_dir will always</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">point to the latest snapshot, unless snapshot_filename is exactly &#x27;</span>lastsnap<span class="hljs-string">&#x27;</span></span><br>snapshot_filename %v-%Y%m%d%H%M%S-snapshot<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">File path for motion triggered images (jpeg, ppm or .webp) relative to target_dir</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Default: %v-%Y%m%d%H%M%S-%q</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Default value is equivalent to legacy oldlayout option</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">For Motion 3.0 compatible mode choose: %Y/%m/%d/%H/%M/%S-%q</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">File extension .jpg, .ppm or .webp is automatically added so do not include this</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Set to &#x27;</span>preview<span class="hljs-string">&#x27; together with best-preview feature enables special naming</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">convention for preview shots. See motion guide for details</span></span><br>picture_filename %v-%Y%m%d%H%M%S-%q<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">File path for motion triggered ffmpeg films (movies) relative to target_dir</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Default: %v-%Y%m%d%H%M%S</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">File extensions(.mpg .avi) are automatically added so do not include them</span></span><br>movie_filename %v-%Y%m%d%H%M%S<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">File path for timelapse movies relative to target_dir</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Default: %Y%m%d-timelapse</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">File extensions(.mpg .avi) are automatically added so do not include them</span></span><br>timelapse_filename %Y%m%d-timelapse<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">###########################################################</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Global Network Options</span></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">###########################################################</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Enable IPv6 (default: off)</span></span><br>ipv6_enabled off<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">###########################################################</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Live Stream Server</span></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">###########################################################</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">The mini-http server listens to this port for requests (default: 0 = disabled)</span></span><br>stream_port 8081<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">50% scaled down substream (default: 0 = disabled)</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">substream_port 8082</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Quality of the jpeg (in percent) images produced (default: 50)</span></span><br>stream_quality 50<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Output frames at 1 fps when no motion is detected and increase to the</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">rate given by stream_maxrate when motion is detected (default: off)</span></span><br>stream_motion off<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Maximum framerate for stream streams (default: 1)</span></span><br>stream_maxrate 1<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Restrict stream connections to localhost only (default: on)</span></span><br>stream_localhost off<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Limits the number of images per connection (default: 0 = unlimited)</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Number can be defined by multiplying actual stream rate by desired number of seconds</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Actual stream rate is the smallest of the numbers framerate and stream_maxrate</span></span><br>stream_limit 0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Set the authentication method (default: 0)</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">0 = disabled</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">1 = Basic authentication</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">2 = MD5 digest (the safer authentication)</span></span><br>stream_auth_method 0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Authentication for the stream. Syntax username:password</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Default: not defined (Disabled)</span></span><br>; stream_authentication username:password<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Percentage to scale the stream image for preview</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">This is scaled on the browser side, motion will keep sending full frames</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Default: 25</span></span><br>; stream_preview_scale 25<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Have stream preview image start on a new line</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Default: no</span></span><br>; stream_preview_newline no<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">###########################################################</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">HTTP Based Control</span></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">###########################################################</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">TCP/IP port for the http server to listen on (default: 0 = disabled)</span></span><br>webcontrol_port 8080<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Restrict control connections to localhost only (default: on)</span></span><br>webcontrol_localhost off<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Output for http server, select off to choose raw text plain (default: on)</span></span><br>webcontrol_html_output on<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Authentication for the http based control. Syntax username:password</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Default: not defined (Disabled)</span></span><br>; webcontrol_authentication username:password<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Parameters to include on webcontrol.  0=none, 1=limited, 2=advanced, 3=restricted</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Default: 0 (none)</span></span><br>webcontrol_parms 0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">###########################################################</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Tracking (Pan/Tilt)</span></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">############################################################</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Type of tracker (0=none (default), 1=stepper, 2=iomojo, 3=pwc, 4=generic, 5=uvcvideo, 6=servo)</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">The generic type enables the definition of motion center and motion size to</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">be used with the conversion specifiers for options like on_motion_detected</span></span><br>track_type 0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Enable auto tracking (default: off)</span></span><br>track_auto off<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Serial port of motor (default: none)</span></span><br>;track_port /dev/ttyS0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Motor number for x-axis (default: 0)</span></span><br>;track_motorx 0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Set motorx reverse (default: 0)</span></span><br>;track_motorx_reverse 0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Motor number for y-axis (default: 0)</span></span><br>;track_motory 1<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Set motory reverse (default: 0)</span></span><br>;track_motory_reverse 0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Maximum value on x-axis (default: 0)</span></span><br>;track_maxx 200<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Minimum value on x-axis (default: 0)</span></span><br>;track_minx 50<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Maximum value on y-axis (default: 0)</span></span><br>;track_maxy 200<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Minimum value on y-axis (default: 0)</span></span><br>;track_miny 50<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Center value on x-axis (default: 0)</span></span><br>;track_homex 128<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Center value on y-axis (default: 0)</span></span><br>;track_homey 128<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">ID of an iomojo camera if used (default: 0)</span></span><br>track_iomojo_id 0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Angle in degrees the camera moves per step on the X-axis</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">with auto-track (default: 10)</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Currently only used with pwc type cameras</span></span><br>track_step_angle_x 10<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Angle in degrees the camera moves per step on the Y-axis</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">with auto-track (default: 10)</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Currently only used with pwc type cameras</span></span><br>track_step_angle_y 10<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Delay to wait for after tracking movement as number</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">of picture frames (default: 10)</span></span><br>track_move_wait 10<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Speed to set the motor to (stepper motor option) (default: 255)</span></span><br>track_speed 255<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Number of steps to make (stepper motor option) (default: 40)</span></span><br>track_stepsize 40<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">###########################################################</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">External Commands, Warnings and Logging:</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">You can use conversion specifiers for the on_xxxx commands</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">%Y = year, %m = month, %d = date,</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">%H = hour, %M = minute, %S = second,</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">%v = event, %q = frame number, %t = camera id number,</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">%D = changed pixels, %N = noise level,</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">%i and %J = width and height of motion area,</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">%K and %L = X and Y coordinates of motion center</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">%C = value defined by text_event</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">%f = filename with full path</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">%n = number indicating filetype</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Both %f and %n are only defined for on_picture_save,</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">on_movie_start and on_movie_end</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Quotation marks round string are allowed.</span></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">###########################################################</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Do not sound beeps when detecting motion (default: on)</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Note: Motion never beeps when running in daemon mode.</span></span><br>quiet on<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Command to be executed when an event starts. (default: none)</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">An event starts at first motion detected after a period of no motion defined by event_gap</span></span><br>; on_event_start value<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Command to be executed when an event ends after a period of no motion</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">(default: none). The period of no motion is defined by option event_gap.</span></span><br>; on_event_end value<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Command to be executed when a picture (.ppm|.jpg) is saved (default: none)</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">To give the filename as an argument to a command append it with %f</span></span><br>; on_picture_save value<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Command to be executed when a motion frame is detected (default: none)</span></span><br>; on_motion_detected value<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Command to be executed when motion in a predefined area is detected</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Check option &#x27;</span>area_detect<span class="hljs-string">&#x27;.   (default: none)</span></span><br>; on_area_detected value<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Command to be executed when a movie file (.mpg|.avi) is created. (default: none)</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">To give the filename as an argument to a command append it with %f</span></span><br>; on_movie_start value<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Command to be executed when a movie file (.mpg|.avi) is closed. (default: none)</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">To give the filename as an argument to a command append it with %f</span></span><br>; on_movie_end value<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Command to be executed when a camera can&#x27;</span>t be opened or <span class="hljs-keyword">if</span> it is lost</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">NOTE: There is situations when motion don<span class="hljs-string">&#x27;t detect a lost camera!</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">It depends on the driver, some drivers dosn&#x27;</span>t detect a lost camera at all</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Some hangs the motion thread. Some even hangs the PC! (default: none)</span><br>; on_camera_lost value<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Command to be executed when a camera that was lost has been found (default: none)</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">NOTE: If motion doesn<span class="hljs-string">&#x27;t properly detect a lost camera, it also won&#x27;</span>t know it found one.</span><br>; on_camera_found value<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">####################################################################</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Common Options <span class="hljs-keyword">for</span> database features.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Options require database options to be active also.</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">####################################################################</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Log to the database when creating motion triggered picture file  (default: on)</span><br>; sql_log_picture on<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Log to the database when creating a snapshot image file (default: on)</span><br>; sql_log_snapshot on<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Log to the database when creating motion triggered movie file (default: off)</span><br>; sql_log_movie off<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Log to the database when creating timelapse movies file (default: off)</span><br>; sql_log_timelapse off<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">SQL query string that is sent to the database</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Use same conversion specifiers has <span class="hljs-keyword">for</span> text features</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Additional special conversion specifiers are</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">%n = the number representing the file_type</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">%f = filename with full path</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Default value:</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Create tables :</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Mysql</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">CREATE TABLE security (camera int, filename char(80) not null, frame int, file_type int, time_stamp timestamp(14), event_time_stamp timestamp(14));</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"></span><br><span class="language-bash"><span class="hljs-comment"># Postgresql</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">CREATE TABLE security (camera int, filename char(80) not null, frame int, file_type int, time_stamp timestamp without time zone, event_time_stamp timestamp without time zone);</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"></span><br><span class="language-bash"><span class="hljs-comment"># insert into security(camera, filename, frame, file_type, time_stamp, text_event) values(&#x27;%t&#x27;, &#x27;%f&#x27;, &#x27;%q&#x27;, &#x27;%n&#x27;, &#x27;%Y-%m-%d %T&#x27;, &#x27;%C&#x27;)</span></span><br>; sql_query insert into security(camera, filename, frame, file_type, time_stamp, event_time_stamp) values(&#x27;%t&#x27;, &#x27;%f&#x27;, &#x27;%q&#x27;, &#x27;%n&#x27;, &#x27;%Y-%m-%d %T&#x27;, &#x27;%C&#x27;)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">###########################################################</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Database Options</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">###########################################################</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">database <span class="hljs-built_in">type</span> : mysql, postgresql, sqlite3 (default : not defined)</span><br>; database_type value<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">database to <span class="hljs-built_in">log</span> to (default: not defined)</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-keyword">for</span> sqlite3, the full path and name <span class="hljs-keyword">for</span> the database.</span><br>; database_dbname value<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">The host on <span class="hljs-built_in">which</span> the database is located (default: localhost)</span><br>; database_host value<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">User account name <span class="hljs-keyword">for</span> database (default: not defined)</span><br>; database_user value<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">User password <span class="hljs-keyword">for</span> database (default: not defined)</span><br>; database_password value<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Port on <span class="hljs-built_in">which</span> the database is located</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"> mysql 3306 , postgresql 5432 (default: not defined)</span><br>; database_port value<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Database <span class="hljs-built_in">wait</span> time <span class="hljs-keyword">in</span> milliseconds <span class="hljs-keyword">for</span> locked database to</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">be unlocked before returning database locked error (default 0)</span><br>; database_busy_timeout 0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">###########################################################</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Video Loopback Device (vloopback project)</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">###########################################################</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Output images to a video4linux loopback device</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Specify the device associated with the loopback device</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">For example /dev/video1 (default: not defined)</span><br>; video_pipe value<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Output motion images to a video4linux loopback device</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Specify the device associated with the loopback device</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">For example /dev/video1 (default: not defined)</span><br>; motion_video_pipe value<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#############################################################</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">camera config files - One <span class="hljs-keyword">for</span> each camera.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Except <span class="hljs-keyword">if</span> only one camera - You only need this config file.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">If you have more than one camera you MUST define one camera</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">config file <span class="hljs-keyword">for</span> each camera <span class="hljs-keyword">in</span> addition to this config file.</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#############################################################</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Remember: If you have more than one camera you must have one</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">camera file <span class="hljs-keyword">for</span> each camera. E.g. 2 cameras requires 3 files:</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">This motion.conf file AND camera1.conf and camera2.conf.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Only put the options that are unique to each camera <span class="hljs-keyword">in</span> the</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">camera config files.</span><br>; camera /etc/motion/camera1.conf<br>; camera /etc/motion/camera2.conf<br>; camera /etc/motion/camera3.conf<br>; camera /etc/motion/camera4.conf<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#############################################################</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Camera config directory</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Any files ending <span class="hljs-keyword">in</span> <span class="hljs-string">&#x27;.conf&#x27;</span> <span class="hljs-keyword">in</span> this directory will be <span class="hljs-built_in">read</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">as a camera config file.</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">#############################################################</span></span><br><br>; camera_dir /etc/motion/conf.d<br><br></code></pre></td></tr></table></figure>
+
+
+
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.jb51.net/article/163690.htm">树莓派使用USB摄像头和motion实现监控</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_30509393/article/details/99396622?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase">linux下的开源移动图像监测程序–motion编译与配置</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="http://lavrsen.dk/foswiki/bin/view/Motion/ConfigFileOptions">（看不懂qwqの）Motion官方配置文件</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/u013162035/article/details/78580486">第6章 树莓派摄像头操作</a>
+<a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/raspberry/" class="category-chain-item">raspberry</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/raspberry/">#raspberry</a>
+      
+        <a href="/tags/%E5%9F%BA%E5%9C%B02-0/">#基地2.0</a>
+      
+        <a href="/tags/%E5%AE%9E%E6%97%B6/">#实时</a>
+      
+        <a href="/tags/%E7%9B%91%E6%8E%A7/">#监控</a>
+      
+        <a href="/tags/%E7%BD%91%E9%A1%B5/">#网页</a>
+      
+        <a href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/">#树莓派</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>玩转树莓派[06:USB摄像头和motion实现监控]</div>
+      <div>https://blog.baixf.tk/2020/07/13/raspberry/玩转树莓派[06USB摄像头和motion实现监控]/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年7月13日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/07/14/raspberry/%E7%8E%A9%E8%BD%AC%E6%A0%91%E8%8E%93%E6%B4%BE%5B07%E5%BC%80%E6%9C%BA%E5%90%8E%E5%B0%86%20IP%20%E5%9C%B0%E5%9D%80%E4%BF%A1%E6%81%AF%E8%87%AA%E5%8A%A8%E6%8E%A8%E9%80%81%E5%88%B0%E5%BE%AE%E4%BF%A1%5D/" title="玩转树莓派[07:开机后将 IP 地址信息自动推送到微信]">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">玩转树莓派[07:开机后将 IP 地址信息自动推送到微信]</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/07/12/raspberry/%E7%8E%A9%E8%BD%AC%E6%A0%91%E8%8E%93%E6%B4%BE%5B05%E7%A7%81%E6%9C%89%E4%BA%91%E6%90%AD%E5%BB%BA%5D/" title="玩转树莓派[05:私有云搭建]">
+                        <span class="hidden-mobile">玩转树莓派[05:私有云搭建]</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

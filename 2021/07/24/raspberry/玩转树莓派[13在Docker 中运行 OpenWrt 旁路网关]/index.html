@@ -1,0 +1,897 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="感谢🙇‍小苏geigei~">
+<meta property="og:type" content="article">
+<meta property="og:title" content="玩转树莓派[13在Docker 中运行 OpenWrt 旁路网关]">
+<meta property="og:url" content="https://blog.baixf.tk/2021/07/24/raspberry/%E7%8E%A9%E8%BD%AC%E6%A0%91%E8%8E%93%E6%B4%BE[13%E5%9C%A8Docker%20%E4%B8%AD%E8%BF%90%E8%A1%8C%20OpenWrt%20%E6%97%81%E8%B7%AF%E7%BD%91%E5%85%B3]/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="感谢🙇‍小苏geigei~">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/20210724005532.png">
+<meta property="article:published_time" content="2021-07-24T00:29:11.000Z">
+<meta property="article:modified_time" content="2023-01-12T14:08:04.371Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="raspberry">
+<meta property="article:tag" content="基地2.0">
+<meta property="article:tag" content="系统">
+<meta property="article:tag" content="Open Wrt">
+<meta property="article:tag" content="旁路由">
+<meta property="article:tag" content="科学上网">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/20210724005532.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>玩转树莓派[13在Docker 中运行 OpenWrt 旁路网关] - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/20210724003635.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="玩转树莓派[13在Docker 中运行 OpenWrt 旁路网关]"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-07-24 00:29" pubdate>
+          2021年7月24日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          46 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">玩转树莓派[13在Docker 中运行 OpenWrt 旁路网关]</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>今天树莓派直刷的Open Wrt又崩了，这不得不让我又燃起了搞这个Docker版Open Wrt的热情，再加上一次次的失败，于是乎我好像懂了<del>然后就水出了这篇咕咕文🕊</del></p>
+</blockquote>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog20220703233011.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="一、写在前面"><a href="#一、写在前面" class="headerlink" title="一、写在前面"></a>一、写在前面</h2><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/20210723222246.png" srcset="/img/loading.gif" lazyload alt="image-20210723222246005"></p>
+<p>众所周知，直接为树莓派刷Open WRT镜像简直就是浪费资源。所以，今天为大家带来的是（咕很久的）在 Docker 中运行 OpenWrt 做旁路网关的教程~</p>
+<blockquote>
+<p>场景1</p>
+</blockquote>
+<p>众所周知，Open Wrt 是面向嵌入型设备的 Linux 发行版，所以 Open Wrt 系统运行时的资源占用率会很低。而树莓派的硬件性能要比普通路由器要高很多。虽然树莓派在硬件配置上的绝对优势能让 Open Wrt 有更大的施展空间，但相应的，硬件上的优势也带来了资源的浪费（Open Wrt 在树莓派上正常运行时，资源占用率只有不到 1&#x2F;10）。再加上 Open Wrt 的可扩展性不是很强，所以很多能在 Raspbian&#x2F;Debian 上能做的事情在 Open Wrt 上往往无法实现。</p>
+<p>所以，可不可以让 Open Wrt 与我们常用的系统共存呢？这样，我们可以享受到 Open Wrt 的功能，又可以让在我们常用的系统中完成一般性的 Linux 工作。</p>
+<p>通过 Docker，完全可以。</p>
+<blockquote>
+<p>场景2</p>
+</blockquote>
+<p>Open Wrt 的功能固然强大，但是树莓派的板载网卡无线吞吐能力实在是无力吐槽，能否将现有路由器与树莓派结合使用，同时发挥现有路由器的信号优势与 Open Wrt 的软件优势呢？</p>
+<p>通过旁路网关，完全可以。</p>
+<blockquote>
+<p>那么，什么是旁路网关呢？</p>
+</blockquote>
+<p>普通的路由器往往集无线信号转发、网关、DNS 服务器等角色为一身，其中的“网关”角色负责路由器内部数据的处理。但因为一般家用的路由器硬件性能很有限，在运行一些比较吃资源的应用（如酸酸乳、去广告等）时，几乎会占满所有硬件资源，导致路由器网络&#x2F;系统不稳定等诸多问题。既然路由器的硬件性能有限，那可不可以把网关的重任交给硬件性能更好的设备去做，让路由器安安心心地做好它的老本行 – 无线转发呢？</p>
+<p>完全可以。</p>
+<p>所谓的旁路网关，就是在路由器之外的其他硬件设备上搭建一个网关环境，把路由器肩负的网关重任交给其他更适合的设备来做，同时，旁路网关处理完的结果会返回给路由器，由路由器继续进行无线转发。</p>
+<p>这样，每个角色各司其职，路由器肩上的任务轻了，即使是油管 4K 也能轻松跑满网速了，而旁路由（树莓派）也结束了它吃灰的命运。由此资源的充分利用，一举两得。</p>
+<p>在接下来的文章中，我们将在 Docker 容器中运行 Open Wrt，并通过设置，让 Docker 容器中的 Open Wrt 网关接管路由器自身的网关，减轻路由器的负担，同时，由于网关被 Open Wrt 接管，所以 Open Wrt 中的大部分应用都是可用的，比如酸酸乳，V2ray，去广告等。做个不恰当的比喻， Open Wrt 网关接管路由器自身的网关后，你可以理解为路由器是 Open Wrt 的一块外置网卡。</p>
+<h2 id="二、前期准备"><a href="#二、前期准备" class="headerlink" title="二、前期准备"></a>二、前期准备</h2><p>既然需要在 Docker 中运行 Open Wrt ，那么首先需要在树莓派的现有系统上安装 Docker，在不同发行版上安装 Docker 的教程有很多，大家可以自行在搜索引擎中搜索相关内容以完成 Docker 的安装。</p>
+<p>如果你的设备是 3B&#x2F;3B+&#x2F;4B，强烈安利使用“树莓派爱好者基地”编译的 64 位 Debian，此版本 Debian 可以充分发挥 64 位 CPU 的性能，同时默认开启 Docker，KVM 等功能，其中，Docker 功能开箱即用，非常方便。</p>
+<p>如果你的设备是树莓派2B，那么你可能需要在其他发行版上手动安装 Docker 了，但是小苏提供的 Docker 镜像是支持 2B~4B 设备的，换句话说，只要在其他发行版上成功安装了 Docker，也是可以用我提供的 Open Wrt 镜像的。</p>
+<p>为了方便叙述以及为大家提供一个参考的宿主机环境，下文内容基于“树莓派爱好者基地”编译的 64 位 Debian。当然，如果你在你使用的发行版上安装了 Docker，步骤是一样的。</p>
+<p>“树莓派爱好者基地”专版64位 Debian 功能介绍（内含下载链接）：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/openfans-community-offical/Debian-Pi-Aarch64/blob/master/README_zh.md">https://github.com/openfans-community-offical/Debian-Pi-Aarch64/blob/master/README_zh.md</a></p>
+<p>如果你习惯使用图形化界面操作，建议下载<strong>桌面全功能版</strong>使用，但是需要你自己安装后启动Docker。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/20210723222900.png" srcset="/img/loading.gif" lazyload alt="image-20210723222859982"></p>
+<blockquote>
+<p>★ ： 表示支持，并以默认启用，可直接使用。</p>
+<p>☆ ： 表示支持，但默认未启用该服务，需要用户手动启动。（关于如果启用相关服务，在本文档中有说明。）</p>
+<p>X ： 表示不支持。</p>
+</blockquote>
+<p>下载镜像烧写到树莓派的 SD 卡并上电开机后，系统会自动完成扩展 SD 卡空间的操作，这个过程大约需要3~5分钟（期间会重启几次）。估摸着时间差不多以后，用网线将树莓派的板载网口与路由器的 Lan 口连接，之后连接树莓派的 SSH(可以自备软件,也可通过内置Web界面9090端口食用)：</p>
+<p>用户名：<code>pi</code></p>
+<p>密码：<code>raspberry</code></p>
+<p>准备工作到此结束。</p>
+<h2 id="三、步骤开始"><a href="#三、步骤开始" class="headerlink" title="三、步骤开始"></a>三、步骤开始</h2><p>成功登陆到树莓派的 SSH 后，在拉取镜像之前，我们还需要进行一些额外的工作：</p>
+<h3 id="1-打开网卡混杂模式"><a href="#1-打开网卡混杂模式" class="headerlink" title="1.打开网卡混杂模式"></a>1.打开网卡混杂模式</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo ip link set eth0 promisc on <br></code></pre></td></tr></table></figure>
+
+<h3 id="2-创建网络"><a href="#2-创建网络" class="headerlink" title="2.创建网络"></a>2.创建网络</h3><p><strong>(须结合实际网络情况，不能照抄命令)</strong></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">docker<span class="hljs-built_in"> network </span>create -d macvlan <span class="hljs-attribute">--subnet</span>=192.168.1.0/24 <span class="hljs-attribute">--gateway</span>=192.168.1.1 -o <span class="hljs-attribute">parent</span>=eth0 macnet<br></code></pre></td></tr></table></figure>
+
+<p>这一条命令需要根据树莓派所处的网络环境来做修改，可以使用 <code>sudo ifconfig</code>命令来查看树莓派 eth0 网卡获得的 IP 地址，如果树莓派获得的 IP 地址为 <code>192.168.5.103</code>，那么说明树莓派处在 <code>192.168.5.x</code>网段，相应的，命令中的<code>192.168.1.0</code>和<code>192.168.1.1</code>需要被替换成 <code>192.168.5.0</code>和<code>192.168.5.1</code>：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">docker<span class="hljs-built_in"> network </span>create -d macvlan <span class="hljs-attribute">--subnet</span>=192.168.5.0/24 <span class="hljs-attribute">--gateway</span>=192.168.5.1 -o <span class="hljs-attribute">parent</span>=eth0 macnet<br></code></pre></td></tr></table></figure>
+
+<p>此时，我们使用 <code>docker network ls</code>命令可以看到网络<code>macnet</code>已建立成功：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sql">$ docker network ls<br>NETWORK ID          NAME                DRIVER              <span class="hljs-keyword">SCOPE</span><br><span class="hljs-number">10e676133746</span>        bridge              bridge              <span class="hljs-keyword">local</span><br>f5308b94e8fa        host                host                <span class="hljs-keyword">local</span><br><span class="hljs-number">16745</span>ea66852        macnet              macvlan             <span class="hljs-keyword">local</span><br><span class="hljs-number">5e72</span>e41ea02a        <span class="hljs-keyword">none</span>                <span class="hljs-keyword">null</span>                <span class="hljs-keyword">local</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="3-拉取镜像"><a href="#3-拉取镜像" class="headerlink" title="3.拉取镜像"></a>3.拉取镜像</h3><p>若身处国内，为提高拉取速度，请拉取阿里云仓库中的镜像：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vim">docker pull registry.<span class="hljs-keyword">cn</span>-shanghai.aliyuncs.<span class="hljs-keyword">com</span>/suling/openwr<span class="hljs-variable">t:latest</span><br></code></pre></td></tr></table></figure>
+
+<p>同时小苏geigei也提供存放在 <a target="_blank" rel="noopener" href="https://hub.docker.com/r/sulinggg/openwrt">Docker 官方仓库</a> 中的镜像：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker pull sulinggg/openwrt:latest<br></code></pre></td></tr></table></figure>
+
+<p>镜像拉取完成后，我们可以执行<code>docker images</code>命令查看现存镜像：</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">$ docker images<br>REPOSITORY                                              <span class="hljs-keyword">TAG</span>                 <span class="hljs-title">IMAGE</span> ID            CREATED             SIZE<br>registry.cn-shanghai.aliyuncs.com/suling/openwrt        latest              <span class="hljs-number">4</span>f4bc5dca2d9        <span class="hljs-number">3</span> hours ago         <span class="hljs-number">200M</span>B<br></code></pre></td></tr></table></figure>
+
+<p>可见，镜像已成功拉取到本地。</p>
+<h3 id="4-创建并启动容器"><a href="#4-创建并启动容器" class="headerlink" title="4.创建并启动容器"></a>4.创建并启动容器</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">docker run <span class="hljs-attr">--restart</span> always <span class="hljs-attr">--name</span> openwrt -d <span class="hljs-attr">--network</span> macnet <span class="hljs-attr">--privileged</span> registry<span class="hljs-selector-class">.cn-shanghai</span><span class="hljs-selector-class">.aliyuncs</span>.com/suling/openwrt:latest /sbin/init<br></code></pre></td></tr></table></figure>
+
+<p>其中：</p>
+<p><code>--restart always</code>参数表示容器退出时始终重启，使服务尽量保持始终可用；</p>
+<p><code>--name openwrt</code>参数定义了容器的名称；</p>
+<p><code>-d</code>参数定义使容器运行在 Daemon 模式；</p>
+<p><code>--network macnet</code>参数定义将容器加入 <code>maxnet</code>网络；</p>
+<p><code>--privileged </code>参数定义容器运行在特权模式下；</p>
+<p><code>registry.cn-shanghai.aliyuncs.com/suling/openwrt:latest</code>为 Docker 镜像名，因容器托管在阿里云 Docker 镜像仓库内，所以在镜像名中含有阿里云仓库信息；</p>
+<p><code>/sbin/init</code>定义容器启动后执行的命令。</p>
+<p>启动容器后，我们可以使用 <code>docker ps -a</code>命令查看当前运行的容器：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-variable">$</span> docker <span class="hljs-built_in">ps</span> <span class="hljs-literal">-a</span><br>CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES<br>a26cee7cade6        openwrt:latest      <span class="hljs-string">&quot;/sbin/init&quot;</span>        <span class="hljs-number">3</span> hours ago         Up <span class="hljs-number">3</span> hours                              openwrt<br></code></pre></td></tr></table></figure>
+
+<p>若容器运行信息<code>STATUS</code>列为 <code>UP</code>状态，则说明容器运行正常。</p>
+<h3 id="5-进入容器并修改相关参数"><a href="#5-进入容器并修改相关参数" class="headerlink" title="5.进入容器并修改相关参数"></a>5.进入容器并修改相关参数</h3><p><strong>(须结合实际网络情况，不能照抄配置)</strong></p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript">docker exec -<span class="hljs-keyword">it</span> openwrt bash<br></code></pre></td></tr></table></figure>
+
+<p>其中：</p>
+<p><code>openwrt</code>为容器名称；</p>
+<p><code>bash</code>为进入容器后执行的命令。</p>
+<p>执行此命令后我们便进入 Open Wrt 的命令行界面，首先，我们需要编辑 Open Wrt 的网络配置文件：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">vim <span class="hljs-regexp">/etc/</span>config/network<br></code></pre></td></tr></table></figure>
+
+<p>我们需要更改 Lan 口设置：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">config interface <span class="hljs-string">&#x27;lan&#x27;</span><br>        <span class="hljs-keyword">option</span> <span class="hljs-keyword">type</span> <span class="hljs-string">&#x27;bridge&#x27;</span><br>        <span class="hljs-keyword">option</span> ifname <span class="hljs-string">&#x27;eth0&#x27;</span><br>        <span class="hljs-keyword">option</span> proto <span class="hljs-string">&#x27;static&#x27;</span><br>        <span class="hljs-keyword">option</span> ipaddr <span class="hljs-string">&#x27;192.168.1.100&#x27;</span><br>        <span class="hljs-keyword">option</span> netmask <span class="hljs-string">&#x27;255.255.255.0&#x27;</span><br>        <span class="hljs-keyword">option</span> ip6assign <span class="hljs-string">&#x27;60&#x27;</span><br>        <span class="hljs-keyword">option</span> gateway <span class="hljs-string">&#x27;192.168.1.1&#x27;</span><br>        <span class="hljs-keyword">option</span> broadcast <span class="hljs-string">&#x27;192.168.1.255&#x27;</span><br>        <span class="hljs-keyword">option</span> dns <span class="hljs-string">&#x27;192.168.1.1&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>其中：</p>
+<p>所有的 <code>192.168.1.x</code> 需要根据树莓派所处网段修改，<code>option gateway</code>和<code>option dns</code>填写路由器的 IP，若树莓派获得的 IP 为 <code>192.168.5.103</code>，路由器 IP 为<code>192.168.5.1</code>，则需要这样修改：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">config interface <span class="hljs-string">&#x27;lan&#x27;</span><br>        <span class="hljs-keyword">option</span> <span class="hljs-keyword">type</span> <span class="hljs-string">&#x27;bridge&#x27;</span><br>        <span class="hljs-keyword">option</span> ifname <span class="hljs-string">&#x27;eth0&#x27;</span><br>        <span class="hljs-keyword">option</span> proto <span class="hljs-string">&#x27;static&#x27;</span><br>        <span class="hljs-keyword">option</span> ipaddr <span class="hljs-string">&#x27;192.168.5.100&#x27;</span><br>        <span class="hljs-keyword">option</span> netmask <span class="hljs-string">&#x27;255.255.255.0&#x27;</span><br>        <span class="hljs-keyword">option</span> ip6assign <span class="hljs-string">&#x27;60&#x27;</span><br>        <span class="hljs-keyword">option</span> gateway <span class="hljs-string">&#x27;192.168.5.1&#x27;</span><br>        <span class="hljs-keyword">option</span> broadcast <span class="hljs-string">&#x27;192.168.5.255&#x27;</span><br>        <span class="hljs-keyword">option</span> dns <span class="hljs-string">&#x27;192.168.5.1&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p><code>option ipaddr </code>项目定义了 Open Wrt 的 IP 地址，在完成网段设置后，IP最后一段可根据自己的爱好修改（前提是符合规则且不和现有已分配 IP 冲突）。</p>
+<h3 id="6-重启网络"><a href="#6-重启网络" class="headerlink" title="6.重启网络"></a>6.重启网络</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/etc/i</span>nit.d/network restart<br></code></pre></td></tr></table></figure>
+
+<h3 id="7-进入控制面板"><a href="#7-进入控制面板" class="headerlink" title="7.进入控制面板"></a>7.进入控制面板</h3><p>在浏览器中输入第 5 步<code>option ipaddr </code>项目中的 IP 进入 Luci 控制面板，若<code>option ipaddr </code>的参数为 <code>192.168.5.100</code>，则可以在浏览器输入 <code>http://192.168.5.100</code>进入控制面板。</p>
+<p>用户名：<code>root</code></p>
+<p>密码：<code>password</code></p>
+<h3 id="8-关闭-DHCP-服务"><a href="#8-关闭-DHCP-服务" class="headerlink" title="8.关闭 DHCP 服务"></a>8.关闭 DHCP 服务</h3><p>在 “网络 - 接口 - Lan - 修改” 界面中，勾选下方的 “<strong>忽略此接口（不在此接口提供 DHCP 服务）</strong>”，并“<strong>保存&amp;应用</strong>”。（默认已打开，检查一下即可）</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/20210723223616.png" srcset="/img/loading.gif" lazyload alt="关闭 “DHCP 服务”"></p>
+<h2 id="四、食用方式"><a href="#四、食用方式" class="headerlink" title="四、食用方式"></a>四、食用方式</h2><p>推荐使用以下几种科学上网工具（待补充）。</p>
+<ul>
+<li><p>ShadowSocksR Plus+ </p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/20210724001544.png" srcset="/img/loading.gif" lazyload alt="image-20210724001544855"></p>
+<ul>
+<li>可以添加SS&#x2F;SSR&#x2F;V2Ray&#x2F;Trojan节点</li>
+<li>支持通过机场订阅链接添加并设置自动更新</li>
+<li>支持通过节点链接添加</li>
+<li>支持手动填写</li>
+<li>支持自动切换节点</li>
+<li>支持设置Socks5代理模式</li>
+</ul>
+</li>
+<li><p>PassWall</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/20210724002040.png" srcset="/img/loading.gif" lazyload alt="image-20210724002040532"></p>
+<ul>
+<li><p>界面简单，好上手，功能强大</p>
+</li>
+<li><p>支持 V2ray VLESS、V2ray VMESS、TROJAN、SS、SSR 等协议</p>
+</li>
+<li><p>支持通过机场订阅链接添加并设置自动更新</p>
+</li>
+<li><p>支持通过节点链接添加</p>
+</li>
+<li><p>支持手动填写</p>
+</li>
+<li><p>支持自动切换节点</p>
+</li>
+<li><p>支持设置Socks5代理模式</p>
+</li>
+</ul>
+</li>
+<li><p>OpenClash</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/20210724002304.png" srcset="/img/loading.gif" lazyload alt="image-20210724002304174"></p>
+<ul>
+<li>操作简单，一键配置添加订阅地址即可</li>
+<li>也有一些复杂的配置项（不过可以不用管）</li>
+<li>提供Web管理界面</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/20210724002405.png" srcset="/img/loading.gif" lazyload alt="image-20210724002405837"></p>
+<p>以下为**ShadowSocksR Plus+**条件下设置的。 </p>
+<h3 id="1-Google插件代理"><a href="#1-Google插件代理" class="headerlink" title="1.Google插件代理"></a>1.Google插件代理</h3><p>推荐安装 **Proxy SwitchyOmega **插件。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/20210723224526.png" srcset="/img/loading.gif" lazyload alt="image-20210723224525926"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/20210723231014.png" srcset="/img/loading.gif" lazyload alt="image-20210723231014825"></p>
+<h3 id="2-Windows"><a href="#2-Windows" class="headerlink" title="2.Windows"></a>2.Windows</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/20210723225319.png" srcset="/img/loading.gif" lazyload alt="Windows"></p>
+<p>手动指定网关，在无线热点的“属性”界面下，点击 “IP 设置 - 编辑”按钮，在弹出框中更改 IP 分配模式为“手动”，打开 IPV4 的开关，根据所处网段及上文安卓的相关设置填写相关参数即可。</p>
+<h3 id="3-Phone"><a href="#3-Phone" class="headerlink" title="3.Phone"></a>3.Phone</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/20210723230621.jpg" srcset="/img/loading.gif" lazyload alt="FotoJet"></p>
+<p>原理同上，但建议使用以下方式配置（小火箭🚀）。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/20210724000903.PNG" srcset="/img/loading.gif" lazyload alt="小🚀"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://mlapp.cn/376.html">在Docker 中运行 OpenWrt 旁路网关</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=6NHwnvsMPqk&lc=UgxRE3e7tTEu3Odve9R4AaABAg.9Q7GvHt1maJ9Q8fFpzB0B_">08-在树莓派3B&#x2F;4B的docker中运行 OpenWrt 旁路由有字幕</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/Docker/" class="category-chain-item">Docker</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Docker/">#Docker</a>
+      
+        <a href="/tags/raspberry/">#raspberry</a>
+      
+        <a href="/tags/%E5%9F%BA%E5%9C%B02-0/">#基地2.0</a>
+      
+        <a href="/tags/%E7%B3%BB%E7%BB%9F/">#系统</a>
+      
+        <a href="/tags/Open-Wrt/">#Open Wrt</a>
+      
+        <a href="/tags/%E6%97%81%E8%B7%AF%E7%94%B1/">#旁路由</a>
+      
+        <a href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/">#科学上网</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>玩转树莓派[13在Docker 中运行 OpenWrt 旁路网关]</div>
+      <div>https://blog.baixf.tk/2021/07/24/raspberry/玩转树莓派[13在Docker 中运行 OpenWrt 旁路网关]/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年7月24日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/03/30/%E6%9D%82%E8%B0%88/%E8%87%B4%E6%95%AC%E6%88%91%E8%BF%99%E5%A5%8B%E6%96%97%E8%80%83%E7%A0%94%E7%9A%84%E4%B8%80%E5%B9%B4/" title="致敬我这奋斗考研的一年">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">致敬我这奋斗考研的一年</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/07/14/raspberry/%E7%8E%A9%E8%BD%AC%E6%A0%91%E8%8E%93%E6%B4%BE%5B12%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9B%B4%E5%88%B7%20OpenWrt%20%E5%81%9A%E6%97%81%E8%B7%AF%E7%BD%91%E5%85%B3%5D/" title="玩转树莓派[12树莓派直刷 OpenWrt 做旁路网关]">
+                        <span class="hidden-mobile">玩转树莓派[12树莓派直刷 OpenWrt 做旁路网关]</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

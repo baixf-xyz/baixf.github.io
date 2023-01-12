@@ -1,0 +1,901 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="😵">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JDBC学习">
+<meta property="og:url" content="https://blog.baixf.tk/2021/02/07/Java/JDBC%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="😵">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/jdbc.png">
+<meta property="article:published_time" content="2021-02-07T11:49:11.000Z">
+<meta property="article:modified_time" content="2022-06-20T09:42:50.770Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/jdbc.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>JDBC学习 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/process.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="JDBC学习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-02-07 11:49" pubdate>
+          2021年2月7日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          27k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          229 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">JDBC学习</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="MySQL学习笔记（狂神说Java）"><a href="#MySQL学习笔记（狂神说Java）" class="headerlink" title="MySQL学习笔记（狂神说Java）"></a>MySQL学习笔记（狂神说Java）</h2><p>狂神说B站视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1NJ411J79W?p=1">https://www.bilibili.com/video/BV1NJ411J79W?p=1</a></p>
+<p>MySQL官网：<a target="_blank" rel="noopener" href="https://www.mysql.com/">https://www.mysql.com/</a></p>
+<p>MySQL教程：<a target="_blank" rel="noopener" href="https://www.runoob.com/mysql/mysql-tutorial.html">https://www.runoob.com/mysql/mysql-tutorial.html</a></p>
+<h3 id="一、数据库驱动"><a href="#一、数据库驱动" class="headerlink" title="一、数据库驱动"></a>一、数据库驱动</h3><p>驱动：声卡、显卡、数据库</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/u=2063724437,2103985919&fm=26&gp=0.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>我们的程序会通过数据库驱动和数据库打交道！</p>
+<h3 id="二、JDBC"><a href="#二、JDBC" class="headerlink" title="二、JDBC"></a>二、JDBC</h3><p><a target="_blank" rel="noopener" href="https://mvnrepository.com/artifact/mysql/mysql-connector-java">Maven下载链接</a></p>
+<p><a target="_blank" rel="noopener" href="https://downloads.mysql.com/archives/c-j/">MySQL官网下载JDBC</a></p>
+<h3 id="三、第一个JDBC程序"><a href="#三、第一个JDBC程序" class="headerlink" title="三、第一个JDBC程序"></a>三、第一个JDBC程序</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/process.jpg" srcset="/img/loading.gif" lazyload alt="process"></p>
+<h4 id="1-创建测试数据库"><a href="#1-创建测试数据库" class="headerlink" title="1.创建测试数据库"></a>1.创建测试数据库</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs mysql">-- JDBC<br>CREATE DATABASE jdbcStudy CHARACTER SET utf8 COLLATE utf8_general_ci;<br><br>USE jdbcStudy;<br><br>CREATE TABLE `users`(<br>	id INT PRIMARY KEY,<br>	NAME VARCHAR(40),<br>	PASSWORD VARCHAR(40),<br>	email VARCHAR(60),<br>	birthday DATE<br>);<br><br>INSERT INTO `users`(id,NAME,PASSWORD,email,birthday)<br>VALUES(1,&#x27;zhansan&#x27;,&#x27;123456&#x27;,&#x27;zs@sina.com&#x27;,&#x27;1980-12-04&#x27;),<br>(2,&#x27;lisi&#x27;,&#x27;123456&#x27;,&#x27;lisi@sina.com&#x27;,&#x27;1981-12-04&#x27;),<br>(3,&#x27;wangwu&#x27;,&#x27;123456&#x27;,&#x27;wangwu@sina.com&#x27;,&#x27;1979-12-04&#x27;)<br></code></pre></td></tr></table></figure>
+
+<h4 id="2-导入数据库驱动"><a href="#2-导入数据库驱动" class="headerlink" title="2.导入数据库驱动"></a>2.导入数据库驱动</h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/image-20210207104736184.png" srcset="/img/loading.gif" lazyload alt="image-20210207104736184"></p>
+<h4 id="3-编写测试代码"><a href="#3-编写测试代码" class="headerlink" title="3.编写测试代码"></a>3.编写测试代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> JDBC;<br><br><span class="hljs-keyword">import</span> java.sql.*;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Demo01</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> ClassNotFoundException, SQLException &#123;<br>        <span class="hljs-comment">// 1 加载驱动</span><br>        Class.forName(<span class="hljs-string">&quot;com.mysql.jdbc.Driver&quot;</span>); <span class="hljs-comment">//固定写法</span><br>        <span class="hljs-comment">// 2 url 和 用户信息</span><br>        <span class="hljs-comment">// useUnicode=true :使用Unicode编码 支持中文</span><br>        <span class="hljs-comment">// characterEncoding=utf8 :设定中文字符集为 UTF-8</span><br>        <span class="hljs-comment">// useSSL=true :使用安全的连接</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">url</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;jdbc:mysql://localhost|:3306/jdbcstudy?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=true&quot;</span>;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">username</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;root&quot;</span>;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">password</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;123456&quot;</span>;<br>        <span class="hljs-comment">// 3 建立连接 connection代表数据库对象</span><br>        <span class="hljs-type">Connection</span> <span class="hljs-variable">connection</span> <span class="hljs-operator">=</span> DriverManager.getConnection(url, username, password);<br>        <span class="hljs-comment">// 4 新建 SQL操作对象</span><br>        <span class="hljs-type">Statement</span> <span class="hljs-variable">statement</span> <span class="hljs-operator">=</span> connection.createStatement();<br>        <span class="hljs-comment">// 5 执行 SQL操作对象</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">sql</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;select * from users&quot;</span>;<br>        <span class="hljs-type">ResultSet</span> <span class="hljs-variable">resultSet</span> <span class="hljs-operator">=</span> statement.executeQuery(sql);<span class="hljs-comment">//链表类型，返回的结果集,结果集中封装了全部的查询对象</span><br>        <span class="hljs-keyword">while</span> (resultSet.next())&#123;<br>            System.out.println(resultSet.getObject(<span class="hljs-string">&quot;id&quot;</span>));<br>            System.out.println(resultSet.getObject(<span class="hljs-string">&quot;NAME&quot;</span>));<br>            System.out.println(resultSet.getObject(<span class="hljs-string">&quot;PASSWORD&quot;</span>));<br>            System.out.println(resultSet.getObject(<span class="hljs-string">&quot;email&quot;</span>));<br>            System.out.println(resultSet.getObject(<span class="hljs-string">&quot;birthday&quot;</span>));<br>            System.out.println(<span class="hljs-string">&quot;=====================================&quot;</span>);<br>        &#125;<br>        <span class="hljs-comment">// 6 释放连接 后创建的先释放</span><br>        statement.close();<br>        connection.close();<br>        connection.close();<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/image-20210207104822012.png" srcset="/img/loading.gif" lazyload alt="image-20210207104822012"></p>
+<p><strong>步骤总结</strong>：  加载驱动 - 连接数据库(DriverManager) - 获取执行对象(Statement) - 获得返回结果集 - 释放连接</p>
+<h4 id="4-常用对象分析"><a href="#4-常用对象分析" class="headerlink" title="4.常用对象分析"></a>4.常用对象分析</h4><h5 id="DriverManager"><a href="#DriverManager" class="headerlink" title="DriverManager"></a>DriverManager</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//DriverManager.registerDriver(new com.mysql.jdbc.Driver());</span><br>Class.forName(<span class="hljs-string">&quot;com.mysql.jdbc.Driver&quot;</span>); <span class="hljs-comment">//固定写法</span><br><br><span class="hljs-comment">//connection代表数据库对象</span><br><span class="hljs-type">Connection</span> <span class="hljs-variable">connection</span> <span class="hljs-operator">=</span> DriverManager.getConnection(url, username, password);<br>connection.commit(); <span class="hljs-comment">//事务提交</span><br>connection.rollback();<span class="hljs-comment">//数据库回滚</span><br>connection.setAutoCommit();<span class="hljs-comment">//数据库设置自动提交</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">String</span> <span class="hljs-variable">url</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;jdbc:mysql://localhost:3306/jdbcstudy?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=true&quot;</span>;<br><span class="hljs-comment">// useUnicode=true :使用Unicode编码 支持中文</span><br><span class="hljs-comment">// characterEncoding=utf8 :设定中文字符集为 UTF-8</span><br><span class="hljs-comment">// useSSL=true :使用安全的连接</span><br><br>jdbc:mysql<span class="hljs-comment">//主机地址:3306/数据库名?参数1&amp;参数2&amp;参数3</span><br>    <br><span class="hljs-comment">//musql - 3306 </span><br><span class="hljs-comment">//oralce - 1521</span><br><span class="hljs-comment">//jdbc:oralce:thin:@localhost:1521:sid</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="Statement"><a href="#Statement" class="headerlink" title="Statement"></a>Statement</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java">PreparedStatement  <span class="hljs-comment">//同为执行SQL的对象</span><br><span class="hljs-comment">//新建 SQL对象</span><br><span class="hljs-type">Statement</span> <span class="hljs-variable">statement</span> <span class="hljs-operator">=</span> connection.createStatement();<br><br><span class="hljs-type">String</span> <span class="hljs-variable">sql</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;select * from users&quot;</span>;<span class="hljs-comment">//编写SQL</span><br><br>statement.executeQuery(); <span class="hljs-comment">//查询操作，返回ResultSet数据集</span><br>statement.executeUpdate(); <span class="hljs-comment">//更新、插入、删除，返回受影响的行数</span><br>statement.execute(); <span class="hljs-comment">//执行任何SQL</span><br>statement.clearBatch(); <span class="hljs-comment">//执行SQL的批处理</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="ResultSet"><a href="#ResultSet" class="headerlink" title="ResultSet"></a>ResultSet</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//查询的结果集 封装了所有查询结果</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>获得指定数据类型</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//在不知道类类型的情况下使用，如果知道就用指定类型</span><br>resultSet.getObject(); <br>resultSet.getDouble();<br>resultSet.getString();<br>resultSet.getFloat();<br>resultSet.getInt();<br>.....<br></code></pre></td></tr></table></figure>
+
+<p><strong>遍历(指针)</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">resultSet.beforeFirst(); <span class="hljs-comment">//移动到最前面</span><br>resultSet.afterLast(); <span class="hljs-comment">//移动到最后面</span><br>resultSet.next(); <span class="hljs-comment">//移动到下一个数据</span><br>resultSet.previous(); <span class="hljs-comment">//移动到前一行</span><br>resultSet.absolute(row); <span class="hljs-comment">//移动到指定行</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>释放资源</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">statement.close();<br>connection.close();<br>connection.close();<br></code></pre></td></tr></table></figure>
+
+<h3 id="四、statement对象"><a href="#四、statement对象" class="headerlink" title="四、statement对象"></a>四、statement对象</h3><p>JDBC中的statement对象用于向数据库发送SQL语句，想完成对数据库的增删改查，只需要通过这个对象向数据库发送增删改查语句即可。</p>
+<p>Statement对象的executeUpdate方法，用于向数据库发送增、删、改的sql语句，executeUpdate执行完后，将会返回一个整数（即增删改语句导致了数据库几行数据发生了变化)。</p>
+<p>Statement.executeQuery方法用于向数据库发送查询语句，executeQuery方法返回代表查询结果的ResultSet对象。</p>
+<h4 id="1-db-properties"><a href="#1-db-properties" class="headerlink" title="1.db.properties"></a>1.db.properties</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java">driver=com.mysql.jdbc.Driver<br>url=jdbc:mysql:<span class="hljs-comment">//localhost:3306/jdbcstudy?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=true</span><br>username=root<br>password=<span class="hljs-number">123456</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="2-jdbcUtils"><a href="#2-jdbcUtils" class="headerlink" title="2.jdbcUtils"></a>2.jdbcUtils</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.baixf.utils;<br><br><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-keyword">import</span> java.io.InputStream;<br><span class="hljs-keyword">import</span> java.sql.*;<br><span class="hljs-keyword">import</span> java.util.Properties;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">jdbcUtils</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">String</span> <span class="hljs-variable">driver</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">String</span> <span class="hljs-variable">url</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">String</span> <span class="hljs-variable">username</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">String</span> <span class="hljs-variable">password</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>    <span class="hljs-keyword">static</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">//返回一个输入流</span><br>            <span class="hljs-type">InputStream</span> <span class="hljs-variable">resourceAsStream</span> <span class="hljs-operator">=</span> jdbcUtils.class.getClassLoader().getResourceAsStream(<span class="hljs-string">&quot;db.properties&quot;</span>);<br>            <span class="hljs-type">Properties</span> <span class="hljs-variable">properties</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Properties</span>();<br>            properties.load(resourceAsStream);<br><br>            driver = properties.getProperty(<span class="hljs-string">&quot;driver&quot;</span>);<br>            url = properties.getProperty(<span class="hljs-string">&quot;url&quot;</span>);<br>            username = properties.getProperty(<span class="hljs-string">&quot;username&quot;</span>);<br>            password = properties.getProperty(<span class="hljs-string">&quot;password&quot;</span>);<br><br>            <span class="hljs-comment">// 1 驱动只需要加载一次</span><br>            Class.forName(driver);<br>        &#125;<span class="hljs-keyword">catch</span> (IOException | ClassNotFoundException e)&#123;<br>            e.printStackTrace();<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">// 2 获取连接</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Connection <span class="hljs-title function_">getConnection</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> SQLException &#123;<br>        <span class="hljs-keyword">return</span> DriverManager.getConnection(url, username, password);<br>    &#125;<br><br>    <span class="hljs-comment">// 3 释放连接</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">release</span><span class="hljs-params">(Connection connection, Statement statement, ResultSet resultSet)</span> <span class="hljs-keyword">throws</span> SQLException &#123;<br>        <span class="hljs-keyword">if</span>(resultSet!=<span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                resultSet.close();<br>            &#125;<span class="hljs-keyword">catch</span> (SQLException e)&#123;<br>                e.printStackTrace();<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (statement!=<span class="hljs-literal">null</span>)&#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                statement.close();<br>            &#125;<span class="hljs-keyword">catch</span> (SQLException e)&#123;<br>                e.printStackTrace();<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (connection!=<span class="hljs-literal">null</span>)&#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                connection.close();<br>            &#125;<span class="hljs-keyword">catch</span> (SQLException e)&#123;<br>                e.printStackTrace();<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-CRUD操作"><a href="#3-CRUD操作" class="headerlink" title="3.CRUD操作"></a>3.CRUD操作</h4><h5 id="Create"><a href="#Create" class="headerlink" title="Create"></a>Create</h5><blockquote>
+<p>使用executeUpdate(String sql)方法完成数据添加操作，示例操作:</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">statement</span> <span class="hljs-variable">st</span> <span class="hljs-operator">=</span> conn.createstatement(;<br><span class="hljs-type">string</span> <span class="hljs-variable">sq1</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;insert into user(... . ) values .... . ) &quot;</span>;<br><span class="hljs-type">int</span> <span class="hljs-variable">num</span> <span class="hljs-operator">=</span> st.executeupdate(sq1);<br><span class="hljs-keyword">if</span>(num&gt;<span class="hljs-number">0</span>)&#123;<br>system.out.println(<span class="hljs-string">&quot;插入成功!!! &quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="Read"><a href="#Read" class="headerlink" title="Read"></a>Read</h5><blockquote>
+<p>使用executeQuery(String sql)方法完成数据查询操作，示例操作:</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">statement</span> <span class="hljs-variable">st</span> <span class="hljs-operator">=</span> conn.createstatement(;<br><span class="hljs-type">string</span> <span class="hljs-variable">sql</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;select t from user where id=1&quot;</span>;<span class="hljs-type">Resu7tset</span> <span class="hljs-variable">rs</span> <span class="hljs-operator">=</span> st.executeupdate(sq1);<br><span class="hljs-keyword">while</span>(rs.next(&#123;<br><span class="hljs-comment">//根据获取列的数据类型，分别调用rs的相应方法映射到java对象中</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="Update"><a href="#Update" class="headerlink" title="Update"></a>Update</h5><blockquote>
+<p>使用executeUpdate(String sql)方法完成数据修改操作，示例操作:</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">statement</span> <span class="hljs-variable">st</span> <span class="hljs-operator">=</span> conn. createstatementO;<br><span class="hljs-type">string</span> <span class="hljs-variable">sql</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;update user set name=&#x27;&quot;</span> where name=<span class="hljs-string">&#x27;&quot; &quot;;int num = st.executeupdate(sq1);</span><br><span class="hljs-string">if(num&gt;0)&#123;</span><br><span class="hljs-string">system.out.print1n(“修改成功!!! &quot;);</span><br><span class="hljs-string">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="Delete"><a href="#Delete" class="headerlink" title="Delete"></a>Delete</h5><blockquote>
+<p>使用executeUpdate(String sql)方法完成数据删除操作，示例操作:</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">statement</span> <span class="hljs-variable">st</span> <span class="hljs-operator">=</span> conn.createstatementO;<br><span class="hljs-type">string</span> <span class="hljs-variable">sql</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;delete from user where id=1&quot;</span>;<br><span class="hljs-type">int</span> <span class="hljs-variable">num</span> <span class="hljs-operator">=</span> st.executeupdate(sq1);<br><span class="hljs-keyword">if</span>(num&gt;<span class="hljs-number">0</span>)&#123;<br>system.out. println(“删除成功!!! <span class="hljs-string">&quot;);</span><br><span class="hljs-string">&#125;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="4-编写增删改查操作"><a href="#4-编写增删改查操作" class="headerlink" title="4.编写增删改查操作"></a>4.编写增删改查操作</h4><h5 id="添加数据"><a href="#添加数据" class="headerlink" title="添加数据"></a>添加数据</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//插入数据</span><br><span class="hljs-keyword">package</span> com.baixf.lesson02;<br><br><span class="hljs-keyword">import</span> com.baixf.lesson02.utils.jdbcUtils;<br><br><span class="hljs-keyword">import</span> java.sql.Connection;<br><span class="hljs-keyword">import</span> java.sql.ResultSet;<br><span class="hljs-keyword">import</span> java.sql.SQLException;<br><span class="hljs-keyword">import</span> java.sql.Statement;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Demo01</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> SQLException ,NullPointerException&#123;<br>        Connection connection=<span class="hljs-literal">null</span>;<br>        Statement statement=<span class="hljs-literal">null</span>;<br>        ResultSet resultSet=<span class="hljs-literal">null</span>;<br><br>        <span class="hljs-keyword">try</span> &#123;<br>            connection = jdbcUtils.getConnection();<span class="hljs-comment">//获取数据库连接</span><br>            statement = connection.createStatement();<span class="hljs-comment">//获得SQL的执行对象</span><br>            <span class="hljs-type">String</span> <span class="hljs-variable">sql</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;INSERT INTO `users`(id,NAME,PASSWORD,email,birthday)&quot;</span> +<br>                    <span class="hljs-string">&quot;VALUES(6,&#x27;wangwu&#x27;,&#x27;password&#x27;,&#x27;1813252727@qq.com&#x27;,&#x27;2020-12-25&#x27;)&quot;</span> ;<br>            <span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> statement.executeUpdate(sql);<br>            <span class="hljs-keyword">if</span> (i&gt;<span class="hljs-number">0</span>)&#123;<br>                System.out.println(<span class="hljs-string">&quot;插入成功！&quot;</span>);<br>            &#125;<br>        &#125;<span class="hljs-keyword">catch</span> (SQLException e)&#123;<br>            e.printStackTrace();<br>        &#125;<span class="hljs-keyword">finally</span> &#123;<br>            <span class="hljs-keyword">assert</span> statement != <span class="hljs-literal">null</span>;<br>            jdbcUtils.release(connection,statement,resultSet);<br>        &#125;<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p><img src="C:%5CUsers%5CBai%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210207145206396.png" srcset="/img/loading.gif" lazyload alt="image-20210207145206396"></p>
+<h5 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.baixf.lesson02;<br><br><span class="hljs-keyword">import</span> com.baixf.lesson02.utils.jdbcUtils;<br><br><span class="hljs-keyword">import</span> java.sql.Connection;<br><span class="hljs-keyword">import</span> java.sql.ResultSet;<br><span class="hljs-keyword">import</span> java.sql.SQLException;<br><span class="hljs-keyword">import</span> java.sql.Statement;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Demo02</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> SQLException &#123;<br>        Connection connection=<span class="hljs-literal">null</span>;<br>        Statement statement=<span class="hljs-literal">null</span>;<br>        ResultSet resultSet=<span class="hljs-literal">null</span>;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">//创建数据库连接</span><br>            connection = jdbcUtils.getConnection();<br>            <span class="hljs-comment">//获得 SQL对象</span><br>            statement = connection.createStatement();<br>            <span class="hljs-comment">//编写 SQL语句</span><br>            <span class="hljs-type">String</span> <span class="hljs-variable">str</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;DELETE FROM users WHERE `ID`=6;&quot;</span>;<br>            <span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> statement.executeUpdate(str);<br>            <span class="hljs-keyword">if</span> (i&gt;<span class="hljs-number">0</span>)&#123;<br>                System.out.println(<span class="hljs-string">&quot;删除成功！&quot;</span>);<br>            &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (SQLException throwables) &#123;<br>            throwables.printStackTrace();<br>        &#125;<span class="hljs-keyword">finally</span> &#123;<br>            jdbcUtils.release(connection,statement,resultSet);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/image-20210207145530714.png" srcset="/img/loading.gif" lazyload alt="image-20210207145530714"></p>
+<h5 id="更新数据"><a href="#更新数据" class="headerlink" title="更新数据"></a>更新数据</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.baixf.lesson02;<br><br><span class="hljs-keyword">import</span> com.baixf.lesson02.utils.jdbcUtils;<br><br><span class="hljs-keyword">import</span> java.sql.Connection;<br><span class="hljs-keyword">import</span> java.sql.ResultSet;<br><span class="hljs-keyword">import</span> java.sql.SQLException;<br><span class="hljs-keyword">import</span> java.sql.Statement;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Demo03</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> SQLException &#123;<br>        Connection connection=<span class="hljs-literal">null</span>;<br>        Statement statement=<span class="hljs-literal">null</span>;<br>        ResultSet resultSet=<span class="hljs-literal">null</span>;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">//创建数据库连接</span><br>            connection = jdbcUtils.getConnection();<br>            <span class="hljs-comment">//获得 SQL对象</span><br>            statement = connection.createStatement();<br>            <span class="hljs-comment">//编写 SQL语句</span><br>            <span class="hljs-type">String</span> <span class="hljs-variable">str</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;UPDATE users SET `NAME`=&#x27;yanghongli&#x27;,`email`=&#x27;707401057@qq.com&#x27; WHERE `id`=5&quot;</span>;<br>            <span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> statement.executeUpdate(str);<br>            <span class="hljs-keyword">if</span> (i&gt;<span class="hljs-number">0</span>)&#123;<br>                System.out.println(<span class="hljs-string">&quot;修改成功！&quot;</span>);<br>            &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (SQLException throwables) &#123;<br>            throwables.printStackTrace();<br>        &#125;<span class="hljs-keyword">finally</span> &#123;<br>            jdbcUtils.release(connection,statement,resultSet);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/image-20210207150416765.png" srcset="/img/loading.gif" lazyload alt="image-20210207150416765"></p>
+<h5 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.baixf.lesson02;<br><br><span class="hljs-keyword">import</span> com.baixf.lesson02.utils.jdbcUtils;<br><br><span class="hljs-keyword">import</span> java.sql.Connection;<br><span class="hljs-keyword">import</span> java.sql.ResultSet;<br><span class="hljs-keyword">import</span> java.sql.SQLException;<br><span class="hljs-keyword">import</span> java.sql.Statement;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Demo04</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> SQLException &#123;<br>        Connection connection=<span class="hljs-literal">null</span>;<br>        Statement statement=<span class="hljs-literal">null</span>;<br>        ResultSet resultSet=<span class="hljs-literal">null</span>;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">// 建立连接</span><br>            connection = jdbcUtils.getConnection();<br>            <span class="hljs-comment">// 创建SQL对象</span><br>            statement = connection.createStatement();<br>            <span class="hljs-comment">// 执行sql语句</span><br>            <span class="hljs-type">String</span> <span class="hljs-variable">str</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;SELECT * FROM users&quot;</span>;<br>            <span class="hljs-comment">// resultset接收数据集</span><br>            resultSet = statement.executeQuery(str);<br>            <span class="hljs-keyword">while</span> (resultSet.next())&#123;<br>                System.out.println(resultSet.getObject(<span class="hljs-string">&quot;id&quot;</span>));<br>                System.out.println(resultSet.getObject(<span class="hljs-string">&quot;NAME&quot;</span>));<br>                System.out.println(resultSet.getObject(<span class="hljs-string">&quot;PASSWORD&quot;</span>));<br>                System.out.println(resultSet.getObject(<span class="hljs-string">&quot;email&quot;</span>));<br>                System.out.println(resultSet.getObject(<span class="hljs-string">&quot;birthday&quot;</span>));<br>                System.out.println(<span class="hljs-string">&quot;=====================================&quot;</span>);<br>            &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (SQLException throwables) &#123;<br>            throwables.printStackTrace();<br>        &#125; <span class="hljs-keyword">finally</span> &#123;<br>            jdbcUtils.release(connection,statement,resultSet);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/image-20210207151759111.png" srcset="/img/loading.gif" lazyload alt="image-20210207151759111"></p>
+<h5 id="SQL注入问题"><a href="#SQL注入问题" class="headerlink" title="SQL注入问题"></a>SQL注入问题</h5><blockquote>
+<p>SQL存在漏洞，会被攻击导致数据泄露，SQL会被拼接。</p>
+<p>SQL注入是比较常见的网络攻击方式之一，它不是利用操作系统的BUG来实现攻击，而是针对程序员编写时的疏忽，通过SQL语句，实现无账号登录，甚至篡改数据库。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.baixf.lesson02;<br><br><span class="hljs-keyword">import</span> com.baixf.lesson02.utils.jdbcUtils;<br><br><span class="hljs-keyword">import</span> java.sql.Connection;<br><span class="hljs-keyword">import</span> java.sql.ResultSet;<br><span class="hljs-keyword">import</span> java.sql.SQLException;<br><span class="hljs-keyword">import</span> java.sql.Statement;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Demo05</span> &#123;<br>    <span class="hljs-comment">// SQL 注入</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> SQLException &#123;<br>        login(<span class="hljs-string">&quot;baixf&quot;</span>,<span class="hljs-string">&quot;password&quot;</span>);<br>        <span class="hljs-comment">//login(&quot;baixf&quot;,&quot;&quot;);</span><br>        login(<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;password&quot;</span>);<br>        login(<span class="hljs-string">&quot;&#x27;or &#x27;1=1&quot;</span>,<span class="hljs-string">&quot;123456&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">login</span><span class="hljs-params">(String username, String password)</span> <span class="hljs-keyword">throws</span> SQLException &#123;<br>        <span class="hljs-type">Connection</span> <span class="hljs-variable">connection</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-type">Statement</span> <span class="hljs-variable">statement</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-type">ResultSet</span> <span class="hljs-variable">resultSet</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">// 建立连接</span><br>            connection = jdbcUtils.getConnection();<br>            <span class="hljs-comment">// 创建SQL对象</span><br>            statement = connection.createStatement();<br>            <span class="hljs-comment">// 执行sql语句</span><br>            <span class="hljs-type">String</span> <span class="hljs-variable">str</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;SELECT * FROM `users` WHERE `NAME`=&#x27;&quot;</span> + username + <span class="hljs-string">&quot;&#x27; &amp;&amp; `PASSWORD`=&#x27;&quot;</span> + password + <span class="hljs-string">&quot;&#x27;&quot;</span>;<br>            resultSet = statement.executeQuery(str);<br>                <span class="hljs-keyword">while</span> (resultSet.next()) &#123;<br>                    System.out.println(resultSet.getObject(<span class="hljs-string">&quot;NAME&quot;</span>));<br>                    System.out.println(resultSet.getObject(<span class="hljs-string">&quot;PASSWORD&quot;</span>));<br>                    System.out.println(<span class="hljs-string">&quot;===================================&quot;</span>);<br>                &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (SQLException throwables) &#123;<br>            throwables.printStackTrace();<br>        &#125; <span class="hljs-keyword">finally</span> &#123;<br>            jdbcUtils.release(connection, statement, resultSet);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/image-20210207154908770.png" srcset="/img/loading.gif" lazyload alt="image-20210207154908770"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/image-20210207154655015.png" srcset="/img/loading.gif" lazyload alt="image-20210207154655015"></p>
+<h3 id="五、PreparedStatement-对象"><a href="#五、PreparedStatement-对象" class="headerlink" title="五、PreparedStatement 对象"></a>五、PreparedStatement 对象</h3><blockquote>
+<p>PreparedStatement 对象可以防止SQL注入，而且效率更快。</p>
+</blockquote>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/image-20210207161653948.png" srcset="/img/loading.gif" lazyload alt="image-20210207161653948"></p>
+<h4 id="1-db-properties-1"><a href="#1-db-properties-1" class="headerlink" title="1.db.properties"></a>1.db.properties</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java">driver=com.mysql.jdbc.Driver<br>url=jdbc:mysql:<span class="hljs-comment">//localhost:3306/jdbcstudy?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=true</span><br>username=root<br>password=<span class="hljs-number">123456</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="2-jdbcUtils-1"><a href="#2-jdbcUtils-1" class="headerlink" title="2.jdbcUtils"></a>2.jdbcUtils</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.baixf.utils;<br><br><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-keyword">import</span> java.io.InputStream;<br><span class="hljs-keyword">import</span> java.sql.*;<br><span class="hljs-keyword">import</span> java.util.Properties;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">jdbcUtils</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">String</span> <span class="hljs-variable">driver</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">String</span> <span class="hljs-variable">url</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">String</span> <span class="hljs-variable">username</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">String</span> <span class="hljs-variable">password</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>    <span class="hljs-keyword">static</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">//返回一个输入流</span><br>            <span class="hljs-type">InputStream</span> <span class="hljs-variable">resourceAsStream</span> <span class="hljs-operator">=</span> jdbcUtils.class.getClassLoader().getResourceAsStream(<span class="hljs-string">&quot;db.properties&quot;</span>);<br>            <span class="hljs-type">Properties</span> <span class="hljs-variable">properties</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Properties</span>();<br>            properties.load(resourceAsStream);<br><br>            driver = properties.getProperty(<span class="hljs-string">&quot;driver&quot;</span>);<br>            url = properties.getProperty(<span class="hljs-string">&quot;url&quot;</span>);<br>            username = properties.getProperty(<span class="hljs-string">&quot;username&quot;</span>);<br>            password = properties.getProperty(<span class="hljs-string">&quot;password&quot;</span>);<br><br>            <span class="hljs-comment">// 1 驱动只需要加载一次</span><br>            Class.forName(driver);<br>        &#125;<span class="hljs-keyword">catch</span> (IOException | ClassNotFoundException e)&#123;<br>            e.printStackTrace();<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">// 2 获取连接</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Connection <span class="hljs-title function_">getConnection</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> SQLException &#123;<br>        <span class="hljs-keyword">return</span> DriverManager.getConnection(url, username, password);<br>    &#125;<br><br>    <span class="hljs-comment">// 3 释放连接</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">release</span><span class="hljs-params">(Connection connection, Statement statement, ResultSet resultSet)</span> <span class="hljs-keyword">throws</span> SQLException &#123;<br>        <span class="hljs-keyword">if</span>(resultSet!=<span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                resultSet.close();<br>            &#125;<span class="hljs-keyword">catch</span> (SQLException e)&#123;<br>                e.printStackTrace();<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (statement!=<span class="hljs-literal">null</span>)&#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                statement.close();<br>            &#125;<span class="hljs-keyword">catch</span> (SQLException e)&#123;<br>                e.printStackTrace();<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (connection!=<span class="hljs-literal">null</span>)&#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                connection.close();<br>            &#125;<span class="hljs-keyword">catch</span> (SQLException e)&#123;<br>                e.printStackTrace();<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-CRUD操作-1"><a href="#3-CRUD操作-1" class="headerlink" title="3.CRUD操作"></a>3.CRUD操作</h4><h5 id="增加数据"><a href="#增加数据" class="headerlink" title="增加数据"></a>增加数据</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.baixf.lesson03;<br><br><span class="hljs-keyword">import</span> com.baixf.lesson02.utils.jdbcUtils;<br><br><span class="hljs-keyword">import</span> java.sql.*;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Demo01</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> SQLException &#123;<br>        <span class="hljs-type">Connection</span> <span class="hljs-variable">connection</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-type">PreparedStatement</span> <span class="hljs-variable">preparedStatement</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-keyword">try</span> &#123;<br>            connection = jdbcUtils.getConnection();<br>            <span class="hljs-comment">//区别 ： 使用 ? 占位符</span><br>            <span class="hljs-type">String</span> <span class="hljs-variable">str</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;INSERT INTO `users`(id,NAME,PASSWORD,email,birthday) VALUES(?,?,?,?,?)&quot;</span>;<br>            <span class="hljs-comment">//预编译 SQL ，先写 SQL 然后赋值</span><br>            preparedStatement = connection.prepareStatement(str);<br>            preparedStatement.setInt(<span class="hljs-number">1</span>,<span class="hljs-number">6</span>);<br>            preparedStatement.setString(<span class="hljs-number">2</span>,<span class="hljs-string">&quot;王冰冰&quot;</span>);<br>            preparedStatement.setString(<span class="hljs-number">3</span>,<span class="hljs-string">&quot;bxfwlg&quot;</span>);<br>            preparedStatement.setString(<span class="hljs-number">4</span>,<span class="hljs-string">&quot;1813252727@qq.com&quot;</span>);<br>            preparedStatement.setDate(<span class="hljs-number">5</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(<span class="hljs-number">2000</span>));<br><br>            <span class="hljs-comment">//执行</span><br>            <span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> preparedStatement.executeUpdate();<br>            <span class="hljs-keyword">if</span> (i&gt;<span class="hljs-number">0</span>)&#123;<br>                System.out.println(<span class="hljs-string">&quot;插入成功！&quot;</span>);<br>            &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (SQLException throwables) &#123;<br>            throwables.printStackTrace();<br>        &#125;<span class="hljs-keyword">finally</span> &#123;<br>            jdbcUtils.release(connection,preparedStatement,<span class="hljs-literal">null</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/image-20210207161607387.png" srcset="/img/loading.gif" lazyload alt="image-20210207161607387"></p>
+<h5 id="删除数据-1"><a href="#删除数据-1" class="headerlink" title="删除数据"></a>删除数据</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.baixf.lesson03;<br><br><span class="hljs-keyword">import</span> com.baixf.lesson02.utils.jdbcUtils;<br><br><span class="hljs-keyword">import</span> java.sql.Connection;<br><span class="hljs-keyword">import</span> java.sql.Date;<br><span class="hljs-keyword">import</span> java.sql.PreparedStatement;<br><span class="hljs-keyword">import</span> java.sql.SQLException;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Demo02</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> SQLException &#123;<br>        <span class="hljs-type">Connection</span> <span class="hljs-variable">connection</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-type">PreparedStatement</span> <span class="hljs-variable">preparedStatement</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-keyword">try</span> &#123;<br>            connection = jdbcUtils.getConnection();<br>            <span class="hljs-comment">//区别 ： 使用 ? 占位符</span><br>            <span class="hljs-type">String</span> <span class="hljs-variable">str</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;delete from users where name = ?&quot;</span>;<br><br>            <span class="hljs-comment">//预编译 SQL ，先写 SQL 然后赋值</span><br>            preparedStatement = connection.prepareStatement(str);<br>            <span class="hljs-comment">//赋值</span><br>            preparedStatement.setString(<span class="hljs-number">1</span>,<span class="hljs-string">&quot;baixf&quot;</span>);<br><br>            <span class="hljs-comment">//执行</span><br>            <span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> preparedStatement.executeUpdate();<br>            <span class="hljs-keyword">if</span> (i&gt;<span class="hljs-number">0</span>)&#123;<br>                System.out.println(<span class="hljs-string">&quot;删除成功！&quot;</span>);<br>            &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (SQLException throwables) &#123;<br>            throwables.printStackTrace();<br>        &#125;<span class="hljs-keyword">finally</span> &#123;<br>            jdbcUtils.release(connection,preparedStatement,<span class="hljs-literal">null</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/image-20210207162244233.png" srcset="/img/loading.gif" lazyload alt="image-20210207162244233"></p>
+<h5 id="更新数据-1"><a href="#更新数据-1" class="headerlink" title="更新数据"></a>更新数据</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.baixf.lesson03;<br><br><span class="hljs-keyword">import</span> com.baixf.lesson02.utils.jdbcUtils;<br><br><span class="hljs-keyword">import</span> java.sql.Connection;<br><span class="hljs-keyword">import</span> java.sql.PreparedStatement;<br><span class="hljs-keyword">import</span> java.sql.SQLException;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Demo03</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> SQLException &#123;<br>        <span class="hljs-type">Connection</span> <span class="hljs-variable">connection</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-type">PreparedStatement</span> <span class="hljs-variable">preparedStatement</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-keyword">try</span> &#123;<br>            connection = jdbcUtils.getConnection();<br>            <span class="hljs-comment">//区别 ： 使用 ? 占位符</span><br>            <span class="hljs-type">String</span> <span class="hljs-variable">str</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;update users set birthday = ?  where name = ?&quot;</span>;<br><br>            <span class="hljs-comment">//预编译 SQL ，先写 SQL 然后赋值</span><br>            preparedStatement = connection.prepareStatement(str);<br>            <span class="hljs-comment">//赋值</span><br>            preparedStatement.setString(<span class="hljs-number">1</span>,<span class="hljs-string">&quot;2020-12-25&quot;</span>);<br>            preparedStatement.setString(<span class="hljs-number">2</span>,<span class="hljs-string">&quot;王冰冰&quot;</span>);<br><br>            <span class="hljs-comment">//执行</span><br>            <span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> preparedStatement.executeUpdate();<br>            <span class="hljs-keyword">if</span> (i&gt;<span class="hljs-number">0</span>)&#123;<br>                System.out.println(<span class="hljs-string">&quot;更新成功！&quot;</span>);<br>            &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (SQLException throwables) &#123;<br>            throwables.printStackTrace();<br>        &#125;<span class="hljs-keyword">finally</span> &#123;<br>            jdbcUtils.release(connection,preparedStatement,<span class="hljs-literal">null</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/image-20210207162852807.png" srcset="/img/loading.gif" lazyload alt="image-20210207162852807"></p>
+<h5 id="查询数据-1"><a href="#查询数据-1" class="headerlink" title="查询数据"></a>查询数据</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.baixf.lesson03;<br><br><span class="hljs-keyword">import</span> com.baixf.lesson02.utils.jdbcUtils;<br><br><span class="hljs-keyword">import</span> java.sql.Connection;<br><span class="hljs-keyword">import</span> java.sql.PreparedStatement;<br><span class="hljs-keyword">import</span> java.sql.ResultSet;<br><span class="hljs-keyword">import</span> java.sql.SQLException;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Demo06</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> SQLException &#123;<br>        <span class="hljs-type">Connection</span> <span class="hljs-variable">connection</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-type">PreparedStatement</span> <span class="hljs-variable">preparedStatement</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-type">ResultSet</span> <span class="hljs-variable">resultSet</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-keyword">try</span> &#123;<br>            connection = jdbcUtils.getConnection();<br>            <span class="hljs-comment">//区别 ： 使用 ? 占位符</span><br>            <span class="hljs-type">String</span> <span class="hljs-variable">str</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;select * from users where name = ?&quot;</span>;<br><br>            <span class="hljs-comment">//预编译 SQL ，先写 SQL 然后赋值</span><br>            preparedStatement = connection.prepareStatement(str);<br>            <span class="hljs-comment">//赋值</span><br>            preparedStatement.setString(<span class="hljs-number">1</span>,<span class="hljs-string">&quot;王冰冰&quot;</span>);<br>            <span class="hljs-comment">//执行并使用数据集接收数据</span><br>            resultSet = preparedStatement.executeQuery();<br>            <span class="hljs-keyword">while</span> (resultSet.next())&#123;<br>                System.out.println(<span class="hljs-string">&quot;查询成功！&quot;</span>);<br>                System.out.println(resultSet.getObject(<span class="hljs-string">&quot;id&quot;</span>));<br>                System.out.println(resultSet.getObject(<span class="hljs-string">&quot;NAME&quot;</span>));<br>                System.out.println(resultSet.getObject(<span class="hljs-string">&quot;PASSWORD&quot;</span>));<br>                System.out.println(resultSet.getObject(<span class="hljs-string">&quot;email&quot;</span>));<br>                System.out.println(resultSet.getObject(<span class="hljs-string">&quot;birthday&quot;</span>));<br>                System.out.println(<span class="hljs-string">&quot;=====================================&quot;</span>);<br>            &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (SQLException throwables) &#123;<br>            throwables.printStackTrace();<br>        &#125;<span class="hljs-keyword">finally</span> &#123;<br>            jdbcUtils.release(connection,preparedStatement,<span class="hljs-literal">null</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/image-20210207163555593.png" srcset="/img/loading.gif" lazyload alt="image-20210207163555593"></p>
+<h5 id="防止注入问题"><a href="#防止注入问题" class="headerlink" title="防止注入问题"></a>防止注入问题</h5><blockquote>
+<p>PreparedStatement 对象防止SQL注入的本质：把传递的参数当作字符</p>
+<p>假设存在转义字符，将直接被忽略 ，例如 ‘ (引号)</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.baixf.lesson03;<br><br><span class="hljs-keyword">import</span> com.baixf.lesson02.utils.jdbcUtils;<br><br><span class="hljs-keyword">import</span> java.sql.*;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Demo07</span> &#123;<br>    <span class="hljs-comment">// 防止 SQL 注入</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> SQLException &#123;<br>        <span class="hljs-comment">//login(&quot;baixf&quot;,&quot;password&quot;);</span><br>        login(<span class="hljs-string">&quot;zhansan&quot;</span>,<span class="hljs-string">&quot;123456&quot;</span>);<br>        <span class="hljs-comment">//login(&quot;&quot;,&quot;password&quot;);</span><br>        login(<span class="hljs-string">&quot;&#x27;or &#x27;1=1&quot;</span>,<span class="hljs-string">&quot;&#x27;or &#x27;1=1&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">login</span><span class="hljs-params">(String username, String password)</span> <span class="hljs-keyword">throws</span> SQLException &#123;<br>        <span class="hljs-type">Connection</span> <span class="hljs-variable">connection</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-type">PreparedStatement</span> <span class="hljs-variable">preparedStatement</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-type">ResultSet</span> <span class="hljs-variable">resultSet</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">// 建立连接</span><br>            connection = jdbcUtils.getConnection();<br>            <span class="hljs-comment">// 预编译 sql语句</span><br>            <span class="hljs-type">String</span> <span class="hljs-variable">str</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;SELECT * FROM `users` WHERE `NAME`=? &amp;&amp; `PASSWORD`=?&quot;</span>; <span class="hljs-comment">//Mybatis</span><br>            preparedStatement = connection.prepareStatement(str);<br>            <span class="hljs-comment">//赋值</span><br>            preparedStatement.setString(<span class="hljs-number">1</span>,username);<br>            preparedStatement.setString(<span class="hljs-number">2</span>,password);<br>            <span class="hljs-comment">//执行 SQL</span><br>            resultSet = preparedStatement.executeQuery();<br>            <span class="hljs-keyword">while</span> (resultSet.next()) &#123;<br>                System.out.println(resultSet.getObject(<span class="hljs-string">&quot;NAME&quot;</span>));<br>                System.out.println(resultSet.getObject(<span class="hljs-string">&quot;PASSWORD&quot;</span>));<br>                System.out.println(<span class="hljs-string">&quot;===================================&quot;</span>);<br>            &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (SQLException throwables) &#123;<br>            throwables.printStackTrace();<br>        &#125; <span class="hljs-keyword">finally</span> &#123;<br>            jdbcUtils.release(connection, preparedStatement, resultSet);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/image-20210207164726143.png" srcset="/img/loading.gif" lazyload alt="image-20210207164726143"></p>
+<h3 id="六、使用IDEA连接数据库"><a href="#六、使用IDEA连接数据库" class="headerlink" title="六、使用IDEA连接数据库"></a>六、使用IDEA连接数据库</h3><p>1.建立连接</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/image-20210207165459982.png" srcset="/img/loading.gif" lazyload alt="image-20210207165459982"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/image-20210207170240272.png" srcset="/img/loading.gif" lazyload alt="image-20210207170240272"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/image-20210207171513022.png" srcset="/img/loading.gif" lazyload alt="image-20210207171513022"></p>
+<p>2.连接成功后选择数据库</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/image-20210207171551215.png" srcset="/img/loading.gif" lazyload alt="image-20210207171551215"></p>
+<p>3.查看数据库中的内容</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/image-20210207171653980.png" srcset="/img/loading.gif" lazyload alt="image-20210207171653980"></p>
+<p>4.CRU操作</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/image-20210207172906572.png" srcset="/img/loading.gif" lazyload alt="image-20210207172906572"></p>
+<p>5.其他操作</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/image-20210207173116722.png" srcset="/img/loading.gif" lazyload alt="image-20210207173116722"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/image-20210207174100024.png" srcset="/img/loading.gif" lazyload alt="image-20210207174100024"></p>
+<h3 id="七、事务"><a href="#七、事务" class="headerlink" title="七、事务"></a>七、事务</h3><blockquote>
+<p>要么都成功，要么都失败！</p>
+</blockquote>
+<h4 id="1-ACID原则"><a href="#1-ACID原则" class="headerlink" title="1.ACID原则"></a>1.ACID原则</h4><ul>
+<li>原子性：要么全部完成，要么不完成</li>
+<li>一致性：总数不变</li>
+<li>隔离性：多个进程互不干扰</li>
+<li>持久性：一旦提交不可逆</li>
+</ul>
+<h4 id="2-代码实现"><a href="#2-代码实现" class="headerlink" title="2.代码实现"></a>2.代码实现</h4><p>1.开启事务。</p>
+<p>2.一组业务执行完毕，提交事务。</p>
+<p>3.可以在catch语句中显示的定义 回滚语句，但默认失败就会回滚。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.baixf.lesson04;<br><br><span class="hljs-keyword">import</span> com.baixf.utils.jdbcUtils;<br><br><span class="hljs-keyword">import</span> java.sql.Connection;<br><span class="hljs-keyword">import</span> java.sql.PreparedStatement;<br><span class="hljs-keyword">import</span> java.sql.ResultSet;<br><span class="hljs-keyword">import</span> java.sql.SQLException;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Transaction</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> SQLException &#123;<br>        <span class="hljs-type">Connection</span> <span class="hljs-variable">connection</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-type">PreparedStatement</span> <span class="hljs-variable">preparedStatement</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        ResultSet resultSet=<span class="hljs-literal">null</span>;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">//关闭数据库自动提交</span><br>            connection = jdbcUtils.getConnection();<br>            <span class="hljs-comment">//关闭数据库自动提交，自动开启事务</span><br>            connection.setAutoCommit(<span class="hljs-literal">false</span>);<span class="hljs-comment">//开启事务</span><br>            <span class="hljs-type">String</span> <span class="hljs-variable">sql1</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;UPDATE ACCOUNT SET `money` = `money` - 100 WHERE NAME=&#x27;A&#x27;&quot;</span>;<br>            preparedStatement = connection.prepareStatement(sql1);<br>            preparedStatement.executeUpdate();<br><br>            <span class="hljs-type">String</span> <span class="hljs-variable">sql2</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;UPDATE ACCOUNT SET `money` = `money` + 100 WHERE NAME=&#x27;B&#x27;&quot;</span>;<br>            preparedStatement = connection.prepareStatement(sql2);<br>            preparedStatement.executeUpdate();<br>            <span class="hljs-comment">//业务完毕，提交事务</span><br>            connection.commit();<br>            System.out.println(<span class="hljs-string">&quot;成功！&quot;</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (SQLException throwables) &#123;<br>            connection.rollback();<span class="hljs-comment">//如果失败则回滚</span><br>            throwables.printStackTrace();<br>        &#125;<span class="hljs-keyword">finally</span> &#123;<br>            jdbcUtils.release(connection,preparedStatement,resultSet);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/image-20210207175955037.png" srcset="/img/loading.gif" lazyload alt="image-20210207175955037"></p>
+<p><strong>失败案例</strong></p>
+<blockquote>
+<p>回滚！</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.baixf.lesson04;<br><br><span class="hljs-keyword">import</span> com.baixf.utils.jdbcUtils;<br><br><span class="hljs-keyword">import</span> java.sql.Connection;<br><span class="hljs-keyword">import</span> java.sql.PreparedStatement;<br><span class="hljs-keyword">import</span> java.sql.ResultSet;<br><span class="hljs-keyword">import</span> java.sql.SQLException;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Demo01</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> SQLException &#123;<br>        <span class="hljs-type">Connection</span> <span class="hljs-variable">connection</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-type">PreparedStatement</span> <span class="hljs-variable">preparedStatement</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        ResultSet resultSet=<span class="hljs-literal">null</span>;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">//关闭数据库自动提交</span><br>            connection = jdbcUtils.getConnection();<br>            <span class="hljs-comment">//关闭数据库自动提交，自动开启事务</span><br>            connection.setAutoCommit(<span class="hljs-literal">false</span>);<span class="hljs-comment">//开启事务</span><br>            <span class="hljs-type">String</span> <span class="hljs-variable">sql1</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;UPDATE ACCOUNT SET `money` = `money` - 100 WHERE NAME=&#x27;A&#x27;&quot;</span>;<br>            preparedStatement = connection.prepareStatement(sql1);<br>            preparedStatement.executeUpdate();<br>            <span class="hljs-type">int</span> x=<span class="hljs-number">1</span>/<span class="hljs-number">0</span>;<br>            <span class="hljs-type">String</span> <span class="hljs-variable">sql2</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;UPDATE ACCOUNT SET `money` = `money` + 100 WHERE NAME=&#x27;B&#x27;&quot;</span>;<br>            preparedStatement = connection.prepareStatement(sql2);<br>            preparedStatement.executeUpdate();<br>            <span class="hljs-comment">//业务完毕，提交事务</span><br>            connection.commit();<br>            System.out.println(<span class="hljs-string">&quot;成功！&quot;</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (SQLException throwables) &#123;<br>            connection.rollback();<span class="hljs-comment">//如果失败则回滚</span><br>            throwables.printStackTrace();<br>        &#125;<span class="hljs-keyword">finally</span> &#123;<br>            jdbcUtils.release(connection,preparedStatement,resultSet);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/image-20210207180147051.png" srcset="/img/loading.gif" lazyload alt="image-20210207180147051"></p>
+<h3 id="八、数据库连接池"><a href="#八、数据库连接池" class="headerlink" title="八、数据库连接池"></a>八、数据库连接池</h3><p>数据库连接–执行完毕–释放 </p>
+<p>连接 —》释放十分浪费资源</p>
+<p><strong>池化技术：准备一些预先的资源，过来就连接预先准备好的</strong></p>
+<p>常用连接数：10</p>
+<p>最小连接数：10</p>
+<p>最大连接数：100</p>
+<p>编写连接池，实现一个接口：Datasource</p>
+<h4 id="1-开源数据源实现"><a href="#1-开源数据源实现" class="headerlink" title="1.开源数据源实现"></a>1.开源数据源实现</h4><blockquote>
+<p>使用了这些数据库连接池，项目中就不需要编写连接数据库的代码！</p>
+</blockquote>
+<ul>
+<li><p>DBCP (需要用到commons-dbcp-1.4.jar、commons-pool-1.6.jar包)</p>
+</li>
+<li><p>C3P0 (需要用到c3p0-0.9.5.5.jar、mchange-commons-java-0.2.19.jar包)</p>
+</li>
+<li><p>Druid:Alibaba</p>
+</li>
+</ul>
+<h4 id="2-jdbcUtils-DBCP-properties"><a href="#2-jdbcUtils-DBCP-properties" class="headerlink" title="2.jdbcUtils_DBCP.properties"></a>2.jdbcUtils_DBCP.properties</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs java">#连接设置 DBCP数据源定义！<br>driverClassName=com.mysql.jdbc.Driver<br>url=jdbc:mysql:<span class="hljs-comment">//localhost:3306/bank</span><br>username=root<br>password=<span class="hljs-number">123456</span><br><br>#初始化连接<br>initialSize=<span class="hljs-number">10</span><br><br>#最大连接数量<br>maxActive=<span class="hljs-number">50</span><br><br>#最大空闲连接<br>maxIdle=<span class="hljs-number">20</span><br><br>#最小空闲连接<br>minIdle=<span class="hljs-number">5</span><br><br>#超时等待时间<br>maxWait=<span class="hljs-number">60000</span><br><br>#JDBC驱动建立连接时附带的连接属性属性的格式必须为这样：[属性名=property;]<br>#注意：“user” 与 “password” 两个属性会被明确地传递，因此这里不需要包含他们。<br>connectionProperties=useUnicode=<span class="hljs-literal">true</span>;characterEncoding=UTF8<br><br>#指定由连接池所创建的连接的自动提交（auto-commit）状态。<br>defaultAutoCommit=<span class="hljs-literal">true</span><br><br>#driver <span class="hljs-keyword">default</span> 指定由连接池所创建的连接的事务级别（TransactionIsolation）。<br>#可用值为下列之一：（详情可见javadoc。）NONE,READ_UNCOMMITTED, READ_COMMITTED, REPEATABLE_READ, SERIALIZABLE<br>defaultTransactionIsolation=READ_UNCOMMITTED<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.baixf.utils;<br><br><span class="hljs-keyword">import</span> org.apache.commons.dbcp2.BasicDataSource;<br><span class="hljs-keyword">import</span> org.apache.commons.dbcp2.BasicDataSourceFactory;<br><br><span class="hljs-keyword">import</span> javax.sql.DataSource;<br><span class="hljs-keyword">import</span> java.io.InputStream;<br><span class="hljs-keyword">import</span> java.sql.*;<br><span class="hljs-keyword">import</span> java.util.Properties;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">jdbcUtils_DBCP</span> &#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">DataSource</span> <span class="hljs-variable">dataSource</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>    <span class="hljs-keyword">static</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-type">InputStream</span> <span class="hljs-variable">in</span> <span class="hljs-operator">=</span> jdbcUtils_DBCP.class.getClassLoader().getResourceAsStream(<span class="hljs-string">&quot;dbcpconfig.properties&quot;</span>);<br>            <span class="hljs-type">Properties</span> <span class="hljs-variable">properties</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Properties</span>();<br>            properties.load(in);<br><br>            <span class="hljs-comment">//创建数据源 工厂模式 -- 》 创建</span><br>            dataSource = BasicDataSourceFactory.createDataSource(properties);<br><br><br>        &#125;<span class="hljs-keyword">catch</span> (Exception e)&#123;<br>            e.printStackTrace();<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">// 2 获取连接</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Connection <span class="hljs-title function_">getConnection</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> SQLException &#123;<br>        <span class="hljs-keyword">return</span> dataSource.getConnection();<span class="hljs-comment">//从数据源中获取连接</span><br>    &#125;<br><br>    <span class="hljs-comment">// 3 释放连接</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">release</span><span class="hljs-params">(Connection connection, Statement statement, ResultSet resultSet)</span> <span class="hljs-keyword">throws</span> SQLException &#123;<br>        <span class="hljs-keyword">if</span>(resultSet!=<span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                resultSet.close();<br>            &#125;<span class="hljs-keyword">catch</span> (SQLException e)&#123;<br>                e.printStackTrace();<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (statement!=<span class="hljs-literal">null</span>)&#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                statement.close();<br>            &#125;<span class="hljs-keyword">catch</span> (SQLException e)&#123;<br>                e.printStackTrace();<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (connection!=<span class="hljs-literal">null</span>)&#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                connection.close();<br>            &#125;<span class="hljs-keyword">catch</span> (SQLException e)&#123;<br>                e.printStackTrace();<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-c3p0-config-xml"><a href="#3-c3p0-config-xml" class="headerlink" title="3.c3p0-config.xml"></a>3.c3p0-config.xml</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs java">&lt;c3p0-config&gt;<br>  &lt;!-- 使用默认的配置读取连接池对象 --&gt;<br>  &lt;<span class="hljs-keyword">default</span>-config&gt;<br>      &lt;!--  连接参数 --&gt;<br>    &lt;property name=<span class="hljs-string">&quot;driverClass&quot;</span>&gt;com.mysql.jdbc.Driver&lt;/property&gt;<br>    &lt;property name=<span class="hljs-string">&quot;jdbcUrl&quot;</span>&gt;jdbc:mysql:<span class="hljs-comment">//localhost:3306/test&lt;/property&gt;</span><br>    &lt;property name=<span class="hljs-string">&quot;user&quot;</span>&gt;root&lt;/property&gt;<br>    &lt;property name=<span class="hljs-string">&quot;password&quot;</span>&gt;root&lt;/property&gt;<br>    <br>    &lt;!-- 连接池参数 --&gt;<br>    &lt;!--初始化申请的连接数量--&gt;<br>    &lt;property name=<span class="hljs-string">&quot;initialPoolSize&quot;</span>&gt;<span class="hljs-number">5</span>&lt;/property&gt;<br>    &lt;!--最大的连接数量--&gt;<br>    &lt;property name=<span class="hljs-string">&quot;maxPoolSize&quot;</span>&gt;<span class="hljs-number">10</span>&lt;/property&gt;<br>    &lt;!--超时时间--&gt;<br>    &lt;property name=<span class="hljs-string">&quot;checkoutTimeout&quot;</span>&gt;<span class="hljs-number">3000</span>&lt;/property&gt;<br>  &lt;/<span class="hljs-keyword">default</span>-config&gt;<br><br>  &lt;named-config name=<span class="hljs-string">&quot;otherc3p0&quot;</span>&gt; <br>    &lt;!--  连接参数 --&gt;<br>    &lt;property name=<span class="hljs-string">&quot;driverClass&quot;</span>&gt;com.mysql.jdbc.Driver&lt;/property&gt;<br>    &lt;property name=<span class="hljs-string">&quot;jdbcUrl&quot;</span>&gt;jdbc:mysql:<span class="hljs-comment">//localhost:3306/test&lt;/property&gt;</span><br>    &lt;property name=<span class="hljs-string">&quot;user&quot;</span>&gt;root&lt;/property&gt;<br>    &lt;property name=<span class="hljs-string">&quot;password&quot;</span>&gt;root&lt;/property&gt;<br>    <br>    &lt;!-- 连接池参数 --&gt;<br>    &lt;property name=<span class="hljs-string">&quot;initialPoolSize&quot;</span>&gt;<span class="hljs-number">5</span>&lt;/property&gt;<br>    &lt;property name=<span class="hljs-string">&quot;maxPoolSize&quot;</span>&gt;<span class="hljs-number">8</span>&lt;/property&gt;<br>    &lt;property name=<span class="hljs-string">&quot;checkoutTimeout&quot;</span>&gt;<span class="hljs-number">1000</span>&lt;/property&gt;<br>  &lt;/named-config&gt;<br>&lt;/c3p0-config&gt;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.itheima.utils;<br><br><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-keyword">import</span> java.sql.*;<br><span class="hljs-keyword">import</span> java.util.Properties;<br><br><span class="hljs-comment">//自定义的JDBC工具类, 结合配置文件使用.</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">JDBCUtils2</span> &#123;<br>    <span class="hljs-comment">//1. 构造方法私有化.</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-title function_">JDBCUtils2</span><span class="hljs-params">()</span>&#123;&#125;<br><br>    <span class="hljs-comment">//2. 定义一些私有的静态的成员变量, 用来记录配置文件中的信息.</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> String driverClass;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> String url;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> String username;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> String password;<br><br>    <span class="hljs-comment">//3. 定义方法loadProperties(), 用来读取配置文件, 并将读取到的数据赋值给变量.</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">loadProperties</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-comment">//3.1 定义Properties集合</span><br>        <span class="hljs-type">Properties</span> <span class="hljs-variable">pp</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Properties</span>();<br>        <span class="hljs-comment">//3.2 加载配置文件中的文件到集合中.</span><br>        <span class="hljs-keyword">try</span> &#123;<br>            pp.load(JDBCUtils2.class.getClassLoader().getResourceAsStream(<span class="hljs-string">&quot;config.properties&quot;</span>));<br>        &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>        <span class="hljs-comment">//3.3 给成员变量赋值.</span><br>        driverClass = pp.getProperty(<span class="hljs-string">&quot;driverClass&quot;</span>);<br>        url = pp.getProperty(<span class="hljs-string">&quot;url&quot;</span>);<br>        username = pp.getProperty(<span class="hljs-string">&quot;username&quot;</span>);<br>        password = pp.getProperty(<span class="hljs-string">&quot;password&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-comment">//4. 通过静态代码块, 用来注册驱动.</span><br>    <span class="hljs-keyword">static</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">//核心细节: 方法只有被调用, 才会执行.</span><br>            <span class="hljs-comment">//调用loadProperties()方法, 读取配置文件.</span><br>            loadProperties();<br>            <span class="hljs-comment">//注册驱动.</span><br>            Class.forName(driverClass);<br>        &#125; <span class="hljs-keyword">catch</span> (ClassNotFoundException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">//5. 对外提供一个公共的访问方式, 用来获取: 连接对象.</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Connection <span class="hljs-title function_">getConnection</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-keyword">return</span> DriverManager.getConnection(url, username,password);<br>        &#125; <span class="hljs-keyword">catch</span> (SQLException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>    &#125;<br><br>    <span class="hljs-comment">//6. 释放资源.</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">release</span><span class="hljs-params">(Connection conn, Statement stat, ResultSet rs)</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-keyword">if</span> (rs != <span class="hljs-literal">null</span>) &#123;<br>                rs.close();<br>                rs = <span class="hljs-literal">null</span>;       <span class="hljs-comment">//GC会优先回收null对象.</span><br>            &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (SQLException e) &#123;<br>            e.printStackTrace();<br>        &#125; <span class="hljs-keyword">finally</span> &#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                <span class="hljs-keyword">if</span> (stat != <span class="hljs-literal">null</span>) &#123;<br>                    stat.close();<br>                    stat = <span class="hljs-literal">null</span>;<br>                &#125;<br>            &#125; <span class="hljs-keyword">catch</span> (SQLException e) &#123;<br>                e.printStackTrace();<br>            &#125; <span class="hljs-keyword">finally</span> &#123;<br>                <span class="hljs-keyword">try</span> &#123;<br>                    <span class="hljs-keyword">if</span> (conn != <span class="hljs-literal">null</span>) &#123;<br>                        conn.close();<br>                        conn = <span class="hljs-literal">null</span>;<br>                    &#125;<br>                &#125; <span class="hljs-keyword">catch</span> (SQLException e) &#123;<br>                    e.printStackTrace();<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">release</span><span class="hljs-params">(Connection conn, Statement stat)</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-keyword">if</span> (stat != <span class="hljs-literal">null</span>) &#123;<br>                stat.close();<br>                stat = <span class="hljs-literal">null</span>;<br>            &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (SQLException e) &#123;<br>            e.printStackTrace();<br>        &#125; <span class="hljs-keyword">finally</span> &#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                <span class="hljs-keyword">if</span> (conn != <span class="hljs-literal">null</span>) &#123;<br>                    conn.close();<br>                    conn = <span class="hljs-literal">null</span>;<br>                &#125;<br>            &#125; <span class="hljs-keyword">catch</span> (SQLException e) &#123;<br>                e.printStackTrace();<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br><br><br></code></pre></td></tr></table></figure>
+
+
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1NJ411J79W?p=1">狂神说B站视频</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.mysql.com/">MySQL官网</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.runoob.com/mysql/mysql-tutorial.html">MySQL教程</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/Java/" class="category-chain-item">Java</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Java/">#Java</a>
+      
+        <a href="/tags/MySQL/">#MySQL</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>JDBC学习</div>
+      <div>https://blog.baixf.tk/2021/02/07/Java/JDBC学习/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年2月7日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/02/13/%E7%BD%91%E7%AB%99%E8%BF%90%E7%BB%B4/HTML%E5%AD%A6%E4%B9%A0/" title="HTML学习">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTML学习</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/02/06/Java/Java%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0/" title="Java进阶学习">
+                        <span class="hidden-mobile">Java进阶学习</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

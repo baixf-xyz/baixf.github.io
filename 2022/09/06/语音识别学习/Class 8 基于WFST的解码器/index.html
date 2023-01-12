@@ -1,0 +1,923 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Viterbi解码体现-TokenPassing">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Class 8 基于WFST的解码器">
+<meta property="og:url" content="https://blog.baixf.tk/2022/09/06/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E5%AD%A6%E4%B9%A0/Class%208%20%E5%9F%BA%E4%BA%8EWFST%E7%9A%84%E8%A7%A3%E7%A0%81%E5%99%A8/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="Viterbi解码体现-TokenPassing">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog屏幕截图 2022-06-25 213320.jpg">
+<meta property="article:published_time" content="2022-09-06T00:24:11.000Z">
+<meta property="article:modified_time" content="2023-01-12T14:08:04.375Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="语音识别">
+<meta property="article:tag" content="ASR">
+<meta property="article:tag" content="LM">
+<meta property="article:tag" content="WFST">
+<meta property="article:tag" content="Prunning">
+<meta property="article:tag" content="HCLG">
+<meta property="article:tag" content="lattice">
+<meta property="article:tag" content="decoder">
+<meta property="article:tag" content="ASR Decoder">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog屏幕截图 2022-06-25 213320.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>Class 8 基于WFST的解码器 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906162711556.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Class 8 基于WFST的解码器"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-09-06 00:24" pubdate>
+          2022年9月6日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          46 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Class 8 基于WFST的解码器</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="专有术语"><a href="#专有术语" class="headerlink" title="专有术语"></a>专有术语</h2><ul>
+<li>Grammar fst(G.fst) 语法模型，建模文本的概率，即N-gram语言模型,其实G是个FSA(acceptor),即输入和输出是一样的FST.</li>
+<li>Lexicon fst(L.fst) 词典模型，建模音素序列到词序列之间的关系</li>
+<li>Context-Dependent fst(C.fst）建模上下文相关音素序列到单音素序列的转换关系</li>
+<li>HMM fst(H.fst) 建模上下文相关音素HMM中的边序列到上下文相关音素序列的转换关系。</li>
+<li>self-loop 自跳转，fst中从当前state跳出仍回到该state的边</li>
+<li>ui-gram 一阶语言模型，当前词的条件概率和上下文无关</li>
+<li>bi-gram 二阶语言模型，当前词的条件概率只和前一个词有关</li>
+<li>backoff 语言模型中，对于训练集中缺失的N阶gram，使用N-1阶的概率进行估计</li>
+<li>recipe kaldi里的完成某个任务整个可执行脚本</li>
+<li>mono-phone 上下文无关单音素</li>
+<li>cd-phone 上下文相关音素，音素由于前后的音素不同会产生不同的发音，因此我们使用上下文相关音素建模往往比单音素要好。</li>
+<li>transition-id kaldi解码fst的输入单元，每个transition-id对应一个(phone, HMM-state, pdf-id, transition-index)元组</li>
+<li>pdf-id pdf-id的个数是决策树绑定后的聚类个数，也是声学模型中GMM的个数或者神经网络的输出节点个数。</li>
+</ul>
+<h2 id="解码"><a href="#解码" class="headerlink" title="解码"></a>解码</h2><p>给定声学观测O &#x3D; o1 , o2 , … , oT ,找到最可能的词序列W &#x3D; w1 , w2 , … , wN ：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906112703903.png" srcset="/img/loading.gif" lazyload alt="image-20220906112703903"></p>
+<p>通过Viterbi算法找到了最可能的状态序列，我们就能恢复出最可能的词序列。但是从状态序列到词序列，我们还需要解码范围(HMM、cd-phone、phone)以及LM约束。</p>
+<h3 id="公式"><a href="#公式" class="headerlink" title="公式"></a>公式</h3><p>给定声学观测O &#x3D; o1 , o2 , … , oT ,找到最可能的词序列W &#x3D; w1 , w2 , … , wN ：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906113139707.png" srcset="/img/loading.gif" lazyload alt="image-20220906113139707"></p>
+<p>语言模型缩放权重(LMWT，language model weight)：P(O|W)是HMM-level;P(W)是word-level;两者颗粒度相差较大，会导致LM几乎对argmax不起作用，即LM地位较低，为此需要LMWT操作，使两者平衡。在kaldi中使用LMST。</p>
+<p>插入词惩罚(WIP，word insertion penalty):上面提到的LMWT存在边缘效应的缺点，即他会偏向于寻找短、多的词，也就是一种投机。因此提出了WIP算法。</p>
+<h3 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906115630377.png" srcset="/img/loading.gif" lazyload alt="image-20220906115630377"></p>
+<p>Viterbi算法应用：alignment和decoder。</p>
+<h3 id="Token-Passing-Algorithm-令牌环传递算法"><a href="#Token-Passing-Algorithm-令牌环传递算法" class="headerlink" title="Token Passing Algorithm(令牌环传递算法)"></a>Token Passing Algorithm(令牌环传递算法)</h3><blockquote>
+<p>Token Passing算法就是Viterbi算法的实现</p>
+</blockquote>
+<p>Token的设计：存储经过某状态的最优路径的概率，存储与全局最优路径的距离，以及帮<br>助寻找其它token或者回溯的指针。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906120023796.png" srcset="/img/loading.gif" lazyload alt="image-20220906120023796"></p>
+<h3 id="晶格网（trellis）"><a href="#晶格网（trellis）" class="headerlink" title="晶格网（trellis）"></a>晶格网（trellis）</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906120114642.png" srcset="/img/loading.gif" lazyload alt="image-20220906120114642"></p>
+<p>本晶格网以AM为例，采用Token Passing算法寻找最佳路径。</p>
+<p>Partial问题(右下角为空)解释：一般终点认为是终止状态。</p>
+<h3 id="孤立词与LM"><a href="#孤立词与LM" class="headerlink" title="孤立词与LM"></a>孤立词与LM</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906120507420.png" srcset="/img/loading.gif" lazyload alt="孤立词示意图：每个phone一个状态(for simple)"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906120649505.png" srcset="/img/loading.gif" lazyload alt="孤立词晶格网"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906120817767.png" srcset="/img/loading.gif" lazyload alt="LM示意图：每个phone一个状态(for simple)"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906120900255.png" srcset="/img/loading.gif" lazyload alt="LM晶体网"></p>
+<h3 id="计算问题"><a href="#计算问题" class="headerlink" title="计算问题"></a>计算问题</h3><p>Viterbi算法理论上准确有效的完成了解码工作，我们可以直接从E(终止状态)找到token，然后不断回溯，最终确定最佳序列W。</p>
+<p>但是产生一条最优路径只是解码器的部分工作，对于解码器的研究，更重要的是生成一个准确的lattice，然后再进行后处理，如重打分(Re-scoring)[i.e. 多阶段解码]。我们在较长序列中训练的LM，wordlist会非常大。尤其是在LVCSR实际任务中会出现形成的N-gram条数存在过多的问题。</p>
+<p>由于LVCSR实际任务中N-gram，Lexicon和triphone建模导致无法只简单的使用Viterbi算法，需要进行一些工程优化。</p>
+<h2 id="解码器"><a href="#解码器" class="headerlink" title="解码器"></a>解码器</h2><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906122613573.png" srcset="/img/loading.gif" lazyload alt="image-20220906122613573"></p>
+<h3 id="剪枝-Prunning"><a href="#剪枝-Prunning" class="headerlink" title="剪枝(Prunning)"></a>剪枝(Prunning)</h3><blockquote>
+<p>思想：去除没有竞争力的路径。</p>
+<p>工程使用：Bean Search + Histogram Pruning</p>
+<p>kaldi参数:–beam;–max-active</p>
+</blockquote>
+<ul>
+<li>Beam Search: 每帧只保留Best Path以及与Best Path距离小于beam-threshold的tokens。(在处理逐帧token时同时处理)</li>
+<li>Histogram Pruning: 每帧只处理前Top N个tokens。（Beam Search执行完操作）</li>
+</ul>
+<h3 id="Lattice和N-best-List"><a href="#Lattice和N-best-List" class="headerlink" title="Lattice和N-best List"></a>Lattice和N-best List</h3><blockquote>
+<p>产生一条最优路径只是解码器的部分工作，对于解码器的研究，更重要的是生成一个准确的lattice，然后再进行后处理，如重打分(Re-scoring)[i.e. 多阶段解码]。</p>
+</blockquote>
+<p>N-best List：解码获得最好的Top N条词序列。</p>
+<p>Lattice: 他是一个有向图，有效的表示关于可能词序列的更多信息。[i.e. 把到达终点的<br>tokens走过路径的信息绘制在一张图里。]</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906123030347.png" srcset="/img/loading.gif" lazyload alt="image-20220906123030347"></p>
+<h3 id="A-decoder思想-简要"><a href="#A-decoder思想-简要" class="headerlink" title="A* decoder思想(简要)"></a>A* decoder思想(简要)</h3><blockquote>
+<p>其中f(s)就是purning操作。</p>
+</blockquote>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906123334448.png" srcset="/img/loading.gif" lazyload alt="image-20220906123334448"></p>
+<h3 id="字典树-简要"><a href="#字典树-简要" class="headerlink" title="字典树(简要)"></a>字典树(简要)</h3><blockquote>
+<p>共享的思想：将具有相同前缀的音素组合在一起表示。</p>
+</blockquote>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906123428050.png" srcset="/img/loading.gif" lazyload alt="image-20220906123428050"></p>
+<h3 id="Language-Look-ahead-简要"><a href="#Language-Look-ahead-简要" class="headerlink" title="Language Look-ahead(简要)"></a>Language Look-ahead(简要)</h3><blockquote>
+<p>在Tree Structured decoder中，把LM概率分配到结点上，而不是走到叶子结点才累<br>积LM概率，从而更早的剪枝。</p>
+</blockquote>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906123614569.png" srcset="/img/loading.gif" lazyload alt="image-20220906123614569"></p>
+<p>在一个字典树上，N-gram的history是h，i和j为树上两个结点，w为从j结点能到达的所有<br>词，v为从i结点能到达的所有词。那么从i结点到j结点上的概率由上式计算。</p>
+<h2 id="WFST介绍"><a href="#WFST介绍" class="headerlink" title="WFST介绍"></a>WFST介绍</h2><blockquote>
+<p>试想你用高阶N-gram语言模型，一个有数以百万词的字典，构建一个解码图。这个解码图会费长的冗余,因此需要一种高效统一的解决办法:WFST构图</p>
+</blockquote>
+<h3 id="有限状态自动机"><a href="#有限状态自动机" class="headerlink" title="有限状态自动机"></a>有限状态自动机</h3><blockquote>
+<p>有限状态自动机可以表示为一个有向图。主要有两部分组成,分别是state(包含initial state,final state以及other)和arc(input label,output label以及weight)</p>
+</blockquote>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906140429537.png" srcset="/img/loading.gif" lazyload alt="image-20220906140429537"></p>
+<h3 id="半环"><a href="#半环" class="headerlink" title="半环"></a>半环</h3><ul>
+<li>有一个元素集合(e.g. R)</li>
+<li>有两个特殊元素 零元 和 幺元</li>
+<li>有两个操作⊕(加操作)和⨂ 乘操作 。<ul>
+<li>加操作有交换律，结合律，与零元相加为本身</li>
+<li>乘操作有结合律，于幺元乘为本身</li>
+<li>分配律：𝑤𝑤1 ⨂ 𝑤𝑤2 ⨁𝑤𝑤3 &#x3D; 𝑤𝑤1 ⨂𝑤𝑤2 ⨁(𝑤𝑤1 ⨂𝑤𝑤3 )</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906141015148.png" srcset="/img/loading.gif" lazyload alt="image-20220906141015148"></p>
+<h3 id="Composition"><a href="#Composition" class="headerlink" title="Composition"></a>Composition</h3><p>组合：如果一个转换器A将序列x映射到序列y伴随着权重a，并且转换器B将序列y映射到序列z伴随着权重b，那么组合的转换器将序列x映射到序列z，权重为a ⨂ 𝑏。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906141107994.png" srcset="/img/loading.gif" lazyload alt="假设Tropical半环"></p>
+<h3 id="Determinization"><a href="#Determinization" class="headerlink" title="Determinization"></a>Determinization</h3><p>确定化：创建等价的FST，任意一个状态都没有两个相同input label的出弧(arc).<br>条件：这个FST是functional的，即每一个输入序列可以转换成独一无二的输出序列。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906141155323.png" srcset="/img/loading.gif" lazyload alt="image-20220906141155323"></p>
+<h3 id="Minimization"><a href="#Minimization" class="headerlink" title="Minimization"></a>Minimization</h3><p>最小化：创建等价的FST，拥有最少的状态数和弧数。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906141220909.png" srcset="/img/loading.gif" lazyload alt="image-20220906141220909"></p>
+<h3 id="其它操作"><a href="#其它操作" class="headerlink" title="其它操作"></a>其它操作</h3><ul>
+<li>弧排序(ArcSort):根据input label或者output label排序每个state的arcs。</li>
+<li>链接(Connect): 剪枝FST，去掉所有不在成功路径(从初始状态到终止状态）的state和arcs。</li>
+<li>相等(Equal): 确定两个FST(A和B)有相同数量和顺序的state，arcs。</li>
+<li>等价(Equivalent):确定两个不含epsilon的确定化状态机(A和B)等价，即对于相同的输入，有相同输出和权重。</li>
+<li>推(Push)：将权重向初始状态或者终止状态推动</li>
+</ul>
+<h2 id="概念梳理图与HCLG"><a href="#概念梳理图与HCLG" class="headerlink" title="概念梳理图与HCLG"></a>概念梳理图与HCLG</h2><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906141423046.png" srcset="/img/loading.gif" lazyload alt="image-20220906141423046"></p>
+<h3 id="G-Fst示例解析"><a href="#G-Fst示例解析" class="headerlink" title="G.Fst示例解析"></a>G.Fst示例解析</h3><p>State 0和1为history&#x3D;空<br>State 2-6为history&#x3D;&lt;&#x2F;s&gt;,&lt;s&gt;,&lt;Cay&gt;,&lt;K&gt;,&lt;ache&gt;</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906141508320.png" srcset="/img/loading.gif" lazyload alt="image-20220906141508320"></p>
+<h3 id="确定化的G-fst"><a href="#确定化的G-fst" class="headerlink" title="确定化的G.fst"></a>确定化的G.fst</h3><blockquote>
+<p>a.用#0替换backoff边的input label<br>b.用epsilon替换<s>和</s><br>c.确定化</p>
+</blockquote>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906141544024.png" srcset="/img/loading.gif" lazyload alt="image-20220906141544024"></p>
+<h3 id="L-Fst介绍"><a href="#L-Fst介绍" class="headerlink" title="L.Fst介绍"></a>L.Fst介绍</h3><blockquote>
+<p>a. 消歧义符(disambiguation symbol,#1,#2…):解决发音前缀和同音异形字。<br>b. 为词前后添加silence。<br>c. Add-self-loop:为终止状态添加#0的自环，从而和G.fst合并。</p>
+</blockquote>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906141636950.png" srcset="/img/loading.gif" lazyload alt="image-20220906141636950"></p>
+<h3 id="L-compose-G"><a href="#L-compose-G" class="headerlink" title="L compose G"></a>L compose G</h3><blockquote>
+<p>addsubsequentialloop由于C的尾处理</p>
+</blockquote>
+<p>Kaldi有一些自己的fst command-line，略不同于Openfst，源于具体问题的处理。使用fst时善用openfst&#x2F;bin, openfst&#x2F;src,kaldi&#x2F;src&#x2F;fstbin, kaldi&#x2F;src&#x2F;fstext</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906141753259.png" srcset="/img/loading.gif" lazyload alt="image-20220906141753259"></p>
+<h3 id="C-fst"><a href="#C-fst" class="headerlink" title="C.fst"></a>C.fst</h3><p>a.通常Kaldi里不单独生成C，而是直接与LG进行compose，生成CLG [fstcomposecontext]。<br>这样可以动态生成，避免穷举所有cd-phone.<br>b.Kaldi用N表示窗长，P表示中心音素位置。[left-context1&#x2F;phone&#x2F;right-context1]&#x3D;[N&#x3D;3,P&#x3D;1]<br>c.(N&#x3D;3,P&#x3D;1为例):每个arc的格式为left&#x2F;phone&#x2F;right:right，如a&#x2F;b&#x2F;c:c，这里输出的不是中心音<br>素。<br>d.用#-1和$处理开头结尾。<br>e.决策树会将你想的逻辑cd-phone变为绑定后的形式。[make-ilabel-transducer]<br>Logical cd-phone C的示意图：[Morhi的表示方法不同,格式为phone:phone&#x2F;left_right]</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906141850615.png" srcset="/img/loading.gif" lazyload alt="image-20220906141850615"></p>
+<h3 id="H-fst"><a href="#H-fst" class="headerlink" title="H.fst"></a>H.fst</h3><p>理想化：我们只要把pdf-id到cd-phone就可以了。<br>但由于kaldi的决策树一个pdf-id可以对应若干cd-phone,所以引入了transition-id<br>&#x3D; (transition-state, transition-index)<br>transition-state &#x3D; (phone, hmm-state, forward pdf, self-loop pdf)—new<br>&#x3D; (phone, hmm-state, pdf)—new</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906141937946.png" srcset="/img/loading.gif" lazyload alt="image-20220906141937946"></p>
+<h3 id="识别中的WFST"><a href="#识别中的WFST" class="headerlink" title="识别中的WFST"></a>识别中的WFST</h3><blockquote>
+<p>对于HCLG：每个arc的ilabel&#x3D;transition-id, olabel&#x3D;word-id,weight为transition概率,LM概率等, weight pushing后的值。</p>
+</blockquote>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906142030946.png" srcset="/img/loading.gif" lazyload alt="image-20220906142030946"></p>
+<h2 id="识别中的WFST—基于kaldi"><a href="#识别中的WFST—基于kaldi" class="headerlink" title="识别中的WFST—基于kaldi"></a>识别中的WFST—基于kaldi</h2><h4 id="生成lattice—基于Viterbi的解码"><a href="#生成lattice—基于Viterbi的解码" class="headerlink" title="生成lattice—基于Viterbi的解码"></a>生成lattice—基于Viterbi的解码</h4><p>常用操作:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c++">遍历state:<br><span class="hljs-function">fst::StateIterator&lt;FST&gt; <span class="hljs-title">siter</span><span class="hljs-params">(*fst_)</span></span>; !siter.<span class="hljs-built_in">Done</span>(); siter.<span class="hljs-built_in">Next</span>() &#123;<br><span class="hljs-type">const</span> StateId &amp;state_id = siter.<span class="hljs-built_in">Value</span>(); ….<br>&#125;<br><br>遍历arc:<br><span class="hljs-function">fst::ArcIterator&lt;FST&gt; <span class="hljs-title">aiter</span><span class="hljs-params">(*fst_, state_id)</span></span>; !aiter.<span class="hljs-built_in">Done</span>(); aiter.<span class="hljs-built_in">Next</span>() &#123;<br><span class="hljs-type">const</span> Arc &amp;arc = aiter.<span class="hljs-built_in">Value</span>();<br>BaseFloat graph_cost = arc.weight.<span class="hljs-built_in">Value</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="识别中的WFST—生成lattice—所需数据结构"><a href="#识别中的WFST—生成lattice—所需数据结构" class="headerlink" title="识别中的WFST—生成lattice—所需数据结构"></a>识别中的WFST—生成lattice—所需数据结构</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c++">Token &#123;<br>BaseFloat tot_cost;<br><span class="hljs-comment">// 从句子其实到当前位置的cost</span><br>BaseFloat extra_cost; <span class="hljs-comment">// 穿过该状态的best path与全局best path距离</span><br>ForwardLinkT *links; <span class="hljs-comment">// 发出的所有arc</span><br>Token *next; <span class="hljs-comment">// 当前帧的下一个token</span><br>&#125;<br><br>ForwardLink &#123;<br>Token *next_token; <span class="hljs-comment">// 目标token</span><br>Label ilabel; <span class="hljs-comment">// 输入标签</span><br>Label olabel; <span class="hljs-comment">// 输出标签</span><br>BaseFloat graph_cost; <span class="hljs-comment">// wfst图上的weight (LM等)</span><br>BaseFloat acoustic_cost; <span class="hljs-comment">// 发射概率</span><br>ForwardLink *next; <span class="hljs-comment">//下一个link</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="生成lattice—核心函数"><a href="#生成lattice—核心函数" class="headerlink" title="生成lattice—核心函数"></a>生成lattice—核心函数</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-built_in">ProcessEmitting</span>():   <span class="hljs-comment">//处理那些需要发射概率的arc，即ilabel ！= 0。</span><br><span class="hljs-built_in">ProcessNonemitting</span>(): <span class="hljs-comment">//处理那些不需要发射概率的arc，即ilabel == 0。</span><br><span class="hljs-built_in">FindOrAddToken</span>(): <span class="hljs-comment">//创立新Token或对同一时刻，到达同一状态的token合并。</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="再看lattice"><a href="#再看lattice" class="headerlink" title="再看lattice"></a>再看lattice</h4><p>对于HCLG：每个arc的ilabel&#x3D;transition-id, olabel&#x3D;word-id, weight。<br>在kaldi里有Lattice和CompactLattice，是一个事物的两种存储形式，可以相互转化，在外观上都和HCLG </p>
+<p>相似，由state和arc组成, 从中你可以知道概率分数和时间。<br>Lattice的arc：ilabel&#x3D;transition-id, olabel&#x3D;word-id, weight&#x3D;(graph_cost, acoustic_cost)<br>CompactLattice的arc: ilabel&#x3D;olabel&#x3D;word-id, weight&#x3D;(graph_cost, acoustic_cost,transition-idsequence).</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906161907029.png" srcset="/img/loading.gif" lazyload alt="image-20220906161907029"></p>
+<h4 id="从lattice转换了解基本操作"><a href="#从lattice转换了解基本操作" class="headerlink" title="从lattice转换了解基本操作"></a>从lattice转换了解基本操作</h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906161928116.png" srcset="/img/loading.gif" lazyload alt="image-20220906161928116"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220906161935728.png" srcset="/img/loading.gif" lazyload alt="image-20220906161935728"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/" class="category-chain-item">语音识别</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/">#语音识别</a>
+      
+        <a href="/tags/ASR/">#ASR</a>
+      
+        <a href="/tags/LM/">#LM</a>
+      
+        <a href="/tags/WFST/">#WFST</a>
+      
+        <a href="/tags/Prunning/">#Prunning</a>
+      
+        <a href="/tags/HCLG/">#HCLG</a>
+      
+        <a href="/tags/lattice/">#lattice</a>
+      
+        <a href="/tags/decoder/">#decoder</a>
+      
+        <a href="/tags/ASR-Decoder/">#ASR Decoder</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Class 8 基于WFST的解码器</div>
+      <div>https://blog.baixf.tk/2022/09/06/语音识别学习/Class 8 基于WFST的解码器/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年9月6日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/09/15/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E5%AD%A6%E4%B9%A0/Class%209%20%E5%8C%BA%E5%88%86%E6%80%A7%E8%AE%AD%E7%BB%83%E5%92%8CLF-MMI/" title="Class 9 区分性训练和LF-MMI">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Class 9 区分性训练和LF-MMI</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/09/04/Linux/Ubuntu22.04%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/" title="Ubuntu22.04配置深度学习环境">
+                        <span class="hidden-mobile">Ubuntu22.04配置深度学习环境</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

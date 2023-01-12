@@ -1,0 +1,805 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="ubuntu有无数个坑，电脑无数次重启，虚拟机最后果断选择了经典款centos7。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kaldi安装">
+<meta property="og:url" content="https://blog.baixf.tk/2022/06/30/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E5%AD%A6%E4%B9%A0/Class0%20kaldi%E5%AE%89%E8%A3%85/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="ubuntu有无数个坑，电脑无数次重启，虚拟机最后果断选择了经典款centos7。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog微信截图_20220630184711.png">
+<meta property="article:published_time" content="2022-06-30T18:50:11.000Z">
+<meta property="article:modified_time" content="2023-01-12T14:08:04.375Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="语音识别">
+<meta property="article:tag" content="ASR">
+<meta property="article:tag" content="kaldi">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog微信截图_20220630184711.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>kaldi安装 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogkaldi_text_and_logo.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="kaldi安装"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-06-30 18:50" pubdate>
+          2022年6月30日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          22k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          184 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">kaldi安装</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>VM配置信息如下:</p>
+<ul>
+<li><p>系统—CentOS7</p>
+</li>
+<li><p>内存—4G</p>
+</li>
+<li><p>处理器—4×1</p>
+</li>
+<li><p>硬盘—20G</p>
+</li>
+<li><p>网络适配器—桥接模式</p>
+</li>
+</ul>
+<p>P.S 如需建立SSH连接需要配置&#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33文件 “ONBOOT&#x3D;yes”;<br>镜像🔗（密码kaldi）：<a target="_blank" rel="noopener" href="https://baixf-my.sharepoint.com/:u:/g/personal/admin_baixf_tk/Ea0twF_tLPxAosExRgwtY4kB4zDQyHrgMr67vzLr-TFvPA?e=LJNNa7">https://baixf-my.sharepoint.com/:u:/g/personal/admin_baixf_tk/Ea0twF_tLPxAosExRgwtY4kB4zDQyHrgMr67vzLr-TFvPA?e=LJNNa7</a></p>
+</blockquote>
+<h2 id="一、安装教程"><a href="#一、安装教程" class="headerlink" title="一、安装教程"></a>一、安装教程</h2><h3 id="➢步骤一：下载kaldi的文件"><a href="#➢步骤一：下载kaldi的文件" class="headerlink" title="➢步骤一：下载kaldi的文件"></a>➢步骤一：下载kaldi的文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git clone https://github.com/kaldi-asr/kaldi.git<br></code></pre></td></tr></table></figure>
+
+<h3 id="➢步骤二：查看安装指南文档"><a href="#➢步骤二：查看安装指南文档" class="headerlink" title="➢步骤二：查看安装指南文档"></a>➢步骤二：查看安装指南文档</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@localhost ~]# cd kaldi/<br>[root@localhost kaldi]# ls<br>cmake           COPYING  egs      misc       scripts  tools<br>CMakeLists.txt  docker   INSTALL  README.md  src      windows<br>[root@localhost kaldi]# cat INSTALL <br>This is the official Kaldi INSTALL. Look also at INSTALL.md for the git mirror installation.<br>[Option 1 in the following does not apply to native Windows install, see windows/INSTALL or following Option 2]<br><br>Option 1 (bash + makefile):<br><br>  Steps:<br>    (1)<br>    go to tools/  and follow INSTALL instructions there.<br><br>    (2)<br>    go to src/ and follow INSTALL instructions there.<br><br>Option 2 (cmake):<br><br>    Go to cmake/ and follow INSTALL.md instructions there.<br>    Note, it may not be well tested and some features are missing currently.<br></code></pre></td></tr></table></figure>
+
+<h3 id="➢步骤三：进入tools，根据指令执行编译"><a href="#➢步骤三：进入tools，根据指令执行编译" class="headerlink" title="➢步骤三：进入tools，根据指令执行编译"></a>➢步骤三：进入tools，根据指令执行编译</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@localhost kaldi]# cd tools/<br>[root@localhost tools]# cat INSTALL <br>To check the prerequisites for Kaldi, first run<br><br>  extras/check_dependencies.sh<br><br>and see if there are any system-level installations you need to do. Check the<br>output carefully. There are some things that will make your life a lot easier<br>if you fix them at this stage. If your system default C++ compiler is not<br>supported, you can do the check with another compiler by setting the CXX<br>environment variable, e.g.<br><br>  CXX=g++-4.8 extras/check_dependencies.sh<br><br>Then run<br><br>  make<br><br>which by default will install ATLAS headers, OpenFst, SCTK and sph2pipe.<br>OpenFst requires a relatively recent C++ compiler with C++11 support, e.g.<br>g++ &gt;= 4.7, Apple clang &gt;= 5.0 or LLVM clang &gt;= 3.3. If your system default<br>compiler does not have adequate support for C++11, you can specify a C++11<br>compliant compiler as a command argument, e.g.<br><br>  make CXX=g++-4.8<br><br>If you have multiple CPUs and want to speed things up, you can do a parallel<br>build by supplying the &quot;-j&quot; option to make, e.g. to use 4 CPUs<br><br>  make -j 4<br><br>In extras/, there are also various scripts to install extra bits and pieces that<br>are used by individual example scripts.  If an example script needs you to run<br>one of those scripts, it will tell you what to do.<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">All done OK<br></code></pre></td></tr></table></figure>
+
+<h3 id="➢步骤四：进入src，按照指令安装"><a href="#➢步骤四：进入src，按照指令安装" class="headerlink" title="➢步骤四：进入src，按照指令安装"></a>➢步骤四：进入src，按照指令安装</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@localhost kaldi]# cd src<br>[root@localhost src]# cat INSTALL <br><br>These instructions are valid for UNIX-like systems (these steps have<br>been run on various Linux distributions; Darwin; Cygwin).  For native Windows<br>compilation, see ../windows/INSTALL.<br><br>You must first have completed the installation steps in ../tools/INSTALL<br>(compiling OpenFst; getting ATLAS and CLAPACK headers).<br><br>The installation instructions are<br><br>  ./configure --shared<br>  make depend -j 8<br>  make -j 8<br><br>Note that we added the &quot;-j 8&quot; to run in parallel because &quot;make&quot; takes a long<br>time.  8 jobs might be too many for a laptop or small desktop machine with not<br>many cores.<br><br>For more information, see documentation at http://kaldi-asr.org/doc/<br>and click on &quot;The build process (how Kaldi is compiled)&quot;.<br></code></pre></td></tr></table></figure>
+
+<h3 id="➢步骤五：检查是否确实安装成功"><a href="#➢步骤五：检查是否确实安装成功" class="headerlink" title="➢步骤五：检查是否确实安装成功"></a>➢步骤五：检查是否确实安装成功</h3><ul>
+<li>跑一个小程序</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@localhost kaldi]# cd egs/yesno/s5/<br>[root@localhost s5]# ls<br>conf  exp    local  path.sh  steps  waves_yesno<br>data  input  mfcc   run.sh   utils  waves_yesno.tar.gz<br>[root@localhost s5]# sh run.sh <br>Preparing train and test data<br>Dictionary preparation succeeded<br>utils/prepare_lang.sh --position-dependent-phones false data/local/dict &lt;SIL&gt; data/local/lang data/lang<br>Checking data/local/dict/silence_phones.txt ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">reading data/local/dict/silence_phones.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/local/dict/silence_phones.txt is OK</span><br><br>Checking data/local/dict/optional_silence.txt ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">reading data/local/dict/optional_silence.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/local/dict/optional_silence.txt is OK</span><br><br>Checking data/local/dict/nonsilence_phones.txt ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">reading data/local/dict/nonsilence_phones.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/local/dict/nonsilence_phones.txt is OK</span><br><br>Checking disjoint: silence_phones.txt, nonsilence_phones.txt<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">disjoint property is OK.</span><br><br>Checking data/local/dict/lexicon.txt<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">reading data/local/dict/lexicon.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/local/dict/lexicon.txt is OK</span><br><br>Checking data/local/dict/extra_questions.txt ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/local/dict/extra_questions.txt is empty (this is OK)</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">SUCCESS [validating dictionary directory data/local/dict]</span><br><br>**Creating data/local/dict/lexiconp.txt from data/local/dict/lexicon.txt<br>fstaddselfloops data/lang/phones/wdisambig_phones.int data/lang/phones/wdisambig_words.int <br>prepare_lang.sh: validating output directory<br>utils/validate_lang.pl data/lang<br>Checking existence of separator file<br>separator file data/lang/subword_separator.txt is empty or does not exist, deal in word case.<br>Checking data/lang/phones.txt ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones.txt is OK</span><br><br>Checking words.txt: #0 ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/words.txt is OK</span><br><br>Checking disjoint: silence.txt, nonsilence.txt, disambig.txt ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">silence.txt and nonsilence.txt are disjoint</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">silence.txt and disambig.txt are disjoint</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">disambig.txt and nonsilence.txt are disjoint</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">disjoint property is OK</span><br><br>Checking sumation: silence.txt, nonsilence.txt, disambig.txt ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">found no unexplainable phones <span class="hljs-keyword">in</span> phones.txt</span><br><br>Checking data/lang/phones/context_indep.&#123;txt, int, csl&#125; ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">1 entry/entries <span class="hljs-keyword">in</span> data/lang/phones/context_indep.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/context_indep.int corresponds to data/lang/phones/context_indep.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/context_indep.csl corresponds to data/lang/phones/context_indep.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/context_indep.&#123;txt, int, csl&#125; are OK</span><br><br>Checking data/lang/phones/nonsilence.&#123;txt, int, csl&#125; ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">2 entry/entries <span class="hljs-keyword">in</span> data/lang/phones/nonsilence.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/nonsilence.int corresponds to data/lang/phones/nonsilence.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/nonsilence.csl corresponds to data/lang/phones/nonsilence.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/nonsilence.&#123;txt, int, csl&#125; are OK</span><br><br>Checking data/lang/phones/silence.&#123;txt, int, csl&#125; ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">1 entry/entries <span class="hljs-keyword">in</span> data/lang/phones/silence.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/silence.int corresponds to data/lang/phones/silence.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/silence.csl corresponds to data/lang/phones/silence.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/silence.&#123;txt, int, csl&#125; are OK</span><br><br>Checking data/lang/phones/optional_silence.&#123;txt, int, csl&#125; ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">1 entry/entries <span class="hljs-keyword">in</span> data/lang/phones/optional_silence.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/optional_silence.int corresponds to data/lang/phones/optional_silence.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/optional_silence.csl corresponds to data/lang/phones/optional_silence.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/optional_silence.&#123;txt, int, csl&#125; are OK</span><br><br>Checking data/lang/phones/disambig.&#123;txt, int, csl&#125; ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">2 entry/entries <span class="hljs-keyword">in</span> data/lang/phones/disambig.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/disambig.int corresponds to data/lang/phones/disambig.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/disambig.csl corresponds to data/lang/phones/disambig.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/disambig.&#123;txt, int, csl&#125; are OK</span><br><br>Checking data/lang/phones/roots.&#123;txt, int&#125; ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">3 entry/entries <span class="hljs-keyword">in</span> data/lang/phones/roots.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/roots.int corresponds to data/lang/phones/roots.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/roots.&#123;txt, int&#125; are OK</span><br><br>Checking data/lang/phones/sets.&#123;txt, int&#125; ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">3 entry/entries <span class="hljs-keyword">in</span> data/lang/phones/sets.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/sets.int corresponds to data/lang/phones/sets.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/sets.&#123;txt, int&#125; are OK</span><br><br>Checking data/lang/phones/extra_questions.&#123;txt, int&#125; ...<br>Checking optional_silence.txt ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">reading data/lang/phones/optional_silence.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/optional_silence.txt is OK</span><br><br>Checking disambiguation symbols: #0 and #1<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/disambig.txt has <span class="hljs-string">&quot;#0&quot;</span> and <span class="hljs-string">&quot;#1&quot;</span></span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/disambig.txt is OK</span><br><br>Checking topo ...<br><br>Checking word-level disambiguation symbols...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/wdisambig.txt exists (newer prepare_lang.sh)</span><br>Checking data/lang/oov.&#123;txt, int&#125; ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">1 entry/entries <span class="hljs-keyword">in</span> data/lang/oov.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/oov.int corresponds to data/lang/oov.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/oov.&#123;txt, int&#125; are OK</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/L.fst is olabel sorted</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/L_disambig.fst is olabel sorted</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">SUCCESS [validating lang directory data/lang]</span><br>Preparing language models for test<br>arpa2fst --disambig-symbol=#0 --read-symbol-table=data/lang_test_tg/words.txt input/task.arpabo data/lang_test_tg/G.fst <br>LOG (arpa2fst[5.5.1035~1-3dd90]:Read():arpa-file-parser.cc:94) Reading \data\ section.<br>LOG (arpa2fst[5.5.1035~1-3dd90]:Read():arpa-file-parser.cc:149) Reading \1-grams: section.<br>LOG (arpa2fst[5.5.1035~1-3dd90]:RemoveRedundantStates():arpa-lm-compiler.cc:359) Reduced num-states from 1 to 1<br>fstisstochastic data/lang_test_tg/G.fst <br>1.20397 1.20397<br>Succeeded in formatting data.<br>steps/make_mfcc.sh --nj 1 data/train_yesno exp/make_mfcc/train_yesno mfcc<br>utils/validate_data_dir.sh: WARNING: you have only one speaker.  This probably a bad idea.<br>   Search for the word &#x27;bold&#x27; in http://kaldi-asr.org/doc/data_prep.html<br>   for more information.<br>utils/validate_data_dir.sh: Successfully validated data-directory data/train_yesno<br>steps/make_mfcc.sh: [info]: no segments file exists: assuming wav.scp indexed by utterance.<br>steps/make_mfcc.sh: Succeeded creating MFCC features for train_yesno<br>steps/compute_cmvn_stats.sh data/train_yesno exp/make_mfcc/train_yesno mfcc<br>Succeeded creating CMVN stats for train_yesno<br>fix_data_dir.sh: kept all 31 utterances.<br>fix_data_dir.sh: old files are kept in data/train_yesno/.backup<br>steps/make_mfcc.sh --nj 1 data/test_yesno exp/make_mfcc/test_yesno mfcc<br>utils/validate_data_dir.sh: WARNING: you have only one speaker.  This probably a bad idea.<br>   Search for the word &#x27;bold&#x27; in http://kaldi-asr.org/doc/data_prep.html<br>   for more information.<br>utils/validate_data_dir.sh: Successfully validated data-directory data/test_yesno<br>steps/make_mfcc.sh: [info]: no segments file exists: assuming wav.scp indexed by utterance.<br>steps/make_mfcc.sh: It seems not all of the feature files were successfully procesed (29 != 31); consider using utils/fix_data_dir.sh data/test_yesno<br>steps/make_mfcc.sh: Less than 95% the features were successfully generated. Probably a serious error.<br>steps/compute_cmvn_stats.sh data/test_yesno exp/make_mfcc/test_yesno mfcc<br>Succeeded creating CMVN stats for test_yesno<br>fix_data_dir.sh: kept 29 utterances out of 31<br>fix_data_dir.sh: old files are kept in data/test_yesno/.backup<br>steps/train_mono.sh --nj 1 --cmd utils/run.pl --totgauss 400 data/train_yesno data/lang exp/mono0a<br>steps/train_mono.sh: Initializing monophone system.<br>steps/train_mono.sh: Compiling training graphs<br>steps/train_mono.sh: Aligning data equally (pass 0)<br>steps/train_mono.sh: Pass 1<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 2<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 3<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 4<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 5<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 6<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 7<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 8<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 9<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 10<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 11<br>steps/train_mono.sh: Pass 12<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 13<br>steps/train_mono.sh: Pass 14<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 15<br>steps/train_mono.sh: Pass 16<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 17<br>steps/train_mono.sh: Pass 18<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 19<br>steps/train_mono.sh: Pass 20<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 21<br>steps/train_mono.sh: Pass 22<br>steps/train_mono.sh: Pass 23<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 24<br>steps/train_mono.sh: Pass 25<br>steps/train_mono.sh: Pass 26<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 27<br>steps/train_mono.sh: Pass 28<br>steps/train_mono.sh: Pass 29<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 30<br>steps/train_mono.sh: Pass 31<br>steps/train_mono.sh: Pass 32<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 33<br>steps/train_mono.sh: Pass 34<br>steps/train_mono.sh: Pass 35<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 36<br>steps/train_mono.sh: Pass 37<br>steps/train_mono.sh: Pass 38<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 39<br>steps/diagnostic/analyze_alignments.sh --cmd utils/run.pl data/lang exp/mono0a<br>steps/diagnostic/analyze_alignments.sh: see stats in exp/mono0a/log/analyze_alignments.log<br>1 warnings in exp/mono0a/log/update.*.log<br>exp/mono0a: nj=1 align prob=-81.88 over 0.05h [retry=0.0%, fail=0.0%] states=11 gauss=371<br>steps/train_mono.sh: Done training monophone system in exp/mono0a<br>tree-info exp/mono0a/tree <br>tree-info exp/mono0a/tree <br>fstdeterminizestar --use-log=true <br>fstminimizeencoded <br>fsttablecompose data/lang_test_tg/L_disambig.fst data/lang_test_tg/G.fst <br>fstpushspecial <br>fstisstochastic data/lang_test_tg/tmp/LG.fst <br>0.534295 0.533859<br>[info]: LG not stochastic.<br>fstcomposecontext --context-size=1 --central-position=0 --read-disambig-syms=data/lang_test_tg/phones/disambig.int --write-disambig-syms=data/lang_test_tg/tmp/disambig_ilabels_1_0.int data/lang_test_tg/tmp/ilabels_1_0.4088 data/lang_test_tg/tmp/LG.fst <br>fstisstochastic data/lang_test_tg/tmp/CLG_1_0.fst <br>0.534295 0.533859<br>[info]: CLG not stochastic.<br>make-h-transducer --disambig-syms-out=exp/mono0a/graph_tgpr/disambig_tid.int --transition-scale=1.0 data/lang_test_tg/tmp/ilabels_1_0 exp/mono0a/tree exp/mono0a/final.mdl <br>fsttablecompose exp/mono0a/graph_tgpr/Ha.fst data/lang_test_tg/tmp/CLG_1_0.fst <br>fstminimizeencoded <br>fstdeterminizestar --use-log=true <br>fstrmepslocal <br>fstrmsymbols exp/mono0a/graph_tgpr/disambig_tid.int <br>fstisstochastic exp/mono0a/graph_tgpr/HCLGa.fst <br>0.5342 -0.000422432<br>HCLGa is not stochastic<br>add-self-loops --self-loop-scale=0.1 --reorder=true exp/mono0a/final.mdl exp/mono0a/graph_tgpr/HCLGa.fst <br>steps/decode.sh --nj 1 --cmd utils/run.pl exp/mono0a/graph_tgpr data/test_yesno exp/mono0a/decode_test_yesno<br>decode.sh: feature type is delta<br>steps/diagnostic/analyze_lats.sh --cmd utils/run.pl exp/mono0a/graph_tgpr exp/mono0a/decode_test_yesno<br>steps/diagnostic/analyze_lats.sh: see stats in exp/mono0a/decode_test_yesno/log/analyze_alignments.log<br>Overall, lattice depth (10,50,90-percentile)=(1,1,2) and mean=1.2<br>steps/diagnostic/analyze_lats.sh: see stats in exp/mono0a/decode_test_yesno/log/analyze_lattice_depth_stats.log<br>local/score.sh --cmd utils/run.pl data/test_yesno exp/mono0a/graph_tgpr exp/mono0a/decode_test_yesno<br>local/score.sh: scoring with word insertion penalty=0.0,0.5,1.0<br><span class="hljs-meta prompt_">%</span><span class="language-bash">WER 0.00 [ 0 / 232, 0 ins, 0 del, 0 sub ] exp/mono0a/decode_test_yesno/wer_10_0.0</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>检查生成文件</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@localhost kaldi]# cd src/bin/<br>[root@localhost bin]# ls<br>acc-lda                                  est-lda.o<br>acc-lda.cc                               est-mllt<br>acc-lda.o                                est-mllt.cc<br>acc-tree-stats                           est-mllt.o<br>acc-tree-stats.cc                        est-pca<br>acc-tree-stats.o                         est-pca.cc<br>add-self-loops                           est-pca.o<br>add-self-loops.cc                        get-post-on-ali<br>add-self-loops.o                         get-post-on-ali.cc<br>align-compiled-mapped                    get-post-on-ali.o<br>align-compiled-mapped.cc                 hmm-info<br>align-compiled-mapped.o                  hmm-info.cc<br>align-equal                              hmm-info.o<br>align-equal.cc                           latgen-faster-mapped<br>align-equal-compiled                     latgen-faster-mapped.cc<br>align-equal-compiled.cc                  latgen-faster-mapped.o<br>align-equal-compiled.o                   latgen-faster-mapped-parallel<br>align-equal.o                            latgen-faster-mapped-parallel.cc<br>align-mapped                             latgen-faster-mapped-parallel.o<br>align-mapped.cc                          latgen-incremental-mapped<br>align-mapped.o                           latgen-incremental-mapped.cc<br>align-text                               latgen-incremental-mapped.o<br>align-text.cc                            logprob-to-post<br>align-text.o                             logprob-to-post.cc<br>ali-to-pdf                               logprob-to-post.o<br>ali-to-pdf.cc                            Makefile<br>ali-to-pdf.o                             make-h-transducer<br>ali-to-phones                            make-h-transducer.cc<br>ali-to-phones.cc                         make-h-transducer.o<br>ali-to-phones.o                          make-ilabel-transducer<br>ali-to-post                              make-ilabel-transducer.cc<br>ali-to-post.cc                           make-ilabel-transducer.o<br>ali-to-post.o                            make-pdf-to-tid-transducer<br>am-info                                  make-pdf-to-tid-transducer.cc<br>am-info.cc                               make-pdf-to-tid-transducer.o<br>am-info.o                                matrix-dim<br>analyze-counts                           matrix-dim.cc<br>analyze-counts.cc                        matrix-dim.o<br>analyze-counts.o                         matrix-max<br>build-pfile-from-ali                     matrix-max.cc<br>build-pfile-from-ali.cc                  matrix-max.o<br>build-pfile-from-ali.o                   matrix-sum<br>build-tree                               matrix-sum.cc<br>build-tree.cc                            matrix-sum.o<br>build-tree.o                             matrix-sum-rows<br>build-tree-two-level                     matrix-sum-rows.cc<br>build-tree-two-level.cc                  matrix-sum-rows.o<br>build-tree-two-level.o                   phones-to-prons<br>cluster-phones                           phones-to-prons.cc<br>cluster-phones.cc                        phones-to-prons.o<br>cluster-phones.o                         post-to-pdf-post<br>compare-int-vector                       post-to-pdf-post.cc<br>compare-int-vector.cc                    post-to-pdf-post.o<br>compare-int-vector.o                     post-to-phone-post<br>compile-graph                            post-to-phone-post.cc<br>compile-graph.cc                         post-to-phone-post.o<br>compile-graph.o                          post-to-smat<br>compile-questions                        post-to-smat.cc<br>compile-questions.cc                     post-to-smat.o<br>compile-questions.o                      post-to-tacc<br>compile-train-graphs                     post-to-tacc.cc<br>compile-train-graphs.cc                  post-to-tacc.o<br>compile-train-graphs-fsts                post-to-weights<br>compile-train-graphs-fsts.cc             post-to-weights.cc<br>compile-train-graphs-fsts.o              post-to-weights.o<br>compile-train-graphs.o                   prob-to-post<br>compile-train-graphs-without-lexicon     prob-to-post.cc<br>compile-train-graphs-without-lexicon.cc  prob-to-post.o<br>compile-train-graphs-without-lexicon.o   prons-to-wordali<br>compute-gop                              prons-to-wordali.cc<br>compute-gop.cc                           prons-to-wordali.o<br>compute-gop.o                            scale-post<br>compute-wer                              scale-post.cc<br>compute-wer-bootci                       scale-post.o<br>compute-wer-bootci.cc                    show-alignments<br>compute-wer-bootci.o                     show-alignments.cc<br>compute-wer.cc                           show-alignments.o<br>compute-wer.o                            show-transitions<br>convert-ali                              show-transitions.cc<br>convert-ali.cc                           show-transitions.o<br>convert-ali.o                            sum-lda-accs<br>copy-gselect                             sum-lda-accs.cc<br>copy-gselect.cc                          sum-lda-accs.o<br>copy-gselect.o                           sum-matrices<br>copy-int-vector                          sum-matrices.cc<br>copy-int-vector.cc                       sum-matrices.o<br>copy-int-vector.o                        sum-mllt-accs<br>copy-matrix                              sum-mllt-accs.cc<br>copy-matrix.cc                           sum-mllt-accs.o<br>copy-matrix.o                            sum-post<br>copy-post                                sum-post.cc<br>copy-post.cc                             sum-post.o<br>copy-post.o                              sum-tree-stats<br>copy-transition-model                    sum-tree-stats.cc<br>copy-transition-model.cc                 sum-tree-stats.o<br>copy-transition-model.o                  transform-vec<br>copy-tree                                transform-vec.cc<br>copy-tree.cc                             transform-vec.o<br>copy-tree.o                              tree-info<br>copy-vector                              tree-info.cc<br>copy-vector.cc                           tree-info.o<br>copy-vector.o                            vector-scale<br>decode-faster                            vector-scale.cc<br>decode-faster.cc                         vector-scale.o<br>decode-faster-mapped                     vector-sum<br>decode-faster-mapped.cc                  vector-sum.cc<br>decode-faster-mapped.o                   vector-sum.o<br>decode-faster.o                          weight-post<br>draw-tree                                weight-post.cc<br>draw-tree.cc                             weight-post.o<br>draw-tree.o                              weight-silence-post<br>est-lda                                  weight-silence-post.cc<br>est-lda.cc                               weight-silence-post.o<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>使用命令</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@localhost kaldi]# cd src<br>[root@localhost src]# featbin/copy-feats<br>featbin/copy-feats <br><br>Copy features [and possibly change format]<br>Usage: copy-feats [options] &lt;feature-rspecifier&gt; &lt;feature-wspecifier&gt;<br>or:   copy-feats [options] &lt;feats-rxfilename&gt; &lt;feats-wxfilename&gt;<br>e.g.: copy-feats ark:- ark,scp:foo.ark,foo.scp<br> or: copy-feats ark:foo.ark ark,t:txt.ark<br>See also: copy-matrix, copy-feats-to-htk, copy-feats-to-sphinx, select-feats,<br>extract-feature-segments, subset-feats, subsample-feats, splice-feats, paste-feats,<br>concat-feats<br><br>Options:<br>  --binary                    : Binary-mode output (not relevant if writing to archive) (bool, default = true)<br>  --compress                  : If true, write output in compressed form(only currently supported for wxfilename, i.e. archive/script,output) (bool, default = false)<br>  --compression-method        : Only relevant if --compress=true; the method (1 through 7) to compress the matrix.  Search for CompressionMethod in src/matrix/compressed-matrix.h. (int, default = 1)<br>  --htk-in                    : Read input as HTK features (bool, default = false)<br>  --sphinx-in                 : Read input as Sphinx features (bool, default = false)<br>  --write-num-frames          : Wspecifier to write length in frames of each utterance. e.g. &#x27;ark,t:utt2num_frames&#x27;.  Only applicable if writing tables, not when this program is writing individual files.  See also feat-to-len. (string, default = &quot;&quot;)<br><br>Standard options:<br>  --config                    : Configuration file to read (this option may be repeated) (string, default = &quot;&quot;)<br>  --help                      : Print out usage message (bool, default = false)<br>  --print-args                : Print the command line arguments (to stderr) (bool, default = true)<br>  --verbose                   : Verbose level (higher-&gt;more logging) (int, default = 0)<br></code></pre></td></tr></table></figure>
+
+<h3 id="➢步骤六：VM拍个快照存档！"><a href="#➢步骤六：VM拍个快照存档！" class="headerlink" title="➢步骤六：VM拍个快照存档！"></a>➢步骤六：VM拍个快照存档！</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220629083806902.png" srcset="/img/loading.gif" lazyload alt="image-20220629083806902"></p>
+<h2 id="二、记坑"><a href="#二、记坑" class="headerlink" title="二、记坑"></a>二、记坑</h2><h3 id="1-内存分配过小"><a href="#1-内存分配过小" class="headerlink" title="1.内存分配过小"></a>1.内存分配过小</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">g++: fatal error: Killed signal terminated program cc1plus<br>compilation terminated.<br>make[3]: *** [Makefile:529: determinize.lo] Error 1<br>make[3]: Leaving directory &#x27;/home/baixf/kaldi/tools/openfst-1.7.2/src/script&#x27;<br>make[2]: *** [Makefile:370: install-recursive] Error 1<br>make[2]: Leaving directory &#x27;/home/baixf/kaldi/tools/openfst-1.7.2/src&#x27;<br>make[1]: *** [Makefile:426: install-recursive] Error 1<br>make[1]: Leaving directory &#x27;/home/baixf/kaldi/tools/openfst-1.7.2&#x27;<br>make: *** [Makefile:64: openfst_compiled] Error 2<br></code></pre></td></tr></table></figure>
+
+<p>这边建议是大于2G，越大越好，反正1G是跑不起来。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220629091426016.png" srcset="/img/loading.gif" lazyload alt="image-20220629091426016"></p>
+<h3 id="2-Tools-x2F-文件夹-make-j-4报错"><a href="#2-Tools-x2F-文件夹-make-j-4报错" class="headerlink" title="2.Tools&#x2F;文件夹 make - j 4报错"></a>2.Tools&#x2F;文件夹 make - j 4报错</h3><p>建议分开编译安装</p>
+<ul>
+<li>OpenFst</li>
+</ul>
+<p>Kaldi使用FST作为状态图的表现形式，安装方式如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">cd tools<br>make openfst<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>cub</li>
+</ul>
+<p><code>cub</code>是NVIDIA官方提供的CUDA核函数开发库，是目前Kaldi编译的必选工具，安装方式如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">make cub<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>安装三种语言模型</li>
+</ul>
+<p>首先安装<code>irstlm</code>，执行</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">extras/install_irstlm.sh<br></code></pre></td></tr></table></figure>
+
+<p>下面安装<code>srilm</code>，执行：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">sudo extras/install_srilm.sh<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>进行编译</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">make -j 4<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-Ubuntu卡死"><a href="#3-Ubuntu卡死" class="headerlink" title="3.Ubuntu卡死"></a>3.Ubuntu卡死</h3><p>待解决~</p>
+<h2 id="三、Ubuntu22-04"><a href="#三、Ubuntu22-04" class="headerlink" title="三、Ubuntu22.04"></a>三、Ubuntu22.04</h2><p>2022.07.29更：最近新换了固态，装了个双系统，在双系统的Ubuntu上成功安装运行，看来是虚拟机性能不行。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/" class="category-chain-item">语音识别</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/">#语音识别</a>
+      
+        <a href="/tags/ASR/">#ASR</a>
+      
+        <a href="/tags/kaldi/">#kaldi</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>kaldi安装</div>
+      <div>https://blog.baixf.tk/2022/06/30/语音识别学习/Class0 kaldi安装/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年6月30日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/02/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E5%AD%A6%E4%B9%A0/Class%202%20%E8%AF%AD%E9%9F%B3%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E5%8F%8A%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96/" title="Class 2 语音信号处理及特征提取">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Class 2 语音信号处理及特征提取</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/06/25/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E5%AD%A6%E4%B9%A0/Class1%20%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%A6%82%E8%BF%B0/" title="Class1 语音识别综述">
+                        <span class="hidden-mobile">Class1 语音识别综述</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

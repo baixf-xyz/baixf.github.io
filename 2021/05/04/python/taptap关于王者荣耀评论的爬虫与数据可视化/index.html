@@ -1,0 +1,837 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="数据可视化小项目">
+<meta property="og:type" content="article">
+<meta property="og:title" content="taptap关于王者荣耀评论的爬虫与数据可视化">
+<meta property="og:url" content="https://blog.baixf.tk/2021/05/04/python/taptap%E5%85%B3%E4%BA%8E%E7%8E%8B%E8%80%85%E8%8D%A3%E8%80%80%E8%AF%84%E8%AE%BA%E7%9A%84%E7%88%AC%E8%99%AB%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="数据可视化小项目">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/image-20210429214747343.png">
+<meta property="article:published_time" content="2021-05-04T07:40:11.000Z">
+<meta property="article:modified_time" content="2022-06-20T09:50:15.491Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="taptap">
+<meta property="article:tag" content="王者荣耀">
+<meta property="article:tag" content="数据可视化">
+<meta property="article:tag" content="pyecharts">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/image-20210429214747343.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>taptap关于王者荣耀评论的爬虫与数据可视化 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/a40b07b6f9e5079fda0a43f1df1dc237ee778b47.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="taptap关于王者荣耀评论的爬虫与数据可视化"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-05-04 07:40" pubdate>
+          2021年5月4日 早上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          81 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">taptap关于王者荣耀评论的爬虫与数据可视化</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>玩家评论可以为游戏的版本迭代提供重要参考，假如可以快速定位玩家的负面评价，则能够节约收集意见的时间成本。本项目通过文本挖掘方法，展示从数据采集到情感模型评价的全过程。</p>
+<h2 id="一、爬虫"><a href="#一、爬虫" class="headerlink" title="一、爬虫"></a>一、爬虫</h2><p>TAPTAP评论数据通过JSON返回，使用python中的Requests库非常容易就可以提取里面的内容。下面这幅图是Fiddler抓包时看到的数据：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/%E7%8E%8B%E8%80%85%E8%8D%A3%E8%80%80.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<h3 id="运行环境"><a href="#运行环境" class="headerlink" title="运行环境"></a>运行环境</h3><p>请在python环境下运行，本次程序的开发环境为python 3.8.1</p>
+<h3 id="基本功能"><a href="#基本功能" class="headerlink" title="基本功能"></a>基本功能</h3><p>这个程序根据你提供的游戏id，按评论最近更新时间，自动抓取每条完整的游戏评论和它的关联信息，存放到csv文件中。</p>
+<ul>
+<li><strong>前置准备：</strong> 如果你将csv文件的保存路径设置在C盘，最好手动建立路径，否则可能会出现premission dennied，抓取的数据保存不成功</li>
+<li><strong>爬虫运行：</strong> 最大抓取页数为990页，由于taptap的设置，单个游戏在990以后的评论数据无法访问。爬取过程中出错，重新运行程序，程序会自动在断点位置续爬</li>
+<li><strong>爬虫结束：</strong> 达到上限，程序报页面无法打开，数据已在csv文件中保存</li>
+</ul>
+<h3 id="抓包获取游戏id"><a href="#抓包获取游戏id" class="headerlink" title="抓包获取游戏id"></a>抓包获取游戏id</h3><ol>
+<li><p>因为fiddler抓包的原理就是通过代理，所以被测终端需要和安装fiddler的电脑在同一个局域网中。</p>
+</li>
+<li><p>开启Fiddler的远程连接，Fiddler 主菜单 Tools -&gt; Fiddler Options…-&gt; Connections页签，选中Allowremote computers to connect，并记住端口号为8888，等会设置手机代理时需要。设置好后重启fiddler保证设置生效。设置如下：</p>
+</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/20160216140525429.png" srcset="/img/loading.gif" lazyload alt="20160216140525429"></p>
+<ol start="3">
+<li><p>查看电脑IP，在CMD中输入ipconfig或者直接在开热点设备上查看连接设备的ip。</p>
+</li>
+<li><p>在手机侧设置代理</p>
+</li>
+</ol>
+<p>设置-WLAN，找到连接的wifi-选择修改网络-勾选高级选项，选择代理为手动，填入代理服务器为自己电脑IP，端口填入刚刚记住的8888。iPhone则可以在对应wifi的设置中直接配置HTTP代理。</p>
+<ol start="5">
+<li>开始抓包</li>
+</ol>
+<p>在手机上对APP进行操作，从fiddler上即可看到对应的网络请求信息与游戏id。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/%E7%8E%8B%E8%80%85%E8%8D%A3%E8%80%80.png" srcset="/img/loading.gif" lazyload alt="王者荣耀"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/4f417635b92afb95647b1e7494af923824973ff7.png" srcset="/img/loading.gif" lazyload alt="和平精英"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/%E5%8E%9F%E7%A5%9E.png" srcset="/img/loading.gif" lazyload alt="原神"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/%E8%8B%B1%E9%9B%84%E8%81%94%E7%9B%9F%E6%89%8B%E6%B8%B8.png" srcset="/img/loading.gif" lazyload alt="英雄联盟手游"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/%E4%BA%BA%E7%B1%BB%E8%B7%8C%E8%90%BD%E6%A2%A6%E5%A2%83.png" srcset="/img/loading.gif" lazyload alt="人类跌落梦境"></p>
+<h3 id="断点续传"><a href="#断点续传" class="headerlink" title="断点续传"></a>断点续传</h3><p> 建立断点txt文件，在因网络等原因中断时，重启程序，可以在断点处续爬，在中断时，已缓存的数据将保存至csv</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">resume</span>(<span class="hljs-params">self</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    爬取出错时，将出错url的‘from’参数值保存至txt中，中断爬虫。再次运行爬虫程序后，从此页继续爬取</span><br><span class="hljs-string">    :return: 本次续连url的‘from’参数值</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    start_from = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">if</span> os.path.exists(STOP_POINT_FILE):<br>        <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(STOP_POINT_FILE, <span class="hljs-string">&#x27;r&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>            start_from = <span class="hljs-built_in">int</span>(f.readline())<br>    <span class="hljs-keyword">return</span> start_from<br></code></pre></td></tr></table></figure>
+
+<h3 id="爬虫休眠"><a href="#爬虫休眠" class="headerlink" title="爬虫休眠"></a>爬虫休眠</h3><p> 文明爬虫，虽未发现反爬，但爬完每个页面后暂停0-2秒，减轻服务器负担</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> random<br><span class="hljs-keyword">import</span> time<br>pause = random.uniform(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>)<br>time.sleep(pause)<br></code></pre></td></tr></table></figure>
+
+<h3 id="编码转换"><a href="#编码转换" class="headerlink" title="编码转换"></a>编码转换</h3><p>python中比较容易出现编码问题，在中文环境下更甚，评论里可能会有无法打印的字符，虽然不影响数据下载，但容易影响后续处理。先把数据进行gbk编码，丢弃无法识别的字符，再进行解码，最后将数据保存为utf-8格式，上面的问题就不存在啦~</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">review[<span class="hljs-string">&#x27;author&#x27;</span>] = r.get(<span class="hljs-string">&#x27;author&#x27;</span>).get(<span class="hljs-string">&#x27;name&#x27;</span>).encode(<span class="hljs-string">&#x27;gbk&#x27;</span>, <span class="hljs-string">&#x27;ignore&#x27;</span>).decode(<span class="hljs-string">&#x27;gbk&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+
+<p><strong>其他信息</strong>： </p>
+<p>每页10条数据，每个游戏的评论最多可爬990页，超过990页，TAPTAP拒绝访问。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/991.png" srcset="/img/loading.gif" lazyload alt="991"></p>
+<p>程序将采集到的数据存放至你指定路径的csv中。</p>
+<h3 id="爬虫完整代码"><a href="#爬虫完整代码" class="headerlink" title="爬虫完整代码"></a>爬虫完整代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> re<br><span class="hljs-keyword">import</span> random<br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">import</span> csv<br><br><span class="hljs-comment"># 请求头</span><br>HEADERS = &#123;<span class="hljs-string">&#x27;Host&#x27;</span>: <span class="hljs-string">&#x27;api.taptapdada.com&#x27;</span>,<br>           <span class="hljs-string">&#x27;Connection&#x27;</span>: <span class="hljs-string">&#x27;Keep-Alive&#x27;</span>,<br>           <span class="hljs-string">&#x27;Accept-Encoding&#x27;</span>: <span class="hljs-string">&#x27;gzip&#x27;</span>,<br>           <span class="hljs-string">&#x27;User-Agent&#x27;</span>: <span class="hljs-string">&#x27;okhttp/3.10.0&#x27;</span>&#125;<br><span class="hljs-comment"># 基础页面 每个页面有10条评论，&#x27;from&#x27;参数表示评论序号，从0开始，每+10翻页一次</span><br>BASE_URL = <span class="hljs-string">&#x27;https://api.taptapdada.com/review/v1/by-app?sort=new&amp;app_id=&#123;&#125;&#x27;</span> \<br>            <span class="hljs-string">&#x27;&amp;X-UA=V%3D1%26PN%3DTapTap%26VN_CODE%3D593%26LOC%3DCN%26LANG%3Dzh_CN%26CH%3Ddefault&#x27;</span> \<br>            <span class="hljs-string">&#x27;%26UID%3D8a5b2b39-ad33-40f3-8634-eef5dcba01e4%26VID%3D7595643&amp;from=&#123;&#125;&#x27;</span><br><span class="hljs-comment"># 保存断点的文件</span><br>STOP_POINT_FILE = <span class="hljs-string">&#x27;stop_point.txt&#x27;</span><br><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">TapSpiderByRequests</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, csv_save_path, game_id</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        获取断点，激活爬虫</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-comment"># 获取断点</span><br>        self.start_from = self.resume()<br>        <span class="hljs-comment"># 重置保存评论的列表</span><br>        self.reviews = []<br>        <span class="hljs-comment"># 运行爬虫</span><br>        self.spider(csv_save_path, game_id)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">spider</span>(<span class="hljs-params">self, csv_save_path, game_id</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        发送请求，验证访问状态</span><br><span class="hljs-string">        :return: 网页返回的json数据</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        end_from = self.start_from + <span class="hljs-number">300</span><br>        <span class="hljs-comment"># 循环爬取30页</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(self.start_from, end_from+<span class="hljs-number">1</span>, <span class="hljs-number">10</span>):<br>            url = BASE_URL.<span class="hljs-built_in">format</span>(game_id, i)<br>            <span class="hljs-keyword">try</span>:<br>                resp = requests.get(url, headers=HEADERS).json()<br>                resp = resp.get(<span class="hljs-string">&#x27;data&#x27;</span>).get(<span class="hljs-string">&#x27;list&#x27;</span>)<br>                self.parse_info(resp)<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;=============已爬取第 %d 页=============&#x27;</span> % <span class="hljs-built_in">int</span>(i/<span class="hljs-number">10</span>))<br><br>                <span class="hljs-comment"># 等待0至2秒，爬下一页</span><br>                <span class="hljs-keyword">if</span> i != end_from:<br>                    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;爬虫等待中...&#x27;</span>)<br>                    pause = random.uniform(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>)<br>                    time.sleep(pause)<br>                    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;等待完成，准备翻页。&#x27;</span>)<br>                <span class="hljs-comment"># 顺利爬至末页，则保存断点</span><br>                <span class="hljs-keyword">else</span>:<br>                    <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(STOP_POINT_FILE, <span class="hljs-string">&#x27;w&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>                        f.write(<span class="hljs-built_in">str</span>(i+<span class="hljs-number">10</span>))<br><br>            <span class="hljs-comment"># 出错，则中断爬虫，保存断点</span><br>            <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> error:<br>                <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(STOP_POINT_FILE, <span class="hljs-string">&#x27;w&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>                    f.write(<span class="hljs-built_in">str</span>(i))<br>                <span class="hljs-comment"># 打印异常信息</span><br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;爬取第%i页出现异常，断点已保存，异常信息如下：&#x27;</span> % <span class="hljs-built_in">int</span>(i/<span class="hljs-number">10</span>))<br>                <span class="hljs-keyword">raise</span> error<br>                <span class="hljs-comment"># 退出程序</span><br>                exit()<br><br>        <span class="hljs-comment"># 将信息写入csv</span><br>        self.write_csv(csv_save_path, self.reviews)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">parse_info</span>(<span class="hljs-params">self, resp</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        :param resp: 本页返回的json数据</span><br><span class="hljs-string">        :return: 将本页评论信息追加至REVIEWS列表</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> resp:<br>            review = &#123;&#125;<br>            <span class="hljs-comment"># id</span><br>            review[<span class="hljs-string">&#x27;id&#x27;</span>] = r.get(<span class="hljs-string">&#x27;id&#x27;</span>)<br>            <span class="hljs-comment"># 昵称</span><br>            review[<span class="hljs-string">&#x27;author&#x27;</span>] = r.get(<span class="hljs-string">&#x27;author&#x27;</span>).get(<span class="hljs-string">&#x27;name&#x27;</span>).encode(<span class="hljs-string">&#x27;gbk&#x27;</span>, <span class="hljs-string">&#x27;ignore&#x27;</span>).decode(<span class="hljs-string">&#x27;gbk&#x27;</span>)<br>            <span class="hljs-comment"># 评论时间</span><br>            review[<span class="hljs-string">&#x27;updated_time&#x27;</span>] = r.get(<span class="hljs-string">&#x27;updated_time&#x27;</span>)<br>            <span class="hljs-comment"># 设备</span><br>            review[<span class="hljs-string">&#x27;device&#x27;</span>] = r.get(<span class="hljs-string">&#x27;device&#x27;</span>).encode(<span class="hljs-string">&#x27;gbk&#x27;</span>, <span class="hljs-string">&#x27;ignore&#x27;</span>).decode(<span class="hljs-string">&#x27;gbk&#x27;</span>)<br>            <span class="hljs-comment"># 游玩时长（分钟）</span><br>            review[<span class="hljs-string">&#x27;spent&#x27;</span>] = r.get(<span class="hljs-string">&#x27;spent&#x27;</span>)<br>            <span class="hljs-comment"># 打分</span><br>            review[<span class="hljs-string">&#x27;stars&#x27;</span>] = r.get(<span class="hljs-string">&#x27;score&#x27;</span>)<br>            <span class="hljs-comment"># 评论内容</span><br>            content = r.get(<span class="hljs-string">&#x27;contents&#x27;</span>).get(<span class="hljs-string">&#x27;text&#x27;</span>).strip()<br>            review[<span class="hljs-string">&#x27;contents&#x27;</span>] = re.sub(<span class="hljs-string">&#x27;&lt;br /&gt;|&amp;nbsp&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>, content).encode(<span class="hljs-string">&#x27;gbk&#x27;</span>, <span class="hljs-string">&#x27;ignore&#x27;</span>).decode(<span class="hljs-string">&#x27;gbk&#x27;</span>)<br>            <span class="hljs-comment"># 支持度</span><br>            review[<span class="hljs-string">&#x27;ups&#x27;</span>] = r.get(<span class="hljs-string">&#x27;ups&#x27;</span>)<br>            <span class="hljs-comment"># 不支持度</span><br>            review[<span class="hljs-string">&#x27;downs&#x27;</span>] = r.get(<span class="hljs-string">&#x27;downs&#x27;</span>)<br><br>            self.reviews.append(review)<br><br>    <span class="hljs-comment"># 断点续传</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">resume</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        爬取出错时，将出错url的‘from’参数值保存至txt中，中断爬虫。再次运行爬虫程序后，从此页继续爬取</span><br><span class="hljs-string">        :return: 本次续连url的‘from’参数值</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        start_from = <span class="hljs-number">0</span><br>        <span class="hljs-keyword">if</span> os.path.exists(STOP_POINT_FILE):<br>            <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(STOP_POINT_FILE, <span class="hljs-string">&#x27;r&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>                start_from = <span class="hljs-built_in">int</span>(f.readline())<br>        <span class="hljs-keyword">return</span> start_from<br><br>    <span class="hljs-comment"># 追加写入csv</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">write_csv</span>(<span class="hljs-params">self, full_path, reviews</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        :param full_path: csv保存的完整路径</span><br><span class="hljs-string">        :param reviews: 列表形式的评论信息</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        title = reviews[<span class="hljs-number">0</span>].keys()<br>        path, file_name = os.path.split(full_path)<br>        <span class="hljs-keyword">if</span> os.path.exists(full_path):<br>            <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(full_path, <span class="hljs-string">&#x27;a+&#x27;</span>, newline=<span class="hljs-string">&#x27;&#x27;</span>, encoding=<span class="hljs-string">&#x27;utf-8-sig&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>                writer = csv.DictWriter(f, title)<br>                writer.writerows(reviews)<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">try</span>:<br>                os.mkdir(path)<br>            <span class="hljs-keyword">except</span> Exception:<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;路径已存在，或未获得建立路径的权限。请检查路径是否存在，或手动建立路径。&#x27;</span>)<br>            <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(full_path, <span class="hljs-string">&#x27;a+&#x27;</span>, newline=<span class="hljs-string">&#x27;&#x27;</span>, encoding=<span class="hljs-string">&#x27;utf-8-sig&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>                writer = csv.DictWriter(f, title)<br>                writer.writeheader()<br>                writer.writerows(reviews)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    <span class="hljs-comment"># csv保存路径</span><br>    csv_save_path = <span class="hljs-string">r&#x27;.\data\tap_reviews.csv&#x27;</span><br>    <span class="hljs-comment"># 游戏id      王者荣耀：2301；和平精英：70056；原神：168332~更多可以抓包获取</span><br>    game_id = <span class="hljs-number">2301</span><br>    <span class="hljs-comment"># 循环爬取至990页</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">33</span>):<br>        TapSpiderByRequests(csv_save_path, game_id)<br></code></pre></td></tr></table></figure>
+
+<h3 id="爬虫数据文档"><a href="#爬虫数据文档" class="headerlink" title="爬虫数据文档"></a>爬虫数据文档</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/%E7%88%AC%E5%8F%96%E6%95%B0%E6%8D%AE.png" srcset="/img/loading.gif" lazyload alt="爬取数据"></p>
+<h2 id="二、数据清洗"><a href="#二、数据清洗" class="headerlink" title="二、数据清洗"></a>二、数据清洗</h2><p>这一步主要为数据可视化服务，使用pandas库可以很方便地进行数据清洗。</p>
+<h3 id="新增列"><a href="#新增列" class="headerlink" title="新增列"></a>新增列</h3><h4 id="评论热度"><a href="#评论热度" class="headerlink" title="评论热度"></a>评论热度</h4><p>点赞数和点踩数的总和，进行归一化表示</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">data[<span class="hljs-string">&#x27;heat&#x27;</span>] = data[<span class="hljs-string">&#x27;ups&#x27;</span>] + data[<span class="hljs-string">&#x27;downs&#x27;</span>]<br>data[<span class="hljs-string">&#x27;heat&#x27;</span>] = (data[<span class="hljs-string">&#x27;heat&#x27;</span>] - data[<span class="hljs-string">&#x27;heat&#x27;</span>].<span class="hljs-built_in">min</span>()) / (data[<span class="hljs-string">&#x27;heat&#x27;</span>].<span class="hljs-built_in">max</span>() - data[<span class="hljs-string">&#x27;heat&#x27;</span>].<span class="hljs-built_in">min</span>())<br></code></pre></td></tr></table></figure>
+
+<h4 id="评分"><a href="#评分" class="headerlink" title="评分"></a>评分</h4><p>评论标星的2倍，标星范围1-5，评分范围2-10</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">data[<span class="hljs-string">&#x27;score&#x27;</span>] = data[<span class="hljs-string">&#x27;stars&#x27;</span>]*<span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="评论净支持数"><a href="#评论净支持数" class="headerlink" title="评论净支持数"></a>评论净支持数</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">data[<span class="hljs-string">&#x27;net_support&#x27;</span>] = data[<span class="hljs-string">&#x27;ups&#x27;</span>] - data[<span class="hljs-string">&#x27;downs&#x27;</span>]<br></code></pre></td></tr></table></figure>
+
+<h3 id="转换"><a href="#转换" class="headerlink" title="转换"></a>转换</h3><h4 id="时间戳转换日期"><a href="#时间戳转换日期" class="headerlink" title="时间戳转换日期"></a>时间戳转换日期</h4><p>为了让pyecharts识别出时间标签，需要进行日期转换</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> time<br>data[<span class="hljs-string">&#x27;updated_time&#x27;</span>] = data[<span class="hljs-string">&#x27;updated_time&#x27;</span>].apply(<span class="hljs-keyword">lambda</span> x: time.strftime(<span class="hljs-string">&#x27;%Y-%m-%d&#x27;</span>, time.localtime(x)))<br></code></pre></td></tr></table></figure>
+
+<h3 id="替换"><a href="#替换" class="headerlink" title="替换"></a>替换</h3><h4 id="替换游玩时间中的0值："><a href="#替换游玩时间中的0值：" class="headerlink" title="替换游玩时间中的0值："></a>替换游玩时间中的0值：</h4><p>实际情况下，玩家不太可能在未游玩的情况下评论（或者说这些评论意义不大），将游玩时间0替换为缺失是合理的，当进行相关维度的可视化，这些缺失值将不会被考虑</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">data[<span class="hljs-string">&#x27;spent&#x27;</span>] = data[<span class="hljs-string">&#x27;spent&#x27;</span>].replace(<span class="hljs-number">0</span>, np.nan)<br></code></pre></td></tr></table></figure>
+
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><h4 id="用正则表达式删除无意义字符"><a href="#用正则表达式删除无意义字符" class="headerlink" title="用正则表达式删除无意义字符"></a>用正则表达式删除无意义字符</h4><p>一些同学发评论比较喜欢用颜表情，但在爬虫过程中，gbk编码下无法全部显示，只能删掉意义不明的那另一半</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> re<br>data[<span class="hljs-string">&#x27;contents&#x27;</span>] = data[<span class="hljs-string">&#x27;contents&#x27;</span>].apply(<span class="hljs-keyword">lambda</span> x: re.sub(<span class="hljs-string">&#x27;&amp;[\w]+;&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-built_in">str</span>(x)))<br>data[<span class="hljs-string">&#x27;contents&#x27;</span>] = data[<span class="hljs-string">&#x27;contents&#x27;</span>].apply(<span class="hljs-keyword">lambda</span> x: re.sub(<span class="hljs-string">&#x27;\(\s*\)&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-built_in">str</span>(x)))<br></code></pre></td></tr></table></figure>
+
+<h4 id="删除无意义的列数据"><a href="#删除无意义的列数据" class="headerlink" title="删除无意义的列数据"></a>删除无意义的列数据</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br>data.drop([<span class="hljs-string">&#x27;ups&#x27;</span>, <span class="hljs-string">&#x27;downs&#x27;</span>], axis=<span class="hljs-number">1</span>, inplace=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
+
+<h3 id="清洗完整代码"><a href="#清洗完整代码" class="headerlink" title="清洗完整代码"></a>清洗完整代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># coding=gbk</span><br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">import</span> re<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><br><span class="hljs-comment"># 爬虫获取的数据的所在路径</span><br>csv_path = <span class="hljs-string">r&#x27;.\data\tap_reviews.csv&#x27;</span><br><span class="hljs-comment"># 清洗后的数据的保存路径</span><br>clean_path = <span class="hljs-string">r&#x27;.\data\tap_reviews-extend cleaned.csv&#x27;</span><br><br><span class="hljs-comment"># 读取数据</span><br>data = pd.read_csv(csv_path, header=<span class="hljs-number">0</span>, index_col=<span class="hljs-string">&#x27;id&#x27;</span>)<br><br><span class="hljs-comment"># # 查看前20条数据和列名</span><br><span class="hljs-comment"># print(data[:20])</span><br><span class="hljs-comment"># print(data.columns)</span><br><br><span class="hljs-comment"># 将评论时间由时间戳转日期</span><br>data[<span class="hljs-string">&#x27;updated_time&#x27;</span>] = data[<span class="hljs-string">&#x27;updated_time&#x27;</span>].apply(<span class="hljs-keyword">lambda</span> x: time.strftime(<span class="hljs-string">&#x27;%Y-%m-%d&#x27;</span>, time.localtime(x)))<br><span class="hljs-comment"># 评论净支持数</span><br>data[<span class="hljs-string">&#x27;net_support&#x27;</span>] = data[<span class="hljs-string">&#x27;ups&#x27;</span>] - data[<span class="hljs-string">&#x27;downs&#x27;</span>]<br><span class="hljs-comment"># 评论热度</span><br>data[<span class="hljs-string">&#x27;heat&#x27;</span>] = data[<span class="hljs-string">&#x27;ups&#x27;</span>] + data[<span class="hljs-string">&#x27;downs&#x27;</span>]<br>data[<span class="hljs-string">&#x27;heat&#x27;</span>] = (data[<span class="hljs-string">&#x27;heat&#x27;</span>] - data[<span class="hljs-string">&#x27;heat&#x27;</span>].<span class="hljs-built_in">min</span>()) / (data[<span class="hljs-string">&#x27;heat&#x27;</span>].<span class="hljs-built_in">max</span>() - data[<span class="hljs-string">&#x27;heat&#x27;</span>].<span class="hljs-built_in">min</span>())<br><span class="hljs-comment"># 评分</span><br>data[<span class="hljs-string">&#x27;score&#x27;</span>] = data[<span class="hljs-string">&#x27;stars&#x27;</span>]*<span class="hljs-number">2</span><br><br><span class="hljs-comment"># 将游玩时间为0的标注为缺失值</span><br>data[<span class="hljs-string">&#x27;spent&#x27;</span>] = data[<span class="hljs-string">&#x27;spent&#x27;</span>].replace(<span class="hljs-number">0</span>, np.nan)<br><br><span class="hljs-comment"># 清除无意义字符</span><br>data[<span class="hljs-string">&#x27;contents&#x27;</span>] = data[<span class="hljs-string">&#x27;contents&#x27;</span>].apply(<span class="hljs-keyword">lambda</span> x: re.sub(<span class="hljs-string">&#x27;&amp;[\w]+;&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-built_in">str</span>(x)))<br>data[<span class="hljs-string">&#x27;contents&#x27;</span>] = data[<span class="hljs-string">&#x27;contents&#x27;</span>].apply(<span class="hljs-keyword">lambda</span> x: re.sub(<span class="hljs-string">&#x27;\(\s*\)&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-built_in">str</span>(x)))<br><span class="hljs-comment"># 删除用不上的列</span><br>data.drop([<span class="hljs-string">&#x27;ups&#x27;</span>, <span class="hljs-string">&#x27;downs&#x27;</span>], axis=<span class="hljs-number">1</span>, inplace=<span class="hljs-literal">True</span>)<br><span class="hljs-comment"># 保存数据，转换成utf-8编码</span><br>data.to_csv(clean_path, encoding=<span class="hljs-string">&#x27;utf_8_sig&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<h3 id="清洗后数据文档"><a href="#清洗后数据文档" class="headerlink" title="清洗后数据文档"></a>清洗后数据文档</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/%E6%B8%85%E6%B4%97%E6%95%B0%E6%8D%AE.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="三、可视化"><a href="#三、可视化" class="headerlink" title="三、可视化"></a>三、可视化</h2><p>查看数据分布情况，通过对评论的长度分析，利用星级评论情感分布分析，一定程度上查看玩家对游戏整体的满意度。</p>
+<p>从时间、设备、玩家印象维度可视化评论数据，这一步使用pyecharts库。pyecharts库是python生成Eharts图表的轮子，<a target="_blank" rel="noopener" href="https://pyecharts.org/">官方文档</a>中就有 丰富的图表实例。颜值高，上手容易，入股不亏。</p>
+<h3 id="查看数据分布情况"><a href="#查看数据分布情况" class="headerlink" title="查看数据分布情况"></a>查看数据分布情况</h3><h4 id="查看评论长度分布"><a href="#查看评论长度分布" class="headerlink" title="查看评论长度分布"></a>查看评论长度分布</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">data[<span class="hljs-string">&#x27;contents_length&#x27;</span>] = data[<span class="hljs-string">&#x27;contents&#x27;</span>].apply(<span class="hljs-keyword">lambda</span> x: <span class="hljs-built_in">len</span>(<span class="hljs-built_in">str</span>(x)))<br>len_se = data.groupby(<span class="hljs-string">&#x27;contents_length&#x27;</span>)[<span class="hljs-string">&#x27;contents_length&#x27;</span>].count()<br>sns.distplot(len_se, bins=<span class="hljs-number">20</span>, hist=<span class="hljs-literal">True</span>, kde=<span class="hljs-literal">True</span>, rug=<span class="hljs-literal">True</span>)<br>plt.title(<span class="hljs-string">&#x27;taptap评论长度分布&#x27;</span>)<br>plt.show()<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;评论长度的9/10分位数：&#x27;</span>, data[<span class="hljs-string">&#x27;contents_length&#x27;</span>].quantile(<span class="hljs-number">0.9</span>))<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/image-20210429221530605.png" srcset="/img/loading.gif" lazyload></p>
+<p>计算分位数发现，90%评论在193字内；密度图表明，评论长度集中在100字以内</p>
+<h4 id="查看评论情感分布"><a href="#查看评论情感分布" class="headerlink" title="查看评论情感分布"></a>查看评论情感分布</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">positive = <span class="hljs-built_in">len</span>(data[<span class="hljs-string">&#x27;stars&#x27;</span>][data[<span class="hljs-string">&#x27;stars&#x27;</span>] &gt;= <span class="hljs-number">4</span>])<br>total = <span class="hljs-built_in">len</span>(data[<span class="hljs-string">&#x27;stars&#x27;</span>])<br>negative = total - positive<br>sns.distplot(data[<span class="hljs-string">&#x27;stars&#x27;</span>], bins=<span class="hljs-number">5</span>, kde=<span class="hljs-literal">False</span>, norm_hist=<span class="hljs-literal">True</span>)<br>plt.title(<span class="hljs-string">&#x27;taptap评论情感分布&#x27;</span>)<br>plt.show()<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;正面评价: %d，占总数的%.2f%%    负面评价: %d, 占总数的%.2f%%&#x27;</span> %<br>      (positive, (positive/total*<span class="hljs-number">100</span>), negative, (negative/total*<span class="hljs-number">100</span>)))<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/image-20210429221633140.png" srcset="/img/loading.gif" lazyload></p>
+<p>正面评价: 2468，占总数的30.62% ;负面评价: 5592, 占总数的69.38%。</p>
+<h3 id="时间维度的考察"><a href="#时间维度的考察" class="headerlink" title="时间维度的考察"></a>时间维度的考察</h3><h4 id="王者荣耀每日评分均值变化"><a href="#王者荣耀每日评分均值变化" class="headerlink" title="王者荣耀每日评分均值变化"></a>王者荣耀每日评分均值变化</h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/image-20210512172003692.png" srcset="/img/loading.gif" lazyload alt="image-20210512172003692"></p>
+<h4 id="王者荣耀每日评分次数"><a href="#王者荣耀每日评分次数" class="headerlink" title="王者荣耀每日评分次数"></a>王者荣耀每日评分次数</h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/image-20210429211906875.png" srcset="/img/loading.gif" lazyload alt="image-20210429211906875"></p>
+<p><strong>归因：04.08赛季更新</strong></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/8d848cf7940d50e86cbe9db624612fc7b56a5bf0.png" srcset="/img/loading.gif" lazyload alt="image-20210429212010527"></p>
+<h3 id="设备维度的考察"><a href="#设备维度的考察" class="headerlink" title="设备维度的考察"></a>设备维度的考察</h3><h4 id="评论活跃设备Top15"><a href="#评论活跃设备Top15" class="headerlink" title="评论活跃设备Top15"></a>评论活跃设备Top15</h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/253264ec0e95b71226bc8fd7642519fc3975dd95.png" srcset="/img/loading.gif" lazyload alt="image-20210429212325016"></p>
+<h4 id="评分较低设备Top10"><a href="#评分较低设备Top10" class="headerlink" title="评分较低设备Top10"></a>评分较低设备Top10</h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/ca43e9601550b8df77b0a5ac2abffee625af9817.png" srcset="/img/loading.gif" lazyload alt="image-20210429214528633"></p>
+<h3 id="玩家印象"><a href="#玩家印象" class="headerlink" title="玩家印象"></a>玩家印象</h3><p>使用文本挖掘的预处理方法对TOP500支持度和热度达到0.5的评论进行处理，得到了玩家对这个游戏的关键评价</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/pic/image-20210429214747343.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="可视化完整代码"><a href="#可视化完整代码" class="headerlink" title="可视化完整代码"></a>可视化完整代码</h3><p><a target="_blank" rel="noopener" href="https://rogerhome.cf/">在线查看网页</a></p>
+<h2 id="四、后记"><a href="#四、后记" class="headerlink" title="四、后记"></a>四、后记</h2><p>对游戏的评价星数并不能真实的反映每个玩家对游戏的感情态度，因此我们还需要对评论数据进行数据挖掘、建立LSTM模型并对模型进行评价。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/whorus1/article/details/50673740">使用Fiddler对移动APP应用进行抓包总结</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://pyecharts.org/#/zh-cn/basic_charts">pyecharts基本图表实例</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/26306795">NLP秒懂词向量Word2vec的本质</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/goto456/stopwords">中文常用停用词表</a>
+<a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:5" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/kingov/article/details/79513322">python数据分析之pandas里的Series</a>
+<a href="#fnref:5" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:6" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39636079/article/details/111227879">word2vec代码_Word2Vec-——gensim实战教程</a>
+<a href="#fnref:6" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:7" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42067550/article/details/106605743">NLP 利器 Gensim 中 word2vec 模型添加 model to dict 方法来加速</a>
+<a href="#fnref:7" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:8" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://pvp.qq.com/">王者荣耀官网</a>
+<a href="#fnref:8" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/python/" class="category-chain-item">python</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/python/">#python</a>
+      
+        <a href="/tags/taptap/">#taptap</a>
+      
+        <a href="/tags/%E7%8E%8B%E8%80%85%E8%8D%A3%E8%80%80/">#王者荣耀</a>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/">#数据可视化</a>
+      
+        <a href="/tags/pyecharts/">#pyecharts</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>taptap关于王者荣耀评论的爬虫与数据可视化</div>
+      <div>https://blog.baixf.tk/2021/05/04/python/taptap关于王者荣耀评论的爬虫与数据可视化/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年5月4日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/07/09/git/%E4%BD%BF%E7%94%A8Github%20Actions%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2Hexo/" title="Github Pages 和 Hexo 搭建自己的私服博客">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Github Pages 和 Hexo 搭建自己的私服博客</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/03/05/%E7%BD%91%E7%AB%99%E8%BF%90%E7%BB%B4/JavaScript%E5%AD%A6%E4%B9%A0/" title="JavaScript学习">
+                        <span class="hidden-mobile">JavaScript学习</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

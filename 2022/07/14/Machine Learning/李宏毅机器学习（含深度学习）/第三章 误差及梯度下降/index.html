@@ -1,0 +1,983 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="error &#x3D; bias + variance \ Gradient Descent comes from Taylor Series">
+<meta property="og:type" content="article">
+<meta property="og:title" content="误差及梯度下降-李宏毅机器学习">
+<meta property="og:url" content="https://blog.baixf.tk/2022/07/14/Machine%20Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%90%AB%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89/%E7%AC%AC%E4%B8%89%E7%AB%A0%20%E8%AF%AF%E5%B7%AE%E5%8F%8A%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="error &#x3D; bias + variance \ Gradient Descent comes from Taylor Series">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220711123106801.png">
+<meta property="article:published_time" content="2022-07-14T18:40:11.000Z">
+<meta property="article:modified_time" content="2023-01-12T14:08:04.367Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Gradient Descent">
+<meta property="article:tag" content="Marchine Learning">
+<meta property="article:tag" content="Deep Learning">
+<meta property="article:tag" content="Adam">
+<meta property="article:tag" content="error">
+<meta property="article:tag" content="bias">
+<meta property="article:tag" content="variance">
+<meta property="article:tag" content="regularization">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220711123106801.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>误差及梯度下降-李宏毅机器学习 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%20.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="误差及梯度下降-李宏毅机器学习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-14 18:40" pubdate>
+          2022年7月14日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          64 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">误差及梯度下降-李宏毅机器学习</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一、Error的来源"><a href="#一、Error的来源" class="headerlink" title="一、Error的来源"></a>一、Error的来源</h2><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220714173354764.png" srcset="/img/loading.gif" lazyload alt="image-20220714173354764"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter5-1.png" srcset="/img/loading.gif" lazyload><br>从上节课测试集数据来看，$Average\ Error$ 随着模型复杂增加呈指数上升趋势。更复杂的模型并不能给测试集带来更好的效果，而这些 $Error$ 的主要有两个来源，分别是 $bias$ 和 $variance$ 。</p>
+<p>然而 $bias$ 和 $variance$ 是什么？可以查看 <a target="_blank" rel="noopener" href="https://www.zhihu.com/question/27068705">机器学习中的Bias(偏差)，Error(误差)，和Variance(方差)有什么区别和联系？</a></p>
+<h3 id="1-估测"><a href="#1-估测" class="headerlink" title="1.估测"></a>1.估测</h3><p>假设真实的模型为 $\hat f$ ， 如果我们知道 $\hat f$ 模型，那是最好不过了，但是 $\hat f$ 只有 Niamtic 公司才知道。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter5-2.png" srcset="/img/loading.gif" lazyload></p>
+<p>所以我们只能通过收集 Pokemon精灵 的数据，然后通过 step1~step3 训练得到我们的理想模型 $f^*$，$f^*$ 其实是  $\hat f$ 的一个预估。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter5-3.png" srcset="/img/loading.gif" lazyload></p>
+<p>这个过程就像打靶，$\hat f$ 就是我们的靶心，$f^*$ 就是我们投掷的结果。如上图所示，$\hat f$ 与  $f^*$ 之间蓝色部分的差距就是偏差和方差导致的。</p>
+<h4 id="估测变量x的偏差和方差"><a href="#估测变量x的偏差和方差" class="headerlink" title="估测变量x的偏差和方差"></a>估测变量x的偏差和方差</h4><p>我们先理解一下偏差和方差是怎样计算的呢？ <a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000016447144">偏差(Bias)和方差(Variance)——机器学习中的模型选择</a></p>
+<h5 id="评估x的偏差"><a href="#评估x的偏差" class="headerlink" title="评估x的偏差"></a>评估x的偏差</h5><ul>
+<li>假设 $x$ 的平均值是  $\mu$，方差为 $\sigma^2$</li>
+</ul>
+<p>评估平均值要怎么做呢？</p>
+<ul>
+<li>首先拿到 $N$ 个样本点：${x^1,x^2,···,x^N}$</li>
+<li>计算平均值 $m$, 得到 $m&#x3D;\frac{1}{N}\sum_n x^n \neq \mu$</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter5-4.png" srcset="/img/loading.gif" lazyload></p>
+<p>但是如果计算很多组的 $m$ ，然后求 $m$ 的期望：</p>
+<p>$$E[m]&#x3D;E[\frac{1}{N}\sum x^n]&#x3D;\frac{1}{N}\sum_nE[x^n]&#x3D;\mu$$</p>
+<p>这个估计呢是无偏估计（unbiased）。</p>
+<p>然后 $m$ 分布对于 $\mu$ 的离散程度（方差）：<br>$$Var[m]&#x3D;\frac{\sigma^2}{N}$$</p>
+<p>这个取决于 $N$，下图看出 $N$ 越小越离散：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter5-5.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="估测变量x的方差"><a href="#估测变量x的方差" class="headerlink" title="估测变量x的方差"></a>估测变量x的方差</h5><p>如何估算方差呢？</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter5-6.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter5-7.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="为什么会有很多的模型"><a href="#为什么会有很多的模型" class="headerlink" title="为什么会有很多的模型?"></a>为什么会有很多的模型?</h4><p>讨论系列02中的案例：这里假设是在平行宇宙中，抓了不同的神奇宝贝</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter5-8.png" srcset="/img/loading.gif" lazyload></p>
+<p>用同一个model，在不同的训练集中找到的 $f^∗$ 就是不一样的</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter5-9.png" srcset="/img/loading.gif" lazyload></p>
+<p>这就像在靶心上射击，进行了很多组（一组多次）。现在需要知道它的散布是怎样的，将100个宇宙中的model画出来</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter5-10.png" srcset="/img/loading.gif" lazyload></p>
+<p>不同的数据集之前什么都有可能发生—||</p>
+<h5 id="考虑不同模型的方差"><a href="#考虑不同模型的方差" class="headerlink" title="考虑不同模型的方差"></a>考虑不同模型的方差</h5><p>一次模型的方差就比较小的，也就是是比较集中，离散程度较小。而5次模型的方差就比较大，同理散布比较广，离散程度较大。</p>
+<p>所以用比较简单的模型，方差是比较小的（就像射击的时候每次的时候，每次射击的设置都集中在一个比较小的区域内）。如果用了复杂的模型，方差就很大，散布比较开。</p>
+<p>这也是因为简单的模型受到不同训练集的影响是比较小的。</p>
+<h5 id="考虑不同模型的偏差"><a href="#考虑不同模型的偏差" class="headerlink" title="考虑不同模型的偏差"></a>考虑不同模型的偏差</h5><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter5-11.png" srcset="/img/loading.gif" lazyload></p>
+<p>这里没办法知道真正的 $\hat{f}$，所以假设图中的那条黑色曲线为真正的 $\hat{f}$</p>
+<p>结果可视化，一次平均的 $\bar{f}$ 没有5次的好，虽然5次的整体结果离散程度很高。</p>
+<p>一次模型的偏差比较大，而复杂的5次模型，偏差就比较小。</p>
+<p>直观的解释：简单的模型函数集的space比较小，所以可能space里面就没有包含靶心，肯定射不中。而复杂的模型函数集的space比较大，可能就包含的靶心，只是没有办法找到确切的靶心在哪，但足够多的，就可能得到真正的 f¯f¯。</p>
+<h5 id="偏差v-s-方差"><a href="#偏差v-s-方差" class="headerlink" title="偏差v.s.方差"></a>偏差v.s.方差</h5><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter5-12.png" srcset="/img/loading.gif" lazyload></p>
+<p>将系列02中的误差拆分为偏差和方差。简单模型（左边）是偏差比较大造成的误差，这种情况叫做欠拟合，而复杂模型（右边）是方差过大造成的误差，这种情况叫做过拟合。</p>
+<h3 id="2-怎么判断？"><a href="#2-怎么判断？" class="headerlink" title="2.怎么判断？"></a>2.怎么判断？</h3><h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter5-13.png" srcset="/img/loading.gif" lazyload></p>
+<p>如果模型没有很好的训练训练集，就是偏差过大，也就是欠拟合<br>如果模型很好的训练训练集，即再训练集上得到很小的错误，但在测试集上得到大的错误，这意味着模型可能是方差比较大，就是过拟合。<br>对于欠拟合和过拟合，是用不同的方式来处理的</p>
+<h5 id="偏差大-欠拟合"><a href="#偏差大-欠拟合" class="headerlink" title="偏差大-欠拟合"></a>偏差大-欠拟合</h5><p>此时应该重新设计模型。因为之前的函数集里面可能根本没有包含$f^*$。可以：</p>
+<p>将更多的函数加进去，比如考虑高度重量，或者HP值等等。</p>
+<p>或者考虑更多次幂、更复杂的模型。</p>
+<p>如果此时强行再收集更多的data去训练，这是没有什么帮助的，因为设计的函数集本身就不好，再找更多的训练集也不会更好。</p>
+<h5 id="方差大-过拟合"><a href="#方差大-过拟合" class="headerlink" title="方差大-过拟合"></a>方差大-过拟合</h5><p>简单粗暴的方法：更多的数据</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter5-14.png" srcset="/img/loading.gif" lazyload></p>
+<p>但是很多时候不一定能做到收集更多的data。可以针对对问题的理解对数据集做调整。比如识别手写数字的时候，偏转角度的数据集不够，那就将正常的数据集左转15度，右转15度，类似这样的处理。</p>
+<h3 id="3-模型选择"><a href="#3-模型选择" class="headerlink" title="3.模型选择"></a>3.模型选择</h3><p>现在在偏差和方差之间就需要一个权衡<br>想选择的模型，可以平衡偏差和方差产生的错误，使得总错误最小<br>但是下面这件事最好不要做：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter5-15.png" srcset="/img/loading.gif" lazyload></p>
+<p>用训练集训练不同的模型，然后在测试集上比较错误，模型3的错误比较小，就认为模型3好。但实际上这只是你手上的测试集，真正完整的测试集并没有。比如在已有的测试集上错误是0.5，但有条件收集到更多的测试集后通常得到的错误都是大于0.5的。</p>
+<h4 id="交叉验证"><a href="#交叉验证" class="headerlink" title="交叉验证"></a>交叉验证</h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter5-16.png" srcset="/img/loading.gif" lazyload></p>
+<p>图中public的测试集是已有的，private是没有的，不知道的。交叉验证 就是将训练集再分为两部分，一部分作为训练集，一部分作为验证集。用训练集训练模型，然后再验证集上比较，确实出最好的模型之后（比如模型3），再用全部的训练集训练模型3，然后再用public的测试集进行测试，此时一般得到的错误都是大一些的。不过此时会比较想再回去调一下参数，调整模型，让在public的测试集上更好，但不太推荐这样。</p>
+<p>上述方法可能会担心将训练集拆分的时候分的效果比较差怎么办，可以用下面的方法。</p>
+<h4 id="N-折交叉验证"><a href="#N-折交叉验证" class="headerlink" title="N-折交叉验证"></a>N-折交叉验证</h4><p>将训练集分成N份，比如分成3份。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter5-17.png" srcset="/img/loading.gif" lazyload></p>
+<p>比如在三份中训练结果Average错误是模型1最好，再用全部训练集训练模型1。</p>
+<h2 id="二、什么是梯度下降法？"><a href="#二、什么是梯度下降法？" class="headerlink" title="二、什么是梯度下降法？"></a>二、什么是梯度下降法？</h2><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%20.png" srcset="/img/loading.gif" lazyload alt="梯度下降 "></p>
+<h4 id="Review-梯度下降法"><a href="#Review-梯度下降法" class="headerlink" title="Review: 梯度下降法"></a>Review: 梯度下降法</h4><p>在回归问题的第三步中，需要解决下面的最优化问题：</p>
+<p>$$\theta^∗&#x3D; \underset{ \theta }{\operatorname{arg\ min}}  L(\theta) \tag1$$</p>
+<ul>
+<li>$L$ :lossfunction（损失函数）</li>
+<li>$\theta$ :parameters（参数）</li>
+</ul>
+<p>这里的parameters是复数，即 $\theta$ 指代一堆参数，比如上篇说到的 $w$ 和 $b$ 。</p>
+<p>我们要找一组参数 $\theta$ ，让损失函数越小越好，这个问题可以用梯度下降法解决：</p>
+<p>假设 $\theta$ 有里面有两个参数 $\theta_1, \theta_2$<br>随机选取初始值</p>
+<p>$$<br>\theta^0 &#x3D; \begin{bmatrix}<br>\theta_1^0 \<br>\theta_2^0<br>\end{bmatrix} \tag2<br>$$</p>
+<p>这里可能某个平台不支持矩阵输入，看下图就好。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter6-1.png" srcset="/img/loading.gif" lazyload></p>
+<p>然后分别计算初始点处，两个参数对 $L$ 的偏微分，然后 $\theta^0$ 减掉 $\eta$ 乘上偏微分的值，得到一组新的参数。同理反复进行这样的计算。黄色部分为简洁的写法，$\triangledown L(\theta)$ 即为梯度。</p>
+<blockquote>
+<p>$\eta$ 叫做Learning rates（学习速率）</p>
+</blockquote>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter6-2.png" srcset="/img/loading.gif" lazyload></p>
+<p>上图举例将梯度下降法的计算过程进行可视化。</p>
+<h3 id="Tip1：调整学习速率"><a href="#Tip1：调整学习速率" class="headerlink" title="Tip1：调整学习速率"></a>Tip1：调整学习速率</h3><h4 id="小心翼翼地调整学习率"><a href="#小心翼翼地调整学习率" class="headerlink" title="小心翼翼地调整学习率"></a>小心翼翼地调整学习率</h4><p>举例：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter6-3.png" srcset="/img/loading.gif" lazyload></p>
+<p>上图左边黑色为损失函数的曲线，假设从左边最高点开始，如果学习率调整的刚刚好，比如红色的线，就能顺利找到最低点。如果学习率调整的太小，比如蓝色的线，就会走的太慢，虽然这种情况给足够多的时间也可以找到最低点，实际情况可能会等不及出结果。如果 学习率调整的有点大，比如绿色的线，就会在上面震荡，走不下去，永远无法到达最低点。还有可能非常大，比如黄色的线，直接就飞出去了，更新参数的时候只会发现损失函数越更新越大。</p>
+<p>虽然这样的可视化可以很直观观察，但可视化也只是能在参数是一维或者二维的时候进行，更高维的情况已经无法可视化了。</p>
+<p>解决方法就是上图右边的方案，将参数改变对损失函数的影响进行可视化。比如学习率太小（蓝色的线），损失函数下降的非常慢；学习率太大（绿色的线），损失函数下降很快，但马上就卡住不下降了；学习率特别大（黄色的线），损失函数就飞出去了；红色的就是差不多刚好，可以得到一个好的结果。</p>
+<h4 id="自适应学习率"><a href="#自适应学习率" class="headerlink" title="自适应学习率"></a>自适应学习率</h4><p>举一个简单的思想：随着次数的增加，通过一些因子来减少学习率</p>
+<ul>
+<li><p>通常刚开始，初始点会距离最低点比较远，所以使用大一点的学习率</p>
+</li>
+<li><p>update好几次参数之后呢，比较靠近最低点了，此时减少学习率</p>
+</li>
+<li><p>比如 $\eta^t &#x3D;\frac{\eta^t}{\sqrt{t+1}}$，$t$ 是次数。随着次数的增加，$\eta^t$ 减小</p>
+</li>
+</ul>
+<p>学习率不能是一个值通用所有特征，不同的参数需要不同的学习率</p>
+<h4 id="Adagrad-算法"><a href="#Adagrad-算法" class="headerlink" title="Adagrad 算法"></a>Adagrad 算法</h4><h5 id="Adagrad-是什么？"><a href="#Adagrad-是什么？" class="headerlink" title="Adagrad 是什么？"></a>Adagrad 是什么？</h5><p>每个参数的学习率都把它除上之前微分的均方根。解释：</p>
+<p>普通的梯度下降为：</p>
+<p>$$w^{t+1} \leftarrow  w^t -η^tg^t \tag3$$<br>$$\eta^t &#x3D;\frac{\eta^t}{\sqrt{t+1}} \tag4$$</p>
+<ul>
+<li>$w$ 是一个参数</li>
+</ul>
+<p>Adagrad 可以做的更好：<br>$$w^{t+1} \leftarrow  w^t -\frac{η^t}{\sigma^t}g^t \tag5$$<br>$$g^t &#x3D;\frac{\partial L(\theta^t)}{\partial w} \tag6$$</p>
+<ul>
+<li>$\sigma^t$ :之前参数的所有微分的均方根，对于每个参数都是不一样的。</li>
+</ul>
+<h5 id="Adagrad举例"><a href="#Adagrad举例" class="headerlink" title="Adagrad举例"></a>Adagrad举例</h5><p>下图是一个参数的更新过程</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter6-4.png" srcset="/img/loading.gif" lazyload></p>
+<p>将 Adagrad 的式子进行化简：<br><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter6-5.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="Adagrad-存在的矛盾？"><a href="#Adagrad-存在的矛盾？" class="headerlink" title="Adagrad 存在的矛盾？"></a>Adagrad 存在的矛盾？</h5><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter6-6.png" srcset="/img/loading.gif" lazyload></p>
+<p>在 Adagrad 中，当梯度越大的时候，步伐应该越大，但下面分母又导致当梯度越大的时候，步伐会越小。</p>
+<p>下图是一个直观的解释：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter6-7.png" srcset="/img/loading.gif" lazyload></p>
+<p>下面给一个正式的解释：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter6-8.png" srcset="/img/loading.gif" lazyload></p>
+<p>比如初始点在 $x_0$，最低点为 $−\frac{b}{2a}$，最佳的步伐就是 $x0$ 到最低点之间的距离 $\left | x_0+\frac{b}{2a} \right |$，也可以写成 $\left | \frac{2ax_0+b}{2a} \right |$。而刚好 $|2ax_0+b|$ 就是方程绝对值在 $x_0$ 这一点的微分。</p>
+<p>这样可以认为如果算出来的微分越大，则距离最低点越远。而且最好的步伐和微分的大小成正比。所以如果踏出去的步伐和微分成正比，它可能是比较好的。</p>
+<p>结论1-1：梯度越大，就跟最低点的距离越远。</p>
+<p>这个结论在多个参数的时候就不一定成立了。</p>
+<h5 id="多参数下结论不一定成立"><a href="#多参数下结论不一定成立" class="headerlink" title="多参数下结论不一定成立"></a>多参数下结论不一定成立</h5><p>对比不同的参数</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter6-9.png" srcset="/img/loading.gif" lazyload></p>
+<p>上图左边是两个参数的损失函数，颜色代表损失函数的值。如果只考虑参数 $w_1$，就像图中蓝色的线，得到右边上图结果；如果只考虑参数 $w_2$，就像图中绿色的线，得到右边下图的结果。确实对于 $a$ 和 $b$，结论1-1是成立的，同理 $c$ 和 $b$ 也成立。但是如果对比$a$ 和 $c$，就不成立了，$c$ 比 $a$ 大，但 $c$ 距离最低点是比较近的。</p>
+<p>所以结论1-1是在没有考虑跨参数对比的情况下，才能成立的。所以还不完善。</p>
+<p>之前说到的最佳距离 $\left | \frac{2ax_0+b}{2a} \right |$，还有个分母 $2a$ 。对function进行二次微分刚好可以得到：<br>$$\frac{\partial ^2y}{\partial x^2} &#x3D; 2a \tag7$$<br>所以最好的步伐应该是：<br>$$\frac{一次微分}{二次微分}$$<br>即不止和一次微分成正比，还和二次微分成反比。最好的step应该考虑到二次微分：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter6-10.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="Adagrad-进一步的解释"><a href="#Adagrad-进一步的解释" class="headerlink" title="Adagrad 进一步的解释"></a>Adagrad 进一步的解释</h5><p>再回到之前的 Adagrad</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter6-11.png" srcset="/img/loading.gif" lazyload></p>
+<p>对于 $\sqrt{\sum_{i&#x3D;0}^t(g^i)^2}$ 就是希望再尽可能不增加过多运算的情况下模拟二次微分。（如果计算二次微分，在实际情况中可能会增加很多的时间消耗）</p>
+<h3 id="Tip2：随机梯度下降法"><a href="#Tip2：随机梯度下降法" class="headerlink" title="Tip2：随机梯度下降法"></a>Tip2：随机梯度下降法</h3><p>之前的梯度下降：</p>
+<p>$$L&#x3D;\sum_n(\hat y^n-(b+\sum w_ix_i^n))^2 \tag8$$<br>$$\theta^i &#x3D;\theta^{i-1}- \eta\triangledown L(\theta^{i-1}) \tag9$$</p>
+<p>而随机梯度下降法更快：</p>
+<p>损失函数不需要处理训练集所有的数据，选取一个例子 $x^n$</p>
+<p>$$L&#x3D;(\hat y^n-(b+\sum w_ix_i^n))^2 \tag{10}$$<br>$$\theta^i &#x3D;\theta^{i-1}- \eta\triangledown L^n(\theta^{i-1}) \tag{11}$$</p>
+<p>此时不需要像之前那样对所有的数据进行处理，只需要计算某一个例子的损失函数Ln，就可以赶紧update 梯度。</p>
+<p>对比：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter6-12.png" srcset="/img/loading.gif" lazyload></p>
+<p>常规梯度下降法走一步要处理到所有二十个例子，但随机算法此时已经走了二十步（每处理一个例子就更新）</p>
+<h3 id="Tip3：特征缩放"><a href="#Tip3：特征缩放" class="headerlink" title="Tip3：特征缩放"></a>Tip3：特征缩放</h3><p>比如有个函数：</p>
+<p>$$y&#x3D;b+w_1x_1+w_2x_2 \tag{12}$$<br>两个输入的分布的范围很不一样，建议把他们的范围缩放，使得不同输入的范围是一样的。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter6-13.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="为什么要这样做？"><a href="#为什么要这样做？" class="headerlink" title="为什么要这样做？"></a>为什么要这样做？</h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter6-14.png" srcset="/img/loading.gif" lazyload></p>
+<p>上图左边是 $x_1$ 的scale比 $x_2$ 要小很多，所以当 $w_1$ 和 $w_2$ 做同样的变化时，$w_1$ 对 $y$ 的变化影响是比较小的，$x_2$ 对 $y$ 的变化影响是比较大的。</p>
+<p>坐标系中是两个参数的error surface（现在考虑左边蓝色），因为 $w_1$ 对 $y$ 的变化影响比较小，所以 $w_1$ 对损失函数的影响比较小，$w_1$ 对损失函数有比较小的微分，所以 $w_1$ 方向上是比较平滑的。同理 $x_2$ 对 $y$ 的影响比较大，所以 $x_2$ 对损失函数的影响比较大，所以在 $x_2$ 方向有比较尖的峡谷。</p>
+<p>上图右边是两个参数scaling比较接近，右边的绿色图就比较接近圆形。</p>
+<p>对于左边的情况，上面讲过这种狭长的情形不过不用Adagrad的话是比较难处理的，两个方向上需要不同的学习率，同一组学习率会搞不定它。而右边情形更新参数就会变得比较容易。左边的梯度下降并不是向着最低点方向走的，而是顺着等高线切线法线方向走的。但绿色就可以向着圆心（最低点）走，这样做参数更新也是比较有效率。</p>
+<h4 id="怎么做缩放？"><a href="#怎么做缩放？" class="headerlink" title="怎么做缩放？"></a>怎么做缩放？</h4><p>方法非常多，这里举例一种常见的做法：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter6-15.png" srcset="/img/loading.gif" lazyload></p>
+<p>上图每一列都是一个例子，里面都有一组特征。</p>
+<p>对每一个维度 $i$（绿色框）都计算平均数，记做 $m_i$；还要计算标准差，记做 $\sigma _i$。</p>
+<p>然后用第 $r$ 个例子中的第 $i$ 个输入，减掉平均数 $m_i$，然后除以标准差 $\sigma _i$，得到的结果是所有的维数都是 $0$，所有的方差都是 $1$</p>
+<h3 id="①梯度下降的理论基础"><a href="#①梯度下降的理论基础" class="headerlink" title="①梯度下降的理论基础"></a>①梯度下降的理论基础</h3><p><strong>问题</strong>：当用梯度下降解决问题：</p>
+<p>$$\theta^∗&#x3D; \underset{ \theta }{\operatorname{arg\ min}}  L(\theta) \tag1$$</p>
+<p>每次更新参数 $\theta$，都得到一个新的 $\theta$，它都使得损失函数更小。即：</p>
+<p>$$L(\theta^0) &gt;L(\theta^1)&gt;L(\theta^2)&gt;···\tag{13}$$</p>
+<p>上述结论正确吗？</p>
+<p>结论是不正确的。。。</p>
+<h3 id="②数学理论"><a href="#②数学理论" class="headerlink" title="②数学理论"></a>②数学理论</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter6-16.png" srcset="/img/loading.gif" lazyload></p>
+<p>比如在 $\theta^0$ 处，可以在一个小范围的圆圈内找到损失函数细小的 $\theta^1$，不断的这样去寻找。</p>
+<p>接下来就是如果在小圆圈内快速的找到最小值？</p>
+<h4 id="泰勒展开式"><a href="#泰勒展开式" class="headerlink" title="泰勒展开式"></a>泰勒展开式</h4><p>先介绍一下泰勒展开式</p>
+<p><strong>定义</strong> 若 $h(x)$ 在 $x&#x3D;x_0$ 点的某个领域内有无限阶导数（即无限可微分，infinitely differentiable），那么在此领域内有：<br>$$<br>\begin{aligned}<br>h(x)  &amp;&#x3D; \sum_{k&#x3D;0}^{\infty }\frac{h^k(x_0)}{k!}(x-x_0)^k  \<br>&amp; &#x3D;h(x_0)+{h}’(x_0)(x−x_0)+\frac{h’’(x_0)}{2!}(x−x_0)^2+⋯<br>\tag{14}<br>\end{aligned}<br>$$</p>
+<p>当 $x$ 很接近 $x_0$ 时，有 $h(x)≈h(x_0)+{h}’(x_0)(x−x_0)$<br>式14 就是函数 $h(x)$ 在 $x&#x3D;x_0$ 点附近关于 $x$ 的幂函数展开式，也叫泰勒展开式。</p>
+<p>举例：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter6-17.png" srcset="/img/loading.gif" lazyload></p>
+<p>图中3条蓝色线是把前3项作图，橙色线是 $sin(x)$。</p>
+<h5 id="多变量泰勒展开式"><a href="#多变量泰勒展开式" class="headerlink" title="多变量泰勒展开式"></a>多变量泰勒展开式</h5><p>下面是两个变量的泰勒展开式</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter6-18.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="利用泰勒展开式简化"><a href="#利用泰勒展开式简化" class="headerlink" title="利用泰勒展开式简化"></a>利用泰勒展开式简化</h4><p>回到之前如何快速在圆圈内找到最小值。基于泰勒展开式，在 $(a,b)$ 点的红色圆圈范围内，可以将损失函数用泰勒展开式进行简化：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter6-19.png" srcset="/img/loading.gif" lazyload></p>
+<p>将问题进而简化为下图：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter6-20.png" srcset="/img/loading.gif" lazyload></p>
+<p>不考虑s的话，可以看出剩下的部分就是两个向量$(\triangle \theta_1,\triangle \theta_2)$ 和  $(u,v)$ 的内积，那怎样让它最小，就是和向量 $(u,v)$ 方向相反的向量</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter6-21.png" srcset="/img/loading.gif" lazyload></p>
+<p>然后将u和v带入。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter6-22.png" srcset="/img/loading.gif" lazyload><br>$$L(\theta)\approx s+u(\theta_1 - a)+v(\theta_2 - b) \tag{14}$$</p>
+<p>发现最后的式子就是梯度下降的式子。但这里用这种方法找到这个式子有个前提，泰勒展开式给的损失函数的估算值是要足够精确的，而这需要红色的圈圈足够小（也就是学习率足够小）来保证。所以理论上每次更新参数都想要损失函数减小的话，即保证式1-2 成立的话，就需要学习率足够足够小才可以。</p>
+<p>所以实际中，当更新参数的时候，如果学习率没有设好，是有可能式1-2是不成立的，所以导致做梯度下降的时候，损失函数没有越来越小。</p>
+<p>式1-2只考虑了泰勒展开式的一次项，如果考虑到二次项（比如牛顿法），在实际中不是特别好，会涉及到二次微分等，多很多的运算，性价比不好。</p>
+<h3 id="③梯度下降的限制"><a href="#③梯度下降的限制" class="headerlink" title="③梯度下降的限制"></a>③梯度下降的限制</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter6-23.png" srcset="/img/loading.gif" lazyload></p>
+<p>容易陷入局部极值<br>还有可能卡在不是极值，但微分值是0的地方<br>还有可能实际中只是当微分值小于某一个数值就停下来了，但这里只是比较平缓，并不是极值点</p>
+<h2 id="三、Gradient-Descent-Demo-by-AOE"><a href="#三、Gradient-Descent-Demo-by-AOE" class="headerlink" title="三、Gradient Descent (Demo by AOE)"></a>三、Gradient Descent (Demo by AOE)</h2><ul>
+<li>利用<strong>帝国时代</strong>的方式模拟<strong>梯度下降</strong>；</li>
+<li>在地图上大多数位置我们是未知的，只有我们单位走过的地方是可知；</li>
+<li>地图上的海拔可以看作损失函数<strong>loss function</strong>，我们的目的就是寻找海拔的最低点的值；</li>
+<li>随机初始一个位置，朝向较低的方向移动，周而复始，直到<strong>local minimal</strong>(在不开天眼的情况下，你始终不会知晓所在位置是否为global minimal)。</li>
+</ul>
+<h2 id="四、Gradient-Descent-Demo-by-Minecraft"><a href="#四、Gradient-Descent-Demo-by-Minecraft" class="headerlink" title="四、Gradient Descent (Demo by Minecraft)"></a>四、Gradient Descent (Demo by Minecraft)</h2><ul>
+<li>利用<strong>梯度下降法</strong>更新参数，损失函数loss function可能会不降反升(利用<strong>Mincraft</strong>解释该情况)；</li>
+<li>人物的前方是较低方向，右方也是较低方向，利用梯度下降法，往右前方移动一步，然后反复用梯度下降法，往右前方移动一步，周而复始；</li>
+<li>尽管前方和右方是下降的方向，但往右前方移动，将会失败(因为实际右前方是比较高的地方)。</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Ht411g7Ef">李宏毅机器学习&amp;深度学习_哔哩哔哩_bilibili</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://linklearner.com/datawhale-homepage/index.html#/learn/detail/13">Datawhale课程笔记</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/datawhalechina/leeml-notes">课程Github仓库</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a target="_blank" rel="noopener" href="http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML17.html">课程课件资源</a>
+<a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/AI/">#AI</a>
+      
+        <a href="/tags/Gradient-Descent/">#Gradient Descent</a>
+      
+        <a href="/tags/Marchine-Learning/">#Marchine Learning</a>
+      
+        <a href="/tags/Deep-Learning/">#Deep Learning</a>
+      
+        <a href="/tags/Adam/">#Adam</a>
+      
+        <a href="/tags/error/">#error</a>
+      
+        <a href="/tags/bias/">#bias</a>
+      
+        <a href="/tags/variance/">#variance</a>
+      
+        <a href="/tags/regularization/">#regularization</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>误差及梯度下降-李宏毅机器学习</div>
+      <div>https://blog.baixf.tk/2022/07/14/Machine Learning/李宏毅机器学习（含深度学习）/第三章 误差及梯度下降/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年7月14日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/16/Machine%20Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%90%AB%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89/%E7%AC%AC%E5%9B%9B%E7%AB%A0%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD/" title="深度学习与反向传递机制-李宏毅机器学习">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">深度学习与反向传递机制-李宏毅机器学习</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/12/Machine%20Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%90%AB%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89/%E7%AC%AC%E4%BA%8C%E7%AB%A0%20%E5%9B%9E%E5%BD%92/" title="Regression-李宏毅机器学习">
+                        <span class="hidden-mobile">Regression-李宏毅机器学习</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

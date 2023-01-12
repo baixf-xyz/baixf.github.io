@@ -1,0 +1,764 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="万物皆可DNN🆒">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Class 6 DNN-HMM作业代码精读">
+<meta property="og:url" content="https://blog.baixf.tk/2022/09/17/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E5%AD%A6%E4%B9%A0/Class%206%20DNN-HMM%E4%BD%9C%E4%B8%9A%E4%BB%A3%E7%A0%81%E7%B2%BE%E8%AF%BB/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="万物皆可DNN🆒">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220918012957402.png">
+<meta property="article:published_time" content="2022-09-17T18:47:11.000Z">
+<meta property="article:modified_time" content="2023-01-12T14:08:04.375Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="语音识别">
+<meta property="article:tag" content="ASR">
+<meta property="article:tag" content="HMM">
+<meta property="article:tag" content="GMM">
+<meta property="article:tag" content="DNN">
+<meta property="article:tag" content="NN">
+<meta property="article:tag" content="DNN-HMM">
+<meta property="article:tag" content="Back Propagation">
+<meta property="article:tag" content="Forward">
+<meta property="article:tag" content="Gradient Descent">
+<meta property="article:tag" content="Cross Entropy">
+<meta property="article:tag" content="Softmax">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220918012957402.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>Class 6 DNN-HMM作业代码精读 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220918012429784.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Class 6 DNN-HMM作业代码精读"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-09-17 18:47" pubdate>
+          2022年9月17日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          66 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Class 6 DNN-HMM作业代码精读</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="训练流程"><a href="#训练流程" class="headerlink" title="训练流程"></a>训练流程</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220918013105505.png" srcset="/img/loading.gif" lazyload alt="image-20220918013105505"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220918013130192.png" srcset="/img/loading.gif" lazyload alt="image-20220918013130192"></p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># Author: Sining Sun, Zhanheng Yang, Binbin Zhang</span><br><br><span class="hljs-keyword">import</span> math<br><span class="hljs-keyword">import</span> matplotlib<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> kaldi_io<br><span class="hljs-keyword">from</span> utils <span class="hljs-keyword">import</span> *<br><br><span class="hljs-comment">#构造索引数据对象</span><br>targets_list = [<span class="hljs-string">&#x27;Z&#x27;</span>, <span class="hljs-string">&#x27;1&#x27;</span>, <span class="hljs-string">&#x27;2&#x27;</span>, <span class="hljs-string">&#x27;3&#x27;</span>, <span class="hljs-string">&#x27;4&#x27;</span>, <span class="hljs-string">&#x27;5&#x27;</span>, <span class="hljs-string">&#x27;6&#x27;</span>, <span class="hljs-string">&#x27;7&#x27;</span>, <span class="hljs-string">&#x27;8&#x27;</span>, <span class="hljs-string">&#x27;9&#x27;</span>, <span class="hljs-string">&#x27;O&#x27;</span>]<br>targets_mapping = &#123;&#125;<br><span class="hljs-keyword">for</span> i, x <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(targets_list):<br>    targets_mapping[x] = i<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">plot_loss</span>(<span class="hljs-params">avg_loss, filename</span>):<br>    fig = plt.figure(figsize=(<span class="hljs-number">20</span>, <span class="hljs-number">10</span>))<br>    plt.plot(avg_loss)<br>    plt.xlabel(<span class="hljs-string">&#x27;epochs&#x27;</span>)<br>    plt.ylabel(<span class="hljs-string">&#x27;loss&#x27;</span>)<br>    plt.savefig(filename)<br>    plt.show()<br><br><span class="hljs-comment">#定义一个Layer类，具有前向，后向，设置学习率，更新的方法</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Layer</span>(<span class="hljs-title class_ inherited__">object</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, <span class="hljs-built_in">input</span></span>):<br>        <span class="hljs-string">&#x27;&#x27;&#x27; Forward function by input</span><br><span class="hljs-string">        Args:</span><br><span class="hljs-string">            input: input, B * N matrix, B for batch size</span><br><span class="hljs-string">        Returns:</span><br><span class="hljs-string">            output when applied this layer</span><br><span class="hljs-string">        &#x27;&#x27;&#x27;</span><br>        <span class="hljs-keyword">raise</span> <span class="hljs-string">&#x27;Not implement error&#x27;</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">backward</span>(<span class="hljs-params">self, <span class="hljs-built_in">input</span>, output, d_output</span>):<br>        <span class="hljs-string">&#x27;&#x27;&#x27; Compute gradient of this layer&#x27;s input by (input, output, d_output)</span><br><span class="hljs-string">            as well as compute the gradient of the parameter of this layer</span><br><span class="hljs-string">        Args:</span><br><span class="hljs-string">            input: input of this layer</span><br><span class="hljs-string">            output: output of this layer</span><br><span class="hljs-string">            d_output: accumulated gradient from final output to this</span><br><span class="hljs-string">                      layer&#x27;s output</span><br><span class="hljs-string">        Returns:</span><br><span class="hljs-string">            accumulated gradient from final output to this layer&#x27;s input</span><br><span class="hljs-string">        &#x27;&#x27;&#x27;</span><br>        <span class="hljs-keyword">raise</span> <span class="hljs-string">&#x27;Not implement error&#x27;</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">set_learning_rate</span>(<span class="hljs-params">self, lr</span>):<br>        <span class="hljs-string">&#x27;&#x27;&#x27; Set learning rate of this layer&#x27;&#x27;&#x27;</span><br>        self.learning_rate = lr<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">update</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-string">&#x27;&#x27;&#x27; Update this layers parameter if it has or do nothing</span><br><span class="hljs-string">        &#x27;&#x27;&#x27;</span><br><br><span class="hljs-comment">#激活函数RELU层</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">ReLU</span>(<span class="hljs-title class_ inherited__">Layer</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, <span class="hljs-built_in">input</span></span>):<br>        <span class="hljs-comment"># BEGIN_LAB</span><br>        tem_mat = np.maximum(<span class="hljs-number">0</span>, <span class="hljs-built_in">input</span>)<br>        <span class="hljs-comment">#assert(断言) # 条件为 true 正常执行；条件为 false 触发异常</span><br>        <span class="hljs-keyword">assert</span> (tem_mat.shape == <span class="hljs-built_in">input</span>.shape)<br>        <span class="hljs-comment">#         print(&#x27;1&#x27;,tem_mat.T.shape)</span><br>        <span class="hljs-keyword">return</span> tem_mat.T<br>        <span class="hljs-comment"># END_LAB</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">backward</span>(<span class="hljs-params">self, <span class="hljs-built_in">input</span>, output, d_output</span>):<br>        <span class="hljs-comment"># BEGIN_LAB</span><br>        d_mat = np.array(d_output, copy=<span class="hljs-literal">True</span>)<br>        <span class="hljs-comment">#         if input.any() &lt;=0:</span><br>        <span class="hljs-comment">#             d_mat= 0</span><br>        d_mat[<span class="hljs-built_in">input</span> &lt;= <span class="hljs-number">0</span>] = <span class="hljs-number">0</span><br>        <span class="hljs-keyword">assert</span> (d_mat.shape == <span class="hljs-built_in">input</span>.shape)<br>        <span class="hljs-comment">#         print(&#x27;2&#x27;,d_mat.T.shape)</span><br>        <span class="hljs-keyword">return</span> d_mat.T<br><br>        <span class="hljs-comment"># END_LAB</span><br><br><span class="hljs-comment">#全连接层定义</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">FullyConnect</span>(<span class="hljs-title class_ inherited__">Layer</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, in_dim, out_dim</span>):<br>        self.w = np.random.randn(out_dim, in_dim) * np.sqrt(<span class="hljs-number">2.0</span> / in_dim)<br>        self.b = np.zeros((out_dim, <span class="hljs-number">1</span>))<br>        self.dw = np.zeros((out_dim, in_dim))<br>        self.db = np.zeros((out_dim, <span class="hljs-number">1</span>))<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, <span class="hljs-built_in">input</span></span>):<br>        <span class="hljs-comment"># BEGIN_LAB</span><br>        <span class="hljs-comment">#FNN前馈神经网络计算</span><br>        out_mat = np.dot(self.w, <span class="hljs-built_in">input</span>.T) + self.b<br>        <span class="hljs-keyword">assert</span> out_mat.shape == (self.w.shape[<span class="hljs-number">0</span>], <span class="hljs-built_in">input</span>.shape[<span class="hljs-number">0</span>])<br>        <span class="hljs-comment">#         print(&#x27;3&#x27;,out_mat.shape)</span><br>        <span class="hljs-keyword">return</span> out_mat<br>        <span class="hljs-comment"># END_LAB</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">backward</span>(<span class="hljs-params">self, <span class="hljs-built_in">input</span>, output, d_output</span>):<br>        batch_size = <span class="hljs-built_in">input</span>.shape[<span class="hljs-number">0</span>]<br>        in_diff = <span class="hljs-literal">None</span><br>        <span class="hljs-comment"># BEGIN_LAB, compute in_diff/dw/db here</span><br>        <span class="hljs-comment">#反向传播链式求导核心公式</span><br>        self.dw = np.dot(d_output, <span class="hljs-built_in">input</span>) / batch_size<br>        <span class="hljs-comment">#axis=1为横向,axis=0为纵向</span><br>        self.db = np.<span class="hljs-built_in">sum</span>(d_output, axis=<span class="hljs-number">1</span>, keepdims=<span class="hljs-literal">True</span>) / batch_size<br>        outt_mat = np.dot(self.w.T, d_output)<br><br>        <span class="hljs-keyword">assert</span> (outt_mat.shape == <span class="hljs-built_in">input</span>.T.shape)<br>        <span class="hljs-keyword">assert</span> (self.dw.shape == self.w.shape)<br>        <span class="hljs-keyword">assert</span> (self.db.shape == self.b.shape)<br>        <span class="hljs-comment">#         print(&#x27;4&#x27;,outt_mat.T.shape)</span><br>        in_diff = outt_mat.T<br>        <span class="hljs-comment"># END_LAB</span><br>        <span class="hljs-comment"># Normalize dw/db by batch size</span><br>        self.dw = self.dw / batch_size<br>        self.db = self.db / batch_size<br>        <span class="hljs-keyword">return</span> in_diff<br><br>    <span class="hljs-comment">#权重和偏移量更新</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">update</span>(<span class="hljs-params">self</span>):<br>        self.w = self.w - self.learning_rate * self.dw<br>        self.b = self.b - self.learning_rate * self.db<br><br><span class="hljs-comment">#softmax层：概率归一化</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Softmax</span>(<span class="hljs-title class_ inherited__">Layer</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, <span class="hljs-built_in">input</span></span>):<br>        _<span class="hljs-built_in">input</span> = <span class="hljs-built_in">input</span>.T<br>        row_max = _<span class="hljs-built_in">input</span>.<span class="hljs-built_in">max</span>(axis=<span class="hljs-number">1</span>).reshape(_<span class="hljs-built_in">input</span>.shape[<span class="hljs-number">0</span>], <span class="hljs-number">1</span>)<br>        <span class="hljs-comment">#并不是普通的softmax，而是针对防止上溢下溢而提出的 -max() 的方法</span><br>        x = _<span class="hljs-built_in">input</span> - row_max<br>        <span class="hljs-keyword">return</span> np.exp(x) / np.<span class="hljs-built_in">sum</span>(np.exp(x), axis=<span class="hljs-number">1</span>).reshape(x.shape[<span class="hljs-number">0</span>], <span class="hljs-number">1</span>)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">backward</span>(<span class="hljs-params">self, <span class="hljs-built_in">input</span>, output, d_output</span>):<br>        <span class="hljs-string">&#x27;&#x27;&#x27; Directly return the d_output as we show below, the grad is to</span><br><span class="hljs-string">            the activation(input) of softmax</span><br><span class="hljs-string">        &#x27;&#x27;&#x27;</span><br>        <span class="hljs-keyword">return</span> d_output<br><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">DNN</span>(<span class="hljs-title class_ inherited__">object</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, in_dim, out_dim, hidden_dim, num_hidden</span>):<br>        <span class="hljs-comment">#初始化一个空layers列表</span><br>        self.layers = []<br>        <span class="hljs-comment">#添加一个全连接层FullyConnect(in_dim, hidden_dim)</span><br>        self.layers.append(FullyConnect(in_dim, hidden_dim))<br>        <span class="hljs-comment">#添加一个激活函数RELU层</span><br>        self.layers.append(ReLU())<br>        <span class="hljs-comment">#for循环添加隐藏层，隐藏层由全连接层和激活函数层组成</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(num_hidden):<br>            <span class="hljs-comment">#隐藏层里的全连接层(hidden_dim, hidden_dim)</span><br>            self.layers.append(FullyConnect(hidden_dim, hidden_dim))<br>            <span class="hljs-comment">#每一个全连接层后面紧接一个RELU层</span><br>            self.layers.append(ReLU())<br>        <span class="hljs-comment">#全连接层(hidden_dim, out_dim)</span><br>        self.layers.append(FullyConnect(hidden_dim, out_dim))<br>        <span class="hljs-comment">#最后一层的softmax层概率归一化 </span><br>        self.layers.append(Softmax())<br><br>    <span class="hljs-comment">#设置学习率大小</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">set_learning_rate</span>(<span class="hljs-params">self, lr</span>):<br>        <span class="hljs-keyword">for</span> layer <span class="hljs-keyword">in</span> self.layers:<br>            layer.set_learning_rate(lr)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, <span class="hljs-built_in">input</span></span>):<br>        self.forward_buf = []<br>        <span class="hljs-comment">#此步应该是因为input和output矩阵大小相等（100，11）</span><br>        out = <span class="hljs-built_in">input</span><br>        self.forward_buf.append(out)<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(self.layers)):<br>            <span class="hljs-comment">#FNN(Feedforward Neural Network)计算</span><br>            out = self.layers[i].forward(out)<br>            self.forward_buf.append(out)<br>        <span class="hljs-keyword">assert</span> (<span class="hljs-built_in">len</span>(self.forward_buf) == <span class="hljs-built_in">len</span>(self.layers) + <span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">return</span> out<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">backward</span>(<span class="hljs-params">self, grad</span>):<br>        <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">        Args:</span><br><span class="hljs-string">            grad: the grad is to the activation before softmax</span><br><span class="hljs-string">        &#x27;&#x27;&#x27;</span><br>        self.backward_buf = [<span class="hljs-literal">None</span>] * <span class="hljs-built_in">len</span>(self.layers)<br>        self.backward_buf[<span class="hljs-built_in">len</span>(self.layers) - <span class="hljs-number">1</span>] = grad<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(self.layers) - <span class="hljs-number">2</span>, -<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>):<br>            grad = self.layers[i].backward(self.forward_buf[i],<br>                                           self.forward_buf[i + <span class="hljs-number">1</span>],<br>                                           self.backward_buf[i + <span class="hljs-number">1</span>].T)<br>            self.backward_buf[i] = grad<br>            <br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">update</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">for</span> layer <span class="hljs-keyword">in</span> self.layers:<br>            layer.update()<br><br><br><span class="hljs-comment">#one-hot编码</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">one_hot</span>(<span class="hljs-params">labels, total_label</span>):<br>    <span class="hljs-comment">#构造(18593, 11)的矩阵：18593为训练集语音的个数，11为对应的词典的编码对应发音</span><br>    output = np.zeros((labels.shape[<span class="hljs-number">0</span>], total_label))<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(labels.shape[<span class="hljs-number">0</span>]):<br>        <span class="hljs-comment">#对第i个孤立词的对应编码列的唯一位置置为1</span><br>        output[i][labels[i]] = <span class="hljs-number">1.0</span><br>    <span class="hljs-comment">#返回的output即为训练集的编码矩阵(18593, 11)</span><br>    <span class="hljs-keyword">return</span> output<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">train</span>(<span class="hljs-params">dnn</span>):<br>    utt2feat, utt2target = read_feats_and_targets(<span class="hljs-string">&#x27;train/feats.scp&#x27;</span>,<br>                                                  <span class="hljs-string">&#x27;train/text&#x27;</span>)<br>    <span class="hljs-comment">#调用utils内的函数读取提取的特征文件</span><br>    inputs, labels = build_input(targets_mapping, utt2feat, utt2target)<br>    num_samples = inputs.shape[<span class="hljs-number">0</span>]<br>    <span class="hljs-comment">#print(&#x27;input&#x27;, num_samples)</span><br>    <span class="hljs-comment"># Shuffle data</span><br>    <br>    <span class="hljs-comment">#随机排列函数,就是将输入的数据进行随机排列</span><br>    permute = np.random.permutation(num_samples)<br>    inputs = inputs[permute]<br>    labels = labels[permute]<br>    <span class="hljs-comment">#迭代训练次数</span><br>    num_epochs = <span class="hljs-number">200</span><br>    <span class="hljs-comment">#批数据大小</span><br>    batch_size = <span class="hljs-number">100</span><br>    avg_loss = np.zeros(num_epochs)<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(num_epochs):<br>        <span class="hljs-comment">#起始位置，从第0个开始</span><br>        cur = <span class="hljs-number">0</span><br>        <span class="hljs-comment">#结束条件，小于孤立词语音个数（从0开始）</span><br>        <span class="hljs-keyword">while</span> cur &lt; num_samples:<br>            <span class="hljs-comment">#控制每一次处理的数据量是一个批大小但不能超过总个数</span><br>            end = <span class="hljs-built_in">min</span>(cur + batch_size, num_samples)<br>            <span class="hljs-comment">#input.shape(100,11)</span><br>            <span class="hljs-built_in">input</span> = inputs[cur:end]<br>            label = labels[cur:end]<br>            <span class="hljs-comment">#             print(&#x27;input&#x27;,input.shape)</span><br>            <span class="hljs-comment">#             print(&#x27;label&#x27;,label.shape)</span><br>            <span class="hljs-comment"># Step1: forward</span><br>            out = dnn.forward(<span class="hljs-built_in">input</span>)<br>            <span class="hljs-comment">#out.shape()=(100,11)</span><br>            <span class="hljs-comment">#print(&#x27;out&#x27;,out.shape)</span><br>            <span class="hljs-comment">#进行one-hot编码</span><br>            one_hot_label = one_hot(label, out.shape[<span class="hljs-number">1</span>])<br>            <br>            <span class="hljs-comment">#计算交叉熵CE(Cross Entropy)损失函数以及反向传播</span><br>            <span class="hljs-comment"># Step2: Compute cross entropy loss and backward</span><br>            <span class="hljs-comment">#             print(one_hot_label.shape)</span><br>            loss = -np.<span class="hljs-built_in">sum</span>(np.log(out + <span class="hljs-number">1e-20</span>) * one_hot_label) / out.shape[<span class="hljs-number">0</span>]<br>            <br>            <span class="hljs-comment"># The grad is to activation before softmax</span><br>            grad = out - one_hot_label<br>            <span class="hljs-comment">#反向传播计算</span><br>            dnn.backward(grad)<br>            <span class="hljs-comment"># Step3: update parameters</span><br>            dnn.update()<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Epoch &#123;&#125; num_samples &#123;&#125; loss &#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(i, cur, loss))<br>            avg_loss[i] += loss<br>            cur += batch_size<br>            avg_loss[i] /= math.ceil(num_samples / batch_size)<br>    plot_loss(avg_loss, <span class="hljs-string">&#x27;loss.png&#x27;</span>)<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">test</span>(<span class="hljs-params">dnn</span>):<br>    utt2feat, utt2target = read_feats_and_targets(<span class="hljs-string">&#x27;test/feats.scp&#x27;</span>,<br>                                                  <span class="hljs-string">&#x27;test/text&#x27;</span>)<br>    total = <span class="hljs-built_in">len</span>(utt2feat)<br>    correct = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">for</span> utt <span class="hljs-keyword">in</span> utt2feat:<br>        t = utt2target[utt]<br>        ark = utt2feat[utt]<br>        mat = kaldi_io.read_mat(ark)<br>        mat = splice(mat, <span class="hljs-number">5</span>, <span class="hljs-number">5</span>)<br>        posterior = dnn.forward(mat)<br>        posterior = np.<span class="hljs-built_in">sum</span>(posterior, axis=<span class="hljs-number">0</span>) / <span class="hljs-built_in">float</span>(mat.shape[<span class="hljs-number">0</span>])<br>        predict = targets_list[np.argmax(posterior)]<br>        <span class="hljs-keyword">if</span> t == predict: correct += <span class="hljs-number">1</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;label: &#123;&#125; predict: &#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(t, predict))<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Acc: &#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(<span class="hljs-built_in">float</span>(correct) / total))<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    <span class="hljs-comment">#利用随机数种子，使得每次生成的随机数相同。</span><br>    np.random.seed(<span class="hljs-number">777</span>)<br>    <span class="hljs-comment">#我们将原始特征与左5帧和右5帧拼接</span><br>    <span class="hljs-comment"># We splice the raw feat with left 5 frames and right 5 frames</span><br>    <span class="hljs-comment"># So the input here is 39 * (5 + 1 + 5) = 429</span><br>    <span class="hljs-comment">#DNN(in_dim, out_dim, hidden_dim, num_hidden)</span><br>    dnn = DNN(<span class="hljs-number">429</span>, <span class="hljs-number">11</span>, <span class="hljs-number">128</span>, <span class="hljs-number">1</span>)<br>    dnn.set_learning_rate(<span class="hljs-number">1e-2</span>)<br>    train(dnn)<br>    test(dnn)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
+
+<h3 id="理论支撑"><a href="#理论支撑" class="headerlink" title="理论支撑"></a>理论支撑</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220918012257685.png" srcset="/img/loading.gif" lazyload alt="image-20220918012257685"></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV13x411v7US?p=14&vd_source=f747729ac690a4ed64455675db3f4f66">李宏毅机器学习(2017)</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/105722023">一文详解Softmax函数</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/" class="category-chain-item">语音识别</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/">#语音识别</a>
+      
+        <a href="/tags/ASR/">#ASR</a>
+      
+        <a href="/tags/HMM/">#HMM</a>
+      
+        <a href="/tags/GMM/">#GMM</a>
+      
+        <a href="/tags/DNN/">#DNN</a>
+      
+        <a href="/tags/NN/">#NN</a>
+      
+        <a href="/tags/DNN-HMM/">#DNN-HMM</a>
+      
+        <a href="/tags/Back-Propagation/">#Back Propagation</a>
+      
+        <a href="/tags/Forward/">#Forward</a>
+      
+        <a href="/tags/Gradient-Descent/">#Gradient Descent</a>
+      
+        <a href="/tags/Cross-Entropy/">#Cross Entropy</a>
+      
+        <a href="/tags/Softmax/">#Softmax</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Class 6 DNN-HMM作业代码精读</div>
+      <div>https://blog.baixf.tk/2022/09/17/语音识别学习/Class 6 DNN-HMM作业代码精读/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年9月17日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/09/18/software/%E8%AE%BE%E7%BD%AE%20SSH%20%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E7%99%BB%E5%BD%95/" title="设置 SSH 通过密钥登录">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">设置 SSH 通过密钥登录</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/09/15/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E5%AD%A6%E4%B9%A0/Class9%E4%BD%9C%E4%B8%9A-Kaldi%E7%9A%84aishell%E5%AE%9E%E4%BE%8B/" title="Class9作业-Kaldi的aishell实例">
+                        <span class="hidden-mobile">Class9作业-Kaldi的aishell实例</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

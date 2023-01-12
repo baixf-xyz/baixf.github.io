@@ -1,0 +1,1129 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="local minima-&gt;saddle point&#x2F;Optimization with Batch&#x2F;Gradient Descent + Momentum&#x2F;Adaptive Learning Rate&#x2F;loss function&#x2F;batch normalization">
+<meta property="og:type" content="article">
+<meta property="og:title" content="优化神经网络训练-李宏毅机器学习">
+<meta property="og:url" content="https://blog.baixf.tk/2022/07/20/Machine%20Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%90%AB%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89/%E7%AC%AC%E4%BA%94%E7%AB%A0%20%E4%BC%98%E5%8C%96%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AE%AD%E7%BB%83/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="local minima-&gt;saddle point&#x2F;Optimization with Batch&#x2F;Gradient Descent + Momentum&#x2F;Adaptive Learning Rate&#x2F;loss function&#x2F;batch normalization">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220711123106801.png">
+<meta property="article:published_time" content="2022-07-20T22:55:11.000Z">
+<meta property="article:modified_time" content="2023-01-12T14:08:04.367Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Marchine Learning">
+<meta property="article:tag" content="Deep Learning">
+<meta property="article:tag" content="critical point">
+<meta property="article:tag" content="local minima">
+<meta property="article:tag" content="saddle point">
+<meta property="article:tag" content="Optimization">
+<meta property="article:tag" content="Batch">
+<meta property="article:tag" content="momentun">
+<meta property="article:tag" content="gradient descent">
+<meta property="article:tag" content="adam">
+<meta property="article:tag" content="learning rate">
+<meta property="article:tag" content="RMSProp">
+<meta property="article:tag" content="learning rate decay">
+<meta property="article:tag" content="warm up">
+<meta property="article:tag" content="loss function">
+<meta property="article:tag" content="batch normalization">
+<meta property="article:tag" content="feature normalization">
+<meta property="article:tag" content="Root mean square">
+<meta property="article:tag" content="Cross-Entropy">
+<meta property="article:tag" content="Mean square error">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220711123106801.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>优化神经网络训练-李宏毅机器学习 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720180026735.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="优化神经网络训练-李宏毅机器学习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-20 22:55" pubdate>
+          2022年7月20日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          16k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          132 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">优化神经网络训练-李宏毅机器学习</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="训练遇到的问题"><a href="#训练遇到的问题" class="headerlink" title="训练遇到的问题"></a>训练遇到的问题</h2><ol>
+<li>参数不断的更新,training loss一开始下降，然后不会再下降，但距离0还有很远的gap；</li>
+<li>一开始model就train不起来，不管怎么update参数，loss一直比较大。</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720180026735.png" srcset="/img/loading.gif" lazyload alt="image-20220720180026735"></p>
+<p>导致上述问题的原因可能有很多，我们先回忆一下梯度下降算法在现实世界中面临的挑战：</p>
+<ul>
+<li>问题1：局部最优（Stuck at local minima）</li>
+<li>问题2：等于0（Stuck at saddle point）</li>
+<li>问题3：趋近于0（Very slow at the plateau）</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/leeml-notes/chapter3/res/chapter3-13.png"><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogchapter3-13.png" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<p>像这种gradient为0的点，统称critical point，我们先从问题1和问题2来看看如何“炼丹”。</p>
+<h2 id="一、局部最小值local-minima和鞍点saddle-point"><a href="#一、局部最小值local-minima和鞍点saddle-point" class="headerlink" title="一、局部最小值local minima和鞍点saddle point"></a>一、局部最小值local minima和鞍点saddle point</h2><h3 id="Critical-Point"><a href="#Critical-Point" class="headerlink" title="Critical Point"></a>Critical Point</h3><p>gradient为0的点。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720180157269.png" srcset="/img/loading.gif" lazyload alt="image-20220720180157269"></p>
+<h4 id="local-minima"><a href="#local-minima" class="headerlink" title="local minima"></a>local minima</h4><p><strong>现在所在的位置已经是局部loss最低的点，</strong>往四周走 loss都会比较高，可能没有路可以走。</p>
+<h4 id="saddle-point"><a href="#saddle-point" class="headerlink" title="saddle point"></a>saddle point</h4><p><strong>saddle point从某个方向还是有可能到达loss更低的位置，</strong>只要逃离saddle point，就有可能让loss更低。</p>
+<h3 id="如何判断某个位置是local-minima还是saddle-point？"><a href="#如何判断某个位置是local-minima还是saddle-point？" class="headerlink" title="如何判断某个位置是local minima还是saddle point？"></a>如何判断某个位置是local minima还是saddle point？</h3><p>通过泰勒级数展开估计（Tayler Series Approximation）loss function的形状。</p>
+<p>也就是，虽然无法完整、准确写出L(\theta)L(θ)，但如果给定某一组参数\theta’θ′，在\theta’θ′附近的loss function可以通过泰勒级数展开来估计：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720180329496.png" srcset="/img/loading.gif" lazyload alt="image-20220720180329496"></p>
+<ul>
+<li>第一项L(\theta’)L(θ′)：当\thetaθ跟\theta’θ′很近的时候,L(\theta)L(θ)跟L(\theta’)L(θ′)比较靠近，但还有一些差距；</li>
+<li>第二项(\theta-\theta’)^Tg(θ−θ′)Tg：<strong>是一个向量,这个gg是gradient</strong>，这个<strong>gradient会来弥补\theta’θ′跟\thetaθ之间的差距</strong>。有时候gradient会写成\nabla L(\theta’)∇L(θ′)，<strong>它的第ii个component,就是θθ的第ii个component对LL的微分</strong>，加上这一项之后仍然还有差距；</li>
+<li>第三项中(\theta-\theta’)^TH(\theta-\theta’)(θ−θ′)TH(θ−θ′)：其中HH跟Hessian有关，是一个矩阵，第三项会再补足与真正的L(θ)之间的差距。<strong>HH是L的二次微分构成的矩阵</strong>,<strong>它第ii个row,第jj个column的值H_{ij}Hij，是把θθ的第ii个component,对LL作微分,再把θθ的第jj个component,对LL作微分,也就是做两次微分以后的结果</strong> 。</li>
+</ul>
+<p>总的来说，L(\theta)L(θ)跟两个东西有关,<strong>跟gradient有关，跟hessian有关。gradient就是一次微分,hessian是内含二次微分的项目</strong>。</p>
+<p>如果我们今天走到了一个critical point，意味着上式中g&#x3D;0g&#x3D;0，只剩下L(\theta’)L(θ′)和红色的这一项：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogblogimage-20220720180545795.png" srcset="/img/loading.gif" lazyload alt="image-20220720180545795"></p>
+<p>于是可以通过红色这一项判断\theta’θ′附近的error surface长什么样，从而判断现在是在local minima、local max还是saddle point。</p>
+<h4 id="通过Hession矩阵判断-theta’θ′附近的error-surface"><a href="#通过Hession矩阵判断-theta’θ′附近的error-surface" class="headerlink" title="通过Hession矩阵判断\theta’θ′附近的error surface"></a>通过Hession矩阵判断\theta’θ′附近的error surface</h4><p>把(\theta-\theta’)(θ−θ′)用向量vv来表示，根据v^THvvTHv的值来判断：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogblogimage-20220720180411417.png" srcset="/img/loading.gif" lazyload alt="image-20220720180411417"></p>
+<p>线性代数中，如果所有的vv带入v^THvvTHv的值都大於零，那HH叫做<strong>positive definite 正定矩阵</strong>。所以我们不需要通过穷举所有的点来判断v^THvvTHv是大于零还是小于零，而是直接利用HH是否正定来判断。而判断HH是否是正定矩阵可以通过求解HH的特征值来判断。如果<strong>所有的eigen value特征值都是正的</strong>，那么HH就是<strong>positive definite 正定矩阵</strong>。</p>
+<p>所以判断条件就转化为：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720180655231.png" srcset="/img/loading.gif" lazyload alt="image-20220720180655231"></p>
+<h3 id="如何逃离saddle-point？"><a href="#如何逃离saddle-point？" class="headerlink" title="如何逃离saddle point？"></a>如何逃离saddle point？</h3><p><strong>HH不只可以帮助我们判断,现在是不是在一个saddle point,还指出了参数可以update的方向。</strong>注意这个时候g&#x3D;0g&#x3D;0。</p>
+<p>根据\lambda x&#x3D;Axλx&#x3D;Ax，可以对式子进行转化：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720180819977.png" srcset="/img/loading.gif" lazyload alt="image-20220720180819977"></p>
+<p>于是如果λ&lt;0λ&lt;0（eigen value&lt;0）,那²λ‖u‖²&lt;0λ‖u‖²&lt;0，所以eigen value是负的,那这一整项就会是<strong>负的</strong>,也就是u^THuuTHu是负的，也就是<strong>红色整项是负的</strong>，于是L(\theta)&lt;L(\theta’)L(θ)&lt;L(θ′)。也就是说令\theta-\theta’&#x3D;\muθ−θ′&#x3D;μ，<strong>在θ’θ′的位置加上\muμ,沿\muμ的方向做update得到θθ,就可以让loss变小</strong>。</p>
+<p><strong>这个方法也有一点问题：HH的运算量非常非常的大，还需要算其特征值和特征向量，运算量惊人，实际操作中还有其他方法可以逃离saddle point，在最糟糕的情况下还有这种方法可以逃离。</strong></p>
+<h3 id="Saddle-Point-v-s-Local-Minima"><a href="#Saddle-Point-v-s-Local-Minima" class="headerlink" title="Saddle Point v.s. Local Minima"></a>Saddle Point v.s. Local Minima</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogblogimage-20220720181016185.png" srcset="/img/loading.gif" lazyload alt="image-20220720181016185"></p>
+<p><strong>事实上Local Minima没有那么常见。</strong>一个可能的解释是：在低维的空间中,低维的一个参数的error surface,好像到处都是local minima,但是在高维空间来看,它可能只是一个saddle point。</p>
+<p>如下图所示，几乎找不到完全所有eigen value都是正的critical point。下图这个例子种，minimum ratio代表正的eigen value的数目占总数的比例，最大也在0.5~0.6,代表只有一半的eigen value是正的,还有一半的eigen value是负的。</p>
+<p>在这个图上,越往右代表critical point越像local minima,<strong>但是它们都没有真的,变成local minima</strong>。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720181134071.png" srcset="/img/loading.gif" lazyload alt="image-20220720181134071"></p>
+<h2 id="二、batch-x2F-mini-batch"><a href="#二、batch-x2F-mini-batch" class="headerlink" title="二、batch&#x2F;mini-batch"></a>二、batch&#x2F;mini-batch</h2><h4 id="Optimization-with-Batch"><a href="#Optimization-with-Batch" class="headerlink" title="Optimization with Batch"></a>Optimization with Batch</h4><p>每次<strong>在 Update 参数的时候，拿一个batch出来,算个 Loss,算个 Gradient,Update 参数</strong>,然后再拿另外个batch,再算个 Loss,算gradient，更新参数，以此类推。</p>
+<p>mini-batch就是不把所有训练数据拿出来一起算loss，而是分小块。</p>
+<p><strong>所有的 Batch 训练过一遍,叫做一个 Epoch。</strong></p>
+<p>在生成batch的时候长春会做shuffle。</p>
+<p>Shuffle 有很多不同的做法，常见的一个做法是<strong>在每一个 Epoch 开始之前,会分一次 Batch，每一个 Epoch 的 Batch 都不一样</strong>。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720181301397.png" srcset="/img/loading.gif" lazyload alt="image-20220720181301397"></p>
+<h4 id="为什么要batch"><a href="#为什么要batch" class="headerlink" title="为什么要batch"></a>为什么要batch</h4><p>直接上对比图：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720181419400.png" srcset="/img/loading.gif" lazyload alt="image-20220720181419400"></p>
+<p>之前提到，更大的batch在看完更多的example后才会更新一次参数，但更新方向可能比小batch更准确（powerful，而小batch可能更noisy）如果都是串行的话，看上去更大的batch的参数更新速度更慢。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720181500186.png" srcset="/img/loading.gif" lazyload alt="image-20220720181500186"></p>
+<p>但实际上，在<strong>有并行计算条件下，比较大的 Batch Size算 Loss再进而算 Gradient所需要的时间,不一定比小的 Batch Size 要花的时间长</strong>。<strong>而更小的batch一个epoch的时间更长。</strong>（一个用于MINIST数据集上的实验如下图。）</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720181614823.png" srcset="/img/loading.gif" lazyload alt="image-20220720181614823"></p>
+<p>所以看上去big batch的时间劣势消失了，那是不是big batch更好呢？</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogblogimage-20220720182354983.png" srcset="/img/loading.gif" lazyload alt="image-20220720182354983"></p>
+<p>答案是否定的，神奇的地方是 <strong>Noisy 的 Gradient,反而可以帮助 Training</strong>。</p>
+<h5 id="同一个model，batchsize过大效果反而更差？"><a href="#同一个model，batchsize过大效果反而更差？" class="headerlink" title="同一个model，batchsize过大效果反而更差？"></a>同一个model，batchsize过大效果反而更差？</h5><p><strong>用过大的batch size optimizer可能会有问题。</strong></p>
+<p>拿不同的 Batch 来训练模型，可能会得到下图的结果：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogblogimage-20220720181614823.png" srcset="/img/loading.gif" lazyload alt="image-20220720181614823"></p>
+<p>Batch Size 越大,Validation Acc 上的结果越差。<strong>但这个不是 Overfitting，因为如果 Training也是 Batch Size 越大，Training 的结果越差。</strong></p>
+<p>现在用的是同一个模型，它们可以表示的 Function 就是一模一样的，所以这个不是 Model Bias 的问题。<strong>这个是 Optimization 的问题,代表当用大的 Batch Size 的时候, Optimization 可能会有问题，小的 Batch Size,Optimization 的结果反而是比较好的</strong>。</p>
+<h5 id="为什么小的-Batch-Size在-Training-Set-上会得到比较好的结果？"><a href="#为什么小的-Batch-Size在-Training-Set-上会得到比较好的结果？" class="headerlink" title="为什么小的 Batch Size在 Training Set 上会得到比较好的结果？"></a>为什么小的 Batch Size在 Training Set 上会得到比较好的结果？</h5><p>一个可能的解释是这样子的，如下图所示：</p>
+<ul>
+<li>假设是 Full Batch，沿著一个 Loss Function 来 Update 参数，走到一个 Local Minima&#x2F;saddle Point，显然就停下来了，Gradient 是零，可能就没办法更新参数了；</li>
+<li>假如是 Small Batch 的话，因为<strong>每次挑一个 Batch 出来算它的 Loss，所以每一次 Update 你的参数的时候，用的 Loss Function 都是略有差异的。</strong>选到第一个 Batch 的时候,，是用 L1 来算 Gradient；选到第二个 Batch 的时候，用 L2 来算Gradient。<strong>假设用 L1 算 Gradient 的时候,发现 Gradient 是零，卡住了，但 L2 它的 Function 和 L1 又不一样，L2 就不一定会卡住。</strong>所以在某一个batch卡住了没关系，还是有办法 Training Model，还是有办法让 Loss 变小。所以mini-batch这种 Noisy 的 Update 的方式，结果反而对 Training是有帮助的。</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogblogimage-20220720181718775.png" srcset="/img/loading.gif" lazyload alt="image-20220720181718775"></p>
+<h5 id="另外一个神奇的事：小的batch在testing也有帮助"><a href="#另外一个神奇的事：小的batch在testing也有帮助" class="headerlink" title="另外一个神奇的事：小的batch在testing也有帮助"></a>另外一个神奇的事：小的batch在testing也有帮助</h5><p>论文<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1609.04836">On Large-Batch Training For Deep Learning,Generalization Gap And Sharp Minima</a>中，就做了这样一个实验：努力的调big- Batch 的 Learning Rate,然后想办法把big-Batch的训练模型,跟small-Batch 训练得得一样好，结果发现<strong>small-Batch在 Testing 的时候是比较好的</strong>。</p>
+<p><strong>注意这个时候big-batch在训练集中表现和small-batch性能相似，但在测试集表现更差说明的问题才是over fitting。</strong></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogblogimage-20220720181804677.png" srcset="/img/loading.gif" lazyload alt="image-20220720181804677"></p>
+<p>为什么会这样呢？文章也给了一个解释：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogblogimage-20220720181857249.png" srcset="/img/loading.gif" lazyload alt="image-20220720181857249"></p>
+<p>假设这个实线是 Training Loss，那在这个 Training Loss 上面，可能有很多个 Local Minima，这些 Local Minima 它们的 Loss 都很低，它们 Loss 可能都趋近于 0。但是 Local Minima还是有好 Minima 跟坏 Minima 之分。</p>
+<ul>
+<li>好的Local Minima：在一个平原上（左边的）；</li>
+<li>坏的Local Minima：在一个峡谷里面（右边的）。</li>
+</ul>
+<p>为什么这么判定呢？</p>
+<p>假设现<strong>在 Training 跟 Testing 中间,有一个 Mismatch</strong>，Training 的 Loss 跟 Testing 的 Loss,它们的Function 不一样。导致这种mismatch的原因可能有两个：</p>
+<ol>
+<li>可能是本来 Training 跟 Testing 的 Distribution就不一样；</li>
+<li>那也有可能是因为 Training 跟 Testing都是从 Sample 的 Data 算出来的，也许 Training 跟 Testing Sample（采样）到的 Data 不一样，那它们算出来的 Loss,自然有一点差距。</li>
+</ol>
+<p>那我们就假设这个 Training 跟 Testing的差距就是把 Training 的 Loss,这个 Function 往右平移一点（上图虚线为testing loss）。这时候会发现，<strong>对左边这个在一个盆地的 Minima 来说，它的在 Training 跟 Testing 上面的结果,不会差太多；但是对右边这个在峡谷的 Minima 来说，就差别很大。</strong></p>
+<p>它在这个 Training Set 上算出来的 Loss 很低，但是因为 Training 跟 Testing 之间的mismatch，所以 Testing 的时候，这个 Error Surface 变化后，算出来的 Loss 就变得很大。所以猜想这个<strong>大的 Batch Size，会让模型倾向于走到峡谷里面,而小的 Batch Size,倾向于让模型走到盆地裡面</strong>：</p>
+<ul>
+<li>因为小的 Batch有很多的 Loss，每次 Update 的方向都不太一样，所以如果这个峡谷非常地窄，可能一个不小心就跳出去了，因为每次 Update 的方向都不太一样，它的 Update 的方向也就随机性，所以一个很小的峡谷，没有办法困住小的 Batch。如果峡谷很小，它可能动一下就跳出去，之后如果有一个非常宽的盆地，它才会停下来；</li>
+<li>而对于大的 Batch Size，就是顺着规定 Update，它就很有可能，走到一个比较小的峡谷里面。</li>
+</ul>
+<p><strong>但这只是一个解释，实际上这个还是一个尚待研究的问题</strong>。</p>
+<h4 id="总结batch-x2F-mini-batch"><a href="#总结batch-x2F-mini-batch" class="headerlink" title="总结batch&#x2F;mini-batch"></a>总结batch&#x2F;mini-batch</h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720182554409.png" srcset="/img/loading.gif" lazyload alt="image-20220720182554409"></p>
+<p>总的来说，大的 Batch 跟小的 Batch,它们各自有它们擅长的地方，<strong>Batch Size,变成另外一个需要去调整的 Hyperparameter。</strong>一些论文也讨论了如何兼顾鱼和熊掌，需要用一些特殊的方法来解决大的Batch Size 可能会带来的劣势：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720182628738.png" srcset="/img/loading.gif" lazyload alt="image-20220720182628738"></p>
+<h2 id="三、动量Momentum"><a href="#三、动量Momentum" class="headerlink" title="三、动量Momentum"></a>三、动量Momentum</h2><p>Momentum是另外一个有可能可以对抗 Saddle Point,或 Local Minima 的技术。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720215042864.png" srcset="/img/loading.gif" lazyload alt="image-20220720215042864"></p>
+<h4 id="传统的梯度下降"><a href="#传统的梯度下降" class="headerlink" title="传统的梯度下降"></a>传统的梯度下降</h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720215129569.png" srcset="/img/loading.gif" lazyload alt="image-20220720215129569"></p>
+<h4 id="Gradient-Descent-Momentum"><a href="#Gradient-Descent-Momentum" class="headerlink" title="Gradient Descent + Momentum"></a>Gradient Descent + Momentum</h4><p>加上 Momentum 以后,每一次在移动参数的时候,不是只往 Gradient 的反方向来移动参数,是 <strong>Gradient 的反方向+前一步移动的方向去调整去到参数</strong></p>
+<p>具体来看步骤如下：把蓝色的虚线加红色的虚线,前一步指示的方向跟 Gradient 指示的方向,当做参数下一步要移动的方向。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogblogimage-20220720215217750.png" srcset="/img/loading.gif" lazyload alt="image-20220720215217750"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720215342821.png" srcset="/img/loading.gif" lazyload alt="image-20220720215342821"></p>
+<p>下面有一个例子来展示：</p>
+<p>在第三步，Gradient 变得很小，但是没关系，如果有 Momentum 的话，根据上一步的Momentum 可以继续往前走；</p>
+<p>甚至走到第四步时，Gradient 表示应该要往左走了，但是如果前一步的影响力,比 Gradient 要大的话，还是有可能继续往右走,甚至翻过一个小丘,可能可以走到更好 Local Minima。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720215522228.png" srcset="/img/loading.gif" lazyload alt="image-20220720215522228"></p>
+<h2 id="四、自动调整学习率Adaptive-Learning-Rate"><a href="#四、自动调整学习率Adaptive-Learning-Rate" class="headerlink" title="四、自动调整学习率Adaptive Learning Rate"></a>四、自动调整学习率Adaptive Learning Rate</h2><p>critical point不一定是训练过程中最大的阻碍，思考一个问题：</p>
+<h3 id="loss不再下降的时候，gradient真的很小吗？"><a href="#loss不再下降的时候，gradient真的很小吗？" class="headerlink" title="loss不再下降的时候，gradient真的很小吗？"></a>loss不再下降的时候，gradient真的很小吗？</h3><p>并不是的。如下图所示<strong>虽然loss不再下降,但是这个gradient的大小并没有真的变得很小</strong>。它可能在error surface山谷的两个谷壁间,<strong>不断的来回的震荡</strong>。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720215654929.png" srcset="/img/loading.gif" lazyload alt="image-20220720215654929"></p>
+<p>所以有的时候训练不下去的原因不是critical point,而是其他的原因。</p>
+<p>举个例子：</p>
+<p>在下面这个error surface中，纵轴的参数变化很小就会导致结果变化很大，而横轴参数变化很大结果变化很小。</p>
+<p>如果两个参数使用同一个学习率，当学习率调的过大，在纵轴方向可能直接震荡：</p>
+<p>如果学习率调的很小，在纵轴可以逐渐找到好的参数，但是在横轴更新时，由于学习率过小，更新速度太慢，也很难找到最优解。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720215808651.png" srcset="/img/loading.gif" lazyload alt="image-20220720215808651"></p>
+<p><strong>所以可以考虑为不同的参数和不同的iteration设置不同的learning rate</strong>。</p>
+<p>上面的案例展示了学习率选择的两个大原则：</p>
+<ol>
+<li><strong>如果在某一个方向上,gradient的值很小,非常的平坦,那learning rate调大一点；</strong></li>
+<li><strong>如果在某一个方向上非常的陡峭,坡度很大,那其实learning rate可以设得小一点</strong>；</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720215915926.png" srcset="/img/loading.gif" lazyload alt="image-20220720215915926"></p>
+<h3 id="learning-rate自动调整策略：为不同的参数和不同的iteration设置不同的learning-rate"><a href="#learning-rate自动调整策略：为不同的参数和不同的iteration设置不同的learning-rate" class="headerlink" title="learning rate自动调整策略：为不同的参数和不同的iteration设置不同的learning rate"></a>learning rate自动调整策略：为不同的参数和不同的iteration设置不同的learning rate</h3><p>以一个参数\theta_iθi为例：</p>
+<p>原始策略：</p>
+<p>\theta_i^{t+1}\leftarrow \theta_i^{t}-\eta g_i^tθit+1←θit−ηgit</p>
+<p><strong>不同的参数和不同的iteration自动调整策略：</strong></p>
+<p>\theta_i^{t+1}\leftarrow \theta_i^{t}-\frac{\eta}{\sigma_t^t} g_i^tθit+1←θit−σttηgit</p>
+<p>上式中\sigma_i^tσit的<strong>下标ii代表它是depend on ii的，也就是不同参数有不同的\sigmaσ</strong>，而<strong>上标tt表示它是iteration dependent的,不同的iteration会有不同的σ</strong>。因此\frac{\eta}{\sigma_t^t}σttη变成parameter dependent的learning rate。</p>
+<p>那么如何计算\sigmaσ呢？</p>
+<p><strong>常见的计算σσ可以用gradient的Root Mean Square，这种计算方法也被用于Adagrad这一优化器中。</strong></p>
+<h4 id="用于Adagrad中的Root-mean-square"><a href="#用于Adagrad中的Root-mean-square" class="headerlink" title="用于Adagrad中的Root mean square"></a>用于Adagrad中的Root mean square</h4><p>Root mean square计算σσ是通过求历史梯度的均方根得到的，计算步骤如下图所示：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720220029769.png" srcset="/img/loading.gif" lazyload alt="image-20220720220029769"></p>
+<h5 id="为什么Root-mean-square可以做到坡度比较大的时候-learning-rate就减小-坡度比较小的时候-learning-rate就放大呢"><a href="#为什么Root-mean-square可以做到坡度比较大的时候-learning-rate就减小-坡度比较小的时候-learning-rate就放大呢" class="headerlink" title="为什么Root mean square可以做到坡度比较大的时候,learning rate就减小,坡度比较小的时候,learning rate就放大呢?"></a>为什么Root mean square可以做到坡度比较大的时候,learning rate就减小,坡度比较小的时候,learning rate就放大呢?</h5><p>看看下面这个例子：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720220135774.png" srcset="/img/loading.gif" lazyload alt="image-20220720220135774"></p>
+<p>现在我们有两个参数:ᵢ¹θᵢ¹θᵢ¹和ᵢ²θᵢ²θᵢ² ，ᵢ¹θᵢ¹θᵢ¹坡度小 ᵢ²θᵢ²θᵢ²坡度大。</p>
+<p><strong>ᵢ¹θᵢ¹θᵢ¹因为坡度小,所以在ᵢ¹θᵢ¹θᵢ¹这个参数上面,算出来的gradient值都比较小，那么σσ也比较小，\frac{\eta}{\sigma}ση就比较大。</strong></p>
+<p><strong>所以有了σσ这一项以后,就可以随iteration gradient的不同,每一个参数的gradient的不同,来自动的调整learning rate的大小。</strong></p>
+<p>但是，就算是同一个参数,它需要的learning rate,也可能会随时间而改变，于是还有进阶版的策略自适应learning rate。</p>
+<h4 id="RMSProp"><a href="#RMSProp" class="headerlink" title="RMSProp"></a>RMSProp</h4><p>同一个参数同一个方向也希望可以自适应调整，比如下面这个新月形的error surface。</p>
+<p>在水平方向（同一参数同一方向）在绿色箭头这个地方坡度比较陡峭，需要比较小的learning rate，走到了中间这一段，到了红色箭头坡度又变得平滑，需要比较大的learning rate。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogblogimage-20220720220457589.png" srcset="/img/loading.gif" lazyload alt="image-20220720220457589"></p>
+<p>RMSProp和Apagrad在计算\sigmaσ时，第一步时一样的，在第二步更新时，通过一个超参数\alphaα赋予了历史梯度和当前梯度不一样的权重（而Apagrad中是一样的权重，也就是每一个gradient同样重要）。</p>
+<p>计算过程如下图所示：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogblogimage-20220720220532679.png" srcset="/img/loading.gif" lazyload alt="image-20220720220532679"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720220720082.png" srcset="/img/loading.gif" lazyload alt="image-20220720220720082"></p>
+<p><strong>α就像learning rate一样是一个hyperparameter，需要自己调整</strong>：</p>
+<ul>
+<li>如果<strong>α设很小趋近于0</strong>,就代表我觉得<strong>ᵢ¹gᵢ¹gᵢ¹相较于之前所算出来的gradient而言,比较重要</strong>；</li>
+<li><strong>α设很大趋近于1</strong>,那就代表<strong>现在算出来的ᵢ¹gᵢ¹gᵢ¹比较不重要,之前算出来的gradient比较重要</strong>。</li>
+</ul>
+<p>举个例子看一下RMSProp的效果：</p>
+<p>下图中，一开始梯度很小，学习率较大；</p>
+<p>到第三步时，<strong>梯度变大，原来的Adagrad反应比较慢，可能还会用比较大的学习率</strong>，但如<strong>果用RMS Prop，把α设小一点，也就是让新的gradient影响比较大，可以很快的让σ的值变大，于是很快的让学习率变小</strong>。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720220828491.png" srcset="/img/loading.gif" lazyload alt="image-20220720220828491"></p>
+<p>还记得前面提到了momentum这个方法，RMSProp+momentum就得到了一个高级版的策略：Adam。</p>
+<h4 id="tips"><a href="#tips" class="headerlink" title="tips"></a>tips</h4><p>这些优化器在pytorch等框架中都写好了，其中也包括很多超参数。李宏毅老师还提到往往用默认的超参数就够好了，自己调有时候反而会调到比较差的，炼丹玄学~</p>
+<h3 id="learning-rate-scheduling"><a href="#learning-rate-scheduling" class="headerlink" title="learning rate scheduling"></a>learning rate scheduling</h3><p>现在让我们回到前面提到的error surface上，加上Adagrad方法后，训练效果如下图右下角的子图所示：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720220939506.png" srcset="/img/loading.gif" lazyload alt="image-20220720220939506"></p>
+<p>加了Adagrad以后，在横轴方向learning rate会自动变大，从而能尽快接近最优解。但我们可以看到一个奇怪的现象，走到非常接近终点的位置，梯度突然爆炸了，这是为什么呢？</p>
+<p>从Adagrad的\sigmaσ计算方式可以回答这个问题，计算σσ时，把过去所有看到的gradient,都拿来作平均：</p>
+<ul>
+<li>所以这个纵轴的方向，在初始的时候gradient很大，学习率比较小；</li>
+<li>可是继续走了很长一段路以后，gradient算出来都很小，于是y轴的方向就开始积累很小的σ；</li>
+<li>累积到一个地步以后，学习率就变很大，于是发生爆炸；</li>
+<li>爆炸后其实也没关系，因为爆炸后就走到gradient比较大的地方，于是σ又慢慢的变大，参数update学习率又慢慢的变小。</li>
+<li>但是累计一段时间又会爆炸，然后恢复，反复。</li>
+</ul>
+<p>解决这种问题的策略是<strong>learning rate scheduling</strong>，这里介绍两种：</p>
+<ol>
+<li>Learning Rate Decay（学习率衰减策略）</li>
+<li>warm up</li>
+</ol>
+<h4 id="Learning-Rate-Decay（学习率衰减策略）"><a href="#Learning-Rate-Decay（学习率衰减策略）" class="headerlink" title="Learning Rate Decay（学习率衰减策略）"></a>Learning Rate Decay（学习率衰减策略）</h4><p>在前面使用的Adagrad中，\etaη被当作一个固定的值，而learning rate scheduling是指让\etaη和时间有关，常见的策略为：Learning Rate Decay（学习率衰减策略），随着训练不断进行，参数不断更新，\etaη越来越小。</p>
+<p>于是：一开始距离终点很远，随着参数不断update，距离终点越来越近，把learning rate减小，让参数更新减速，所以前面的那个问题，加上Learning Rate Decay可以解决。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720221023280.png" srcset="/img/loading.gif" lazyload alt="image-20220720221023280"></p>
+<h4 id="warm-up"><a href="#warm-up" class="headerlink" title="warm up"></a>warm up</h4><p>Warm Up的方法是<strong>让learning rate,要先变大后变小</strong>。<strong>其中变大到多大、变大速度、变小到多小、变小速度都是超参数。</strong>如下图所示：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720221103836.png" srcset="/img/loading.gif" lazyload alt="image-20220720221103836"></p>
+<p>但是为什么需要Warm Up，为什么Warm Up有效都是待研究的问题，但在很多文献中，它就是work了，比如BERT、transformer等等模型中都用到了warm up这个技术。</p>
+<p>李宏毅老师提到了一个可能的解释：</p>
+<p> 当我们在用Adam RMS Prop，或Adagrad的时候，需要计算σ，它是一个统计的结果，<strong>σ告诉我们，某一个方向它到底有多陡,或者是多平滑</strong>，这个统计的结果，<strong>要看得够多笔数据以后才比较精确，所以一开始我们的统计是不精确的</strong>。于是我们一开始不要让参数走离初始的地方太远，先让它在初始的做一些探索。所以<strong>一开始learning rate比较小,是让它探索 收集一些有关error surface的情报</strong>，先收集有关σ的统计数据，<strong>等σ统计得比较精準以后，在让learning rate呢慢慢地增大</strong>。</p>
+<h3 id="自动调整学习率方法总结"><a href="#自动调整学习率方法总结" class="headerlink" title="自动调整学习率方法总结"></a>自动调整学习率方法总结</h3><p>我们逐步将原始梯度下降方法进行优化：</p>
+<ol>
+<li>加入momentum；</li>
+<li>加入自适应iteration和参数的\sigmaσ；</li>
+<li>使用自适应iteration的\etaη；</li>
+</ol>
+<p>注意：momentum和σσ虽然都与过去所有的gradient有关，一个放在分母，一个放在分子，但是momentum考虑了方向，而σσ只考虑了gradient的大小。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720221210996.png" srcset="/img/loading.gif" lazyload alt="image-20220720221210996"></p>
+<h2 id="另一个角度-铲平error-surface？"><a href="#另一个角度-铲平error-surface？" class="headerlink" title="另一个角度-铲平error surface？"></a>另一个角度-铲平error surface？</h2><p>之前考虑的常见都是假设error surface非常崎岖情况下怎么找到比较好的参数，但其实我们可以从error surface出发，考虑如何把error surface变成一个比较平坦的，好训练的error surface，如下图所示：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720221336605.png" srcset="/img/loading.gif" lazyload alt="image-20220720221336605"></p>
+<p>通过修改损失函数和batch normalization可能可以做到修改error surface，让模型更好训练。</p>
+<h2 id="五、损失函数loss-function"><a href="#五、损失函数loss-function" class="headerlink" title="五、损失函数loss function"></a>五、损失函数loss function</h2><p>在讲分类模型的时候，李宏毅老师解释了为什么cross entropy更常用在分类上 ，并且用一个例子展示了loss function对error surface的影响。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720222801483.png" srcset="/img/loading.gif" lazyload alt="image-20220720222801483"></p>
+<p>我们这里直接看这个例子：</p>
+<p>现在我们用下面这个模型做一个3个Class的分类任务，下面两个坐标系中的图是当loss function分别设定为Mean Square Error和Cross-entropy的时候，算出来的Error surface（₁、₂y₁、y₂y₁、y₂的变化对loss的影响）。在红色部分（左上角）loss很大，蓝紫色部分（右下角）loss比较小。所以我们希望在训练后，参数走到右下角的地方。</p>
+<p>假设<strong>我们开始的地方,都是左上角</strong>：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720221513649.png" srcset="/img/loading.gif" lazyload alt="image-20220720221513649"></p>
+<ul>
+<li>如果<strong>loss function 是Cross-Entropy</strong>，那么error surface的左上角这个地方是有斜率的，所以可以通过gradient descent一路往右下的地方走；</li>
+<li>如果<strong>loss function 是Mean square error</strong>的话，Mean square error在左上角这种Loss很大的地方，是非常平坦的，也就是说它的gradient是非常小趋近于0的。如果初始的时候在这个地方，离目标非常远，它gradient又很小，就会没有办法用gradient descent顺利的走到右下角的地方去（当然用Adam还是有可能可以成功训练起来的，不过训练起步比较慢，训练更困难）。</li>
+</ul>
+<h3 id="总结loss-function"><a href="#总结loss-function" class="headerlink" title="总结loss function"></a>总结loss function</h3><p>由此例可以发现，<strong>Loss function的定义也可能影响error surface从而影响Training，选一个合适的loss function可以改变optimization的难度。</strong></p>
+<p>这里补充一个资料，对于一些常见任务应该选择什么样的loss function进行了总结。<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39226755/article/details/89355974">深度学习中常见的激活函数与损失函数的选择与介绍</a></p>
+<h2 id="六、batch-normalization"><a href="#六、batch-normalization" class="headerlink" title="六、batch normalization"></a>六、batch normalization</h2><p>Batch Normalization是修改error surface，让模型更好训练的其中一个方法。</p>
+<p>比如现在有两个参数，<strong>它们对 Loss 的斜率差别非常大</strong>，在w_1w1这个方向上面斜率变化很小，在w_2w2这个方向上斜率变化很大。如下图左边所示。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720223040198.png" srcset="/img/loading.gif" lazyload alt="image-20220720223040198"></p>
+<p>之前提到用daptive 的 learning rate，比如Adam 等等比较进阶的 optimization 的方法去更新参数，其实另一个角度就是<strong>把这种很难训练的error surface改掉，</strong>改成下图中右边所示。</p>
+<p>于是我们需要思考：<strong>斜率差很多</strong>的这种状况，到底是哪里来的？</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogblogimage-20220720223040198.png" srcset="/img/loading.gif" lazyload alt="image-20220720223040198"></p>
+<p>假设我们的模型上图中下半部分的简单模型：</p>
+<ul>
+<li>输入的x_1很小，w_1有小小的改变，对输出y的影响比较小，对L的影响也小；</li>
+<li>如果x_2取值很大，w_2变化很小也会造成y很大的变化，于是对L的影响也大；</li>
+<li>所以如果x_1,x_2的取值范围差别过大（<strong>每一个 dimension 的值scale 差距很大</strong>）会导致不同方向斜率差别很大。</li>
+</ul>
+<p>因此，<strong>希望给不同的 dimension，同样的数值范围（转为上图右边部分），将原本的error surface变成比较好训练的error surface。</strong>可以完成这个操作的方法统称为feature normalization。</p>
+<h3 id="feature-normalization"><a href="#feature-normalization" class="headerlink" title="feature normalization"></a>feature normalization</h3><p>feature normalization可以<strong>让Loss 收敛更快一点，让梯度下降更顺利一点。</strong></p>
+<p>下面举一个常用的feature normalization方法：利用均值和方差进行标准化standardization。</p>
+<p>假设x^1x1到x^RxR是所有的训练数据的 feature vector，把所有训练数据的 feature vector ,统统都集合起来，x_1^1x11代表x_1x1的第一个 element,x_1^2x12就代表x_2x2的第一个 element,以此类推。</p>
+<p>把<strong>不同样本即不同 feature vector,同一个 dimension</strong> 里面的数值计算均值mean m_imi，并且计算第 ii 个 dimension 的标准差standard deviation \sigma_iσi。</p>
+<p>然后用下式进行<strong>标准化</strong>standardization，然后<strong>用标准化后的\tilde x_i^rx~ir作为模型的输入。</strong></p>
+<p>\tilde x_i^r \leftarrow \frac{x_i^r-m_i}{\sigma_i}x~ir←σixir−mi</p>
+<p>示意图如下：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720223310753.png" srcset="/img/loading.gif" lazyload alt="image-20220720223310753"></p>
+<p>做完 normalize 以后，这个 dimension 上面的数值平均是 0， variance是 1，所以<strong>一排数值的分布就都会在 0 上下</strong>。对每一个 dimension都做一样的 normalization,就会发现所有 feature 不同 dimension 的数值都在 0 上下，那可能就可以<strong>构造比较好的 error surface</strong>。</p>
+<h3 id="feature-normalization-for-deep-learning"><a href="#feature-normalization-for-deep-learning" class="headerlink" title="feature normalization for deep learning"></a>feature normalization for deep learning</h3><p>我们先用feature normalization对最原始的输入做了处理得到\tilde xx~，那么经过第一层参数时，我们的输入各个维度的scale就是差不多的，但是深度学习的模型都是有很多层的，像下图这样<strong>：上一层的输出是下一层的输入，那么经过了一层神经网络的特征（输出z^1z1或经过sigmoid层的输出a^1a1）各个维度可能又会有不同的scale。</strong></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720223433909.png" srcset="/img/loading.gif" lazyload alt="image-20220720223433909"></p>
+<p>所以我们可以对z或者a做normalization。这里也有一个tips：</p>
+<ul>
+<li><strong>一般来说，这个 normalization,要放在 activation function 之前,或之后都是可以的，在实操上，可能没有太大的差别</strong>。</li>
+<li>不过，如果选择的是 Sigmoid作为激活函数，那可能比较推荐对 zz 做 Feature Normalization因为Sigmoid 是一个 s 的形状，它在 0 附近斜率比较大。所以如果对z 做 Feature Normalization，把所有的值都挪到 0 附近，算 gradient 的时候值会比较大。</li>
+<li>因为激活函数不一定是选 sigmoid，所以也不一定要对zz做 Feature Normalization，如果是选别的激活函数，也许对aa做normalization可能会有好的结果。</li>
+</ul>
+<p>我们这边<strong>假设对z做feature normalization，举个例子</strong>：</p>
+<p>和之前对xx做的操作类似，对zz也是计算均值和方差，然后进行归一化：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720223624606.png" srcset="/img/loading.gif" lazyload alt="image-20220720223624606"></p>
+<p>这里有个地方需要特别注意：</p>
+<p>上图中的\muμ跟\sigmaσ ,它们其实都是根据z^1,z^2,z^3z1,z2,z3算出来的，那么：</p>
+<ul>
+<li>如果没有做feature normalization，因为\tilde xx<del>是处理后单独输入的，修改z^1z1只会影响\tilde z^1z</del>1和a^1a1；</li>
+<li>做了feature normalization后，修改z^1z1会影响\muμ和\sigmaσ，进而不仅影响\tilde z^1z<del>1和a^1a1，还会影响\tilde z^2z</del>2和a^2a2、\tilde z^3z~3和a^3a3；</li>
+<li>于是这三个 example,它们变得<strong>彼此关联</strong>了。如下图所示：</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720223724138.png" srcset="/img/loading.gif" lazyload alt="image-20220720223724138"></p>
+<p>因为彼此关联，于是整个process（包括根据feature算均值方差）就变成了network的一部分，所以现在变成一个比较大的network，如下图所示。</p>
+<ul>
+<li>之前的 network,都只输入一个 input,得到一个 output；</li>
+<li>现在有一个比较大的 network是输入一堆 input,用这堆 input 在这个 network 里面，要算出均值和方差,然后输出一堆 output。</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogblogimage-20220720223522837.png" srcset="/img/loading.gif" lazyload alt="image-20220720223522837"></p>
+<p>自然而然地产生一个问题，是不能一次性把很大的一个训练集全部输入网络中训练的，因为内存有限。</p>
+<p>再自然而然地就可以考虑不输入全部的数据，而是输入一部分（batch），每次只考虑一个batch里的样本，所以在实际操作中，是对一个batch做normalization，于是这个方法叫batch normalization。</p>
+<h3 id="normalization-in-each-batch-batch-normalization"><a href="#normalization-in-each-batch-batch-normalization" class="headerlink" title="normalization in each batch - batch normalization"></a>normalization in each batch - batch normalization</h3><p>显然一定要有一个够大的 batch，才算得出均值和方差，假设batch size&#x3D;1，那么均值和方差就没啥好算的。</p>
+<p>所以<strong>Batch Normalization适用于 batch size 比较大的时候</strong>。<strong>相当于我们用一个batch size的训练数据分布估计整个数据集的数据分布。如果 batch size 比较大，也许这个 batch size 里的 data足以表示整个 corpus 的分布</strong>。这个时候就可以把对整个 corpus做 Feature Normalization改成只在一个 batch做 Feature Normalization。</p>
+<h4 id="进阶的batch-normalization"><a href="#进阶的batch-normalization" class="headerlink" title="进阶的batch normalization"></a>进阶的batch normalization</h4><p>在做 Batch Normalization 的时候，往往还会对计算出来的\tilde zz~进行下一步操作，得到最终的\hat zz^：</p>
+<p>\hat z^i&#x3D;\gamma \odot \tilde z^i+\betaz^i&#x3D;γ⊙z~i+β</p>
+<p>其中\gammaγ和\betaβ是 network 的参数，在训练过程中被学习到的。如下图所示：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720223940669.png" srcset="/img/loading.gif" lazyload alt="image-20220720223940669"></p>
+<h5 id="为什么要加上-beta-和和和-gamma-？"><a href="#为什么要加上-beta-和和和-gamma-？" class="headerlink" title="为什么要加上$\beta 和和和\gamma$？"></a>为什么要加上$\beta 和和和\gamma$？</h5><p>有一种猜测是，<strong>做 normalization 以后feature的平均就一定是 0，这可能会给 network 一些限制，也许这个限制会带来什麼负面的影响</strong>。所以在训练的时候，将$\beta 和和和\gamma$作为训练参数，重新调整其分布，让它的 hidden layer 的 output平均不是 0 。</p>
+<p>如果是这样，那可能又会问：<strong>上一步做Batch Normalization 就是要让每一个不同的 dimension的 range 都是一样的，现在如果做这一步，不是又让 dimension 的分布不一样了吗？</strong></p>
+<p>答案是：确实有可能。以我们<strong>在初始的时候，将$\beta 内的元素都设置为，内的元素都设置为 1，内的元素都设置为1，\gamma内的元素都设置为。于是在一开始训练的时候每一个的分布是比较接近的，也许训练到后来，已经找到一个比较好的，走到一个比较好的地方以后，再慢慢调整内的元素都设置为0。</strong>于是 network 在一开始训练的时候,每一个 dimension 的分布,是比较接近的，也许训练到后来，已经找到一个比较好的 error surface，走到一个比较好的地方以后，再慢慢调整内的元素都设置为0。∗∗于是network在一开始训练的时候,每一个dimension的分布,是比较接近的，也许训练到后来，已经找到一个比较好的errorsurface，走到一个比较好的地方以后，再慢慢调整\beta 和和和\gamma$。</p>
+<h3 id="batch-normalization-for-testing-x2F-inference"><a href="#batch-normalization-for-testing-x2F-inference" class="headerlink" title="batch normalization for testing&#x2F;inference"></a>batch normalization for testing&#x2F;inference</h3><p>之前说的都是training的时候要做什么，在testing（inference）的时候，想用batch normalization会有什么问题呢？</p>
+<p>batch normalization需要一个batch的数据计算\muμ和\sigmaσ，在testing的时候，首先遇到的问题是，可能输入不够一个batch size，因为在工程上不可能等数据攒到一个batch size才开始计算输出。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720224027338.png" srcset="/img/loading.gif" lazyload alt="image-20220720224027338"></p>
+<p><strong>也就是可能根本就不是一个batch的输入，应该怎么获得\muμ和\gammaγ呢？</strong></p>
+<p>在实际操作中，如果是PyTorch 的话，Batch Normalization 在 testing 的时候，其使用的\muμ和\gammaγ是通过：如果training的时候有做 Batch Normalization 的话，在 training 的时候，<strong>每一个 batch 计算出来的\muμ和\sigmaσ 都计算moving average，然后得到平均值（\bar \muμˉ和\bar \sigmaσˉ），将这两个值作为testing的\muμ和\sigmaσ</strong>。如下图所示。</p>
+<p>moving average的计算过程是：每一次取一个 batch 出来的时候,就会算一个\mu^1μ1，取第二个 batch 出来的时候算\mu^2μ2 ,一直到取第 t 个 batch 出来的时候算\mu^tμt，利用\mu^1…\mu^{t-1}μ1…μt−1算一个平均值得到\bar \muμˉ然后结合一个超参数pp更新\bar\muμˉ。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720224107842.png" srcset="/img/loading.gif" lazyload alt="image-20220720224107842"></p>
+<p>看看加了batch normalization的训练效果：横轴是训练过程，纵轴是在验证集上的精度。</p>
+<ol>
+<li>训练速度变快，收敛速度变快；</li>
+<li>更好训练（sigmoid比较难训练，但是加入batch normalization后成功训练起来了）；</li>
+<li>如果<strong>做 Batch Normalization 的话,error surface 会比较平滑比较容易训练，所以可以把 learning rate 设大一点</strong>，（但是这里有个问题是：learning rate 设 30 倍的时候比 5 倍差，作者也没有解释为什么）。</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720224146326.png" srcset="/img/loading.gif" lazyload alt="image-20220720224146326"></p>
+<h3 id="internal-covariate-shift"><a href="#internal-covariate-shift" class="headerlink" title="internal covariate shift"></a>internal covariate shift</h3><p>在原始的 Batch Normalization那篇 paper 作者提出来一个概念,叫做 internal covariate shift。（友情先提醒这个猜测已经被推翻了）</p>
+<p>其中<strong>covariate shift</strong>是本身存在的概念：<strong>训练集和预测集样本分布不一致的问题就叫做“*covariate shift*”现象</strong>。</p>
+<p>internal covariate shift指的是：当我们在计算 B,update 到 B′ 的 gradient 的时候，这个时候前一层的参数是 A （或者说是前一层的 output 是a），那当前一层从 A 变成 A′ 的时候,它的 output 就从 a 变成 a′ 。但是我们计算这个 gradient 的时候,我们是根据这个 a 算出来的，所以这个 update 的方向,也许它<strong>适合用在 a 上,但不适合用在 a′ 上面</strong>。</p>
+<p>所以如果每次都有做 normalization,可能就会让 a 跟 a′ 的分布比较接近,也许这样就会对训练有帮助。</p>
+<p>如下图所示：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720224239724.png" srcset="/img/loading.gif" lazyload alt="image-20220720224239724"></p>
+<p>但是！</p>
+<p>有一篇 paperHow Does Batch Normalization,Help Optimization就<strong>推翻了internal covariate shift 的这一个观点</strong>。</p>
+<p>作者从各种各样的角度说明i<strong>nternal covariate shift它不一定是 training network 的时候的一个问题，且Batch Normalization会比较好不一定是因为解决了 internal covariate shift问题</strong>。</p>
+<p>作者通过比较训练时a 分布的变化发现：</p>
+<ol>
+<li><strong>不管有没有做 Batch Normalization,它的变化都不大</strong>；</li>
+<li>就算是变化很大，对 training 也没有太大的伤害；</li>
+<li>不管你是根据 a 算出来的 gradient,还是根据 a′ 算出来的 gradient,方向都差不多。</li>
+</ol>
+<p>这篇 How Does Batch Normalization,Help Optimization 论文中从实验上、也从理论上至少<strong>支持了 Batch Normalization,可以改变 error surface,让 error surface 比较不崎岖这个观点</strong>。并且说：<strong>如果我们要让 network的error surface 变得比较不崎岖，不一定要做 Batch Normalization，还有很多其他的方法（作者也试了一些其他的方法，见原文实验）</strong>，batch normalization只是一个<strong>serendipitous</strong>（意料之外的发现），恰好work了而已。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220720224403742.png" srcset="/img/loading.gif" lazyload alt="image-20220720224403742"></p>
+<h3 id="其他normalization的方法"><a href="#其他normalization的方法" class="headerlink" title="其他normalization的方法"></a>其他normalization的方法</h3><p>主要包括以下几种方法：BatchNorm（2015年）、LayerNorm（2016年）、InstanceNorm（2016年）、GroupNorm（2018年）。</p>
+<p>normalization方法和paper原文如下：</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1702.03275">Batch Renormalization</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1607.06450">Layer Normalization</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1607.08022">Instance Normalization</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1803.08494">Group Normalization</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1602.07868">Weight Normalization</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1705.10941">Spectrum Normalization</a></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Ht411g7Ef">李宏毅机器学习&amp;深度学习_哔哩哔哩_bilibili</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://linklearner.com/datawhale-homepage/index.html#/learn/detail/13">Datawhale课程笔记</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/datawhalechina/leeml-notes">课程Github仓库</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a target="_blank" rel="noopener" href="http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML17.html">课程课件资源</a>
+<a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/AI/">#AI</a>
+      
+        <a href="/tags/Marchine-Learning/">#Marchine Learning</a>
+      
+        <a href="/tags/Deep-Learning/">#Deep Learning</a>
+      
+        <a href="/tags/critical-point/">#critical point</a>
+      
+        <a href="/tags/local-minima/">#local minima</a>
+      
+        <a href="/tags/saddle-point/">#saddle point</a>
+      
+        <a href="/tags/Optimization/">#Optimization</a>
+      
+        <a href="/tags/Batch/">#Batch</a>
+      
+        <a href="/tags/momentun/">#momentun</a>
+      
+        <a href="/tags/gradient-descent/">#gradient descent</a>
+      
+        <a href="/tags/adam/">#adam</a>
+      
+        <a href="/tags/learning-rate/">#learning rate</a>
+      
+        <a href="/tags/RMSProp/">#RMSProp</a>
+      
+        <a href="/tags/learning-rate-decay/">#learning rate decay</a>
+      
+        <a href="/tags/warm-up/">#warm up</a>
+      
+        <a href="/tags/loss-function/">#loss function</a>
+      
+        <a href="/tags/batch-normalization/">#batch normalization</a>
+      
+        <a href="/tags/feature-normalization/">#feature normalization</a>
+      
+        <a href="/tags/Root-mean-square/">#Root mean square</a>
+      
+        <a href="/tags/Cross-Entropy/">#Cross-Entropy</a>
+      
+        <a href="/tags/Mean-square-error/">#Mean square error</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>优化神经网络训练-李宏毅机器学习</div>
+      <div>https://blog.baixf.tk/2022/07/20/Machine Learning/李宏毅机器学习（含深度学习）/第五章 优化神经网络训练/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年7月20日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/21/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E5%AD%A6%E4%B9%A0/Class4%20%E9%9A%90%E9%A9%AC%E5%B0%94%E7%A7%91%E5%A4%AB%E6%A8%A1%E5%9E%8BHMM/" title="Class4 隐马尔科夫模型HMM">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Class4 隐马尔科夫模型HMM</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/18/software/vscode/" title="VScode">
+                        <span class="hidden-mobile">VScode</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,875 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Kaldi aishell手札~">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Class9作业-Kaldi的aishell实例">
+<meta property="og:url" content="https://blog.baixf.tk/2022/09/15/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E5%AD%A6%E4%B9%A0/Class9%E4%BD%9C%E4%B8%9A-Kaldi%E7%9A%84aishell%E5%AE%9E%E4%BE%8B/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="Kaldi aishell手札~">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220915152136033.png">
+<meta property="article:published_time" content="2022-09-15T15:59:11.000Z">
+<meta property="article:modified_time" content="2023-01-12T14:08:04.375Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="语音识别">
+<meta property="article:tag" content="ASR">
+<meta property="article:tag" content="kaldi">
+<meta property="article:tag" content="HMM">
+<meta property="article:tag" content="MMI">
+<meta property="article:tag" content="chain model">
+<meta property="article:tag" content="单音素">
+<meta property="article:tag" content="三音素">
+<meta property="article:tag" content="状态绑定">
+<meta property="article:tag" content="aishell">
+<meta property="article:tag" content="tdnn">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220915152136033.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>Class9作业-Kaldi的aishell实例 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220915120844106.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Class9作业-Kaldi的aishell实例"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-09-15 15:59" pubdate>
+          2022年9月15日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          38k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          321 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Class9作业-Kaldi的aishell实例</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="获取数据"><a href="#获取数据" class="headerlink" title="获取数据"></a>获取数据</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/usr/bin/env bash</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Copyright 2017 Beijing Shell Shell Tech. Co. Ltd. (Authors: Hui Bu)</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">          2017 Jiayu Du</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">          2017 Xingyu Na</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">          2017 Bengu Wu</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">          2017 Hao Zheng</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Apache 2.0</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">This is a shell script, but it<span class="hljs-string">&#x27;s recommended that you run the commands one by</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">one by copying and pasting into the shell.</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">Caution: some of the graph creation steps use quite a bit of memory, so you</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">should run this on a machine that has sufficient memory.</span></span><br><br>data=/home/baixf/kaldi/egs/aishell/s5/openslr_aishell<br>data_url=www.openslr.org/resources/33<br><br>. ./cmd.sh<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">#下载并解压aishell 178小时语料库，（音频和lexicon词典）</span></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">local/download_and_untar.sh $data $data_url data_aishell || exit 1;</span></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">local/download_and_untar.sh $data $data_url resource_aishell || exit 1;</span></span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220914192150198.png" srcset="/img/loading.gif" lazyload alt="image-20220914192150198"></p>
+<h2 id="准备词典"><a href="#准备词典" class="headerlink" title="准备词典"></a>准备词典</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">准备词典</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Lexicon Preparation,</span><br>local/aishell_prepare_dict.sh $data/resource_aishell || exit 1;<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">local/aishell_prepare_dict.sh: AISHELL dict preparation succeeded<br></code></pre></td></tr></table></figure>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220914192247435.png" srcset="/img/loading.gif" lazyload alt="image-20220914192247435"></p>
+<h2 id="准备数据"><a href="#准备数据" class="headerlink" title="准备数据"></a>准备数据</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">准备数据。分成<span class="hljs-built_in">test</span>、dev、train集。</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Data Preparation,</span><br>local/aishell_data_prep.sh $data/data_aishell/wav $data/data_aishell/transcript || exit 1;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">Preparing data/local/train transcriptions<br>Preparing data/local/dev transcriptions<br>Preparing data/local/test transcriptions<br>local/aishell_data_prep.sh: AISHELL data preparation succeeded<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220914192320750.png" srcset="/img/loading.gif" lazyload alt="image-20220914192320750"></p>
+<p>其中，数据关系保存在&#x2F;data&#x2F;{train,dev,test}里，文件解释如下：</p>
+<ul>
+<li>spk2utt 包含说话人编号和说话人的语音编号的信息</li>
+<li>text 包含语音和语音编号之间的关系</li>
+<li>utt2spk 语音编号和说话人编号之间的关系</li>
+<li>wav.scp 包含了原始语音的路径信息等</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220914192300486.png" srcset="/img/loading.gif" lazyload alt="image-20220914192300486"></p>
+<h2 id="语言文件准备"><a href="#语言文件准备" class="headerlink" title="语言文件准备"></a>语言文件准备</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">词典、语言文件准备，生成对应的数据关系</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Phone Sets, questions, L compilation</span><br>utils/prepare_lang.sh --position-dependent-phones false data/local/dict \<br>    &quot;&lt;SPOKEN_NOISE&gt;&quot; data/local/lang data/lang || exit 1;<br></code></pre></td></tr></table></figure>
+<p>utils&#x2F;prepare_lang.sh 对 data&#x2F;dict 进行了处理，得到data&#x2F;lang，目的是创建L.fst：音素词典（Phonetic Dictionary or Lexicon）模型，phone symbols作为输入，word symbols作为输出，其中fst是Finite State Transducers（有限状态转换器）的缩写。选项“position_dependent_phones”指明是否使用位置相关的音素，即是否根据一个音素在词中的位置将其加上不同的后缀：“_B”（开头）、“_E”（结尾）、“_I”（中间）、“_S”（独立成词）。参数“”取自 lexicon.txt，后续处理中所有集外词（Out Of Vocabulary，OOV）都用它来代替。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br></pre></td><td class="code"><pre><code class="hljs shell">Checking data/local/dict/silence_phones.txt ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">reading data/local/dict/silence_phones.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/local/dict/silence_phones.txt is OK</span><br><br>Checking data/local/dict/optional_silence.txt ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">reading data/local/dict/optional_silence.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/local/dict/optional_silence.txt is OK</span><br><br>Checking data/local/dict/nonsilence_phones.txt ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">reading data/local/dict/nonsilence_phones.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/local/dict/nonsilence_phones.txt is OK</span><br><br>Checking disjoint: silence_phones.txt, nonsilence_phones.txt<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">disjoint property is OK.</span><br><br>Checking data/local/dict/lexicon.txt<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">reading data/local/dict/lexicon.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/local/dict/lexicon.txt is OK</span><br><br>Checking data/local/dict/extra_questions.txt ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">reading data/local/dict/extra_questions.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/local/dict/extra_questions.txt is OK</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">SUCCESS [validating dictionary directory data/local/dict]</span><br><br>**Creating data/local/dict/lexiconp.txt from data/local/dict/lexicon.txt<br>fstaddselfloops data/lang/phones/wdisambig_phones.int data/lang/phones/wdisambig_words.int <br>prepare_lang.sh: validating output directory<br>utils/validate_lang.pl data/lang<br>Checking existence of separator file<br>separator file data/lang/subword_separator.txt is empty or does not exist, deal in word case.<br>Checking data/lang/phones.txt ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones.txt is OK</span><br><br>Checking words.txt: #0 ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/words.txt is OK</span><br><br>Checking disjoint: silence.txt, nonsilence.txt, disambig.txt ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">silence.txt and nonsilence.txt are disjoint</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">silence.txt and disambig.txt are disjoint</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">disambig.txt and nonsilence.txt are disjoint</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">disjoint property is OK</span><br><br>Checking sumation: silence.txt, nonsilence.txt, disambig.txt ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">found no unexplainable phones <span class="hljs-keyword">in</span> phones.txt</span><br><br>Checking data/lang/phones/context_indep.&#123;txt, int, csl&#125; ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">1 entry/entries <span class="hljs-keyword">in</span> data/lang/phones/context_indep.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/context_indep.int corresponds to data/lang/phones/context_indep.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/context_indep.csl corresponds to data/lang/phones/context_indep.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/context_indep.&#123;txt, int, csl&#125; are OK</span><br><br>Checking data/lang/phones/nonsilence.&#123;txt, int, csl&#125; ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">216 entry/entries <span class="hljs-keyword">in</span> data/lang/phones/nonsilence.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/nonsilence.int corresponds to data/lang/phones/nonsilence.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/nonsilence.csl corresponds to data/lang/phones/nonsilence.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/nonsilence.&#123;txt, int, csl&#125; are OK</span><br><br>Checking data/lang/phones/silence.&#123;txt, int, csl&#125; ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">1 entry/entries <span class="hljs-keyword">in</span> data/lang/phones/silence.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/silence.int corresponds to data/lang/phones/silence.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/silence.csl corresponds to data/lang/phones/silence.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/silence.&#123;txt, int, csl&#125; are OK</span><br><br>Checking data/lang/phones/optional_silence.&#123;txt, int, csl&#125; ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">1 entry/entries <span class="hljs-keyword">in</span> data/lang/phones/optional_silence.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/optional_silence.int corresponds to data/lang/phones/optional_silence.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/optional_silence.csl corresponds to data/lang/phones/optional_silence.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/optional_silence.&#123;txt, int, csl&#125; are OK</span><br><br>Checking data/lang/phones/disambig.&#123;txt, int, csl&#125; ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">105 entry/entries <span class="hljs-keyword">in</span> data/lang/phones/disambig.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/disambig.int corresponds to data/lang/phones/disambig.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/disambig.csl corresponds to data/lang/phones/disambig.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/disambig.&#123;txt, int, csl&#125; are OK</span><br><br>Checking data/lang/phones/roots.&#123;txt, int&#125; ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">67 entry/entries <span class="hljs-keyword">in</span> data/lang/phones/roots.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/roots.int corresponds to data/lang/phones/roots.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/roots.&#123;txt, int&#125; are OK</span><br><br>Checking data/lang/phones/sets.&#123;txt, int&#125; ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">67 entry/entries <span class="hljs-keyword">in</span> data/lang/phones/sets.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/sets.int corresponds to data/lang/phones/sets.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/sets.&#123;txt, int&#125; are OK</span><br><br>Checking data/lang/phones/extra_questions.&#123;txt, int&#125; ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">7 entry/entries <span class="hljs-keyword">in</span> data/lang/phones/extra_questions.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/extra_questions.int corresponds to data/lang/phones/extra_questions.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/extra_questions.&#123;txt, int&#125; are OK</span><br><br>Checking optional_silence.txt ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">reading data/lang/phones/optional_silence.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/optional_silence.txt is OK</span><br><br>Checking disambiguation symbols: #0 and #1<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/disambig.txt has <span class="hljs-string">&quot;#0&quot;</span> and <span class="hljs-string">&quot;#1&quot;</span></span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/disambig.txt is OK</span><br><br>Checking topo ...<br><br>Checking word-level disambiguation symbols...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/phones/wdisambig.txt exists (newer prepare_lang.sh)</span><br>Checking data/lang/oov.&#123;txt, int&#125; ...<br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text seems to be UTF-8 or ASCII, checking whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">text contains only allowed whitespaces</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">1 entry/entries <span class="hljs-keyword">in</span> data/lang/oov.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/oov.int corresponds to data/lang/oov.txt</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/oov.&#123;txt, int&#125; are OK</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/L.fst is olabel sorted</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">data/lang/L_disambig.fst is olabel sorted</span><br><span class="hljs-meta prompt_">--&gt; </span><span class="language-bash">SUCCESS [validating lang directory data/lang]</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220914192828957.png" srcset="/img/loading.gif" lazyload alt="image-20220914192828957"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220914192839528.png" srcset="/img/loading.gif" lazyload alt="image-20220914192839528"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220914195901647.png" srcset="/img/loading.gif" lazyload alt="image-20220914195901647"></p>
+<p>lang 中生成的文件：</p>
+<ul>
+<li><p>phones.txt，将所有音素一一映射为自然数，即音素 ID，引入“”（epsilon）、消歧（Disambiguation）符号“#n”（n 为自然数）， 便于 FST 处理，符号表（symbol-table）文件，符合 OpenFst 的格式定义，一般只有脚本 utils&#x2F;int2sym.pl、 utils&#x2F;sym2int.pl 和 OpenFst 中的程序fstcompile 和 fstprint 会读取这些文件。</p>
+</li>
+<li><p>words.txt，将词一一映射为自然数，即词ID，引入“”（epsilon）、消歧符号 “#0”、“”（句子起始处）、“”（句子结尾处），便于 FST 处理，符号表（symbol-table）文件，符合 OpenFst 的格式定义，一般只有脚本 utils&#x2F;int2sym.pl、 utils&#x2F;sym2int.pl 和 OpenFst 中的程序fstcompile 和 fstprint 会读取这些文件。</p>
+</li>
+<li><p>oov.txt，oov.int，集外词的替代者（此处为）及其在words.txt 中的ID。在训练过程中，所有词汇表以外的词都会被映射为这个词（UNK 即unknown）。“” 本身并没有特殊的地方，也不一定非要用这个词。重要的是需要保证这个词的发音只包含一个被指定为“垃圾音素”（garbage phone）的音素。该音素会与各种口语噪声对齐。在我们的这个特别设置中，该音素被称为，就是“spoken noise” 的缩写。</p>
+</li>
+<li><p>topo，各个音素HMM模型的拓扑图，第二章提过将一个音素（或三音素）表示成一个HMM，此文件确定了每个音素使用的HMM状态数以及转移概率，用于初始化单音素GMM-HMM，可根据需要自行进行修改（并用utils&#x2F;validate_lang.pl校验），实验中静音音素用了5个状态，其他音素用了3个状态；</p>
+</li>
+<li><p>L.fst，L_disambig.fst，发音词典转换成的FST形式的词典，即输入是音素，输出是词，两个 FST的区别在于后者考虑了消歧，包含了为消歧而引入的符号，诸如#1、#2之类，以及为自环（self-loop） 而引入的#0。</p>
+</li>
+<li><p>phones&#x2F;，是dict&#x2F; 的拓展，内部文件均可以文本形式打开查看，后缀为 txt&#x2F;int&#x2F;csl 的同名文件之间是相互转换的，其中 context_indep.txt 包含一个音素列表，用于建立文本无关的模型， wdisambig.txt&#x2F;wdisambig_phones.int&#x2F;wdisambig_words.int 分别标明了words.txt 引入的消歧符号（#0）及其在phones.txt 和words.txt 中的ID， roots.txt 定义了同一行音素的各个状态是否共享决策树的根以及是否拆分，对应的音素集则存放于sets.txt，extra_questions.txt 包含那些自动产生的问题集之外的一些问题，optional_silence.txt 只含有一个音素，该音素可在需要的时候出现在词之间，disambig.txt 包含一个“消岐符号” 列表 (见 Disambiguation symbols)，silence.txt 和 nonsilence.txt 分别包含静音音素列表和非静音音素列表。。</p>
+</li>
+</ul>
+<p>消歧是为了确保发音词典能够得到一个确定性的（Deterministic） WFST。 如果有些词对应的音素串是另一些词音素串的前缀，比如 good 的音素串是 goodness 的前半段音素串，需要在前者对应的音素串后面加入消歧音素，破坏这种前缀关系，这样， WFST 中一个词的路径就不会包含于另一个词的路径中。</p>
+<h2 id="语言模型"><a href="#语言模型" class="headerlink" title="语言模型"></a>语言模型</h2><p>语言模型方面，可以单独提供 ARPA 格式的统计语言模型，也可以由现有文本训练出来（如使用 Kaldi LM 工具或 SRILM 工具包的 ngram-count ，具体训练方法可参照本案例egs&#x2F;aishell&#x2F;s5&#x2F;local&#x2F;aishell_train_lms.sh）。</p>
+<p>这个shell脚本读取<code>data/local/train/text</code>,<code>data/local/dict/lexicon.txt</code> 得到text的计数文件<code>word.counts</code>并以<code>word.counts</code>为基础添加<code>lexicon.txt</code>中的字（除了SIL）出现的次数到<code>unigram.counts</code>中。我就没深入看下去了，期间用到的脚本文件有:<code>get_word_map.pl</code>、<code>train_lm.sh --arpa --lmtype 3gram-mincount $dir || exit 1</code>;这个步骤的结果保存在<code>data/local/lm/3gram-mincount/lm_unpruned.gz</code>中。 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">LM training</span><br>local/aishell_train_lms.sh || exit 1;<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br></pre></td><td class="code"><pre><code class="hljs shell">Getting raw N-gram counts<br>discount_ngrams: for n-gram order 1, D=0.000000, tau=0.000000 phi=1.000000<br>discount_ngrams: for n-gram order 2, D=0.000000, tau=0.000000 phi=1.000000<br>discount_ngrams: for n-gram order 3, D=1.000000, tau=0.000000 phi=1.000000<br>Iteration 1/6 of optimizing discounting parameters<br>discount_ngrams: for n-gram order 1, D=0.600000, tau=0.675000 phi=2.000000<br>discount_ngrams: for n-gram order 2, D=0.800000, tau=0.675000 phi=2.000000<br>discount_ngrams: for n-gram order 3, D=0.000000, tau=0.825000 phi=2.000000<br>discount_ngrams: for n-gram order 1, D=0.600000, tau=0.900000 phi=2.000000<br>discount_ngrams: for n-gram order 2, D=0.800000, tau=0.900000 phi=2.000000<br>discount_ngrams: for n-gram order 3, D=0.000000, tau=1.100000 phi=2.000000<br>discount_ngrams: for n-gram order 1, D=0.600000, tau=1.215000 phi=2.000000<br>discount_ngrams: for n-gram order 2, D=0.800000, tau=1.215000 phi=2.000000<br>discount_ngrams: for n-gram order 3, D=0.000000, tau=1.485000 phi=2.000000<br>interpolate_ngrams: 137074 words in wordslist<br>interpolate_ngrams: 137074 words in wordslist<br>interpolate_ngrams: 137074 words in wordslist<br>Perplexity over 99496.000000 words is 573.088187<br>Perplexity over 99496.000000 words (excluding 0.000000 OOVs) is 573.088187<br><br>real    0m2.755s<br>user    0m3.710s<br>sys     0m0.118s<br>Perplexity over 99496.000000 words is 571.860357<br>Perplexity over 99496.000000 words (excluding 0.000000 OOVs) is 571.860357<br><br>real    0m2.865s<br>user    0m3.681s<br>sys     0m0.157s<br>Perplexity over 99496.000000 words is 571.430399<br>Perplexity over 99496.000000 words (excluding 0.000000 OOVs) is 571.430399<br><br>real    0m2.962s<br>user    0m3.928s<br>sys     0m0.094s<br>Projected perplexity change from setting alpha=-0.413521475380432 is 571.860357-&gt;571.350704659834, reduction of 0.509652340166213<br>Alpha value on iter 1 is -0.413521475380432<br>Iteration 2/6 of optimizing discounting parameters<br>discount_ngrams: for n-gram order 1, D=0.600000, tau=0.527831 phi=2.000000<br>discount_ngrams: for n-gram order 2, D=0.800000, tau=0.527831 phi=2.000000<br>discount_ngrams: for n-gram order 3, D=0.000000, tau=0.483845 phi=2.000000<br>discount_ngrams: for n-gram order 1, D=0.600000, tau=0.527831 phi=2.000000<br>discount_ngrams: for n-gram order 2, D=0.800000, tau=0.527831 phi=2.000000<br>discount_ngrams: for n-gram order 3, D=0.000000, tau=0.645126 phi=2.000000<br>discount_ngrams: for n-gram order 1, D=0.600000, tau=0.527831 phi=2.000000<br>discount_ngrams: for n-gram order 2, D=0.800000, tau=0.527831 phi=2.000000<br>discount_ngrams: for n-gram order 3, D=0.000000, tau=0.870921 phi=2.000000<br>interpolate_ngrams: 137074 words in wordslist<br>interpolate_ngrams: 137074 words in wordslist<br>interpolate_ngrams: 137074 words in wordslist<br>Perplexity over 99496.000000 words is 570.548231<br>Perplexity over 99496.000000 words (excluding 0.000000 OOVs) is 570.548231<br><br>real    0m2.819s<br>user    0m3.762s<br>sys     0m0.135s<br>Perplexity over 99496.000000 words is 570.909914<br>Perplexity over 99496.000000 words (excluding 0.000000 OOVs) is 570.909914<br><br>real    0m2.870s<br>user    0m3.817s<br>sys     0m0.122s<br>Perplexity over 99496.000000 words is 570.209333<br>Perplexity over 99496.000000 words (excluding 0.000000 OOVs) is 570.209333<br><br>real    0m2.936s<br>user    0m3.883s<br>sys     0m0.103s<br>optimize_alpha.pl: alpha=0.782133003937562 is too positive, limiting it to 0.7<br>Projected perplexity change from setting alpha=0.7 is 570.548231-&gt;570.0658029, reduction of 0.482428099999765<br>Alpha value on iter 2 is 0.7<br>Iteration 3/6 of optimizing discounting parameters<br>discount_ngrams: for n-gram order 1, D=0.600000, tau=0.527831 phi=2.000000<br>discount_ngrams: for n-gram order 2, D=0.800000, tau=0.527831 phi=2.000000<br>discount_ngrams: for n-gram order 3, D=0.000000, tau=1.096715 phi=1.750000<br>discount_ngrams: for n-gram order 1, D=0.600000, tau=0.527831 phi=2.000000<br>discount_ngrams: for n-gram order 2, D=0.800000, tau=0.527831 phi=2.000000<br>discount_ngrams: for n-gram order 3, D=0.000000, tau=1.096715 phi=2.000000<br>discount_ngrams: for n-gram order 1, D=0.600000, tau=0.527831 phi=2.000000<br>discount_ngrams: for n-gram order 2, D=0.800000, tau=0.527831 phi=2.000000<br>discount_ngrams: for n-gram order 3, D=0.000000, tau=1.096715 phi=2.350000<br>interpolate_ngrams: 137074 words in wordslist<br>interpolate_ngrams: 137074 words in wordslist<br>interpolate_ngrams: 137074 words in wordslist<br>Perplexity over 99496.000000 words is 570.070852<br>Perplexity over 99496.000000 words (excluding 0.000000 OOVs) is 570.070852<br><br>real    0m2.858s<br>user    0m3.681s<br>sys     0m0.171s<br>Perplexity over 99496.000000 words is 570.135232<br>Perplexity over 99496.000000 words (excluding 0.000000 OOVs) is 570.135232<br><br>real    0m2.960s<br>user    0m3.826s<br>sys     0m0.112s<br>Perplexity over 99496.000000 words is 570.074175<br>Perplexity over 99496.000000 words (excluding 0.000000 OOVs) is 570.074175<br><br>real    0m3.036s<br>user    0m3.902s<br>sys     0m0.116s<br>Projected perplexity change from setting alpha=-0.149743638839048 is 570.074175-&gt;570.068152268062, reduction of 0.00602273193794645<br>Alpha value on iter 3 is -0.149743638839048<br>Iteration 4/6 of optimizing discounting parameters<br>discount_ngrams: for n-gram order 1, D=0.600000, tau=0.527831 phi=2.000000<br>discount_ngrams: for n-gram order 2, D=0.600000, tau=0.527831 phi=2.000000<br>discount_ngrams: for n-gram order 3, D=0.000000, tau=1.096715 phi=1.850256<br>discount_ngrams: for n-gram order 1, D=0.600000, tau=0.527831 phi=2.000000<br>discount_ngrams: for n-gram order 2, D=0.800000, tau=0.527831 phi=2.000000<br>discount_ngrams: for n-gram order 3, D=0.000000, tau=1.096715 phi=1.850256<br>discount_ngrams: for n-gram order 1, D=0.600000, tau=0.527831 phi=2.000000<br>discount_ngrams: for n-gram order 2, D=1.080000, tau=0.527831 phi=2.000000<br>discount_ngrams: for n-gram order 3, D=0.000000, tau=1.096715 phi=1.850256<br>interpolate_ngrams: 137074 words in wordslist<br>interpolate_ngrams: 137074 words in wordslist<br>interpolate_ngrams: 137074 words in wordslist<br>Perplexity over 99496.000000 words is 651.559076<br>Perplexity over 99496.000000 words (excluding 0.000000 OOVs) is 651.559076<br><br>real    0m2.060s<br>user    0m2.633s<br>sys     0m0.083s<br>Perplexity over 99496.000000 words is 571.811721<br>Perplexity over 99496.000000 words (excluding 0.000000 OOVs) is 571.811721<br><br>real    0m2.819s<br>user    0m3.796s<br>sys     0m0.074s<br>Perplexity over 99496.000000 words is 570.079098<br>Perplexity over 99496.000000 words (excluding 0.000000 OOVs) is 570.079098<br><br>real    0m2.838s<br>user    0m3.780s<br>sys     0m0.092s<br>Projected perplexity change from setting alpha=-0.116327143544381 is 570.079098-&gt;564.672375993263, reduction of 5.40672200673657<br>Alpha value on iter 4 is -0.116327143544381<br>Iteration 5/6 of optimizing discounting parameters<br>discount_ngrams: for n-gram order 1, D=0.600000, tau=0.527831 phi=2.000000<br>discount_ngrams: for n-gram order 2, D=0.706938, tau=0.395873 phi=2.000000<br>discount_ngrams: for n-gram order 3, D=0.000000, tau=1.096715 phi=1.850256<br>discount_ngrams: for n-gram order 1, D=0.600000, tau=0.527831 phi=2.000000<br>discount_ngrams: for n-gram order 2, D=0.706938, tau=0.527831 phi=2.000000<br>discount_ngrams: for n-gram order 3, D=0.000000, tau=1.096715 phi=1.850256<br>discount_ngrams: for n-gram order 1, D=0.600000, tau=0.527831 phi=2.000000<br>discount_ngrams: for n-gram order 2, D=0.706938, tau=0.712571 phi=2.000000<br>discount_ngrams: for n-gram order 3, D=0.000000, tau=1.096715 phi=1.850256<br>interpolate_ngrams: 137074 words in wordslist<br>interpolate_ngrams: 137074 words in wordslist<br>interpolate_ngrams: 137074 words in wordslist<br>Perplexity over 99496.000000 words is 567.407206<br>Perplexity over 99496.000000 words (excluding 0.000000 OOVs) is 567.407206<br><br>real    0m2.902s<br>user    0m3.781s<br>sys     0m0.089s<br>Perplexity over 99496.000000 words is 567.980179<br>Perplexity over 99496.000000 words (excluding 0.000000 OOVs) is 567.980179<br><br>real    0m2.935s<br>user    0m3.839s<br>sys     0m0.118s<br>Perplexity over 99496.000000 words is 567.231151<br>Perplexity over 99496.000000 words (excluding 0.000000 OOVs) is 567.231151<br><br>real    0m2.987s<br>user    0m3.944s<br>sys     0m0.123s<br>Projected perplexity change from setting alpha=0.259356959958262 is 567.407206-&gt;567.206654822021, reduction of 0.20055117797915<br>Alpha value on iter 5 is 0.259356959958262<br>Iteration 6/6 of optimizing discounting parameters<br>discount_ngrams: for n-gram order 1, D=0.600000, tau=0.527831 phi=2.000000<br>discount_ngrams: for n-gram order 2, D=0.706938, tau=0.664727 phi=1.750000<br>discount_ngrams: for n-gram order 3, D=0.000000, tau=1.096715 phi=1.850256<br>discount_ngrams: for n-gram order 1, D=0.600000, tau=0.527831 phi=2.000000<br>discount_ngrams: for n-gram order 2, D=0.706938, tau=0.664727 phi=2.000000<br>discount_ngrams: for n-gram order 3, D=0.000000, tau=1.096715 phi=1.850256<br>discount_ngrams: for n-gram order 1, D=0.600000, tau=0.527831 phi=2.000000<br>discount_ngrams: for n-gram order 2, D=0.706938, tau=0.664727 phi=2.350000<br>discount_ngrams: for n-gram order 3, D=0.000000, tau=1.096715 phi=1.850256<br>interpolate_ngrams: 137074 words in wordslist<br>interpolate_ngrams: 137074 words in wordslist<br>interpolate_ngrams: 137074 words in wordslist<br>Perplexity over 99496.000000 words is 567.478625<br>Perplexity over 99496.000000 words (excluding 0.000000 OOVs) is 567.478625<br><br>real    0m2.914s<br>user    0m3.796s<br>sys     0m0.153s<br>Perplexity over 99496.000000 words is 567.181130<br>Perplexity over 99496.000000 words (excluding 0.000000 OOVs) is 567.181130<br><br>real    0m2.932s<br>user    0m3.816s<br>sys     0m0.154s<br>Perplexity over 99496.000000 words is 567.346876<br>Perplexity over 99496.000000 words (excluding 0.000000 OOVs) is 567.346876<br><br>real    0m3.047s<br>user    0m4.029s<br>sys     0m0.099s<br>optimize_alpha.pl: alpha=2.83365708509299 is too positive, limiting it to 0.7<br>Projected perplexity change from setting alpha=0.7 is 567.346876-&gt;567.0372037, reduction of 0.309672299999761<br>Alpha value on iter 6 is 0.7<br>Final config is:<br>D=0.6 tau=0.527830672157611 phi=2<br>D=0.706938285164495 tau=0.664727230661135 phi=2.7<br>D=0 tau=1.09671484103859 phi=1.85025636116095<br>Discounting N-grams.<br>discount_ngrams: for n-gram order 1, D=0.600000, tau=0.527831 phi=2.000000<br>discount_ngrams: for n-gram order 2, D=0.706938, tau=0.664727 phi=2.700000<br>discount_ngrams: for n-gram order 3, D=0.000000, tau=1.096715 phi=1.850256<br>Computing final perplexity<br>Building ARPA LM (perplexity computation is in background)<br>interpolate_ngrams: 137074 words in wordslist<br>interpolate_ngrams: 137074 words in wordslist<br>Perplexity over 99496.000000 words is 567.320537<br>Perplexity over 99496.000000 words (excluding 0.000000 OOVs) is 567.320537<br>567.320537<br>Done training LM of type 3gram-mincount<br></code></pre></td></tr></table></figure>
+
+<h2 id="LG-composition"><a href="#LG-composition" class="headerlink" title="LG composition"></a>LG composition</h2><p>utils&#x2F;format_lm.sh 将该语言模型转换为G.fst，即输入是词，输出也是词，与 data&#x2F;lang 中的文件一同放在 data&#x2F;lang_test 下，用于后面制作解码图，与模型的训练无关。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">G compilation, check LG composition</span><br>utils/format_lm.sh data/lang data/local/lm/3gram-mincount/lm_unpruned.gz \<br>    data/local/dict/lexicon.txt data/lang_test || exit 1;<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">Converting &#x27;data/local/lm/3gram-mincount/lm_unpruned.gz&#x27; to FST<br>arpa2fst --disambig-symbol=#0 --read-symbol-table=data/lang_test/words.txt - data/lang_test/G.fst <br>LOG (arpa2fst[5.5.1050~1-0fb50]:Read():arpa-file-parser.cc:94) Reading \data\ section.<br>LOG (arpa2fst[5.5.1050~1-0fb50]:Read():arpa-file-parser.cc:149) Reading \1-grams: section.<br>LOG (arpa2fst[5.5.1050~1-0fb50]:Read():arpa-file-parser.cc:149) Reading \2-grams: section.<br>LOG (arpa2fst[5.5.1050~1-0fb50]:Read():arpa-file-parser.cc:149) Reading \3-grams: section.<br>LOG (arpa2fst[5.5.1050~1-0fb50]:RemoveRedundantStates():arpa-lm-compiler.cc:359) Reduced num-states from 561655 to 102646<br>fstisstochastic data/lang_test/G.fst <br>8.84583e-06 -0.56498<br>Succeeded in formatting LM: &#x27;data/local/lm/3gram-mincount/lm_unpruned.gz&#x27;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220915101721338.png" srcset="/img/loading.gif" lazyload alt="image-20220915101721338"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220914230245746.png" srcset="/img/loading.gif" lazyload alt="image-20220914230245746"></p>
+<h2 id="MFCC特征提取"><a href="#MFCC特征提取" class="headerlink" title="MFCC特征提取"></a>MFCC特征提取</h2><p>这里还计算了倒谱均值方差归一化（Cepstral Mean and Variance Normalization，CMVN）系数用于声学特征的规整化，该方法旨在提高声学特征对说话人、录音设备、环境、音量等因素的鲁棒性。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">提取MFCC特征并算倒谱均值和方差归一化</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Now make MFCC plus pitch features.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">mfccdir should be some place with a largish disk <span class="hljs-built_in">where</span> you</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">want to store MFCC features.</span><br>mfccdir=mfcc<br>for x in train dev test; do<br>  steps/make_mfcc_pitch.sh --cmd &quot;$train_cmd&quot; --nj 10 data/$x exp/make_mfcc/$x $mfccdir || exit 1;<br>  steps/compute_cmvn_stats.sh data/$x exp/make_mfcc/$x $mfccdir || exit 1;<br>  utils/fix_data_dir.sh data/$x || exit 1;<br>done<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs shell">utils/validate_data_dir.sh: Successfully validated data-directory data/train<br>steps/make_mfcc_pitch.sh: [info]: no segments file exists: assuming wav.scp indexed by utterance.<br>steps/make_mfcc_pitch.sh: Succeeded creating MFCC and pitch features for train<br>steps/compute_cmvn_stats.sh data/train exp/make_mfcc/train mfcc<br>Succeeded creating CMVN stats for train<br>fix_data_dir.sh: kept all 120098 utterances.<br>fix_data_dir.sh: old files are kept in data/train/.backup<br>steps/make_mfcc_pitch.sh --cmd run.pl --nj 10 data/dev exp/make_mfcc/dev mfcc<br>utils/validate_data_dir.sh: Successfully validated data-directory data/dev<br>steps/make_mfcc_pitch.sh: [info]: no segments file exists: assuming wav.scp indexed by utterance.<br>steps/make_mfcc_pitch.sh: Succeeded creating MFCC and pitch features for dev<br>steps/compute_cmvn_stats.sh data/dev exp/make_mfcc/dev mfcc<br>Succeeded creating CMVN stats for dev<br>fix_data_dir.sh: kept all 14326 utterances.<br>fix_data_dir.sh: old files are kept in data/dev/.backup<br>steps/make_mfcc_pitch.sh --cmd run.pl --nj 10 data/test exp/make_mfcc/test mfcc<br>utils/validate_data_dir.sh: Successfully validated data-directory data/test<br>steps/make_mfcc_pitch.sh: [info]: no segments file exists: assuming wav.scp indexed by utterance.<br>steps/make_mfcc_pitch.sh: Succeeded creating MFCC and pitch features for test<br>steps/compute_cmvn_stats.sh data/test exp/make_mfcc/test mfcc<br>Succeeded creating CMVN stats for test<br>fix_data_dir.sh: kept all 7176 utterances.<br>fix_data_dir.sh: old files are kept in data/test/.backup<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220914234138420.png" srcset="/img/loading.gif" lazyload alt="image-20220914234138420"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220914234111224.png" srcset="/img/loading.gif" lazyload alt="image-20220914234111224"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220914234240519.png" srcset="/img/loading.gif" lazyload alt="image-20220914234240519"></p>
+<h2 id="单音素训练"><a href="#单音素训练" class="headerlink" title="单音素训练"></a>单音素训练</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">单音素训练</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Train a monophone model on delta features.</span><br>steps/train_mono.sh --cmd &quot;$train_cmd&quot; --nj 10 \<br>  data/train data/lang exp/mono || exit 1;<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><code class="hljs shell">steps/train_mono.sh: Initializing monophone system.<br>steps/train_mono.sh: Compiling training graphs<br>steps/train_mono.sh: Aligning data equally (pass 0)<br>steps/train_mono.sh: Pass 1<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 2<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 3<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 4<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 5<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 6<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 7<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 8<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 9<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 10<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 11<br>steps/train_mono.sh: Pass 12<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 13<br>steps/train_mono.sh: Pass 14<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 15<br>steps/train_mono.sh: Pass 16<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 17<br>steps/train_mono.sh: Pass 18<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 19<br>steps/train_mono.sh: Pass 20<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 21<br>steps/train_mono.sh: Pass 22<br>steps/train_mono.sh: Pass 23<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 24<br>steps/train_mono.sh: Pass 25<br>steps/train_mono.sh: Pass 26<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 27<br>steps/train_mono.sh: Pass 28<br>steps/train_mono.sh: Pass 29<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 30<br>steps/train_mono.sh: Pass 31<br>steps/train_mono.sh: Pass 32<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 33<br>steps/train_mono.sh: Pass 34<br>steps/train_mono.sh: Pass 35<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 36<br>steps/train_mono.sh: Pass 37<br>steps/train_mono.sh: Pass 38<br>steps/train_mono.sh: Aligning data<br>steps/train_mono.sh: Pass 39<br>steps/diagnostic/analyze_alignments.sh --cmd run.pl data/lang exp/mono<br>steps/diagnostic/analyze_alignments.sh: see stats in exp/mono/log/analyze_alignments.log<br>1130 warnings in exp/mono/log/acc.*.*.log<br>36952 warnings in exp/mono/log/align.*.*.log<br>exp/mono: nj=10 align prob=-82.04 over 150.16h [retry=0.9%, fail=0.0%] states=203 gauss=987<br>steps/train_mono.sh: Done training monophone system in exp/mono<br></code></pre></td></tr></table></figure>
+
+<p>之后会在 exp 文件夹下产生一个 mono 的目录，里面以 .mdl 结尾的就保存了模型的参数。使用下面的命令可以查看模型的内容。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">~/kaldi/src/gmmbin/gmm-copy --binary=false final.mdl - | less<br>~/kaldi/src/gmmbin/gmm-copy --binary=false final.mdl final.txt<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220915012711858.png" srcset="/img/loading.gif" lazyload alt="image-20220915012711858"></p>
+<h2 id="构建单音素解码图"><a href="#构建单音素解码图" class="headerlink" title="构建单音素解码图"></a>构建单音素解码图</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">构建单音素解码图</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Decode with the monophone model.</span><br>utils/mkgraph.sh data/lang_test exp/mono exp/mono/graph || exit 1;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs shell">tree-info exp/mono/tree <br>tree-info exp/mono/tree <br>fsttablecompose data/lang_test/L_disambig.fst data/lang_test/G.fst <br>fstpushspecial <br>fstminimizeencoded <br>fstdeterminizestar --use-log=true <br>fstisstochastic data/lang_test/tmp/LG.fst <br>-0.0663446 -0.0666824<br>[info]: LG not stochastic.<br>fstcomposecontext --context-size=1 --central-position=0 --read-disambig-syms=data/lang_test/phones/disambig.int --write-disambig-syms=data/lang_test/tmp/disambig_ilabels_1_0.int data/lang_test/tmp/ilabels_1_0.6866 data/lang_test/tmp/LG.fst <br>fstisstochastic data/lang_test/tmp/CLG_1_0.fst <br>-0.0663446 -0.0666824<br>[info]: CLG not stochastic.<br>make-h-transducer --disambig-syms-out=exp/mono/graph/disambig_tid.int --transition-scale=1.0 data/lang_test/tmp/ilabels_1_0 exp/mono/tree exp/mono/final.mdl <br>fsttablecompose exp/mono/graph/Ha.fst data/lang_test/tmp/CLG_1_0.fst <br>fstdeterminizestar --use-log=true <br>fstminimizeencoded <br>fstrmsymbols exp/mono/graph/disambig_tid.int <br>fstrmepslocal <br>fstisstochastic exp/mono/graph/HCLGa.fst <br>0.000244693 -0.132761<br>HCLGa is not stochastic<br>add-self-loops --self-loop-scale=0.1 --reorder=true exp/mono/final.mdl exp/mono/graph/HCLGa.fst <br></code></pre></td></tr></table></figure>
+
+<p><code>mkgraph.sh</code>主要生成了<code>HCLG.fst</code>和<code>words.txt</code>这两个重要的文件，后续识别主要利用了三个文件，分别是<code>final.mdl</code>、<code>HCLG.fst</code>、<code>words.txt</code>。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220915091144774.png" srcset="/img/loading.gif" lazyload alt="image-20220915091144774"></p>
+<h2 id="单音素解码"><a href="#单音素解码" class="headerlink" title="单音素解码"></a>单音素解码</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">解码：分别针对开发集和测试集解码</span><br>steps/decode.sh --cmd &quot;$decode_cmd&quot; --config conf/decode.config --nj 10 \<br>  exp/mono/graph data/dev exp/mono/decode_dev<br>steps/decode.sh --cmd &quot;$decode_cmd&quot; --config conf/decode.config --nj 10 \<br>  exp/mono/graph data/test exp/mono/decode_test<br></code></pre></td></tr></table></figure>
+
+<p>解码的日志会保存在 exp&#x2F;mono&#x2F;decode_dev&#x2F;log 和 exp&#x2F;mono&#x2F;decode_test&#x2F;log 里。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs shell">decode.sh: feature type is delta<br>steps/diagnostic/analyze_lats.sh --cmd run.pl  exp/mono/graph exp/mono/decode_dev<br>steps/diagnostic/analyze_lats.sh: see stats in exp/mono/decode_dev/log/analyze_alignments.log<br>Overall, lattice depth (10,50,90-percentile)=(1,16,133) and mean=49.7<br>steps/diagnostic/analyze_lats.sh: see stats in exp/mono/decode_dev/log/analyze_lattice_depth_stats.log<br>+ steps/score_kaldi.sh --cmd &#x27;run.pl &#x27; data/dev exp/mono/graph exp/mono/decode_dev<br>steps/score_kaldi.sh --cmd run.pl  data/dev exp/mono/graph exp/mono/decode_dev<br>steps/score_kaldi.sh: scoring with word insertion penalty=0.0,0.5,1.0<br>+ steps/scoring/score_kaldi_cer.sh --stage 2 --cmd &#x27;run.pl &#x27; data/dev exp/mono/graph exp/mono/decode_dev<br>steps/scoring/score_kaldi_cer.sh --stage 2 --cmd run.pl  data/dev exp/mono/graph exp/mono/decode_dev<br>steps/scoring/score_kaldi_cer.sh: scoring with word insertion penalty=0.0,0.5,1.0<br>+ echo &#x27;local/score.sh: Done&#x27;<br>local/score.sh: Done<br>steps/decode.sh --cmd run.pl  --config conf/decode.config --nj 10 exp/mono/graph data/test exp/mono/decode_test<br>decode.sh: feature type is delta<br>steps/diagnostic/analyze_lats.sh --cmd run.pl  exp/mono/graph exp/mono/decode_test<br>steps/diagnostic/analyze_lats.sh: see stats in exp/mono/decode_test/log/analyze_alignments.log<br>Overall, lattice depth (10,50,90-percentile)=(1,20,156) and mean=57.9<br>steps/diagnostic/analyze_lats.sh: see stats in exp/mono/decode_test/log/analyze_lattice_depth_stats.log<br>+ steps/score_kaldi.sh --cmd &#x27;run.pl &#x27; data/test exp/mono/graph exp/mono/decode_test<br>steps/score_kaldi.sh --cmd run.pl  data/test exp/mono/graph exp/mono/decode_test<br>steps/score_kaldi.sh: scoring with word insertion penalty=0.0,0.5,1.0<br>+ steps/scoring/score_kaldi_cer.sh --stage 2 --cmd &#x27;run.pl &#x27; data/test exp/mono/graph exp/mono/decode_test<br>steps/scoring/score_kaldi_cer.sh --stage 2 --cmd run.pl  data/test exp/mono/graph exp/mono/decode_test<br>steps/scoring/score_kaldi_cer.sh: scoring with word insertion penalty=0.0,0.5,1.0<br>+ echo &#x27;local/score.sh: Done&#x27;<br>local/score.sh: Done<br></code></pre></td></tr></table></figure>
+
+<h2 id="单音素对齐"><a href="#单音素对齐" class="headerlink" title="单音素对齐"></a>单音素对齐</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">Get alignments from monophone system.</span><br>steps/align_si.sh --cmd &quot;$train_cmd&quot; --nj 10 \<br>  data/train data/lang exp/mono exp/mono_ali || exit 1;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">steps/align_si.sh: feature type is delta<br>steps/align_si.sh: aligning data in data/train using model from exp/mono, putting alignments in exp/mono_ali<br>steps/diagnostic/analyze_alignments.sh --cmd run.pl data/lang exp/mono_ali<br>steps/diagnostic/analyze_alignments.sh: see stats in exp/mono_ali/log/analyze_alignments.log<br>steps/align_si.sh: done aligning data.<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220915121625488.png" srcset="/img/loading.gif" lazyload alt="image-20220915121625488"></p>
+<h2 id="三音素模型"><a href="#三音素模型" class="headerlink" title="三音素模型"></a>三音素模型</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">训练上下文相关的三音素模型</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Train the first triphone pass model tri1 on delta + delta-delta features.</span><br>steps/train_deltas.sh --cmd &quot;$train_cmd&quot; \<br> 2500 20000 data/train data/lang exp/mono_ali exp/tri1 || exit 1;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">decode tri1</span><br>utils/mkgraph.sh data/lang_test exp/tri1 exp/tri1/graph || exit 1;<br>steps/decode.sh --cmd &quot;$decode_cmd&quot; --config conf/decode.config --nj 10 \<br>  exp/tri1/graph data/dev exp/tri1/decode_dev<br>steps/decode.sh --cmd &quot;$decode_cmd&quot; --config conf/decode.config --nj 10 \<br>  exp/tri1/graph data/test exp/tri1/decode_test<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">align tri1</span><br>steps/align_si.sh --cmd &quot;$train_cmd&quot; --nj 10 \<br>  data/train data/lang exp/tri1 exp/tri1_ali || exit 1;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">train tri2 [delta+delta-deltas]</span><br>steps/train_deltas.sh --cmd &quot;$train_cmd&quot; \<br> 2500 20000 data/train data/lang exp/tri1_ali exp/tri2 || exit 1;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">decode tri2</span><br>utils/mkgraph.sh data/lang_test exp/tri2 exp/tri2/graph<br>steps/decode.sh --cmd &quot;$decode_cmd&quot; --config conf/decode.config --nj 10 \<br>  exp/tri2/graph data/dev exp/tri2/decode_dev<br>steps/decode.sh --cmd &quot;$decode_cmd&quot; --config conf/decode.config --nj 10 \<br>  exp/tri2/graph data/test exp/tri2/decode_test<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Align training data with the tri2 model.</span><br>steps/align_si.sh --cmd &quot;$train_cmd&quot; --nj 10 \<br>  data/train data/lang exp/tri2 exp/tri2_ali || exit 1;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">线性判别分析和最大似然线性转换</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Train the second triphone pass model tri3a on LDA+MLLT features.</span><br>steps/train_lda_mllt.sh --cmd &quot;$train_cmd&quot; \<br> 2500 20000 data/train data/lang exp/tri2_ali exp/tri3a || exit 1;<br><span class="hljs-meta prompt_"> </span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Run a <span class="hljs-built_in">test</span> decode with the tri3a model.</span><br>utils/mkgraph.sh data/lang_test exp/tri3a exp/tri3a/graph || exit 1;<br>steps/decode.sh --cmd &quot;$decode_cmd&quot; --nj 10 --config conf/decode.config \<br>  exp/tri3a/graph data/dev exp/tri3a/decode_dev<br>steps/decode.sh --cmd &quot;$decode_cmd&quot; --nj 10 --config conf/decode.config \<br>  exp/tri3a/graph data/test exp/tri3a/decode_test<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">align tri3a with fMLLR</span><br><br>steps/align_fmllr.sh --cmd &quot;$train_cmd&quot; --nj 10 \<br>  data/train data/lang exp/tri3a exp/tri3a_ali || exit 1;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">用来训练发音人自适应，基于特征空间最大似然线性回归</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Train the third triphone pass model tri4a on LDA+MLLT+SAT features.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">From now on, we start building a more serious system with Speaker</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Adaptive Training (SAT).</span><br>steps/train_sat.sh --cmd &quot;$train_cmd&quot; \<br>  2500 20000 data/train data/lang exp/tri3a_ali exp/tri4a || exit 1;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">decode tri4a</span><br>utils/mkgraph.sh data/lang_test exp/tri4a exp/tri4a/graph<br>steps/decode_fmllr.sh --cmd &quot;$decode_cmd&quot; --nj 10 --config conf/decode.config \<br>  exp/tri4a/graph data/dev exp/tri4a/decode_dev<br>steps/decode_fmllr.sh --cmd &quot;$decode_cmd&quot; --nj 10 --config conf/decode.config \<br>  exp/tri4a/graph data/test exp/tri4a/decode_test<br><span class="hljs-meta prompt_">  </span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">align tri4a with fMLLR</span><br>steps/align_fmllr.sh  --cmd &quot;$train_cmd&quot; --nj 10 \<br>  data/train data/lang exp/tri4a exp/tri4a_ali<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Train tri5a, <span class="hljs-built_in">which</span> is LDA+MLLT+SAT</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Building a larger SAT system. You can see the num-leaves is 3500 and tot-gauss is 100000</span><br><br>steps/train_sat.sh --cmd &quot;$train_cmd&quot; \<br>  3500 100000 data/train data/lang exp/tri4a_ali exp/tri5a || exit 1;<br><span class="hljs-meta prompt_">  </span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">decode tri5a</span><br>utils/mkgraph.sh data/lang_test exp/tri5a exp/tri5a/graph || exit 1;<br>steps/decode_fmllr.sh --cmd &quot;$decode_cmd&quot; --nj 10 --config conf/decode.config \<br>   exp/tri5a/graph data/dev exp/tri5a/decode_dev || exit 1;<br>steps/decode_fmllr.sh --cmd &quot;$decode_cmd&quot; --nj 10 --config conf/decode.config \<br>   exp/tri5a/graph data/test exp/tri5a/decode_test || exit 1;<br>   <br><span class="hljs-meta prompt_"># </span><span class="language-bash">align tri5a with fMLLR</span><br>steps/align_fmllr.sh --cmd &quot;$train_cmd&quot; --nj 10 \<br>  data/train data/lang exp/tri5a exp/tri5a_ali || exit 1;<br></code></pre></td></tr></table></figure>
+
+<h2 id="DNN训练"><a href="#DNN训练" class="headerlink" title="DNN训练"></a>DNN训练</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">用nnet3来训练DNN</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">nnet3</span><br>local/nnet3/run_tdnn.sh<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">用chain训练DNN</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">chain</span><br>local/chain/run_tdnn.sh<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">getting results (see RESULTS file)</span><br>for x in exp/*/decode_test; do [ -d $x ] &amp;&amp; grep WER $x/cer_* | utils/best_wer.sh; done 2&gt;/dev/null<br>for x in exp/*/*/decode_test; do [ -d $x ] &amp;&amp; grep WER $x/cer_* | utils/best_wer.sh; done 2&gt;/dev/null<br><br>exit 0;<br></code></pre></td></tr></table></figure>
+
+<p>从上述的注释来看， GMM-HMM 训练了 5 次，得到一个相对比较不错的模型，然后训练 nnet3 模型以及 chain 模型，最后测试精度。</p>
+<p>在 kaldi 训练过程中，DNN 的训练是依赖于 GMM-HMM 模型的，通过 GMM-HMM 模型得到 DNN 声学模型的输出结果(在 get_egs.sh 脚本中可以看到这一过程)。因此训练一个好的 GMM-HMM 模型是 kaldi 语音识别的关键。</p>
+<h3 id="run-tdnn-sh"><a href="#run-tdnn-sh" class="headerlink" title="run_tdnn.sh"></a>run_tdnn.sh</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/usr/bin/env bash</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">This script is based on swbd/s5c/local/nnet3/run_tdnn.sh</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">this is the standard <span class="hljs-string">&quot;tdnn&quot;</span> system, built <span class="hljs-keyword">in</span> nnet3; it<span class="hljs-string">&#x27;s what we use to</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">call multi-splice.</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">At this script level we don&#x27;</span>t support not running on GPU, as it would be painfully slow.</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">If you want to run without GPU you<span class="hljs-string">&#x27;d have to call train_tdnn.sh with --gpu false,</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">--num-threads 16 and --minibatch-size 128.</span></span><br>set -e<br><br>stage=0<br>train_stage=-10<br>affix=<br>common_egs_dir=<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">training options</span></span><br>initial_effective_lrate=0.0015<br>final_effective_lrate=0.00015<br>num_epochs=4<br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">开始时候的gpu个数，这里一开始用2个gpu。</span></span><br>num_jobs_initial=2 <br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">最后用的gpu个数，训练中根据某个增加规则，慢慢增加gpu个数。</span></span><br>num_jobs_final=12<br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">每个job，就是每用一个gpu，就训练一批数据，并生成一个新的模型，一开始只训练两个模型，逐渐增加训练模型个数，因为一开始可能会面临模型分散的问题，后面逐渐不会有这个问题，因此可以把模型数目增加。</span></span><br>remove_egs=true<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">feature options</span></span><br>use_ivectors=true<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">End configuration section.</span></span><br><br>. ./cmd.sh<br>. ./path.sh<br>. ./utils/parse_options.sh<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">gpu环境监测</span></span><br>if ! cuda-compiled; then<br>  cat &lt;&lt;EOF &amp;&amp; exit 1<br>This script is intended to be used with GPUs but you have not compiled Kaldi with CUDA<br>If you want to use GPUs (and have them), go to src/, and configure and make on a machine<br>where &quot;nvcc&quot; is installed.<br>EOF<br>fi<br><br>dir=exp/nnet3/tdnn_sp$&#123;affix:+_$affix&#125;<br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">设置GMM输入参数目录</span></span><br>gmm_dir=exp/tri5a<br>train_set=train_sp<br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-string">对齐后的特征集合目录</span></span><br>ali_dir=$&#123;gmm_dir&#125;_sp_ali<br>graph_dir=$gmm_dir/graph<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">提取i-vector说话人信息，作为神经网络输入特征的一部分，</span></span><br>local/nnet3/run_ivector_common.sh --stage $stage || exit 1;<br><br>if [ $stage -le 7 ]; then<br>  echo &quot;$0: creating neural net configs&quot;;<br><br>  num_targets=$(tree-info $ali_dir/tree |grep num-pdfs|awk &#x27;&#123;print $2&#125;&#x27;)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">  #</span><span class="language-bash"><span class="hljs-string">kaldi DNN 网络配置，是用户比较容易读懂的模型结构描述，在Kaldi中也称作xconfig</span></span><br>  mkdir -p $dir/configs<br>  cat &lt;&lt;EOF &gt; $dir/configs/network.xconfig<br>  input dim=100 name=ivector<br>  input dim=43 name=input<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">  # </span><span class="language-bash"><span class="hljs-string">please note that it is important to have input layer with the name=input</span></span><br><span class="hljs-meta prompt_">  # </span><span class="language-bash"><span class="hljs-string">as the layer immediately preceding the fixed-affine-layer to enable</span></span><br><span class="hljs-meta prompt_">  # </span><span class="language-bash"><span class="hljs-string">the use of short notation for the descriptor</span></span><br>  fixed-affine-layer name=lda input=Append(-2,-1,0,1,2,ReplaceIndex(ivector, t, 0)) affine-transform-file=$dir/configs/lda.mat<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">  # </span><span class="language-bash"><span class="hljs-string">the first splicing is moved before the lda layer, so no splicing here</span></span><br>  relu-batchnorm-layer name=tdnn1 dim=850<br>  relu-batchnorm-layer name=tdnn2 dim=850 input=Append(-1,0,2)<br>  relu-batchnorm-layer name=tdnn3 dim=850 input=Append(-3,0,3)<br>  relu-batchnorm-layer name=tdnn4 dim=850 input=Append(-7,0,2)<br>  relu-batchnorm-layer name=tdnn5 dim=850 input=Append(-3,0,3)<br>  relu-batchnorm-layer name=tdnn6 dim=850<br>  output-layer name=output input=tdnn6 dim=$num_targets max-change=1.5<br>EOF<br>  <br><span class="hljs-meta prompt_">  #</span><span class="language-bash"><span class="hljs-string">通过xconfig_to_configs.py 进行转换，转换为Kaldi训练过程中真正使用的nnet3网络配置文件</span></span><br>  steps/nnet3/xconfig_to_configs.py --xconfig-file $dir/configs/network.xconfig --config-dir $dir/configs/<br>fi<br><br>if [ $stage -le 8 ]; then<br>  if [[ $(hostname -f) == *.clsp.jhu.edu ]] &amp;&amp; [ ! -d $dir/egs/storage ]; then<br>    utils/create_split_dir.pl \<br>     /export/b0&#123;5,6,7,8&#125;/$USER/kaldi-data/egs/aishell-$(date +&#x27;%m_%d_%H_%M&#x27;)/s5/$dir/egs/storage $dir/egs/storage<br>  fi<br><br>  <br><span class="hljs-meta prompt_">  #</span><span class="language-bash"><span class="hljs-string">执行train_dnn.py 来对 feats 内容进行训练</span></span><br>  steps/nnet3/train_dnn.py --stage=$train_stage \<br>    --cmd=&quot;$decode_cmd&quot; \<br>    --feat.online-ivector-dir exp/nnet3/ivectors_$&#123;train_set&#125; \<br>    --feat.cmvn-opts=&quot;--norm-means=false --norm-vars=false&quot; \<br>    --trainer.num-epochs $num_epochs \<br>    --trainer.optimization.num-jobs-initial $num_jobs_initial \<br>    --trainer.optimization.num-jobs-final $num_jobs_final \<br>    --trainer.optimization.initial-effective-lrate $initial_effective_lrate \<br>    --trainer.optimization.final-effective-lrate $final_effective_lrate \<br>    --egs.dir &quot;$common_egs_dir&quot; \<br>    --cleanup.remove-egs $remove_egs \<br>    --cleanup.preserve-model-interval 500 \<br>    --use-gpu true \<br>    --feat-dir=data/$&#123;train_set&#125;_hires \<br>    --ali-dir $ali_dir \<br>    --lang data/lang \<br>    --reporting.email=&quot;$reporting_email&quot; \<br>    --dir=$dir  || exit 1;<br>fi<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string">解码部分</span></span><br>if [ $stage -le 9 ]; then<br><span class="hljs-meta prompt_">  # </span><span class="language-bash"><span class="hljs-string">this version of the decoding treats each utterance separately</span></span><br><span class="hljs-meta prompt_">  # </span><span class="language-bash"><span class="hljs-string">without carrying forward speaker information.</span></span><br>  for decode_set in dev test; do<br>    num_jobs=`cat data/$&#123;decode_set&#125;_hires/utt2spk|cut -d&#x27; &#x27; -f2|sort -u|wc -l`<br>    decode_dir=$&#123;dir&#125;/decode_$decode_set<br>    steps/nnet3/decode.sh --nj $num_jobs --cmd &quot;$decode_cmd&quot; \<br>       --online-ivector-dir exp/nnet3/ivectors_$&#123;decode_set&#125; \<br>       $graph_dir data/$&#123;decode_set&#125;_hires $decode_dir || exit 1;<br>  done<br>fi<br><br>wait;<br>exit 0;<br></code></pre></td></tr></table></figure>
+
+<h3 id="train-tdnn-py"><a href="#train-tdnn-py" class="headerlink" title="train_tdnn.py"></a>train_tdnn.py</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><br></code></pre></td></tr></table></figure>
+
+<h3 id="get-egs-sh"><a href="#get-egs-sh" class="headerlink" title="get_egs.sh"></a>get_egs.sh</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><br></code></pre></td></tr></table></figure>
+
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><ul>
+<li>数据集中压缩文件太多，对于解压多个.gz文件的，用此命令：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/usr/bin/env bash</span><br>for i in $(ls *.tar.gz);do tar -xvf $i;done<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>运行aishell时出现：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">local/aishell_train_lms.sh: train_lm.sh is not found. That might mean it&#x27;s not installed<br>local/aishell_train_lms.sh: or it is not added to PATH<br>local/aishell_train_lms.sh: Use the script tools/extras/install_kaldi_lm.sh to install it<br></code></pre></td></tr></table></figure>
+
+<p>提示需安装kaldi-lm，进入你的kaldi&#x2F;tools&#x2F;extras目录下，并运行 : </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">./install_kaldi_lm.sh<br></code></pre></td></tr></table></figure>
+
+<p>成功安装kaldi_lm,需要添加路径</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">vim path.sh<br>export PATH=$PATH:/kaldi/tools/kaldi_lmS<br></code></pre></td></tr></table></figure>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="http://kaldi-asr.org/doc/dnn3_scripts_context.html">kaldi-asr</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/eqiang8848/article/details/81543599">kaldi入门详解——aishell步骤解释</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://t.cj.sina.com.cn/articles/view/7610527761/1c59f701100101c68g">语音识别基础：（四）前端处理</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_34418883/article/details/89581635">kaldi 源码分析(八) - DNN训练过程</a>
+<a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:5" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://xueqiu.com/9217191040/151686820">神经网络的区分性训练 | 文末赠书</a>
+<a href="#fnref:5" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:6" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.cnblogs.com/welen/articles/10261220.html">系统学习机器学习之神经网络（十一）–TDNN</a>
+<a href="#fnref:6" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:7" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.icode9.com/content-4-430057.html">kaldi入门详解——nnet3实现tdnn</a>
+<a href="#fnref:7" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:8" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/longwo888/article/details/86406927">Kaldi单步完美运行AIShell v1 S5</a>
+<a href="#fnref:8" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:9" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/5978380c3f82">Kaldi-Timit脚本</a>
+<a href="#fnref:9" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/" class="category-chain-item">语音识别</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/">#语音识别</a>
+      
+        <a href="/tags/ASR/">#ASR</a>
+      
+        <a href="/tags/kaldi/">#kaldi</a>
+      
+        <a href="/tags/HMM/">#HMM</a>
+      
+        <a href="/tags/MMI/">#MMI</a>
+      
+        <a href="/tags/chain-model/">#chain model</a>
+      
+        <a href="/tags/%E5%8D%95%E9%9F%B3%E7%B4%A0/">#单音素</a>
+      
+        <a href="/tags/%E4%B8%89%E9%9F%B3%E7%B4%A0/">#三音素</a>
+      
+        <a href="/tags/%E7%8A%B6%E6%80%81%E7%BB%91%E5%AE%9A/">#状态绑定</a>
+      
+        <a href="/tags/aishell/">#aishell</a>
+      
+        <a href="/tags/tdnn/">#tdnn</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Class9作业-Kaldi的aishell实例</div>
+      <div>https://blog.baixf.tk/2022/09/15/语音识别学习/Class9作业-Kaldi的aishell实例/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年9月15日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/09/17/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E5%AD%A6%E4%B9%A0/Class%206%20DNN-HMM%E4%BD%9C%E4%B8%9A%E4%BB%A3%E7%A0%81%E7%B2%BE%E8%AF%BB/" title="Class 6 DNN-HMM作业代码精读">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Class 6 DNN-HMM作业代码精读</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/09/15/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E5%AD%A6%E4%B9%A0/Class%209%20%E5%8C%BA%E5%88%86%E6%80%A7%E8%AE%AD%E7%BB%83%E5%92%8CLF-MMI/" title="Class 9 区分性训练和LF-MMI">
+                        <span class="hidden-mobile">Class 9 区分性训练和LF-MMI</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

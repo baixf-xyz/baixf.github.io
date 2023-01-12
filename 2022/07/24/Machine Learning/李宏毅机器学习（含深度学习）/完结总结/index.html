@@ -1,0 +1,1584 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="完结撒花🎶">
+<meta property="og:type" content="article">
+<meta property="og:title" content="答疑与总结-李宏毅机器学习">
+<meta property="og:url" content="https://blog.baixf.tk/2022/07/24/Machine%20Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%90%AB%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89/%E5%AE%8C%E7%BB%93%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="完结撒花🎶">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220711123106801.png">
+<meta property="article:published_time" content="2022-07-24T12:31:11.000Z">
+<meta property="article:modified_time" content="2023-01-12T14:08:04.367Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Marchine Learning">
+<meta property="article:tag" content="Deep Learning">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220711123106801.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>答疑与总结-李宏毅机器学习 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/image-20220724232104132.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="答疑与总结-李宏毅机器学习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-24 12:31" pubdate>
+          2022年7月24日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          51 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">答疑与总结-李宏毅机器学习</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一、问题"><a href="#一、问题" class="headerlink" title="一、问题"></a>一、问题</h2><h4 id="1-为什么要做深度学习而不是宽度学习？"><a href="#1-为什么要做深度学习而不是宽度学习？" class="headerlink" title="1.为什么要做深度学习而不是宽度学习？"></a>1.<a target="_blank" rel="noopener" href="https://blog.csdn.net/pengchengliu/article/details/89393016">为什么要做深度学习而不是宽度学习？</a></h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220724140014139.png" srcset="/img/loading.gif" lazyload alt="image-20220724140014139"></p>
+<h4 id="2-为什么说最小交叉熵就是最大似然估计？"><a href="#2-为什么说最小交叉熵就是最大似然估计？" class="headerlink" title="2.为什么说最小交叉熵就是最大似然估计？"></a>2.<a href="(https://zhuanlan.zhihu.com/p/165139520)">为什么说最小交叉熵就是最大似然估计？</a></h4><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogv2-7b83ef99e7e4cf3acae59036d7c9b7d5_1440w.jpg" srcset="/img/loading.gif" lazyload alt="交叉熵和极大似然估计的再理解"></p>
+<h4 id="3-特征缩放和特征标准化有什么区别呢？"><a href="#3-特征缩放和特征标准化有什么区别呢？" class="headerlink" title="3.特征缩放和特征标准化有什么区别呢？"></a>3.特征缩放和特征标准化有什么区别呢？</h4><p>可以认为Feature Scaling包括Standardization和Normalization，其中Standardization可以叫做Z-Score Normalization。</p>
+<h2 id="二、思维导图"><a href="#二、思维导图" class="headerlink" title="二、思维导图"></a>二、思维导图</h2><h4 id="机器学习【Machine-Learning】"><a href="#机器学习【Machine-Learning】" class="headerlink" title="机器学习【Machine Learning】"></a><a href="https://blog.baixf.tk/2022/07/11/Machine%20Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%90%AB%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89/%E7%AC%AC%E4%B8%80%E7%AB%A0%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%BB%8B%E7%BB%8D/">机器学习【Machine Learning】</a></h4><ul>
+<li><p>监督学习【Supervised Learning】</p>
+<ul>
+<li><p>回归任务【Regression】</p>
+</li>
+<li><p>分类任务【Classification】</p>
+<ul>
+<li><p>线性模型</p>
+</li>
+<li><p>非线性模型</p>
+<ul>
+<li><p>深度学习</p>
+</li>
+<li><p>svm</p>
+</li>
+<li><p>decision tree</p>
+</li>
+<li><p>k-nn</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>结构化学习【Structured Learning】</p>
+<ul>
+<li>输入与输出具有结构性</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>半监督学习【Semi-supervised Learning】</p>
+<ul>
+<li>部分训练数据没有标注</li>
+</ul>
+</li>
+<li><p>无监督学习【Unsupervised Learning】</p>
+<ul>
+<li>经过大量的数据后能不能创造出没有的东西</li>
+</ul>
+</li>
+<li><p>强化学习【Reinforcement Learning】</p>
+<ul>
+<li><p>评价中学习，只知道做的结果不知道某个过程的贡献程度。</p>
+</li>
+<li><p>Alpha Go is supervised learning + reinforcement learning.</p>
+</li>
+</ul>
+</li>
+<li><p>迁移学习【Transfer Learning】</p>
+<ul>
+<li>少量有标签的数据，大量与目标无关的数据作为 训练集</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220724132807119.png" srcset="/img/loading.gif" lazyload alt="image-20220724132807119"></p>
+<h4 id="回归【Regression】"><a href="#回归【Regression】" class="headerlink" title="回归【Regression】"></a><a href="https://blog.baixf.tk/2022/07/12/Machine%20Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%90%AB%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89/%E7%AC%AC%E4%BA%8C%E7%AB%A0%20%E5%9B%9E%E5%BD%92/">回归【Regression】</a></h4><ul>
+<li><p>Output</p>
+<ul>
+<li>Scalar标量</li>
+</ul>
+</li>
+<li><p>Examples</p>
+<ul>
+<li><p>预测股票</p>
+</li>
+<li><p>无人驾驶车方向盘角度</p>
+</li>
+<li><p>使用者对商品购买的可能性</p>
+</li>
+</ul>
+</li>
+<li><p>Steps</p>
+<ul>
+<li><p>①：Model——模型</p>
+<ul>
+<li><p>Model</p>
+<ul>
+<li><p>简单线性函数</p>
+<ul>
+<li>f&#x3D;b+w∗xf&#x3D;b+w*xf&#x3D;b+w∗x</li>
+</ul>
+</li>
+<li><p>复杂高次函数</p>
+<ul>
+<li>f&#x3D;b+w1∗x+w2∗x2f&#x3D;b+w_{1}*x+w_{2}*x^{2}f&#x3D;b+w1∗x+w2∗x2</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Optimize</p>
+<ul>
+<li><p>防止欠拟合</p>
+</li>
+<li><p>Selecting another Model 重选模型</p>
+</li>
+<li><p>Consider the Hidden Factors 考虑因素</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>②：Goodness of Function——评价函数</p>
+<ul>
+<li><p>Loss Function损失函数</p>
+<ul>
+<li>L(w,b)&#x3D;∑(yn−(b+w∗xcpn))2L(w,b)&#x3D;\sum(y^{n}-(b+w*x_{cp}^{n}))^{2}L(w,b)&#x3D;∑(yn−(b+w∗xcpn))2</li>
+</ul>
+</li>
+<li><p>Optimize</p>
+<ul>
+<li><p>Regularization正则化</p>
+<ul>
+<li><p>防止过拟合</p>
+</li>
+<li><p>在损失函数中加上一项与参数相关的表达，得到smoother function</p>
+</li>
+<li><p>由于新加上的一项的无理由性，过度正则化会使得bias偏差增大</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>③：Best Function——最优函数</p>
+<ul>
+<li>选取最优的模型，即损失函数较优的模型<ul>
+<li>GD(Gradient Descent)<ul>
+<li>线性回归中损失函数是凸的convex，故局部最优即全局最优</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Tips</p>
+<ul>
+<li><p>模型越复杂，训练集越准确，但是测试集可能越不准确，即过拟合</p>
+</li>
+<li><p>适当调整LR，可以给不同的参数设置独立的LR</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220724132959708.png" srcset="/img/loading.gif" lazyload alt="image-20220724132959708"></p>
+<h4 id="误差【Error】"><a href="#误差【Error】" class="headerlink" title="误差【Error】"></a><a href="https://blog.baixf.tk/2022/07/14/Machine%20Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%90%AB%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89/%E7%AC%AC%E4%B8%89%E7%AB%A0%20%E8%AF%AF%E5%B7%AE%E5%8F%8A%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/">误差【Error】</a></h4><ul>
+<li><p>from</p>
+<ul>
+<li><p>偏差【bias】</p>
+</li>
+<li><p>方差【variance】</p>
+</li>
+<li><p>【Error】 &#x3D;【 Bias】 +【Variance】</p>
+</li>
+<li><p>以打靶为例，偏差就是偏离靶心的程度，方差就是离散程度</p>
+</li>
+</ul>
+</li>
+<li><p>Estimator</p>
+<ul>
+<li><p>Bias</p>
+<ul>
+<li><p>无偏估计（Unbiased）</p>
+</li>
+<li><p>E[m]&#x3D;E[1N∑xn]&#x3D;1N∑E[xn]&#x3D;uE[m]&#x3D;E[\frac{1}{N}\sum{x^{n}}]&#x3D;\frac{1}{N}\sum{E[x^{n}]}&#x3D;uE[m]&#x3D;E[N1∑xn]&#x3D;N1∑E[xn]&#x3D;u</p>
+</li>
+</ul>
+</li>
+<li><p>Variance</p>
+<ul>
+<li><p>取决于样本数量</p>
+</li>
+<li><p>有偏估计（Biased）</p>
+</li>
+<li><p>E[s2]&#x3D;N−1Nσ2E[s^{2}]&#x3D;\frac{N-1}{N}\sigma^{2}E[s2]&#x3D;NN−1σ2</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>deal</p>
+<ul>
+<li><p>偏差大</p>
+<ul>
+<li><p>欠拟合</p>
+<ul>
+<li><p>没有很好的训练</p>
+</li>
+<li><p>选择复杂模型，考虑其他因子</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>方差大</p>
+<ul>
+<li><p>过拟合</p>
+<ul>
+<li><p>很好训练但测试集错误很大</p>
+</li>
+<li><p>增加数据、正则化、数据增强</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>model selection</p>
+<ul>
+<li><p>一般需要在两种误差中做权衡，通常是采用交叉验证法使得总误差最小</p>
+</li>
+<li><p>交叉验证法</p>
+<ul>
+<li><p>验证集方法</p>
+<ul>
+<li>随机平分训练集为训练集与验证集</li>
+</ul>
+</li>
+<li><p>K-折交叉验证</p>
+<ul>
+<li>训练集分为KKK份，选取111份作为验证集，其余作为训练集，重复KKK轮，取最终的平均值为得分</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Tips</p>
+<ul>
+<li>为什么有很多的模型<ul>
+<li>同一模型在不同的训练集找到的f∗f^{*}f∗不同</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220724133116517.png" srcset="/img/loading.gif" lazyload alt="image-20220724133116517"></p>
+<h4 id="梯度下降【Gradient-descent】"><a href="#梯度下降【Gradient-descent】" class="headerlink" title="梯度下降【Gradient descent】"></a><a href="https://blog.baixf.tk/2022/07/14/Machine%20Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%90%AB%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89/%E7%AC%AC%E4%B8%89%E7%AB%A0%20%E8%AF%AF%E5%B7%AE%E5%8F%8A%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/">梯度下降【Gradient descent】</a></h4><ul>
+<li><p>define </p>
+<ul>
+<li><p>一种寻找目标函数最小化的方法</p>
+</li>
+<li><p>沿梯度下降的方向求解极小值（也可以沿梯度上升方向求解极大值）</p>
+</li>
+<li><p>数学理论</p>
+<ul>
+<li>对损失函数作泰勒展开</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>limited</p>
+<ul>
+<li><p>容易陷入局部极值 </p>
+</li>
+<li><p>可能卡在非极值</p>
+<ul>
+<li><p>微分值为0</p>
+</li>
+<li><p>微分值小于某一个数值，约等于0</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Tips</p>
+<ul>
+<li><p>学习率【Learning Rate】</p>
+<ul>
+<li><p>意义</p>
+<ul>
+<li><p>监督学习以及深度学习中重要的超参</p>
+</li>
+<li><p>决定着目标函数能否收敛到局部最小值以及何时收敛到最小值</p>
+</li>
+<li><p>合适的学习率能够使目标函数在合适的时间内收敛到局部最小值</p>
+</li>
+</ul>
+</li>
+<li><p>调整方法</p>
+<ul>
+<li><p>手动调整</p>
+<ul>
+<li><p>将参数改变对损失函数的影响进行可视化。</p>
+<ul>
+<li><p>学习率太小，损失函数下降的非常慢；</p>
+</li>
+<li><p>学习率太大，损失函数下降很快，但马上就卡住不下降了；</p>
+</li>
+<li><p>学习率特别大，损失函数就飞出去了；</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>自适应学习率</p>
+<ul>
+<li><p>随着次数的增加，通过一些因子来减少学习率</p>
+</li>
+<li><p>学习率不能是一个值通用所有特征，不同的参数需要不同的学习率</p>
+</li>
+</ul>
+</li>
+<li><p>Adagrad算法</p>
+<ul>
+<li>每个参数的学习率都把它除上之前微分的均方根。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>随机梯度下降法</p>
+<ul>
+<li><p>使得训练更快</p>
+</li>
+<li><p>损失函数不需要处理训练集所有的数据，只需要计算某一个例子的损失函数Ln，就可以赶紧update 梯度</p>
+</li>
+</ul>
+</li>
+<li><p>特征缩放</p>
+<ul>
+<li><p>两个输入的分布的范围很不一样，将他们的范围缩放，使得不同输入的范围是一样的。</p>
+</li>
+<li><p>使不同的特征具有相同的范围</p>
+</li>
+<li><p>结果是参数更新比较有效率</p>
+</li>
+<li><p>方法</p>
+<ul>
+<li>归一化</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220724133259816.png" srcset="/img/loading.gif" lazyload alt="image-20220724133259816"></p>
+<h4 id="深度学习【Deep-Learning】"><a href="#深度学习【Deep-Learning】" class="headerlink" title="深度学习【Deep Learning】"></a><a href="https://blog.baixf.tk/2022/07/16/Machine%20Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%90%AB%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89/%E7%AC%AC%E5%9B%9B%E7%AB%A0%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD/">深度学习【Deep Learning】</a></h4><ul>
+<li><p>Ups and downs</p>
+<ul>
+<li><p>1958: Perceptron (linear model)</p>
+</li>
+<li><p>1969: Perceptron has limitation</p>
+</li>
+<li><p>1980s: Multi-layer perceptron</p>
+<ul>
+<li>Do not have significant difference from DNN today</li>
+</ul>
+</li>
+<li><p>1986: Backpropagation</p>
+<ul>
+<li>Usually more than 3 hidden layers is not helpful</li>
+</ul>
+</li>
+<li><p>1989: 1 hidden layer is “good enough”, why deep?</p>
+</li>
+<li><p>2006: RBM initialization (breakthrough)</p>
+</li>
+<li><p>2009: GPU </p>
+<ul>
+<li>【09年的GPU的发展是很关键的，使用GPU矩阵运算节省了很多时间】</li>
+</ul>
+</li>
+<li><p>2011: Start to be popular in speech recognition</p>
+</li>
+<li><p>2012: win ILSVRC image competition</p>
+<ul>
+<li>感知机（Perceptron）非常像我们的逻辑回归（Logistics Regression）只不过是没有sigmoid激活函数。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Steps</p>
+<ul>
+<li><p>Step1：神经网络【Neural network】</p>
+<ul>
+<li><p>组成</p>
+<ul>
+<li><p>神经网络由若干 神经元 连接构成</p>
+</li>
+<li><p>神经元neuronneuronneuron为一些逻辑回归函数</p>
+</li>
+<li><p>参数【network parameter θ\thetaθ 】</p>
+<ul>
+<li>所有neuronneuronneuron 的权重以及偏差就是network的parameter参数</li>
+</ul>
+</li>
+<li><p>一般结构</p>
+<ul>
+<li><p>输入层（1）</p>
+</li>
+<li><p>隐藏层（N）</p>
+</li>
+<li><p>输出层（1）</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>连接方式【connection】</p>
+<ul>
+<li><p>采用不同的connection得到不同的network structures</p>
+</li>
+<li><p>神经网络的结构决定了函数集（function set），因此网络结构（network structured）很关键。</p>
+</li>
+<li><p>connection可以自己动手设计</p>
+<ul>
+<li><p>比如卷积神经网络【CNN】</p>
+</li>
+<li><p>全连接前馈神经网络【Full Connect Feedforward Network】</p>
+<ul>
+<li><p>全连接</p>
+<ul>
+<li>相邻两层都有连接</li>
+</ul>
+</li>
+<li><p>前馈</p>
+<ul>
+<li>传递方向从后往前传</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>自动找到神经网络的结构的</p>
+<ul>
+<li>进化人工神经网络，并不普及</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Step2：模型评价【Goodness of function】</p>
+<ul>
+<li>损失函数<ul>
+<li>交叉熵【cross entropy】函数计算yyy与y^\hat{y}y^的损失，调整参数使得交叉熵最小</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Step3：选择最优【Pick best function】</p>
+<ul>
+<li><p>梯度下降【Gradient Descent】</p>
+</li>
+<li><p>反向传播【Backpropagation】</p>
+<ul>
+<li><p>内容</p>
+<ul>
+<li><p>正向传播过程</p>
+<ul>
+<li>输入信息通过逐层处理并传向输出层。</li>
+</ul>
+</li>
+<li><p>反向传播过程</p>
+<ul>
+<li><p>如果在输出层得不到期望的输出值，则通过构造输出值与真实值的损失函数作为目标函数，转入反向传播。</p>
+</li>
+<li><p>逐层求出目标函数对各神经元权值的偏导数，构成目标函数对权值向量的梯度，作为修改权值的依据，网络的学习在权值修改过程中完成。</p>
+</li>
+<li><p>输出值与真实值的误差达到所期望值时，网络学习结束。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Tips</p>
+<ul>
+<li><p>建立在梯度下降法的基础</p>
+</li>
+<li><p>适合于多层神经元网络</p>
+</li>
+<li><p>神经网络中计算损失最好的方法，可用框架来进行计算损失【TensorFlow、theano、Pytorch】</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Tips</p>
+<ul>
+<li><p>1.为什么要用深度学习，深层架构带来哪些好处？那是不是隐藏层越多越好？</p>
+<ul>
+<li><p>层次越深效果越好</p>
+</li>
+<li><p>普遍性定理</p>
+<ul>
+<li>对于任何一个连续的函数，都可以用足够多的隐藏层来表示。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>2.深度学习（Deep Learning）能表达出以前所不能表达的情况。</p>
+</li>
+<li><p>3.Deep的含义：许多隐藏层</p>
+</li>
+<li><p>4.层层之间是矩阵运算【Matrix Operation】</p>
+<ul>
+<li>可以采用GPU矩阵加速计算</li>
+</ul>
+</li>
+<li><p>5.本质：通过隐藏层进行特征转换</p>
+</li>
+<li><p>6.需要不断试错以及直觉确定层数以及 神经元个数</p>
+</li>
+<li><p>7.损失函数</p>
+<ul>
+<li><p>损失函数(Loss function)是定义在单个训练样本上的，也就是就算一个样本的误差，比如我们想要分类，就是预测的类别和实际类别的区别，是一个样本的，用L表示。</p>
+</li>
+<li><p>代价函数(Cost function)是定义在整个训练集上面的，也就是所有样本的误差的总和的平均，也就是损失函数的总和的平均，有没有这个平均其实不会影响最后的参数的求解结果。</p>
+</li>
+<li><p>总体损失函数(Total loss function)是定义在整个训练集上面的，也就是所有样本的误差的总和。也就是平时我们反向传播需要最小化的值。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220724133910805.png" srcset="/img/loading.gif" lazyload alt="image-20220724133910805"></p>
+<h4 id="卷积神经网络【CNN】"><a href="#卷积神经网络【CNN】" class="headerlink" title="卷积神经网络【CNN】"></a><a href="https://blog.baixf.tk/2022/07/21/Machine%20Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%90%AB%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89/%E7%AC%AC%E5%85%AD%E7%AB%A0%20%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">卷积神经网络【CNN】</a></h4><ul>
+<li><p>Why CNN</p>
+<ul>
+<li>普通神经网络需要太多的参数，减少输入的参数，简化神经网络</li>
+</ul>
+</li>
+<li><p>CNN in image</p>
+<ul>
+<li><p>image</p>
+<ul>
+<li><p>少数的pattern 就能代表whole image，不需要去看整个image去识别</p>
+</li>
+<li><p>pattern 出现在不同区域但是表示相同的意义</p>
+</li>
+<li><p>图片下采样subsampling不会改变目标</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>CNN架构</p>
+<ul>
+<li><p>input</p>
+</li>
+<li><p>convolution</p>
+<ul>
+<li>patterns处理</li>
+</ul>
+</li>
+<li><p>max pooling</p>
+<ul>
+<li>图片下采样subsampling</li>
+</ul>
+</li>
+<li><p>flattern</p>
+<ul>
+<li>将feature map拉直后作为feedforward netwwork的输入</li>
+</ul>
+</li>
+<li><p>fully connected feedforward network</p>
+</li>
+</ul>
+</li>
+<li><p>convolution vs fully connected</p>
+<ul>
+<li>convolution就是fully connected拿掉一些weight的结果</li>
+</ul>
+</li>
+<li><p>CNN in Keras</p>
+<ul>
+<li>唯一要改的是：network structure和input format，向量改为3维张量</li>
+</ul>
+</li>
+<li><p>CNN learned</p>
+<ul>
+<li>每一个filter所做的事情就是detain不同角度的线条</li>
+</ul>
+</li>
+<li><p>Deep Dream</p>
+<ul>
+<li><p>如果你给machine一张image，它会在这张image里加上它看到的东西</p>
+</li>
+<li><p>应用</p>
+<ul>
+<li>图片风格迁徙</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>application</p>
+<ul>
+<li><p>围棋</p>
+</li>
+<li><p>语音</p>
+</li>
+<li><p>文本</p>
+</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220724134306613.png" srcset="/img/loading.gif" lazyload alt="image-20220724134306613"></p>
+</li>
+</ul>
+<h4 id="网络设计技巧"><a href="#网络设计技巧" class="headerlink" title="网络设计技巧"></a><a href="https://blog.baixf.tk/2022/07/20/Machine%20Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%90%AB%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89/%E7%AC%AC%E4%BA%94%E7%AB%A0%20%E4%BC%98%E5%8C%96%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AE%AD%E7%BB%83/">网络设计技巧</a></h4><ul>
+<li><p>如果optimization失败了</p>
+<ul>
+<li><p>现象</p>
+<ul>
+<li><p>参数在更新，loss在下降，但是不满意</p>
+</li>
+<li><p>一开始loss就掉不下去</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>失败的原因一——微分为000</p>
+<ul>
+<li><p>gradient is close to 0  【原因】</p>
+<ul>
+<li><p>critical point </p>
+<ul>
+<li><p>内容</p>
+<ul>
+<li><p>local minima</p>
+</li>
+<li><p>saddle point 鞍点</p>
+</li>
+</ul>
+</li>
+<li><p>类型判断【判断黑塞矩阵H的特征值】</p>
+<ul>
+<li><p>原理</p>
+<ul>
+<li>要知道loss function的形状<ul>
+<li>给定某一组参数，就可以写出参数附近的损失函数<br>原理：泰勒级数展开</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>结论</p>
+<ul>
+<li><p>都大于0则为local minima</p>
+</li>
+<li><p>都小于0则为local maxima</p>
+</li>
+<li><p>有正有负则为saddle point</p>
+<ul>
+<li>H给出了参数更新方向，新的参数为特征向量加上此时参数<br>【实际上不是这样处理的，还有更加优秀的处理鞍点的方法】</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>常见程度</p>
+<ul>
+<li><p>维度越高，local minima越少，local minima 是比较不常见的</p>
+</li>
+<li><p>saddle point 鞍点更加常见</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Batch and Momentum【解决方案】</p>
+<ul>
+<li><p>Batch</p>
+<ul>
+<li><p>原因</p>
+<ul>
+<li><p>实际上算微分的时候，不是对所有的data算出来的L做微分</p>
+</li>
+<li><p>把所有的data分成一个一个的batch，从第一个batch开始计算，由上一个计算下一个L的参数</p>
+</li>
+<li><p>会用到shuffle</p>
+</li>
+</ul>
+</li>
+<li><p>为什么要用batch</p>
+<ul>
+<li><p>比较</p>
+<ul>
+<li><img src="https://api2.mubu.com/v3/document_image/431a0896-02a7-4187-9672-1d79c725170a-12278669.jpg" srcset="/img/loading.gif" lazyload alt="img"></li>
+</ul>
+</li>
+<li><p>batch带来的帮助</p>
+<ul>
+<li>small batch size  help escape critical point</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>momentum</p>
+<ul>
+<li><p>作用</p>
+<ul>
+<li><p>有可能对抗critical point 的技术</p>
+</li>
+<li><p>momentum help escape critical point</p>
+</li>
+</ul>
+</li>
+<li><p>原理</p>
+<ul>
+<li>即使gradient为0，由于动量依旧可以往前动一点点，从而跳出critical point</li>
+</ul>
+</li>
+<li><p>下一步方向</p>
+<ul>
+<li>综合考虑gradient和之前的移动决定下一步的方向</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>失败的原因二——学习率</p>
+<ul>
+<li><p>现象</p>
+<ul>
+<li>loss不再下降，而梯度范数在不断的变换</li>
+</ul>
+</li>
+<li><p>自动调整学习速率【Adaptive Learning Rate】</p>
+<ul>
+<li><p>内容</p>
+<ul>
+<li>之前的gradient设置的同样的learning rate，启发想到给不同的参数设置不同的学习率</li>
+</ul>
+</li>
+<li><p>大原则</p>
+<ul>
+<li><p>如果在某一个方向上，gradient 的值很小，非常的平坦，我们希望learning rate 调大一点</p>
+</li>
+<li><p>如果在某一个方向上，gradient 的值很大，非常的陡峭，我们希望learning rate 调小一点</p>
+</li>
+</ul>
+</li>
+<li><p>更新方式</p>
+<ul>
+<li><p>引入root mean square均方根</p>
+<ul>
+<li><p>应用</p>
+<ul>
+<li><p>Adagrad</p>
+</li>
+<li><p>RMSProp方法【Adagrad的改进】</p>
+<ul>
+<li>Adam：RMSProp+Momentum</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>tips</p>
+<ul>
+<li>由于只考虑大小，所以可以和Momentum叠加使用</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>问题</p>
+<ul>
+<li><p>内容</p>
+<ul>
+<li>由于使用了之前的gradient，累积了很多σ\sigmaσ导致后面会不时走到很大的地方</li>
+</ul>
+</li>
+<li><p>Learning Rate Scheduling【解决方案】</p>
+<ul>
+<li><p>原理：使得lr和时间有关</p>
+</li>
+<li><p>Learning Rate Decay</p>
+<ul>
+<li>随着训练发生，我们越来越接近目的，所以我们减小学习率</li>
+</ul>
+</li>
+<li><p>Warm up</p>
+<ul>
+<li><p>学习率先变大后变小</p>
+</li>
+<li><p>Residual Network残差网络</p>
+</li>
+<li><p>RAdam</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>失败的原因三——损失函数</p>
+<ul>
+<li>损失函数也可能有影响<ul>
+<li>在分类中，损失函数采取 MSEMSEMSE 和 Cross−entopyCross-entopyCross−entopy 的结果不一样</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>设计技巧——批标准化</p>
+<ul>
+<li><p>适用场景</p>
+<ul>
+<li>想要“铲平”凹凸部分，改变error surface</li>
+</ul>
+</li>
+<li><p>简介</p>
+<ul>
+<li><p>批标准化（Batch Normalization,BN），又叫批量归一化，是一种用于改善人工神经网络的性能和稳定性的技术。 这是一种为神经网络中的任何层提供零均值&#x2F;单位方差输入的技术。</p>
+</li>
+<li><p>它用于通过调整和缩放激活来规范化输入层。</p>
+</li>
+</ul>
+</li>
+<li><p>优点</p>
+<ul>
+<li><p>减少了参数的人为选择，可以取消dropout和L2正则项参数,或者采取更小的L2正则项约束参数。</p>
+</li>
+<li><p>减少了对学习率的要求。</p>
+</li>
+<li><p>可以不再使用局部响应归一化了，BN本身就是归一化网络(局部响应归一化-AlexNet)。</p>
+</li>
+<li><p>更破坏原来的数据分布,一定程度上缓解过拟合。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/pengchengliu/article/details/89393016">为什么要做深度学习而不是宽度学习？</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/165139520">交叉熵和极大似然估计的再理解</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/352113849">特征缩放和标准化</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.mubucm.com/doc/3KxlS5risat">幕布思维导图</a>
+<a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/AI/">#AI</a>
+      
+        <a href="/tags/Marchine-Learning/">#Marchine Learning</a>
+      
+        <a href="/tags/Deep-Learning/">#Deep Learning</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>答疑与总结-李宏毅机器学习</div>
+      <div>https://blog.baixf.tk/2022/07/24/Machine Learning/李宏毅机器学习（含深度学习）/完结总结/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年7月24日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/25/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E5%AD%A6%E4%B9%A0/Class5%20%E5%9F%BA%E4%BA%8EGMM-HMM%E7%9A%84%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E7%B3%BB%E7%BB%9F/" title="Class5 基于GMM-HMM的语音识别系统">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Class5 基于GMM-HMM的语音识别系统</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/21/Machine%20Learning/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%90%AB%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%89/%E7%AC%AC%E5%85%AD%E7%AB%A0%20%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="卷积神经网络-李宏毅机器学习">
+                        <span class="hidden-mobile">卷积神经网络-李宏毅机器学习</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

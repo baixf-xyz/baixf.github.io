@@ -1,0 +1,953 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="ELK期末大作业~">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ELK实时日志分析平台">
+<meta property="og:url" content="https://blog.baixf.tk/2020/12/22/elk/ELK%E5%AE%9E%E6%97%B6%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="ELK期末大作业~">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608293429743-a32b5d1af3e2d6b9abd0cddc94a870cbb21.jpg">
+<meta property="article:published_time" content="2020-12-22T12:11:11.000Z">
+<meta property="article:modified_time" content="2022-06-20T09:42:50.770Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="elastic">
+<meta property="article:tag" content="elasticsearch">
+<meta property="article:tag" content="kibana">
+<meta property="article:tag" content="logstash">
+<meta property="article:tag" content="filebeat">
+<meta property="article:tag" content="ELK">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608293429743-a32b5d1af3e2d6b9abd0cddc94a870cbb21.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>ELK实时日志分析平台 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608287066355-image.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="ELK实时日志分析平台"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-12-22 12:11" pubdate>
+          2020年12月22日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          53 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">ELK实时日志分析平台</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="一、ELK"><a href="#一、ELK" class="headerlink" title="一、ELK"></a>一、ELK</h1><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608287127236-image.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="1-ELK-简介"><a href="#1-ELK-简介" class="headerlink" title="1.ELK  简介"></a>1.ELK  简介</h2><ul>
+<li><p>Elasticsearch 是一个搜索和分析引擎。</p>
+</li>
+<li><p>Logstash 是服务器端数据处理管道，能够同时从多个来源采集数据，转换数据，然后将数据发送到诸如 Elasticsearch 等存储库中。</p>
+</li>
+<li><p>Kibana 则可以让用户在 Elasticsearch 中使用图形和图表对数据进行可视化。</p>
+</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608286874599-v2-892fdabc5a34aea398a14956ff94d6e3_720w.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>事实上Elasticsearch的完整栈有如下的几个：</p>
+<ul>
+<li>Beats</li>
+</ul>
+<p>Filebeat是本地文件的日志数据采集器。 作为服务器上的代理安装，Filebeat监视日志目录或特定日志文件，tail file，并将它们转发给Elasticsearch或Logstash进行索引、kafka 等。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608287482176-image.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>APM Server</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608288332934-image.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>Elasticsearch</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608287377112-image.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>Elasticsearch Hadoop</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608288413802-image.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>Logstash</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608287714262-image.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>Kibana</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608287322225-image.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="2-ELK日志系统数据流图"><a href="#2-ELK日志系统数据流图" class="headerlink" title="2.ELK日志系统数据流图"></a>2.ELK日志系统数据流图</h2><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608287005820-v2-8aafc73492e4e1c6b2f910bba5824377_720w.jpg" srcset="/img/loading.gif" lazyload></p>
+<h2 id="3-Elasticsearch"><a href="#3-Elasticsearch" class="headerlink" title="3.Elasticsearch"></a>3.Elasticsearch</h2><p>简单地说， Elaaticsearch 是一个分布式的使用REST接口的搜索引擎。Elasticsearch 是一个分布式的基于 REST 接口的为云而设计的搜索引擎，它的功能包括：</p>
+<p>Elasticsearch是一个基于Apache Lucene (TM)的开源搜索引擎，无论在开源还是专有领域，Lucene 可以被认为是迄今为止最先进、性能最好的、功能最全的搜索引擎库。但是，Lucene 只是一个库。Lucene 本身并不提供高可用性及分布式部署。想要发挥其强大的作用，你需使用 Java 并要将其集成到你的应用中。Lucene 非常复杂，你需要深入的了解检索相关知识来理解它是如何工作的。 </p>
+<p>Elasticsearch 也是使用 Java 编写并使用 Lucene 来建立索引并实现搜索功能，但是它的目的是通过简单连贯的 RESTful API 让全文搜索变得简单并隐藏 Lucene 的复杂性。 </p>
+<p>不过，Elasticsearch 不仅仅是 Lucene 和全文搜索引擎，它还提供：</p>
+<ul>
+<li>分布式的实时文件存储，每个字段都被索引并可被搜索</li>
+<li>实时分析的分布式搜索引擎</li>
+<li>可以扩展到上百台服务器，处理PB级结构化或非结构化数据</li>
+</ul>
+<p>而且，所有的这些功能被集成到一台服务器，你的应用可以通过简单的 RESTful API、各种语言的客户端甚至命令行与之交互。上手 Elasticsearch 非常简单，它提供了许多合理的缺省值，并对初学者隐藏了复杂的搜索引擎理论。它开箱即用（安装即可使用），只需很少的学习既可在生产环境中使用。Elasticsearch 在 Apache 2 license 下许可使用，可以免费下载、使用和修改。<br>随着知识的积累，你可以根据不同的问题领域定制 Elasticsearch 的高级特性，这一切都是可配置的，并且配置非常灵活。</p>
+<p>Elasticsearch 的特点是它提供了一个极速的搜索体验。这源于它的高速（speed）。相比较其它的一些大数据引擎，Elasticsearch 可以实现秒级的搜索，但是对于它们来说，可能需要数小时才能完成。Elasticsearch 的 cluster 是一种分布式的部署，极易扩展（scale)。这样很容易使它处理 petabytes 的数据库容量。最重要的是 Elasticsearch 是它搜索的结果可以按照分数进行排序，它能提供我们最相关的搜索结果（relevance)。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608289599682-20190909144042553.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="4-Elasticsearch中的一些重要概念"><a href="#4-Elasticsearch中的一些重要概念" class="headerlink" title="4.Elasticsearch中的一些重要概念"></a>4.Elasticsearch中的一些重要概念</h2><h3 id="1-Cluster"><a href="#1-Cluster" class="headerlink" title="1.Cluster"></a>1.Cluster</h3><p>Cluster 也就是集群的意思。Elasticsearch 集群由一个或多个节点组成，可通过其集群名称进行标识。通常这个 Cluster 的名字是可以在 Elasticsearch 里的配置文件中设置的。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608290738034-20190813160721443.png" srcset="/img/loading.gif" lazyload></p>
+<p>云上的集群如下图所示：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608291521040-image.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="2-node"><a href="#2-node" class="headerlink" title="2.node"></a>2.node</h3><p>在大多数环境中，每个节点都在单独的盒子或虚拟机上运行。一个集群由一个或多个 node 组成。在测试模拟集群的环境中，我可以把多个 node 运行在一个 server 上。但是在实际的部署中，大多数情况还是需要一个 server 上运行一个 node。</p>
+<p>如图所示，云里面的每个白色正方形的盒子代表一个节点——Node。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608291502260-image.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="3-Document"><a href="#3-Document" class="headerlink" title="3.Document"></a>3.Document</h3><p>Elasticsearch 是面向文档的，这意味着您索引或搜索的最小数据单元是文档。</p>
+<p>文档通常是数据的 JSON 表示形式。JSON over HTTP 是与 Elasticsearch 进行通信的最广泛使用的方式，它是我们在本书中使用的方法。例如，聚会网站中的事件可以在以下文档中表示：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Elasticsearch Denver&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;organizer&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Lee&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;location&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Denver, Colorado, USA&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608290504555-20200418074457143.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="4-type"><a href="#4-type" class="headerlink" title="4.type"></a>4.type</h3><p>类型是文档的逻辑容器，类似于表是行的容器。 您将具有不同结构（模式）的文档放在不同类型中。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608290204987-20190923220747401.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="5-index"><a href="#5-index" class="headerlink" title="5.index"></a>5.index</h3><p>在 Elasticsearch 中，索引是文档的集合。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608290366176-20190813164839888.png" srcset="/img/loading.gif" lazyload></p>
+<p>在一个或者多个节点之间，多个绿色小方块组合在一起形成一个 ElasticSearch 的索引。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608291536992-image.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="6-shard"><a href="#6-shard" class="headerlink" title="6.shard"></a>6.shard</h3><p>在一个索引下，分布在多个节点里的绿色小方块称为分片——Shard。</p>
+<p>一个索引可以存储超出单个结点硬件限制的大量数据，但是在处理搜索请求时，响应太慢。为了解决这个问题，Elasticsearch 提供了将索引划分成多份的能力，这些份就叫做分片（shard）。由于 Elasticsearch 是一个分布式搜索引擎，当你创建一个索引的时候，你可以指定你想要的分片(shard)的数量。每个分片本身也是一个功能完善并且独立的“索引”，这个“索引”可以被放置到集群中的任何节点上。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608291284909-20200624114427449.png" srcset="/img/loading.gif" lazyload></p>
+<p>在一个索引下，分布在多个节点里的绿色小方块称为分片——Shard。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608291560506-image.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="7-replica"><a href="#7-replica" class="headerlink" title="7.replica"></a>7.replica</h3><p>默认情况下，Elasticsearch 为每个索引创建一个主分片和一个副本。这意味着每个索引将包含一个主分片，每个分片将具有一个副本。</p>
+<p>分配多个分片和副本是分布式搜索功能设计的本质，提供高可用性和快速访问索引中的文档。主副本和副本分片之间的主要区别在于只有主分片可以接受索引请求。副本和主分片都可以提供查询请求。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608291077338-20190814211710327.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="二、实验操作步骤"><a href="#二、实验操作步骤" class="headerlink" title="二、实验操作步骤"></a>二、实验操作步骤</h1><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-22/1608648053326-1608647917408-image.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="1-从命令运行-Elasticsearch"><a href="#1-从命令运行-Elasticsearch" class="headerlink" title="1.从命令运行 Elasticsearch"></a>1.从命令运行 Elasticsearch</h2><h3 id="1-启动elasticsearch"><a href="#1-启动elasticsearch" class="headerlink" title="1.启动elasticsearch"></a>1.启动elasticsearch</h3><p>进入elasticsearch安装目录，输入如下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">bin/elasticsearch<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608289504124-%E5%90%AF%E5%8A%A8elasticsearch.PNG" srcset="/img/loading.gif" lazyload></p>
+<p>如图所示，浏览器输入<a target="_blank" rel="noopener" href="http://192.168.154.135:9200/%E5%8D%B3%E5%8F%AF%E7%9C%8B%E5%88%B0elasticsearch%E5%90%AF%E5%8A%A8%E6%88%90%E5%8A%9F%E3%80%82">http://192.168.154.135:9200/即可看到elasticsearch启动成功。</a></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608289488877-elasticsearch%E5%90%AF%E5%8A%A8.PNG" srcset="/img/loading.gif" lazyload></p>
+<h3 id="2-查看集群状况"><a href="#2-查看集群状况" class="headerlink" title="2.查看集群状况"></a>2.查看集群状况</h3><p>在浏览器输入如下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">http://192.168.154.135:9200/_cat<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608288620392-%E6%9F%A5%E7%9C%8B%E9%9B%86%E7%BE%A4%E7%8A%B6%E6%80%81.PNG" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">首先，我们需要了解ES中以下几个名词，是做什么的：<br><br>集群(cluster):由一个或多个节点组成, 并通过集群名称与其他集群进行区分<br>节点(node):单个ElasticSearch实例. 通常一个节点运行在一个隔离的容器或虚拟机中<br>索引(index):在ES中, 索引是一组文档的集合（就是我们所说的一个日志）<br>分片(shard):因为ES是个分布式的搜索引擎, 所以索引通常都会分解成不同部分, 而这些分布在不同节点的数据就是分片. ES自动管理和组织分片, 并在必要的时候对分片数据进行再平衡分配, 所以用户基本上不用担心分片的处理细节，一个分片默认最大文档数量是20亿.<br>副本(replica):ES默认为一个索引创建5个主分片, 并分别为其创建一个副本分片. 也就是说每个索引都由5个主分片成本, 而每个主分片都相应的有一个copy.<br></code></pre></td></tr></table></figure>
+
+
+<h2 id="2-从命令运行-Kibana"><a href="#2-从命令运行-Kibana" class="headerlink" title="2.从命令运行 Kibana"></a>2.从命令运行 Kibana</h2><h3 id="1-通过-config-配置Kibana"><a href="#1-通过-config-配置Kibana" class="headerlink" title="1.通过 config 配置Kibana"></a>1.通过 config 配置Kibana</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">server.port: 5601<br>server.host: &quot;192.168.154.135&quot;<br>server.name: &quot;kibana_1&quot;<br>elasticsearch.hosts: [&quot;http://192.168.154.135:9200&quot;]<br></code></pre></td></tr></table></figure>
+
+<p>将Kibana 的界面设置为中文的界面，在 kibana.yml 中进行如下的设置：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">i18n.locale: &quot;zh-CN&quot;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608289399293-kia%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.PNG" srcset="/img/loading.gif" lazyload></p>
+<h3 id="2-启动Kibana"><a href="#2-启动Kibana" class="headerlink" title="2.启动Kibana"></a>2.启动Kibana</h3><p>可以从命令行启动 Kibana，如下所示：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">./bin/kibana<br></code></pre></td></tr></table></figure>
+<p>默认情况下，Kibana 在前台运行，将其日志打印到标准输出（stdout），按 Ctrl-C 可以停止。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608289413489-%E5%90%AF%E5%8A%A8kia.PNG" srcset="/img/loading.gif" lazyload></p>
+<p>在我们的浏览器中，我们输入地址 <a href="http://192.168.154.135:5601。我们可以看到上面的界面。我们可以利用这个界面来对我们的数据进行接下来的分析，展示等。">http://192.168.154.135:5601。我们可以看到上面的界面。我们可以利用这个界面来对我们的数据进行接下来的分析，展示等。</a></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608288103241-ki%E7%95%8C%E9%9D%A2.PNG" srcset="/img/loading.gif" lazyload></p>
+<h2 id="3-将本地日志上传到linux主机"><a href="#3-将本地日志上传到linux主机" class="headerlink" title="3.将本地日志上传到linux主机"></a>3.将本地日志上传到linux主机</h2><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608289337927-file.PNG" srcset="/img/loading.gif" lazyload></p>
+<h2 id="4-Filebeat读取log日志文件"><a href="#4-Filebeat读取log日志文件" class="headerlink" title="4.Filebeat读取log日志文件"></a>4.Filebeat读取log日志文件</h2><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-22/1608647361317-image.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="1-编写filebeat配置文件app-yml"><a href="#1-编写filebeat配置文件app-yml" class="headerlink" title="1.编写filebeat配置文件app.yml"></a>1.编写filebeat配置文件app.yml</h3><p>在filebeat目录执行如下命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">vi app.yml<br></code></pre></td></tr></table></figure>
+<p>添加以下内容信息至app.yml</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">filebeat.inputs:<br>- type: log<br>  enabled: true<br>  paths:<br>   - /home/elastic/*.log<br>setup.template.settings:<br>  index.number_of_shards: 3<br>output.elasticsearch:<br>  hosts: [&quot;192.168.154.135:5044&quot;]<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608289288243-filebeat%20app.yml%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE.PNG" srcset="/img/loading.gif" lazyload></p>
+<h3 id="2-将filebeat读取文件提交至elasticsearch"><a href="#2-将filebeat读取文件提交至elasticsearch" class="headerlink" title="2.将filebeat读取文件提交至elasticsearch"></a>2.将filebeat读取文件提交至elasticsearch</h3><p>在filebeat目录下执行如下命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">./filebeat -e -c app.yml<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-18/1608289302846-filebeat%E8%AF%BB%E5%8F%96%E6%9C%AC%E5%9C%B0%E6%97%A5%E5%BF%97%E5%88%B0logstash.PNG" srcset="/img/loading.gif" lazyload></p>
+<h2 id="5-kibana添加dashboard"><a href="#5-kibana添加dashboard" class="headerlink" title="5.kibana添加dashboard"></a>5.kibana添加dashboard</h2><h3 id="1-添加索引到Kibana中："><a href="#1-添加索引到Kibana中：" class="headerlink" title="1.添加索引到Kibana中："></a>1.添加索引到Kibana中：</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-22/1608643629278-%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95.PNG" srcset="/img/loading.gif" lazyload></p>
+<h3 id="2-设置配置"><a href="#2-设置配置" class="headerlink" title="2.设置配置"></a>2.设置配置</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-22/1608643762860-%E9%85%8D%E7%BD%AE%E8%AE%BE%E7%BD%AE.PNG" srcset="/img/loading.gif" lazyload></p>
+<h3 id="3-查看索引模式"><a href="#3-查看索引模式" class="headerlink" title="3.查看索引模式"></a>3.查看索引模式</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-22/1608643699176-%E6%9F%A5%E7%9C%8B%E7%B4%A2%E5%BC%95%E6%A8%A1%E5%BC%8F.PNG" srcset="/img/loading.gif" lazyload></p>
+<h3 id="4-查看discover界面"><a href="#4-查看discover界面" class="headerlink" title="4.查看discover界面"></a>4.查看discover界面</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-22/1608643646126-%E6%9F%A5%E7%9C%8Bdiscover%E9%A1%B5.PNG" srcset="/img/loading.gif" lazyload></p>
+<h3 id="5-添加总访问人数"><a href="#5-添加总访问人数" class="headerlink" title="5.添加总访问人数"></a>5.添加总访问人数</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-22/1608643842722-%E6%B7%BB%E5%8A%A0%E6%80%BB%E8%AE%BF%E9%97%AE%E4%BA%BA%E6%95%B0.PNG" srcset="/img/loading.gif" lazyload></p>
+<h3 id="6-添加访问面积图"><a href="#6-添加访问面积图" class="headerlink" title="6.添加访问面积图"></a>6.添加访问面积图</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-22/1608643892580-%E5%88%9B%E5%BB%BA%E8%AE%BF%E9%97%AE%E9%9D%A2%E7%A7%AF%E5%9B%BE.PNG" srcset="/img/loading.gif" lazyload></p>
+<h3 id="7-添加访问设备系统饼图"><a href="#7-添加访问设备系统饼图" class="headerlink" title="7.添加访问设备系统饼图"></a>7.添加访问设备系统饼图</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-22/1608643947403-%E5%88%9B%E5%BB%BA%E8%AE%BF%E9%97%AE%E8%AE%BE%E5%A4%87%E7%B3%BB%E7%BB%9F%E7%B1%BB%E5%9E%8B%E9%A5%BC%E5%9B%BE.PNG" srcset="/img/loading.gif" lazyload></p>
+<h3 id="8-添加访问次数前十ip数据表格"><a href="#8-添加访问次数前十ip数据表格" class="headerlink" title="8.添加访问次数前十ip数据表格"></a>8.添加访问次数前十ip数据表格</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-22/1608643999779-%E8%AE%BE%E7%BD%AE%E5%89%8D%E5%8D%81%E8%AE%BF%E9%97%AEip%E6%95%B0%E6%8D%AE%E8%A1%A8%E6%A0%BC.PNG" srcset="/img/loading.gif" lazyload></p>
+<h3 id="9-添加requst方法标签词云"><a href="#9-添加requst方法标签词云" class="headerlink" title="9.添加requst方法标签词云"></a>9.添加requst方法标签词云</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-22/1608644038309-%E8%AE%BE%E7%BD%AErequst%E6%96%B9%E6%B3%95%E6%A0%87%E7%AD%BE%E8%AF%8D%E4%BA%91.PNG" srcset="/img/loading.gif" lazyload></p>
+<h3 id="10-添加每天不同时间访问热力图"><a href="#10-添加每天不同时间访问热力图" class="headerlink" title="10.添加每天不同时间访问热力图"></a>10.添加每天不同时间访问热力图</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-22/1608644078829-%E5%88%9B%E5%BB%BA%E4%B8%8D%E5%90%8C%E6%97%B6%E9%97%B4%E6%AE%B5%E7%83%AD%E5%8A%9B%E5%9B%BE.PNG" srcset="/img/loading.gif" lazyload></p>
+<h3 id="11-添加访问网站途径饼图"><a href="#11-添加访问网站途径饼图" class="headerlink" title="11.添加访问网站途径饼图"></a>11.添加访问网站途径饼图</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-22/1608644135578-%E8%AE%BE%E7%BD%AE%E7%BD%91%E9%A1%B5%E6%B5%8F%E8%A7%88%E9%80%94%E5%BE%84%E9%A5%BC%E5%9B%BE.PNG" srcset="/img/loading.gif" lazyload></p>
+<h3 id="12-添加用户访问详细信息"><a href="#12-添加用户访问详细信息" class="headerlink" title="12.添加用户访问详细信息"></a>12.添加用户访问详细信息</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-22/1608644205517-%E5%B1%95%E7%A4%BA%E8%AE%BF%E9%97%AE%E7%94%A8%E6%88%B7%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF.PNG" srcset="/img/loading.gif" lazyload></p>
+<h3 id="13-添加访问用户城市表格"><a href="#13-添加访问用户城市表格" class="headerlink" title="13.添加访问用户城市表格"></a>13.添加访问用户城市表格</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-22/1608644262051-%E8%AE%BE%E7%BD%AE%E8%AE%BF%E9%97%AE%E5%9F%8E%E5%B8%82%E6%95%B0%E6%8D%AE%E8%A1%A8.PNG" srcset="/img/loading.gif" lazyload></p>
+<h3 id="14-添加用户城市分布地图"><a href="#14-添加用户城市分布地图" class="headerlink" title="14.添加用户城市分布地图"></a>14.添加用户城市分布地图</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-22/1608644298906-%E8%AE%BE%E7%BD%AE%E8%AE%BF%E9%97%AE%E5%9F%8E%E5%B8%82map%E5%88%86%E5%B8%83%E5%9B%BE.PNG" srcset="/img/loading.gif" lazyload></p>
+<h2 id="6-可视化总效果图"><a href="#6-可视化总效果图" class="headerlink" title="6.可视化总效果图"></a>6.可视化总效果图</h2><p>![](<a target="_blank" rel="noopener" href="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/111-%E6%81%A2%E5%A4%8D%E7%9A%84">https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/111-恢复的</a> 00_00_00-00_00_30.gif)</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-22/1608646231208-001.gif" srcset="/img/loading.gif" lazyload></p>
+<p><a target="_blank" rel="noopener" href="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-22/1608646231208-001.gif">https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-12-22/1608646231208-001.gif</a></p>
+<iframe width=100% height=100%  src='https://player.youku.com/embed/XNTAyMTA1MjkzMg==' frameborder=0  'allowfullscreen'></iframe>
+
+
+
+<h1 id="三、拓展-head插件"><a href="#三、拓展-head插件" class="headerlink" title="三、拓展-head插件"></a>三、拓展-head插件</h1><h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h2><p>ElasticSearch-head就是一款能连接ElasticSearch搜索引擎，并提供可视化的操作页面对ElasticSearch搜索引擎进行各种设置和数据检索功能的管理插件，如在head插件页面编写RESTful接口风格的请求，就可以对ElasticSearch中的数据进行增删改查、创建或者删除索引等操作。类似于使用navicat工具连接MySQL这种关系型数据库，对数据库做操作。</p>
+<p>在登陆和访问head插件地址和ElasticSearch前需要事先在服务器上安装和配置好ElasticSearch以及head插件。安装完后，默认head插件的web端口为9100，ElasticSearch服务的端口为9200，使用浏览器访问head地址，如<a target="_blank" rel="noopener" href="http://ip地址:9100/%EF%BC%8C%E6%8E%A8%E8%8D%90%E4%BD%BF%E7%94%A8Chrome%E6%B5%8F%E8%A7%88%E5%99%A8%EF%BC%8Chead%E6%8F%92%E4%BB%B6%E5%AF%B9Chrome%E6%B5%8F%E8%A7%88%E5%99%A8%E5%85%BC%E5%AE%B9%E6%9B%B4%E4%BD%B3%E3%80%82%E8%BF%9B%E5%85%A5head%E9%A1%B5%E9%9D%A2%E5%90%8E%E5%B0%86ElasticSearch%E8%BF%9E%E6%8E%A5%E8%BE%93%E5%85%A5%E6%A1%86%E4%B8%AD%E5%A1%AB%E5%86%99%E6%AD%A3%E7%A1%AE%E7%9A%84ElasticSearch%E6%9C%8D%E5%8A%A1%E5%9C%B0%E5%9D%80%EF%BC%8C%E5%A6%82http://IP%E5%9C%B0%E5%9D%80:9200/">http://IP地址:9100/，推荐使用Chrome浏览器，head插件对Chrome浏览器兼容更佳。进入head页面后将ElasticSearch连接输入框中填写正确的ElasticSearch服务地址，如http://IP地址:9200/</a></p>
+<h2 id="2-安装"><a href="#2-安装" class="headerlink" title="2.安装"></a>2.安装</h2><h3 id="1-安装Node-js"><a href="#1-安装Node-js" class="headerlink" title="1.安装Node.js"></a>1.安装Node.js</h3><p>下载并解压</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">cd /usr/local<br>wget https://npm.taobao.org/mirrors/<span class="hljs-keyword">node</span><span class="hljs-title">/v14</span>.<span class="hljs-number">4.0</span>/<span class="hljs-keyword">node</span><span class="hljs-title">-v14</span>.<span class="hljs-number">4.0</span>-linux-x64.tar.xz<br>tar -xvf <span class="hljs-keyword">node</span><span class="hljs-title">-v14</span>.<span class="hljs-number">4.0</span>-linux-x64.tar.xz<br>cd <span class="hljs-keyword">node</span><span class="hljs-title">-v14</span>.<span class="hljs-number">4.0</span>-linux-x64 <br></code></pre></td></tr></table></figure>
+
+<p>将nodejs的命令node、npm等添加到PATH环境变量中</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-built_in">export</span> <span class="hljs-attribute">NODE_HOME</span>=/usr/local/node-v14.4.0-linux-x64<br><span class="hljs-built_in">export</span> <span class="hljs-attribute">PATH</span>=<span class="hljs-variable">$PATH</span>:$&#123;NODE_HOME&#125;/bin<br></code></pre></td></tr></table></figure>
+<p>创建软链接</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">ln -s <span class="hljs-regexp">/usr/</span>local<span class="hljs-regexp">/nodejs/</span>bin<span class="hljs-regexp">/node /u</span>sr<span class="hljs-regexp">/bin/</span>node <br>ln -s <span class="hljs-regexp">/usr/</span>local<span class="hljs-regexp">/nodejs/</span>bin<span class="hljs-regexp">/npm /u</span>sr<span class="hljs-regexp">/bin/</span>npm<br></code></pre></td></tr></table></figure>
+<p>验证安装</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">npm -v<br><span class="hljs-keyword">node</span> <span class="hljs-title">-v</span><br>cnpm -v<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-安装git并拉取ElasticSearch-head代码"><a href="#2-安装git并拉取ElasticSearch-head代码" class="headerlink" title="2.安装git并拉取ElasticSearch-head代码"></a>2.安装git并拉取ElasticSearch-head代码</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs awk">yum install –y git <span class="hljs-comment">#安装git 安装过则更新</span><br>git --version <span class="hljs-comment">#查看是否安装成功</span><br>git clone https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/mobz/</span>elasticsearch-head.git<span class="hljs-comment">#从github上拉取elasticsearch-head代码</span><br>cd elasticsearch-head <span class="hljs-comment">#进入elasticsearch-head文件夹</span><br>npm install cnpm -g --registry=https:<span class="hljs-regexp">//</span>registry.npm.taobao.org <span class="hljs-comment">#因为npm安装非常非常慢，所以在这里先安装淘宝源地址</span><br>ln -s <span class="hljs-regexp">/usr/</span>local<span class="hljs-regexp">/nodejs/</span>bin<span class="hljs-regexp">/cnpm /u</span>sr<span class="hljs-regexp">/local/</span>bin/cnpm <span class="hljs-comment">#创建cnpm软链接，不然执行下面执行命令会报错</span><br>cnpm install <span class="hljs-comment">#使用cnpm命令下载安装项目所需要的插件</span><br></code></pre></td></tr></table></figure>
+
+
+<h3 id="3-配置ElasticSearch-head"><a href="#3-配置ElasticSearch-head" class="headerlink" title="3.配置ElasticSearch-head"></a>3.配置ElasticSearch-head</h3><p>修改elasticsearch.yml</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus">cd software/elasticsearch-<span class="hljs-number">7.8</span>.<span class="hljs-number">1</span>/config<br>vim elasticsearch<span class="hljs-selector-class">.yml</span><br>修改以下内容：<br>http<span class="hljs-selector-class">.cors</span><span class="hljs-selector-class">.enabled</span>: true <br>http<span class="hljs-selector-class">.cors</span><span class="hljs-selector-class">.allow-origin</span>: <span class="hljs-string">&quot;*&quot;</span> <span class="hljs-comment">//允许跨域访问</span><br></code></pre></td></tr></table></figure>
+
+
+<p>修改Gruntfile.js</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">cd</span> elasticSearch-head<br><span class="hljs-keyword">vim</span> Gruntfile.js<br>在此添加 <span class="hljs-built_in">hostname</span>=<span class="hljs-string">&quot;*&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/14.jpg" srcset="/img/loading.gif" lazyload></p>
+<h3 id="4-启动ElasticSearch-head"><a href="#4-启动ElasticSearch-head" class="headerlink" title="4.启动ElasticSearch-head"></a>4.启动ElasticSearch-head</h3><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c">grunt server <span class="hljs-meta">&amp;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/15.jpg" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/12.jpg" srcset="/img/loading.gif" lazyload></p>
+<h2 id="3-实验中的具体应用"><a href="#3-实验中的具体应用" class="headerlink" title="3.实验中的具体应用"></a>3.实验中的具体应用</h2><p>在这次实验当中，我们用head插件可以很方便的查看到logsearch以及kibana所创建的索引。从而，我们能够清晰的判断出程序是否向elasticsearch中正确写入了数据。以便我们后边数据可视化的构建以及dashboard的构造。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/10.jpg" srcset="/img/loading.gif" lazyload></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>[^1] <a target="_blank" rel="noopener" href="https://www.elastic.co/cn/">Elasticsearch官网</a></p>
+<p>[^2] <a target="_blank" rel="noopener" href="https://blog.csdn.net/UbuntuTouch/article/details/98871531">Elasticsearch 简介</a></p>
+<p>[^3] <a target="_blank" rel="noopener" href="https://blog.csdn.net/UbuntuTouch/article/details/102728604">Elastic：菜鸟上手指南</a></p>
+<p>[^4] <a target="_blank" rel="noopener" href="https://www.zhihu.com/question/338932215/answer/777380560">ELK可以干什么呢？</a></p>
+<p>[^5] <a target="_blank" rel="noopener" href="https://blog.csdn.net/UbuntuTouch/article/details/99443042">Elasticsearch中的一些重要概念:cluster, node, index, document, shards及replica</a></p>
+<p>[^6] <a target="_blank" rel="noopener" href="https://elasticstack.blog.csdn.net/article/details/99433732">Kibana：如何在 Linux，MacOS 及 Windows 上安装 Elastic 栈中的 Kibana</a></p>
+<p>[^7] <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?src=11&timestamp=1608288309&ver=2774&signature=u7YvT9ss9ztVI9kt8i6b4Z33LGTmymhkdrX7y1sZmWIOZS-TTHNI1bCbZ*UKRGPd1XDY54HGEKcMYuykx6oghiUaDhS9KzmJjGroDV8xGCbXHaNbNwkKm5AqLOlEUg08&new=1">多语言应用性能监控系统：Elastic APM</a></p>
+<p>[^8] <a target="_blank" rel="noopener" href="https://blog.csdn.net/vkingnew/article/details/92433598">Elasticsearch-Hadoop 介绍</a></p>
+<p>[^9] <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?src=11&timestamp=1608291430&ver=2774&signature=qMPp5kevq*OIUMs7tcdRTL1Rg8s9nh-yXY9a0T0cMN0IbUohSewrapky8wD0-1vcZt70cRGv2TuK4u6p5jvG*8tTRFrG6VLToMvSS2I30VeGtIcsQx8xsFZvhxMO0HGH&new=1">图解ElasticSearch原理，你可收好了!</a></p>
+<p>[^10] <a target="_blank" rel="noopener" href="https://www.cnblogs.com/tdp0108/p/11105848.html">ElasticSearch-head插件使用小结</a></p>
+<p>[^11] <a target="_blank" rel="noopener" href="https://blog.csdn.net/huwei2003/article/details/40581143">ElasticSearch-head插件用法</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/elastic/" class="category-chain-item">elastic</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/elastic/">#elastic</a>
+      
+        <a href="/tags/elasticsearch/">#elasticsearch</a>
+      
+        <a href="/tags/kibana/">#kibana</a>
+      
+        <a href="/tags/logstash/">#logstash</a>
+      
+        <a href="/tags/filebeat/">#filebeat</a>
+      
+        <a href="/tags/ELK/">#ELK</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>ELK实时日志分析平台</div>
+      <div>https://blog.baixf.tk/2020/12/22/elk/ELK实时日志分析平台/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年12月22日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/12/29/python/%E6%96%B0%E9%97%BB%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96%E5%8F%8A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" title="新闻信息抓取及数据分析">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">新闻信息抓取及数据分析</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/12/18/elk/ELK%E5%AE%9E%E6%97%B6%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0-%E6%A1%88%E4%BE%8B/" title="ELK实时日志分析平台-案例">
+                        <span class="hidden-mobile">ELK实时日志分析平台-案例</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

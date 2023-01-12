@@ -1,0 +1,979 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="hands-free">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Class1 语音识别综述">
+<meta property="og:url" content="https://blog.baixf.tk/2022/06/25/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E5%AD%A6%E4%B9%A0/Class1%20%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E6%A6%82%E8%BF%B0/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="hands-free">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog屏幕截图 2022-06-25 213320.jpg">
+<meta property="article:published_time" content="2022-06-25T21:37:11.000Z">
+<meta property="article:modified_time" content="2023-01-12T14:08:04.375Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="语音识别">
+<meta property="article:tag" content="ASR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog屏幕截图 2022-06-25 213320.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>Class1 语音识别综述 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog屏幕截图 2022-06-25 213133.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Class1 语音识别综述"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-06-25 21:37" pubdate>
+          2022年6月25日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          25 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Class1 语音识别综述</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="一、语音"><a href="#一、语音" class="headerlink" title="一、语音"></a>一、语音</h3><ul>
+<li><p>语音</p>
+<ul>
+<li><p>语音是语言的物质外壳，即语言的声学表现形式</p>
+</li>
+<li><p>语音是人类自然的交流工具</p>
+</li>
+<li><p>语音通信</p>
+</li>
+<li><p>人机语音交互</p>
+</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220625175004042.png" srcset="/img/loading.gif" lazyload alt="image-20220625175004042"></p>
+</li>
+<li><p>声学（Acoustics）</p>
+</li>
+<li><p>音频（Audio）：采样率、量化位数、通道数（例16KHz, 16bit, Mono）</p>
+</li>
+<li><p>语音（Speech）编码&#x2F;格式：参数编码、波形编码、混合编码（例PCM(WAV)、MP3、SLIK…）</p>
+</li>
+<li><p>时域：波形的振幅、频率</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220625180753461.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>频域：</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220625180931687.png" srcset="/img/loading.gif" lazyload alt="image-20220625180931687"></p>
+<ul>
+<li><p>傅里叶分析：每个复杂的波形都可以有不同频率的正弦波组成</p>
+</li>
+<li><p>语谱(spectrum):  述了信号包含的频率成分和它们的幅度</p>
+</li>
+<li><p>语谱图(spectrogram)：语谱随时间的变化</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="二、语音识别"><a href="#二、语音识别" class="headerlink" title="二、语音识别"></a>二、语音识别</h3><ol>
+<li>什么是语音识别</li>
+</ol>
+<blockquote>
+<p>Automatic Speech Recognition (ASR) 或 Speech to Text (STT)</p>
+<p>Aim: 解决机器听清问题，不在意理解</p>
+</blockquote>
+<ul>
+<li><p>将语音转换成文本</p>
+</li>
+<li><p>解决机器“听清”问题，不处理“听懂”问题</p>
+</li>
+<li><p>但是要处理声学和（部分）语言上的混淆</p>
+</li>
+<li><p>解决“共性”问题：每个人的语音都能 <strong>识别出正确的文本</strong></p>
+</li>
+</ul>
+<blockquote>
+<p>狭义语音识别不包含以下几个部分：说话人（声纹）识别；副语言（paralinguistic aspects）信息的分析与识别（例如发音质量感情韵律）；言语理解（褒贬）</p>
+</blockquote>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog139.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol start="2">
+<li>语音识别评估</li>
+</ol>
+<blockquote>
+<p>Error Rate &#x3D; (Substitutions + Deletions+ Insertions) &#x2F; (Total Words in Reference transcripts)</p>
+<p>错误类型：S-替换词错误；D-删除词错误 ；I-插入词错误；R-正确抄本;</p>
+<p>注意：Error Rate有可能超过100%；</p>
+</blockquote>
+<ul>
+<li><p>准确率（Accuracy）&#x3D; 1 - 错误率</p>
+<ul>
+<li>音素错误率 (Phone Error Rate)</li>
+<li>词错误率 (Word Error Rate, WER)</li>
+<li>字错误率 (Character Error Rate, CER)</li>
+<li>句错误率 (Sentence Error Rate, SER)（语音搜索）</li>
+</ul>
+</li>
+<li><p>Efficiency：实时率 (Real-time Factor, RTF)</p>
+<p>例：10s语音5s识别 RTF&#x3D;0.5</p>
+</li>
+</ul>
+<ol start="3">
+<li>语音识别系统分类</li>
+</ol>
+<ul>
+<li>说话人：特定人、非特定人</li>
+<li>语种：单一语种、多语种</li>
+<li>词汇量：大、中、小（OOV：Out of Vocabulary）</li>
+<li>设备：云侧、端侧</li>
+<li>距离：近讲、远讲…</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220625183420624.png" srcset="/img/loading.gif" lazyload alt="image-20220625183420624"></p>
+<h3 id="三、语音交互"><a href="#三、语音交互" class="headerlink" title="三、语音交互"></a>三、语音交互</h3><ul>
+<li><p>Speech Chain</p>
+<blockquote>
+<p>level: A to B；B to A; A to A; B to B?</p>
+</blockquote>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220625184719022.png" srcset="/img/loading.gif" lazyload alt="image-20220625184719022"></p>
+</li>
+</ul>
+<h3 id="四、语音生成"><a href="#四、语音生成" class="headerlink" title="四、语音生成"></a>四、语音生成</h3><blockquote>
+<p>Speech Production: 大脑—神经肌肉命令—发音器官运动</p>
+</blockquote>
+<ol>
+<li>发音过程</li>
+</ol>
+<p>由于 <strong>声门(Glottis)</strong> 的肌肉张力，加上由 <strong>肺部</strong> 压迫出来的空气，就会造成声门的快速打开与关闭，这一疏一密的空气压力，即为 <strong>人声源头</strong> ，再经 <strong>声道、口腔、鼻腔</strong> 的共振，就会产生不同声音。</p>
+<ul>
+<li><p>声门震动的快慢，决定声音的基本频率（即音高）。</p>
+</li>
+<li><p>口腔、鼻腔、舌头的位置、嘴型等，决定声音的内容（即音色）。</p>
+</li>
+<li><p>肺部压缩空气力量的大小，决定音量</p>
+</li>
+<li><p>Source-Filter Model</p>
+<p>发音是由信号源（声门），经过滤波器（口腔、鼻腔、 嘴型等）产生</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220625185943338.png" srcset="/img/loading.gif" lazyload alt="image-20220625185943338"></p>
+<ul>
+<li><p>浊音(Voiced sound): 声带振动引起，声音波形具有明显周期 性，声带震动的频率称为基音频率或基频(fundamental frequency, F0)，人们可以感受到稳定的音高存在。</p>
+</li>
+<li><p>清音(Unvoiced sound): 声带不震动，波形类似白噪，人们无 法感受到稳定的音高存在</p>
+</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li>清音与浊音在波形和语谱上的表现</li>
+</ol>
+<p>  <img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220625190600847.png" srcset="/img/loading.gif" lazyload alt="image-20220625190600847"></p>
+<ul>
+<li>清音杂论无序，无高峰差异</li>
+<li>浊音波形较为规律，由各个小峰组成，共振峰较为明显，短时能量较高。</li>
+</ul>
+<ol start="3">
+<li>基频(F0)与共振峰(F1,F2,F3)</li>
+</ol>
+<blockquote>
+<p>基音频率体现的是声源的信息,而共振峰(formant)体现的是声道的信息。</p>
+</blockquote>
+<p><img src="/../AppData/Roaming/Typora/typora-user-images/image-20220625191726623.png" srcset="/img/loading.gif" lazyload alt="image-20220625191726623"></p>
+<ul>
+<li><p>共振峰指在声音的频谱中能量相对集中的一些区域(语谱峰值)</p>
+</li>
+<li><p>共振峰是被声道特别放大的频带; 由于不同元音在声道内不同位置产生，不同元音会产生不同种类的放大或共振。</p>
+</li>
+<li><p>第一和第二个共振峰(F1和F2)对于区分不同元音尤为重要(不同元音F1与F2有不同位置)。</p>
+<blockquote>
+<p>P.S基音和共振峰是不同的两个量，基音是声带振动产生的；而共振峰是口（鼻）腔耦合共振产生的。同一个基频如果口（鼻）腔的形状不同有不同的共振峰，同样不同的基频相同的口（鼻）腔，产生相同的音。所以它们之间没有直接的关系，但只有（带基音的）激励脉冲通过口（鼻）腔的耦合才能产生语音。</p>
+</blockquote>
+</li>
+</ul>
+<ol start="4">
+<li>音素与词素</li>
+</ol>
+<ul>
+<li><p>音素（Phonemes）：一种语言中语音的“最小”单元(primitive sounds)（P.S对语音识别进行声学建模是以音素为单位的）</p>
+<ul>
+<li><p>辅音(consonants):由限制或阻挡气流产生，可以是浊音或清音</p>
+</li>
+<li><p>元音(vowels):声腔开放，气流较为顺畅的通过，通常为浊音，比辅音声音洪亮且持续时间长</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220625193914958.png" srcset="/img/loading.gif" lazyload alt="image-20220625193914958"></p>
+</li>
+</ul>
+</li>
+<li><p>词&#x2F;语素（morpheme）：一种语言中最小的具有语义的结构单元</p>
+</li>
+</ul>
+<blockquote>
+<p>区别于音素，词素是构成词的要素。是语言中最小单位的音义结合体。词素是比词低一级的单位，词是语言中能够独立运用的最小单位，是指词在句法结构中的地位和作用而言的。语素是指语言中最小的音义结合体。</p>
+</blockquote>
+<ol start="5">
+<li>协同发音</li>
+</ol>
+<p>音素在声学上的实现和上下文强相关 –&gt; 上下文相关模型(Context-dependent model)</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220625194451819.png" srcset="/img/loading.gif" lazyload alt="image-20220625194451819"></p>
+<ol start="6">
+<li>音素抄本（Phonetic Transcription）</li>
+</ol>
+<ul>
+<li>一段语音对应的音素列表（带或不带时间边界，时间信息由人工标注或者自动对齐获得）</li>
+<li>服务于语音识别声学建模</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220625194721964.png" srcset="/img/loading.gif" lazyload alt="image-20220625194721964"></p>
+<ol start="7">
+<li>音节：元音和辅音结合构成一个音节</li>
+</ol>
+<blockquote>
+<p>Onset:音节头；rime:韵母；nucleus:音节核；coda:音节尾</p>
+</blockquote>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220625194848404.png" srcset="/img/loading.gif" lazyload alt="image-20220625194848404"></p>
+<ol start="8">
+<li>语音生成与语音识别</li>
+</ol>
+<ul>
+<li>解析出来的发音特征(articulatory features) or 属性(attributes)—效果有限</li>
+<li>对语音信号处理层面仍有指导意义<ul>
+<li>源-滤波器模型(source-filter model)</li>
+<li>声道调制中分离出激励信息，如对英文来说激励的频率可以忽略，<br>对中文来说则可以利用</li>
+</ul>
+</li>
+<li>对建模单元的选取有指导意义<ul>
+<li>协同发音（co-articulation）— 上下文相关模型</li>
+<li>发音上下文现象类似 — 决策树聚类</li>
+</ul>
+</li>
+</ul>
+<h3 id="五、语音感知"><a href="#五、语音感知" class="headerlink" title="五、语音感知"></a>五、语音感知</h3><blockquote>
+<p>Speech Perception: 人耳—大脑</p>
+</blockquote>
+<ul>
+<li>人耳：“频谱分析仪”，作为语音处理中频率分析的证据（心理物理学）</li>
+<li>人耳构成</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220625205224448.png" srcset="/img/loading.gif" lazyload alt="image-20220625205224448"></p>
+<ul>
+<li>物理特性 vs. 听觉特性（physical vs. perceptual）</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220625205242556.png" srcset="/img/loading.gif" lazyload alt="image-20220625205242556"></p>
+<ul>
+<li>音色：又称音品，由声音波形的谐波频谱和包络决定。</li>
+<li>音调：人耳对于频率的感知是非线性的，近似对数函数。</li>
+<li>掩蔽效应(Masking)：一种心理声学现象，是由人耳对声音频率分辨机制决定的。是指一个较强声音的附近，相对较弱的声音不易被人耳察觉，即被强音所掩蔽。</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220625205450284.png" srcset="/img/loading.gif" lazyload alt="image-20220625205450284"></p>
+<ul>
+<li><p>语音感知与语音识别（语音信号处理与特征提取）</p>
+<ul>
+<li>特征工程， Mel Frequency Cepstral Coefficients （MFCC），PLP…</li>
+<li>语音编码、增强、分离与麦克风阵列技术…</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220625205734728.png" srcset="/img/loading.gif" lazyload alt="MFCC特征提取过程"></p>
+</li>
+</ul>
+<h3 id="六、语音识别的难度"><a href="#六、语音识别的难度" class="headerlink" title="六、语音识别的难度"></a>六、语音识别的难度</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220625200233460.png" srcset="/img/loading.gif" lazyload alt="image-20220625200233460"></p>
+<h3 id="七、语音识别的发展历史"><a href="#七、语音识别的发展历史" class="headerlink" title="七、语音识别的发展历史"></a>七、语音识别的发展历史</h3><ul>
+<li><p>早期个别方法： 1950-1960年代 </p>
+<p>谱分析，线性预测，统计训练，动态规划（DTW），语言模型</p>
+</li>
+<li><p>现代语音识别的诞生：1970-1980年代</p>
+<p>监督学习，GMM, HMM, N-gram</p>
+</li>
+<li><p>平稳发展期：1990-2000年代</p>
+<p>GMM-HMM框架主导</p>
+</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220625200141155.png" srcset="/img/loading.gif" lazyload alt="image-20220625200141155"></p>
+<h3 id="八、现代语音识别"><a href="#八、现代语音识别" class="headerlink" title="八、现代语音识别"></a>八、现代语音识别</h3><ul>
+<li><p>统计模型</p>
+<p>使用声学模型、语言模型和发音词典，通过给定的声学特征向量X，获取最有可能的词序列W*</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220625210221922.png" srcset="/img/loading.gif" lazyload alt="image-20220625210221922"></p>
+</li>
+<li><p>端到端系统</p>
+<p>用一个神经网络直接将输入声学特征向量X映射为词序列W*</p>
+</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blogimage-20220625205916170.png" srcset="/img/loading.gif" lazyload alt="image-20220625205916170"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/" class="category-chain-item">语音识别</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB/">#语音识别</a>
+      
+        <a href="/tags/ASR/">#ASR</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Class1 语音识别综述</div>
+      <div>https://blog.baixf.tk/2022/06/25/语音识别学习/Class1 语音识别概述/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年6月25日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/06/30/%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E5%AD%A6%E4%B9%A0/Class0%20kaldi%E5%AE%89%E8%A3%85/" title="kaldi安装">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">kaldi安装</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/06/09/Machine%20Learning/%E6%9C%AC%E7%A7%91%E6%AF%95%E4%B8%9A%E8%AE%BA%E6%96%87/" title="基于LSTM神经网络的股票价格趋势预测的研究与实现">
+                        <span class="hidden-mobile">基于LSTM神经网络的股票价格趋势预测的研究与实现</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

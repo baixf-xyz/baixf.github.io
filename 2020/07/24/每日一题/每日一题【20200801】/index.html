@@ -1,0 +1,845 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第十一天建模打卡">
+<meta property="og:type" content="article">
+<meta property="og:title" content="每日一题【20200725】">
+<meta property="og:url" content="https://blog.baixf.tk/2020/07/24/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200801%E3%80%91/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="第十一天建模打卡">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201129201333.jpg">
+<meta property="article:published_time" content="2020-07-24T03:11:11.000Z">
+<meta property="article:modified_time" content="2022-06-20T09:42:49.958Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="数学建模">
+<meta property="article:tag" content="数据预处理">
+<meta property="article:tag" content="白噪声检验">
+<meta property="article:tag" content="时间序列">
+<meta property="article:tag" content="预测">
+<meta property="article:tag" content="ARIMA">
+<meta property="article:tag" content="读取数据">
+<meta property="article:tag" content="稳定性检验">
+<meta property="article:tag" content="拟合">
+<meta property="article:tag" content="AIC">
+<meta property="article:tag" content="BIC">
+<meta property="article:tag" content="卡方统计">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201129201333.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>每日一题【20200725】 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201129201333.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="每日一题【20200725】"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-07-24 03:11" pubdate>
+          2020年7月24日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          31 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">每日一题【20200725】</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="时间序列的ARIMA预测分析"><a href="#时间序列的ARIMA预测分析" class="headerlink" title="时间序列的ARIMA预测分析"></a>时间序列的ARIMA预测分析</h1><h2 id="例"><a href="#例" class="headerlink" title="例"></a>例</h2><p>假设我们有这么一段数据（采样自移动公司某段时间的开户客户数目），预测接下来31天的开户客户数。</p>
+<p class="note note-primary">
+  文件地址：
+  链接: https://pan.baidu.com/s/1RS-x1HTQLUU1IF5g3Yesdw
+  提取码: xbyt
+</p>
+在这里，我们把时间序列数据利用Cramer分解定理将其分解为以下四项：
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs matlab">真实数据=趋势项+周期项+信息传递项+白噪声项<br>趋势性：例如随时间变化的一次函数/多次函数/幂函数趋势等<br>周期项：周期规律<br>信息传递项：<br>白噪声项：作为残差<br></code></pre></td></tr></table></figure>
+## 1.观测数据（均值，周期等）
+
+<ul>
+<li>读取数据</li>
+<li>绘制数据图像</li>
+<li>绘制自相关图像</li>
+</ul>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs matlab">x0=xlsread(<span class="hljs-string">&#x27;移动通知户开户数.xlsx&#x27;</span>,<span class="hljs-string">&#x27;B2:B732&#x27;</span>);<br>n=<span class="hljs-number">1</span>:<span class="hljs-built_in">length</span>(x0);<br>subplot(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">1</span>);<br><span class="hljs-built_in">plot</span>(n,x0);<br>title(<span class="hljs-string">&#x27;原始数据图像&#x27;</span>);<br><span class="hljs-built_in">hold</span> on;<br>subplot(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">2</span>);<br>autocorr(x0);<br>title(<span class="hljs-string">&#x27;自相关图&#x27;</span>);<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201129212617.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="2-数据预处理"><a href="#2-数据预处理" class="headerlink" title="2. 数据预处理"></a>2. 数据预处理</h2><ul>
+<li>去周期&#x2F;趋势</li>
+<li>绘制数据图像</li>
+<li>绘制自相关图像</li>
+</ul>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201129212715.png" srcset="/img/loading.gif" lazyload></p>
+<p>如图所示我们可以看到周期大约是30或31，由此我们也可以推测该数据是一个来自每天的开户统计数据。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs matlab">s=<span class="hljs-number">31</span>; <span class="hljs-comment">%周期s=31</span><br>n=<span class="hljs-number">31</span>; <span class="hljs-comment">%预报数据个数</span><br>m1=<span class="hljs-built_in">length</span>(x0)<br><span class="hljs-keyword">for</span> <span class="hljs-built_in">i</span>=s+<span class="hljs-number">1</span>:m1<br>    y(<span class="hljs-built_in">i</span>-s)=x0(<span class="hljs-built_in">i</span>)-x0(<span class="hljs-built_in">i</span>-s);<br><span class="hljs-keyword">end</span><br>x1=diff(y)<br>m2=<span class="hljs-built_in">length</span>(x1)<br>subplot(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">1</span>)<br><span class="hljs-built_in">plot</span>(<span class="hljs-number">1</span>:m2,x1)<br>title(<span class="hljs-string">&#x27;&#x27;</span>)<br><span class="hljs-built_in">hold</span> on<br>subplot(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">2</span>)<br>autocorr(x1)<br></code></pre></td></tr></table></figure>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201129212755.png" srcset="/img/loading.gif" lazyload></p>
+<p><span class="label label-primary">adf检验处理后的数据平稳</span></p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs matlab">[h1,p1,adf,ljz]=adftest(x1)<br>h1 =<br>  logical<br>   <span class="hljs-number">1</span><br>p1 =<br>   <span class="hljs-number">1.0000e-03</span><br>adf =<br>  <span class="hljs-number">-47.5009</span><br>ljz =<br>   <span class="hljs-number">-1.9413</span><br></code></pre></td></tr></table></figure>
+<p>结果表示一阶31步后的数据是平稳的。</p>
+<h2 id="3-白噪声检验"><a href="#3-白噪声检验" class="headerlink" title="3. 白噪声检验"></a>3. 白噪声检验</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs matlab">yanchi=[<span class="hljs-number">6</span>,<span class="hljs-number">12</span>,<span class="hljs-number">18</span>];<br>[H,pValue,Qstat,CriticalValue]=lbqtest(x1,<span class="hljs-string">&#x27;lags&#x27;</span>,yanchi);<br>fprintf(<span class="hljs-string">&#x27;%15s%15s%15s&#x27;</span>,<span class="hljs-string">&#x27;延迟阶数&#x27;</span>,<span class="hljs-string">&#x27;卡方统计量&#x27;</span>,<span class="hljs-string">&#x27;p值&#x27;</span>);<br>fprintf(<span class="hljs-string">&#x27;\n&#x27;</span>);<br><span class="hljs-keyword">for</span> <span class="hljs-built_in">i</span>=<span class="hljs-number">1</span>:<span class="hljs-built_in">length</span>(yanchi)<br>    fprintf(<span class="hljs-string">&#x27;%18f%19f%19f&#x27;</span>,yanchi(<span class="hljs-built_in">i</span>),Qstat(<span class="hljs-built_in">i</span>),pValue(<span class="hljs-built_in">i</span>));<br>    fprintf(<span class="hljs-string">&#x27;\n&#x27;</span>);<br><span class="hljs-keyword">end</span><br>           延迟阶数          卡方统计量             p值<br>          <span class="hljs-number">6.000000</span>         <span class="hljs-number">200.496085</span>           <span class="hljs-number">0.000000</span><br>         <span class="hljs-number">12.000000</span>         <span class="hljs-number">209.963846</span>           <span class="hljs-number">0.000000</span><br>         <span class="hljs-number">18.000000</span>         <span class="hljs-number">235.502676</span>           <span class="hljs-number">0.000000</span><br></code></pre></td></tr></table></figure>
+<p>p&lt;0.1说明数据不是白噪声,可以进行aeima模型。</p>
+<h2 id="4-模型检验"><a href="#4-模型检验" class="headerlink" title="4. 模型检验"></a>4. 模型检验</h2><ul>
+<li>aic</li>
+<li>bic</li>
+</ul>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs matlab">x1=x1&#x27;;<br>LOGL=<span class="hljs-built_in">zeros</span>(<span class="hljs-number">6</span>,<span class="hljs-number">6</span>); <span class="hljs-comment">%Initialize</span><br>PQ=<span class="hljs-built_in">zeros</span>(<span class="hljs-number">6</span>,<span class="hljs-number">6</span>);<br><span class="hljs-keyword">for</span> p=<span class="hljs-number">0</span>:<span class="hljs-number">5</span><br>    <span class="hljs-keyword">for</span> q=<span class="hljs-number">0</span>:<span class="hljs-number">5</span><br>        model=arima(p,<span class="hljs-number">0</span>,q); <span class="hljs-comment">%指定模型结构</span><br>        [fit,~,logL]=estimate(model,x1);<br>LOGL(p+<span class="hljs-number">1</span>,q+<span class="hljs-number">1</span>)=logL;<br>        PQ(p+<span class="hljs-number">1</span>,q+<span class="hljs-number">1</span>)=p+q; <span class="hljs-comment">%计算拟合参数的个数</span><br>    <span class="hljs-keyword">end</span><br><span class="hljs-keyword">end</span><br>LOGL=<span class="hljs-built_in">reshape</span>(LOGL,<span class="hljs-number">36</span>,<span class="hljs-number">1</span>);<br>PQ=<span class="hljs-built_in">reshape</span>(PQ,<span class="hljs-number">36</span>,<span class="hljs-number">1</span>);<br>[aic,bic]=aicbic(LOGL,PQ+<span class="hljs-number">1</span>,m2);<br>fprintf(<span class="hljs-string">&#x27;AIC为：\n&#x27;</span>);<span class="hljs-comment">%显示计算结果</span><br><span class="hljs-built_in">reshape</span>(aic,<span class="hljs-number">6</span>,<span class="hljs-number">6</span>) <span class="hljs-comment">%储存36个模型AIC的值</span><br>fprintf(<span class="hljs-string">&#x27;BIC为: \n&#x27;</span>);<br><span class="hljs-built_in">reshape</span>(bic,<span class="hljs-number">6</span>,<span class="hljs-number">6</span>) <span class="hljs-comment">%储存36个模型BIC的值</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs matlab">AIC为：<br><span class="hljs-built_in">ans</span> =<br>   <span class="hljs-number">1.0e+04</span> *<br>    <span class="hljs-number">1.5207</span>    <span class="hljs-number">1.4932</span>    <span class="hljs-number">1.4859</span>    <span class="hljs-number">1.4859</span>    <span class="hljs-number">1.4859</span>    <span class="hljs-number">1.4861</span><br>    <span class="hljs-number">1.4980</span>    <span class="hljs-number">1.4858</span>    <span class="hljs-number">1.4859</span>    <span class="hljs-number">1.4843</span>    <span class="hljs-number">1.4843</span>    <span class="hljs-number">1.4864</span><br>    <span class="hljs-number">1.4917</span>    <span class="hljs-number">1.4858</span>    <span class="hljs-number">1.4850</span>    <span class="hljs-number">1.4840</span>    <span class="hljs-number">1.4851</span>    <span class="hljs-number">1.4844</span><br>    <span class="hljs-number">1.4892</span>    <span class="hljs-number">1.4858</span>    <span class="hljs-number">1.4862</span>    <span class="hljs-number">1.4852</span>    <span class="hljs-number">1.4839</span>    <span class="hljs-number">1.4843</span><br>    <span class="hljs-number">1.4876</span>    <span class="hljs-number">1.4846</span>    <span class="hljs-number">1.4862</span>    <span class="hljs-number">1.4844</span>    <span class="hljs-number">1.4841</span>    <span class="hljs-number">1.4841</span><br>    <span class="hljs-number">1.4873</span>    <span class="hljs-number">1.4850</span>    <span class="hljs-number">1.4846</span>    <span class="hljs-number">1.4845</span>    <span class="hljs-number">1.4836</span>    <span class="hljs-number">1.4833</span><br>BIC为:<br><span class="hljs-built_in">ans</span> =<br>   <span class="hljs-number">1.0e+04</span> *<br>    <span class="hljs-number">1.5211</span>    <span class="hljs-number">1.4942</span>    <span class="hljs-number">1.4873</span>    <span class="hljs-number">1.4877</span>    <span class="hljs-number">1.4882</span>    <span class="hljs-number">1.4889</span><br>    <span class="hljs-number">1.4989</span>    <span class="hljs-number">1.4872</span>    <span class="hljs-number">1.4878</span>    <span class="hljs-number">1.4865</span>    <span class="hljs-number">1.4870</span>    <span class="hljs-number">1.4896</span><br>    <span class="hljs-number">1.4931</span>    <span class="hljs-number">1.4877</span>    <span class="hljs-number">1.4872</span>    <span class="hljs-number">1.4867</span>    <span class="hljs-number">1.4883</span>    <span class="hljs-number">1.4880</span><br>    <span class="hljs-number">1.4910</span>    <span class="hljs-number">1.4881</span>    <span class="hljs-number">1.4889</span>    <span class="hljs-number">1.4884</span>    <span class="hljs-number">1.4876</span>    <span class="hljs-number">1.4883</span><br>    <span class="hljs-number">1.4899</span>    <span class="hljs-number">1.4873</span>    <span class="hljs-number">1.4894</span>    <span class="hljs-number">1.4880</span>    <span class="hljs-number">1.4882</span>    <span class="hljs-number">1.4887</span><br>    <span class="hljs-number">1.4901</span>    <span class="hljs-number">1.4882</span>    <span class="hljs-number">1.4883</span>    <span class="hljs-number">1.4886</span>    <span class="hljs-number">1.4882</span>    <span class="hljs-number">1.4883</span><br></code></pre></td></tr></table></figure>
+<p>寻找使AIC\BIC值最小的p值和q值（p、q值越小越好）<br>如果数值相同可尽量选择阶数较小。<br>p&#x3D;q&#x3D;5</p>
+<h2 id="5-模型估计"><a href="#5-模型估计" class="headerlink" title="5. 模型估计"></a>5. 模型估计</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs matlab">p=input(<span class="hljs-string">&#x27;输入阶数p=&#x27;</span>);<br>q=input(<span class="hljs-string">&#x27;输入阶数q=&#x27;</span>);<br>model=arima(p,<span class="hljs-number">0</span>,q);  <span class="hljs-comment">%指定模型的结构</span><br>m=estimate(model,x1);  <span class="hljs-comment">%拟合参数</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs matlab">ARIMA(<span class="hljs-number">5</span>,<span class="hljs-number">0</span>,<span class="hljs-number">5</span>) Model (Gaussian Distribution):<br>                  Value       StandardError    TStatistic      PValue<br>                __________    _____________    __________    __________<br>    Constant      <span class="hljs-number">-0.13876</span>         <span class="hljs-number">5.2153</span>       <span class="hljs-number">-0.026606</span>       <span class="hljs-number">0.97877</span><br>    AR&#123;<span class="hljs-number">1</span>&#125;         <span class="hljs-number">-0.62756</span>         <span class="hljs-number">0.2344</span>         <span class="hljs-number">-2.6773</span>     <span class="hljs-number">0.0074222</span><br>    AR&#123;<span class="hljs-number">2</span>&#125;          <span class="hljs-number">0.63226</span>        <span class="hljs-number">0.23509</span>          <span class="hljs-number">2.6894</span>     <span class="hljs-number">0.0071576</span><br>    AR&#123;<span class="hljs-number">3</span>&#125;          <span class="hljs-number">0.45155</span>        <span class="hljs-number">0.16781</span>          <span class="hljs-number">2.6909</span>     <span class="hljs-number">0.0071264</span><br>    AR&#123;<span class="hljs-number">4</span>&#125;         <span class="hljs-number">-0.21596</span>        <span class="hljs-number">0.23391</span>        <span class="hljs-number">-0.92326</span>       <span class="hljs-number">0.35587</span><br>    AR&#123;<span class="hljs-number">5</span>&#125;          <span class="hljs-number">0.14475</span>       <span class="hljs-number">0.055125</span>          <span class="hljs-number">2.6259</span>     <span class="hljs-number">0.0086427</span><br>    MA&#123;<span class="hljs-number">1</span>&#125;         <span class="hljs-number">-0.16113</span>         <span class="hljs-number">0.2338</span>        <span class="hljs-number">-0.68919</span>        <span class="hljs-number">0.4907</span><br>    MA&#123;<span class="hljs-number">2</span>&#125;          <span class="hljs-number">-1.1618</span>       <span class="hljs-number">0.073341</span>         <span class="hljs-number">-15.841</span>    <span class="hljs-number">1.6094e-56</span><br>    MA&#123;<span class="hljs-number">3</span>&#125;         <span class="hljs-number">0.080585</span>         <span class="hljs-number">0.3241</span>         <span class="hljs-number">0.24864</span>       <span class="hljs-number">0.80364</span><br>    MA&#123;<span class="hljs-number">4</span>&#125;          <span class="hljs-number">0.64061</span>        <span class="hljs-number">0.12254</span>          <span class="hljs-number">5.2276</span>    <span class="hljs-number">1.7168e-07</span><br>    MA&#123;<span class="hljs-number">5</span>&#125;         <span class="hljs-number">-0.39824</span>        <span class="hljs-number">0.17684</span>          <span class="hljs-number">-2.252</span>       <span class="hljs-number">0.02432</span><br>    Variance    <span class="hljs-number">1.0281e+08</span>     <span class="hljs-number">1.3326e-06</span>      <span class="hljs-number">7.7147e+13</span>             <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+<h2 id="6-模型检验"><a href="#6-模型检验" class="headerlink" title="6. 模型检验"></a>6. 模型检验</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs matlab">z=iddata(x1);<br>ml1=armax(z,[p,q]);<br>e=resid(ml1,z);  <span class="hljs-comment">%拟合做残差分析</span><br>[H,pValue,Qstat,CriticalValue]=lbqtest(e.OutputData,<span class="hljs-string">&#x27;lags&#x27;</span>,<span class="hljs-number">6</span>)<br></code></pre></td></tr></table></figure>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs matlab">H =<br>  logical<br>   <span class="hljs-number">0</span><br>pValue =<br>    <span class="hljs-number">0.9795</span><br>Qstat =<br>    <span class="hljs-number">1.1455</span><br>CriticalValue =<br>   <span class="hljs-number">12.5916</span><br></code></pre></td></tr></table></figure>
+<p>说明残差是白噪声序列。</p>
+<h2 id="7-预测"><a href="#7-预测" class="headerlink" title="7. 预测"></a>7. 预测</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs matlab">[yf,ymse]=forecast(m,n,<span class="hljs-string">&#x27;Y0&#x27;</span>,x1);<br>yhat=y(<span class="hljs-keyword">end</span>)+cumsum(yf);  <span class="hljs-comment">%求y的预报值</span><br><span class="hljs-keyword">for</span> <span class="hljs-built_in">j</span>=<span class="hljs-number">1</span>:n<br>    x0(m1+<span class="hljs-built_in">j</span>)=yhat(<span class="hljs-built_in">j</span>)+x0(m1+<span class="hljs-built_in">j</span>-s);  <span class="hljs-comment">%求x的预测值</span><br><span class="hljs-keyword">end</span><br>xhat=x0(m1+<span class="hljs-number">1</span>:<span class="hljs-keyword">end</span>)<br></code></pre></td></tr></table></figure>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs matlab">xhat =<br>   <span class="hljs-number">1.0e+04</span> *<br>    <span class="hljs-number">9.4432</span><br>    <span class="hljs-number">6.1221</span><br>    <span class="hljs-number">5.4381</span><br>    <span class="hljs-number">4.6014</span><br>    <span class="hljs-number">4.6824</span><br>    <span class="hljs-number">4.3914</span><br>    <span class="hljs-number">3.7724</span><br>    <span class="hljs-number">4.0716</span><br>    <span class="hljs-number">4.1337</span><br>    <span class="hljs-number">4.0116</span><br>    <span class="hljs-number">3.8555</span><br>    <span class="hljs-number">3.7977</span><br>    <span class="hljs-number">3.8511</span><br>    <span class="hljs-number">3.2243</span><br>    <span class="hljs-number">3.4339</span><br>    <span class="hljs-number">3.4500</span><br>    <span class="hljs-number">4.0557</span><br>    <span class="hljs-number">3.9356</span><br>    <span class="hljs-number">3.6604</span><br>    <span class="hljs-number">3.6947</span><br>    <span class="hljs-number">3.2538</span><br>    <span class="hljs-number">3.4977</span><br>    <span class="hljs-number">3.6063</span><br>    <span class="hljs-number">3.8183</span><br>    <span class="hljs-number">3.5776</span><br>    <span class="hljs-number">3.9540</span><br>    <span class="hljs-number">3.9762</span><br>    <span class="hljs-number">3.5320</span><br>    <span class="hljs-number">3.8284</span><br>    <span class="hljs-number">4.2821</span><br>    <span class="hljs-number">4.3404</span><br></code></pre></td></tr></table></figure>
+<p>这就是接下来31天的预测客户数。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a href="">NULL</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/" class="category-chain-item">数学建模</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">#数学建模</a>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86/">#数据预处理</a>
+      
+        <a href="/tags/%E7%99%BD%E5%99%AA%E5%A3%B0%E6%A3%80%E9%AA%8C/">#白噪声检验</a>
+      
+        <a href="/tags/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97/">#时间序列</a>
+      
+        <a href="/tags/%E9%A2%84%E6%B5%8B/">#预测</a>
+      
+        <a href="/tags/ARIMA/">#ARIMA</a>
+      
+        <a href="/tags/%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE/">#读取数据</a>
+      
+        <a href="/tags/%E7%A8%B3%E5%AE%9A%E6%80%A7%E6%A3%80%E9%AA%8C/">#稳定性检验</a>
+      
+        <a href="/tags/%E6%8B%9F%E5%90%88/">#拟合</a>
+      
+        <a href="/tags/AIC/">#AIC</a>
+      
+        <a href="/tags/BIC/">#BIC</a>
+      
+        <a href="/tags/%E5%8D%A1%E6%96%B9%E7%BB%9F%E8%AE%A1/">#卡方统计</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>每日一题【20200725】</div>
+      <div>https://blog.baixf.tk/2020/07/24/每日一题/每日一题【20200801】/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年7月24日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/07/24/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200728%E3%80%91/" title="每日一题【20200728】">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">每日一题【20200728】</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/07/24/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200807%E3%80%91/" title="每日一题【20200807】">
+                        <span class="hidden-mobile">每日一题【20200807】</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

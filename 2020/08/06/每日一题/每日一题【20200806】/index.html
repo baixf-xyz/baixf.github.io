@@ -1,0 +1,798 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第十六天建模打卡">
+<meta property="og:type" content="article">
+<meta property="og:title" content="每日一题【20200806】">
+<meta property="og:url" content="https://blog.baixf.tk/2020/08/06/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200806%E3%80%91/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="第十六天建模打卡">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201129201333.jpg">
+<meta property="article:published_time" content="2020-08-06T03:11:11.000Z">
+<meta property="article:modified_time" content="2022-06-20T09:42:49.958Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="数学建模">
+<meta property="article:tag" content="主成分分析">
+<meta property="article:tag" content="标准化处理">
+<meta property="article:tag" content="相关系数矩阵">
+<meta property="article:tag" content="特征值">
+<meta property="article:tag" content="特征向量">
+<meta property="article:tag" content="主成分得分">
+<meta property="article:tag" content="排序">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201129201333.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>每日一题【20200806】 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201129201333.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="每日一题【20200806】"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-08-06 03:11" pubdate>
+          2020年8月6日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          35 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">每日一题【20200806】</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="主成分分析法"><a href="#主成分分析法" class="headerlink" title="主成分分析法"></a>主成分分析法</h1><h2 id="例"><a href="#例" class="headerlink" title="例"></a>例</h2><p>30个市经济各项水平统计如下，请针对各市经济水平做综合评价。<br>指标如下：GDP、居民消费水平、固定资产投资、职工平均工资、货物周转量、居民消费价格指数、商品零售价格指数、工业总产值</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs matlab"><span class="hljs-comment">%1.对原始资料矩阵进行标准化处理</span><br>zef_data = xlsread(<span class="hljs-string">&#x27;zhengfu.xlsx&#x27;</span>,<span class="hljs-string">&#x27;A1:H30&#x27;</span>);<br>z = zscore(zef_data)<br><span class="hljs-comment">%2.计算相关系数矩阵</span><br>cor = corrcoef(z)<br><span class="hljs-comment">%3.计算该相关系数矩阵的特征值和特征向量，并对特征值进行排序</span><br>[vec, val] = eig(cor)  <span class="hljs-comment">%特征向量vec  特征值val</span><br>newval = <span class="hljs-built_in">diag</span>(val);  <span class="hljs-comment">%取主对角线上的数值，排成一列数组</span><br>newy = <span class="hljs-built_in">sort</span>(newval, <span class="hljs-string">&#x27;descend&#x27;</span>)<br><span class="hljs-comment">%4.确定主成分个数</span><br>newrate = newy./sum(newy)  <span class="hljs-comment">%求方差贡献率</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs matlab">vec =<br>    <span class="hljs-number">0.0109</span>    <span class="hljs-number">0.5539</span>    <span class="hljs-number">0.4080</span>   <span class="hljs-number">-0.1042</span>    <span class="hljs-number">0.0890</span>    <span class="hljs-number">0.2307</span>    <span class="hljs-number">0.6671</span>    <span class="hljs-number">0.0977</span><br>   <span class="hljs-number">-0.0771</span>   <span class="hljs-number">-0.3504</span>    <span class="hljs-number">0.3043</span>   <span class="hljs-number">-0.4476</span>   <span class="hljs-number">-0.4496</span>   <span class="hljs-number">-0.4534</span>    <span class="hljs-number">0.2001</span>    <span class="hljs-number">0.3613</span><br>    <span class="hljs-number">0.4191</span>    <span class="hljs-number">0.4359</span>   <span class="hljs-number">-0.5288</span>   <span class="hljs-number">-0.2359</span>   <span class="hljs-number">-0.2482</span>    <span class="hljs-number">0.0325</span>   <span class="hljs-number">-0.1290</span>    <span class="hljs-number">0.4688</span><br>   <span class="hljs-number">-0.6966</span>    <span class="hljs-number">0.2717</span>    <span class="hljs-number">0.0032</span>    <span class="hljs-number">0.4111</span>   <span class="hljs-number">-0.1323</span>   <span class="hljs-number">-0.0710</span>   <span class="hljs-number">-0.1781</span>    <span class="hljs-number">0.4665</span><br>   <span class="hljs-number">-0.2552</span>   <span class="hljs-number">-0.2215</span>    <span class="hljs-number">0.0281</span>   <span class="hljs-number">-0.5299</span>    <span class="hljs-number">0.4367</span>    <span class="hljs-number">0.5087</span>   <span class="hljs-number">-0.1960</span>    <span class="hljs-number">0.3411</span><br>    <span class="hljs-number">0.5152</span>   <span class="hljs-number">-0.1608</span>    <span class="hljs-number">0.5043</span>    <span class="hljs-number">0.4166</span>    <span class="hljs-number">0.1020</span>    <span class="hljs-number">0.1151</span>   <span class="hljs-number">-0.2373</span>    <span class="hljs-number">0.4482</span><br>   <span class="hljs-number">-0.0497</span>    <span class="hljs-number">0.0252</span>    <span class="hljs-number">0.2152</span>   <span class="hljs-number">-0.0557</span>   <span class="hljs-number">-0.6998</span>    <span class="hljs-number">0.5873</span>   <span class="hljs-number">-0.2350</span>   <span class="hljs-number">-0.2401</span><br>   <span class="hljs-number">-0.0024</span>   <span class="hljs-number">-0.4806</span>   <span class="hljs-number">-0.3998</span>    <span class="hljs-number">0.3266</span>   <span class="hljs-number">-0.1415</span>    <span class="hljs-number">0.3438</span>    <span class="hljs-number">0.5626</span>    <span class="hljs-number">0.2183</span><br>val =<br>    <span class="hljs-number">0.0119</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span><br>         <span class="hljs-number">0</span>    <span class="hljs-number">0.0489</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span><br>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>    <span class="hljs-number">0.0721</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span><br>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>    <span class="hljs-number">0.1662</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span><br>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>    <span class="hljs-number">0.5028</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span><br>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>    <span class="hljs-number">1.1819</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span><br>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>    <span class="hljs-number">1.9446</span>         <span class="hljs-number">0</span><br>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>         <span class="hljs-number">0</span>    <span class="hljs-number">4.0716</span><br>newy =<br>    <span class="hljs-number">4.0716</span><br>    <span class="hljs-number">1.9446</span><br>    <span class="hljs-number">1.1819</span><br>    <span class="hljs-number">0.5028</span><br>    <span class="hljs-number">0.1662</span><br>    <span class="hljs-number">0.0721</span><br>    <span class="hljs-number">0.0489</span><br>    <span class="hljs-number">0.0119</span><br>newrate =<br>    <span class="hljs-number">0.5089</span><br>    <span class="hljs-number">0.2431</span><br>    <span class="hljs-number">0.1477</span><br>    <span class="hljs-number">0.0629</span><br>    <span class="hljs-number">0.0208</span><br>    <span class="hljs-number">0.0090</span><br>    <span class="hljs-number">0.0061</span><br>    <span class="hljs-number">0.0015</span><br></code></pre></td></tr></table></figure>
+<p>由方差贡献率可知：0.5089+0.2431+0.1477&gt;0.8,因此7、6、5后三项作为主成分。<br>下图所示为特征向量值，所以7、6、5倒数3列为各省主成分。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs matlab">vec =<br>    <span class="hljs-number">0.0109</span>    <span class="hljs-number">0.5539</span>    <span class="hljs-number">0.4080</span>   <span class="hljs-number">-0.1042</span>    <span class="hljs-number">0.0890</span>    <span class="hljs-number">0.2307</span>    <span class="hljs-number">0.6671</span>    <span class="hljs-number">0.0977</span><br>   <span class="hljs-number">-0.0771</span>   <span class="hljs-number">-0.3504</span>    <span class="hljs-number">0.3043</span>   <span class="hljs-number">-0.4476</span>   <span class="hljs-number">-0.4496</span>   <span class="hljs-number">-0.4534</span>    <span class="hljs-number">0.2001</span>    <span class="hljs-number">0.3613</span><br>    <span class="hljs-number">0.4191</span>    <span class="hljs-number">0.4359</span>   <span class="hljs-number">-0.5288</span>   <span class="hljs-number">-0.2359</span>   <span class="hljs-number">-0.2482</span>    <span class="hljs-number">0.0325</span>   <span class="hljs-number">-0.1290</span>    <span class="hljs-number">0.4688</span><br>   <span class="hljs-number">-0.6966</span>    <span class="hljs-number">0.2717</span>    <span class="hljs-number">0.0032</span>    <span class="hljs-number">0.4111</span>   <span class="hljs-number">-0.1323</span>   <span class="hljs-number">-0.0710</span>   <span class="hljs-number">-0.1781</span>    <span class="hljs-number">0.4665</span><br>   <span class="hljs-number">-0.2552</span>   <span class="hljs-number">-0.2215</span>    <span class="hljs-number">0.0281</span>   <span class="hljs-number">-0.5299</span>    <span class="hljs-number">0.4367</span>    <span class="hljs-number">0.5087</span>   <span class="hljs-number">-0.1960</span>    <span class="hljs-number">0.3411</span><br>    <span class="hljs-number">0.5152</span>   <span class="hljs-number">-0.1608</span>    <span class="hljs-number">0.5043</span>    <span class="hljs-number">0.4166</span>    <span class="hljs-number">0.1020</span>    <span class="hljs-number">0.1151</span>   <span class="hljs-number">-0.2373</span>    <span class="hljs-number">0.4482</span><br>   <span class="hljs-number">-0.0497</span>    <span class="hljs-number">0.0252</span>    <span class="hljs-number">0.2152</span>   <span class="hljs-number">-0.0557</span>   <span class="hljs-number">-0.6998</span>    <span class="hljs-number">0.5873</span>   <span class="hljs-number">-0.2350</span>   <span class="hljs-number">-0.2401</span><br>   <span class="hljs-number">-0.0024</span>   <span class="hljs-number">-0.4806</span>   <span class="hljs-number">-0.3998</span>    <span class="hljs-number">0.3266</span>   <span class="hljs-number">-0.1415</span>    <span class="hljs-number">0.3438</span>    <span class="hljs-number">0.5626</span>    <span class="hljs-number">0.2183</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs matlab"><span class="hljs-comment">%5.计算主成分得分</span><br>sco = z * vec<br><span class="hljs-comment">%6.建立排序指标，进行排序</span><br>nowsco = sco(:, <span class="hljs-keyword">end</span>) .* newrate(<span class="hljs-number">1</span>) + sco(:, <span class="hljs-keyword">end</span><span class="hljs-number">-1</span>) .* newrate(<span class="hljs-number">2</span>)+ sco(:, <span class="hljs-keyword">end</span><span class="hljs-number">-2</span>) .* newrate(<span class="hljs-number">3</span>)<br>[a,x] = <span class="hljs-built_in">sort</span>(nowsco, <span class="hljs-string">&#x27;descend&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs matlab"><span class="hljs-comment">%倒数第一列是第一主成分在30个城市中的得分，倒数第二列是是第二主成分在30个城市中的得分</span><br>sco =<br>   <span class="hljs-number">-0.2671</span>    <span class="hljs-number">0.4404</span>   <span class="hljs-number">-0.1319</span>    <span class="hljs-number">0.7683</span>    <span class="hljs-number">0.0348</span>   <span class="hljs-number">-1.0019</span>   <span class="hljs-number">-0.8083</span>    <span class="hljs-number">3.1053</span><br>   <span class="hljs-number">-0.1212</span>   <span class="hljs-number">-0.0731</span>    <span class="hljs-number">0.1029</span>    <span class="hljs-number">0.5436</span>    <span class="hljs-number">0.9089</span>   <span class="hljs-number">-1.9800</span>   <span class="hljs-number">-0.7629</span>    <span class="hljs-number">2.6881</span><br>   <span class="hljs-number">-0.0113</span>    <span class="hljs-number">0.4556</span>   <span class="hljs-number">-0.3883</span>   <span class="hljs-number">-1.0661</span>    <span class="hljs-number">0.9795</span>    <span class="hljs-number">2.9656</span>   <span class="hljs-number">-1.0149</span>    <span class="hljs-number">3.3810</span><br>    <span class="hljs-number">0.0458</span>    <span class="hljs-number">0.1186</span>    <span class="hljs-number">0.2694</span>    <span class="hljs-number">0.6032</span>    <span class="hljs-number">0.2964</span>    <span class="hljs-number">0.8737</span>   <span class="hljs-number">-1.5556</span>    <span class="hljs-number">1.3791</span><br>    <span class="hljs-number">0.0503</span>    <span class="hljs-number">0.0518</span>    <span class="hljs-number">0.6655</span>    <span class="hljs-number">0.2457</span>   <span class="hljs-number">-0.0388</span>    <span class="hljs-number">1.0481</span>   <span class="hljs-number">-2.0285</span>    <span class="hljs-number">1.0424</span><br>   <span class="hljs-number">-0.2491</span>   <span class="hljs-number">-0.7849</span>    <span class="hljs-number">0.0103</span>   <span class="hljs-number">-0.2186</span>    <span class="hljs-number">0.6038</span>    <span class="hljs-number">1.4134</span>    <span class="hljs-number">0.4535</span>    <span class="hljs-number">3.2715</span><br>    <span class="hljs-number">0.2483</span>   <span class="hljs-number">-0.0634</span>    <span class="hljs-number">0.2053</span>    <span class="hljs-number">0.5152</span>    <span class="hljs-number">0.2555</span>   <span class="hljs-number">-0.0685</span>   <span class="hljs-number">-1.0577</span>    <span class="hljs-number">1.6799</span><br>    <span class="hljs-number">0.3040</span>   <span class="hljs-number">-0.2936</span>    <span class="hljs-number">0.0847</span>   <span class="hljs-number">-0.0270</span>    <span class="hljs-number">0.1158</span>    <span class="hljs-number">0.5102</span>   <span class="hljs-number">-0.2808</span>    <span class="hljs-number">2.5044</span><br>    <span class="hljs-number">0.0840</span>    <span class="hljs-number">0.0376</span>   <span class="hljs-number">-0.3266</span>   <span class="hljs-number">-0.4305</span>   <span class="hljs-number">-2.3921</span>   <span class="hljs-number">-1.8753</span>    <span class="hljs-number">0.8014</span>    <span class="hljs-number">5.5768</span><br>    <span class="hljs-number">0.0004</span>   <span class="hljs-number">-0.0170</span>    <span class="hljs-number">0.0486</span>    <span class="hljs-number">0.2251</span>   <span class="hljs-number">-0.0212</span>    <span class="hljs-number">0.6055</span>    <span class="hljs-number">3.1295</span>   <span class="hljs-number">-0.2001</span><br>   <span class="hljs-number">-0.0152</span>    <span class="hljs-number">0.1412</span>    <span class="hljs-number">0.3801</span>   <span class="hljs-number">-0.4242</span>    <span class="hljs-number">0.2755</span>   <span class="hljs-number">-0.7199</span>    <span class="hljs-number">1.4977</span>   <span class="hljs-number">-0.4861</span><br>    <span class="hljs-number">0.0839</span>    <span class="hljs-number">0.0399</span>   <span class="hljs-number">-0.4196</span>    <span class="hljs-number">0.1720</span>    <span class="hljs-number">1.0203</span>   <span class="hljs-number">-0.7362</span>    <span class="hljs-number">0.5886</span>   <span class="hljs-number">-0.9374</span><br>   <span class="hljs-number">-0.0532</span>    <span class="hljs-number">0.0089</span>    <span class="hljs-number">0.4601</span>   <span class="hljs-number">-0.6610</span>   <span class="hljs-number">-0.0587</span>   <span class="hljs-number">-0.9762</span>    <span class="hljs-number">0.3208</span>   <span class="hljs-number">-0.8409</span><br>    <span class="hljs-number">0.0016</span>    <span class="hljs-number">0.0192</span>   <span class="hljs-number">-0.1305</span>    <span class="hljs-number">0.0309</span>   <span class="hljs-number">-0.1090</span>    <span class="hljs-number">0.0185</span>   <span class="hljs-number">-0.4284</span>   <span class="hljs-number">-1.5195</span><br>    <span class="hljs-number">0.0368</span>   <span class="hljs-number">-0.0624</span>   <span class="hljs-number">-0.2698</span>    <span class="hljs-number">0.5473</span>    <span class="hljs-number">0.1708</span>    <span class="hljs-number">0.8670</span>    <span class="hljs-number">3.1543</span>   <span class="hljs-number">-0.2973</span><br>    <span class="hljs-number">0.0512</span>    <span class="hljs-number">0.0868</span>   <span class="hljs-number">-0.3433</span>    <span class="hljs-number">0.4549</span>    <span class="hljs-number">0.2526</span>    <span class="hljs-number">0.5363</span>    <span class="hljs-number">1.2403</span>   <span class="hljs-number">-1.0387</span><br>   <span class="hljs-number">-0.0414</span>   <span class="hljs-number">-0.1997</span>   <span class="hljs-number">-0.0449</span>    <span class="hljs-number">0.1098</span>   <span class="hljs-number">-0.6326</span>    <span class="hljs-number">0.6207</span>    <span class="hljs-number">0.7261</span>   <span class="hljs-number">-1.1425</span><br>   <span class="hljs-number">-0.0019</span>    <span class="hljs-number">0.0704</span>   <span class="hljs-number">-0.0080</span>    <span class="hljs-number">0.0072</span>   <span class="hljs-number">-0.0855</span>    <span class="hljs-number">0.0907</span>    <span class="hljs-number">0.3834</span>   <span class="hljs-number">-1.2070</span><br>    <span class="hljs-number">0.0062</span>    <span class="hljs-number">0.2360</span>    <span class="hljs-number">0.5092</span>   <span class="hljs-number">-0.4653</span>    <span class="hljs-number">0.7371</span>   <span class="hljs-number">-0.9719</span>    <span class="hljs-number">3.1392</span>    <span class="hljs-number">0.2452</span><br>   <span class="hljs-number">-0.0202</span>    <span class="hljs-number">0.1367</span>    <span class="hljs-number">0.0953</span>   <span class="hljs-number">-0.0901</span>   <span class="hljs-number">-0.3339</span>    <span class="hljs-number">0.1565</span>   <span class="hljs-number">-0.2945</span>   <span class="hljs-number">-1.5072</span><br>    <span class="hljs-number">0.0614</span>   <span class="hljs-number">-0.1975</span>   <span class="hljs-number">-0.3144</span>   <span class="hljs-number">-0.3866</span>    <span class="hljs-number">1.3292</span>   <span class="hljs-number">-2.1673</span>   <span class="hljs-number">-0.5809</span>   <span class="hljs-number">-0.9178</span><br>   <span class="hljs-number">-0.0205</span>    <span class="hljs-number">0.1694</span>    <span class="hljs-number">0.0782</span>    <span class="hljs-number">0.2735</span>   <span class="hljs-number">-0.6234</span>    <span class="hljs-number">1.1873</span>    <span class="hljs-number">1.3348</span>   <span class="hljs-number">-1.1501</span><br>   <span class="hljs-number">-0.0142</span>    <span class="hljs-number">0.1213</span>   <span class="hljs-number">-0.0579</span>    <span class="hljs-number">0.0199</span>   <span class="hljs-number">-0.4379</span>    <span class="hljs-number">0.3117</span>   <span class="hljs-number">-1.1431</span>   <span class="hljs-number">-1.9150</span><br>   <span class="hljs-number">-0.0636</span>   <span class="hljs-number">-0.1021</span>    <span class="hljs-number">0.0482</span>    <span class="hljs-number">0.0060</span>   <span class="hljs-number">-0.9963</span>    <span class="hljs-number">0.7430</span>   <span class="hljs-number">-0.5425</span>   <span class="hljs-number">-1.7106</span><br>    <span class="hljs-number">0.0281</span>    <span class="hljs-number">0.0692</span>   <span class="hljs-number">-0.1999</span>   <span class="hljs-number">-0.1376</span>    <span class="hljs-number">0.3650</span>   <span class="hljs-number">-0.7658</span>   <span class="hljs-number">-1.3861</span>   <span class="hljs-number">-1.7108</span><br>   <span class="hljs-number">-0.0311</span>   <span class="hljs-number">-0.0777</span>   <span class="hljs-number">-0.0733</span>    <span class="hljs-number">0.0158</span>   <span class="hljs-number">-0.5475</span>    <span class="hljs-number">0.3302</span>   <span class="hljs-number">-0.6233</span>   <span class="hljs-number">-1.6505</span><br>   <span class="hljs-number">-0.0028</span>   <span class="hljs-number">-0.0617</span>   <span class="hljs-number">-0.2341</span>    <span class="hljs-number">0.0926</span>   <span class="hljs-number">-0.2533</span>    <span class="hljs-number">0.1336</span>   <span class="hljs-number">-0.9374</span>   <span class="hljs-number">-1.7505</span><br>   <span class="hljs-number">-0.0382</span>   <span class="hljs-number">-0.0898</span>    <span class="hljs-number">0.0388</span>   <span class="hljs-number">-0.3045</span>   <span class="hljs-number">-0.3436</span>   <span class="hljs-number">-0.4329</span>   <span class="hljs-number">-1.3358</span>   <span class="hljs-number">-1.7028</span><br>   <span class="hljs-number">-0.0039</span>   <span class="hljs-number">-0.0719</span>   <span class="hljs-number">-0.1110</span>   <span class="hljs-number">-0.2239</span>    <span class="hljs-number">0.0702</span>   <span class="hljs-number">-0.6892</span>   <span class="hljs-number">-1.2226</span>   <span class="hljs-number">-1.6105</span><br>   <span class="hljs-number">-0.0471</span>   <span class="hljs-number">-0.1084</span>    <span class="hljs-number">0.0569</span>   <span class="hljs-number">-0.1955</span>   <span class="hljs-number">-0.5414</span>   <span class="hljs-number">-0.0271</span>   <span class="hljs-number">-0.7662</span>   <span class="hljs-number">-1.5784</span><br></code></pre></td></tr></table></figure>
+<p>下面展示的为各个市按照上面计算得到的结果以及原数据排名。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><code class="hljs matlab">nowsco =<br>    <span class="hljs-number">1.2360</span><br>    <span class="hljs-number">0.8902</span><br>    <span class="hljs-number">1.9122</span><br>    <span class="hljs-number">0.4528</span><br>    <span class="hljs-number">0.1923</span><br>    <span class="hljs-number">1.9841</span><br>    <span class="hljs-number">0.5877</span><br>    <span class="hljs-number">1.2817</span><br>    <span class="hljs-number">2.7561</span><br>    <span class="hljs-number">0.7483</span><br>    <span class="hljs-number">0.0103</span><br>   <span class="hljs-number">-0.4428</span><br>   <span class="hljs-number">-0.4942</span><br>   <span class="hljs-number">-0.8748</span><br>    <span class="hljs-number">0.7435</span><br>   <span class="hljs-number">-0.1479</span><br>   <span class="hljs-number">-0.3133</span><br>   <span class="hljs-number">-0.5077</span><br>    <span class="hljs-number">0.7443</span><br>   <span class="hljs-number">-0.8155</span><br>   <span class="hljs-number">-0.9285</span><br>   <span class="hljs-number">-0.0855</span><br>   <span class="hljs-number">-1.2065</span><br>   <span class="hljs-number">-0.8927</span><br>   <span class="hljs-number">-1.3208</span><br>   <span class="hljs-number">-0.9428</span><br>   <span class="hljs-number">-1.0990</span><br>   <span class="hljs-number">-1.2553</span><br>   <span class="hljs-number">-1.2187</span><br>   <span class="hljs-number">-0.9936</span><br>a =<br>    <span class="hljs-number">2.7561</span><br>    <span class="hljs-number">1.9841</span><br>    <span class="hljs-number">1.9122</span><br>    <span class="hljs-number">1.2817</span><br>    <span class="hljs-number">1.2360</span><br>    <span class="hljs-number">0.8902</span><br>    <span class="hljs-number">0.7483</span><br>    <span class="hljs-number">0.7443</span><br>    <span class="hljs-number">0.7435</span><br>    <span class="hljs-number">0.5877</span><br>    <span class="hljs-number">0.4528</span><br>    <span class="hljs-number">0.1923</span><br>    <span class="hljs-number">0.0103</span><br>   <span class="hljs-number">-0.0855</span><br>   <span class="hljs-number">-0.1479</span><br>   <span class="hljs-number">-0.3133</span><br>   <span class="hljs-number">-0.4428</span><br>   <span class="hljs-number">-0.4942</span><br>   <span class="hljs-number">-0.5077</span><br>   <span class="hljs-number">-0.8155</span><br>   <span class="hljs-number">-0.8748</span><br>   <span class="hljs-number">-0.8927</span><br>   <span class="hljs-number">-0.9285</span><br>   <span class="hljs-number">-0.9428</span><br>   <span class="hljs-number">-0.9936</span><br>   <span class="hljs-number">-1.0990</span><br>   <span class="hljs-number">-1.2065</span><br>   <span class="hljs-number">-1.2187</span><br>   <span class="hljs-number">-1.2553</span><br>   <span class="hljs-number">-1.3208</span><br>x =<br>     <span class="hljs-number">9</span><br>     <span class="hljs-number">6</span><br>     <span class="hljs-number">3</span><br>     <span class="hljs-number">8</span><br>     <span class="hljs-number">1</span><br>     <span class="hljs-number">2</span><br>    <span class="hljs-number">10</span><br>    <span class="hljs-number">19</span><br>    <span class="hljs-number">15</span><br>     <span class="hljs-number">7</span><br>     <span class="hljs-number">4</span><br>     <span class="hljs-number">5</span><br>    <span class="hljs-number">11</span><br>    <span class="hljs-number">22</span><br>    <span class="hljs-number">16</span><br>    <span class="hljs-number">17</span><br>    <span class="hljs-number">12</span><br>    <span class="hljs-number">13</span><br>    <span class="hljs-number">18</span><br>    <span class="hljs-number">20</span><br>    <span class="hljs-number">14</span><br>    <span class="hljs-number">24</span><br>    <span class="hljs-number">21</span><br>    <span class="hljs-number">26</span><br>    <span class="hljs-number">30</span><br>    <span class="hljs-number">27</span><br>    <span class="hljs-number">23</span><br>    <span class="hljs-number">29</span><br>    <span class="hljs-number">28</span><br>    <span class="hljs-number">25</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a href="">NULL</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/" class="category-chain-item">数学建模</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">#数学建模</a>
+      
+        <a href="/tags/%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/">#主成分分析</a>
+      
+        <a href="/tags/%E6%A0%87%E5%87%86%E5%8C%96%E5%A4%84%E7%90%86/">#标准化处理</a>
+      
+        <a href="/tags/%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0%E7%9F%A9%E9%98%B5/">#相关系数矩阵</a>
+      
+        <a href="/tags/%E7%89%B9%E5%BE%81%E5%80%BC/">#特征值</a>
+      
+        <a href="/tags/%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/">#特征向量</a>
+      
+        <a href="/tags/%E4%B8%BB%E6%88%90%E5%88%86%E5%BE%97%E5%88%86/">#主成分得分</a>
+      
+        <a href="/tags/%E6%8E%92%E5%BA%8F/">#排序</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>每日一题【20200806】</div>
+      <div>https://blog.baixf.tk/2020/08/06/每日一题/每日一题【20200806】/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年8月6日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/08/08/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/%E5%AD%A6%E4%B9%A0%E5%B8%B8%E7%94%A8%E6%A8%A1%E5%9E%8B%E5%8F%8A%E7%AE%97%E6%B3%951.%E6%A8%A1%E6%8B%9F%E9%80%80%E7%81%AB%E7%AE%97%E6%B3%95/" title="学习常用模型及算法1.模拟退火算法">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">学习常用模型及算法1.模拟退火算法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/08/05/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200805%E3%80%91/" title="每日一题【20200805】">
+                        <span class="hidden-mobile">每日一题【20200805】</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

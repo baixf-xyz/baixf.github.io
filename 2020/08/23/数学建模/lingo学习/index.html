@@ -1,0 +1,789 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="为建模准备~">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lingo学习">
+<meta property="og:url" content="https://blog.baixf.tk/2020/08/23/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/lingo%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="为建模准备~">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/dwrxJK.jpg">
+<meta property="article:published_time" content="2020-08-23T03:11:11.000Z">
+<meta property="article:modified_time" content="2022-06-20T09:42:49.959Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="数学建模">
+<meta property="article:tag" content="整数规划">
+<meta property="article:tag" content="非线性规划">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/dwrxJK.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>lingo学习 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/src=http___gss0.baidu.com_-Po3dSag_xI4khGko9WTAnF6hhy_zhidao_pic_item_d833c895d143ad4bf2a7bb2583025aafa50f064d.jpg&refer=http___gss0.baidu.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="lingo学习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-08-23 03:11" pubdate>
+          2020年8月23日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          13k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          107 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">lingo学习</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>在lingo中&gt;与&gt;&#x3D;等价<br>  @gin，整数变量限制<br>  @bin，0-1变量限制<br>  @bnd(取值范围)</p>
+</blockquote>
+<h2 id="1-整数规划"><a href="#1-整数规划" class="headerlink" title="1.整数规划"></a>1.整数规划</h2><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/dwlf1K.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs lingo">model:<br>    max=z;<br>    z=5*x1+8*x2;<br>    x1+x2&lt;6;<br>    5*x1+9*x2&lt;45;<br>    x1&gt;0;x2&gt;0;<br>    @gin(x1);@gin(x2);<br>    end<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/dwtpHU.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="2-非线性规划"><a href="#2-非线性规划" class="headerlink" title="2.非线性规划"></a>2.非线性规划</h2><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/dw1Oa9.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">model:<br>    min=3*x^2+y^2-x*y+0.4*y;<br>    1.2*x+0.9*y&gt;1.1;<br>    x+y=1;<br>    y&lt;0.7;<br>    end<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/dwNCsP.png" srcset="/img/loading.gif" lazyload><br><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/dw1X5R.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell">model:<br>    min=z;<br>    z=@abs(pi-((a*b)/(c*d)))+1;<br>    @bnd(20,a,100);<br>    @bnd(20,b,100);<br>    @bnd(20,c,100);<br>    @bnd(20,d,100);<br>    @gin(a);<br>    @gin(b);<br>    @gin(c);<br>    @gin(d);<br>    end<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/dwUG0f.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="3-复杂问题求解"><a href="#3-复杂问题求解" class="headerlink" title="3.复杂问题求解"></a>3.复杂问题求解</h2><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/dw0trn.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs shell">Model:<br>    Sets:       !定义集合;<br>    CK/1..10/:d,y;   !10个仓库，y和d都是10维的变量，其中y是01变量，d由下面数据给定;<br>    KH/1..20/;        !20个客户;<br>    SS(CK,KH):x,c;   !x和c都是10*20的变量，x表示供应百分数，c表示全部供应的费用;<br>    EndSets<br>    Min=@Sum(SS(i,j):c(i,j)*x(i,j))+@Sum(CK(i):d(i)*y(i));<br>    @For(CK(i):@Sum(KH(j):x(i,j))&lt;20*y(i));  !若不建某仓库，是没有物资的;<br>    @For(KH(j):@Sum(CK(i):x(i,j))=1);  !每个客户需要供应的百分数之和都为1;<br>    @For(CK(i):@Bin(y(i)));    !y是0、1变量限制;<br>    Data:   !数据部分;<br>    d=2    3    4    2    3    4    2    3    4    5<br>    ;<br>    c=<br>    9    14    6    15    6    19    11    19    4    5    3    6    4    10    12    19    8    7    10    4<br>    10    16    9    12    8    14    4    20    9    13    2    17    18    19    15    18    16    9    8    8<br>    2    10    2    18    4    19    8    13    15    9    4    8    16    2    15    11    8    8    3    14<br>    6    4    1    9    3    3    5    15    6    10    9    13    6    4    8    5    2    9    13    8<br>    7    10    20    17    7    9    13    16    9    15    13    10    12    12    4    16    6    16    6    17<br>    15    18    14    18    11    4    20    20    13    1    10    19    6    4    12    20    20    1    20    7<br>    15    14    20    12    6    15    20    3    1    16    6    6    6    20    3    17    6    11    17    12<br>    1    1    5    2    2    5    16    8    7    7    12    9    5    12    6    4    17    11    11    20<br>    18    16    20    18    5    20    8    6    17    20    9    19    1    10    9    5    8    9    17    15<br>    6    7    17    4    12    4    19    4    13    16    7    6    1    14    11    5    7    9    11    13<br>    ;<br>    EndData<br>    End<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br></pre></td><td class="code"><pre><code class="hljs shell"> Global optimal solution found.<br>Objective value:                              69.00000<br>Objective bound:                              69.00000<br>Infeasibilities:                              0.000000<br>Extended solver steps:                               0<br>Total solver iterations:                           427<br>Elapsed runtime seconds:                          0.55<br>Model Class:                                      MILP<br>Total variables:                    210<br>Nonlinear variables:                  0<br>Integer variables:                   10<br>Total constraints:                   31<br>Nonlinear constraints:                0<br>Total nonzeros:                     620<br>Nonlinear nonzeros:                   0<br>                                    Variable           Value        Reduced Cost<br>                                       D( 1)        2.000000            0.000000<br>                                       D( 2)        3.000000            0.000000<br>                                       D( 3)        4.000000            0.000000<br>                                       D( 4)        2.000000            0.000000<br>                                       D( 5)        3.000000            0.000000<br>                                       D( 6)        4.000000            0.000000<br>                                       D( 7)        2.000000            0.000000<br>                                       D( 8)        3.000000            0.000000<br>                                       D( 9)        4.000000            0.000000<br>                                      D( 10)        5.000000            0.000000<br>                                       Y( 1)        1.000000            2.000000<br>                                       Y( 2)        0.000000           -17.00000<br>                                       Y( 3)        1.000000            4.000000<br>                                       Y( 4)        1.000000            2.000000<br>                                       Y( 5)        0.000000            3.000000<br>                                       Y( 6)        1.000000            4.000000<br>                                       Y( 7)        1.000000            2.000000<br>                                       Y( 8)        1.000000            3.000000<br>                                       Y( 9)        0.000000           -56.00000<br>                                      Y( 10)        0.000000           -55.00000<br>                                    X( 1, 1)        0.000000            8.000000<br>                                    X( 1, 2)        0.000000            13.00000<br>                                    X( 1, 3)        0.000000            5.000000<br>                                    X( 1, 4)        0.000000            13.00000<br>                                    X( 1, 5)        0.000000            4.000000<br>                                    X( 1, 6)        0.000000            16.00000<br>                                    X( 1, 7)        0.000000            6.000000<br>                                    X( 1, 8)        0.000000            16.00000<br>                                    X( 1, 9)        0.000000            3.000000<br>                                   X( 1, 10)        0.000000            4.000000<br>                                   X( 1, 11)        1.000000            0.000000<br>                                   X( 1, 12)        0.000000            0.000000<br>                                   X( 1, 13)        1.000000            0.000000<br>                                   X( 1, 14)        0.000000            8.000000<br>                                   X( 1, 15)        0.000000            9.000000<br>                                   X( 1, 16)        0.000000            15.00000<br>                                   X( 1, 17)        0.000000            6.000000<br>                                   X( 1, 18)        0.000000            6.000000<br>                                   X( 1, 19)        0.000000            7.000000<br>                                   X( 1, 20)        1.000000            0.000000<br>                                    X( 2, 1)        0.000000            10.00000<br>                                    X( 2, 2)        0.000000            16.00000<br>                                    X( 2, 3)        0.000000            9.000000<br>                                    X( 2, 4)        0.000000            11.00000<br>                                    X( 2, 5)        0.000000            7.000000<br>                                    X( 2, 6)        0.000000            12.00000<br>                                    X( 2, 7)        0.000000            0.000000<br>                                    X( 2, 8)        0.000000            18.00000<br>                                    X( 2, 9)        0.000000            9.000000<br>                                   X( 2, 10)        0.000000            13.00000<br>                                   X( 2, 11)        0.000000            0.000000<br>                                   X( 2, 12)        0.000000            12.00000<br>                                   X( 2, 13)        0.000000            15.00000<br>                                   X( 2, 14)        0.000000            18.00000<br>                                   X( 2, 15)        0.000000            13.00000<br>                                   X( 2, 16)        0.000000            15.00000<br>                                   X( 2, 17)        0.000000            15.00000<br>                                   X( 2, 18)        0.000000            9.000000<br>                                   X( 2, 19)        0.000000            6.000000<br>                                   X( 2, 20)        0.000000            5.000000<br>                                    X( 3, 1)        0.000000            1.000000<br>                                    X( 3, 2)        0.000000            9.000000<br>                                    X( 3, 3)        0.000000            1.000000<br>                                    X( 3, 4)        0.000000            16.00000<br>                                    X( 3, 5)        0.000000            2.000000<br>                                    X( 3, 6)        0.000000            16.00000<br>                                    X( 3, 7)        0.000000            3.000000<br>                                    X( 3, 8)        0.000000            10.00000<br>                                    X( 3, 9)        0.000000            14.00000<br>                                   X( 3, 10)        0.000000            8.000000<br>                                   X( 3, 11)        0.000000            1.000000<br>                                   X( 3, 12)        0.000000            2.000000<br>                                   X( 3, 13)        0.000000            12.00000<br>                                   X( 3, 14)        1.000000            0.000000<br>                                   X( 3, 15)        0.000000            12.00000<br>                                   X( 3, 16)        0.000000            7.000000<br>                                   X( 3, 17)        0.000000            6.000000<br>                                   X( 3, 18)        0.000000            7.000000<br>                                   X( 3, 19)        1.000000            0.000000<br>                                   X( 3, 20)        0.000000            10.00000<br>                                    X( 4, 1)        0.000000            5.000000<br>                                    X( 4, 2)        0.000000            3.000000<br>                                    X( 4, 3)        1.000000            0.000000<br>                                    X( 4, 4)        0.000000            7.000000<br>                                    X( 4, 5)        0.000000            1.000000<br>                                    X( 4, 6)        1.000000            0.000000<br>                                    X( 4, 7)        1.000000            0.000000<br>                                    X( 4, 8)        0.000000            12.00000<br>                                    X( 4, 9)        0.000000            5.000000<br>                                   X( 4, 10)        0.000000            9.000000<br>                                   X( 4, 11)        0.000000            6.000000<br>                                   X( 4, 12)        0.000000            7.000000<br>                                   X( 4, 13)        0.000000            2.000000<br>                                   X( 4, 14)        0.000000            2.000000<br>                                   X( 4, 15)        0.000000            5.000000<br>                                   X( 4, 16)        0.000000            1.000000<br>                                   X( 4, 17)        1.000000            0.000000<br>                                   X( 4, 18)        0.000000            8.000000<br>                                   X( 4, 19)        0.000000            10.00000<br>                                   X( 4, 20)        0.000000            4.000000<br>                                    X( 5, 1)        0.000000            6.000000<br>                                    X( 5, 2)        0.000000            9.000000<br>                                    X( 5, 3)        0.000000            19.00000<br>                                    X( 5, 4)        0.000000            15.00000<br>                                    X( 5, 5)        0.000000            5.000000<br>                                    X( 5, 6)        0.000000            6.000000<br>                                    X( 5, 7)        0.000000            8.000000<br>                                    X( 5, 8)        0.000000            13.00000<br>                                    X( 5, 9)        0.000000            8.000000<br>                                   X( 5, 10)        0.000000            14.00000<br>                                   X( 5, 11)        0.000000            10.00000<br>                                   X( 5, 12)        0.000000            4.000000<br>                                   X( 5, 13)        0.000000            8.000000<br>                                   X( 5, 14)        0.000000            10.00000<br>                                   X( 5, 15)        0.000000            1.000000<br>                                   X( 5, 16)        0.000000            12.00000<br>                                   X( 5, 17)        0.000000            4.000000<br>                                   X( 5, 18)        0.000000            15.00000<br>                                   X( 5, 19)        0.000000            3.000000<br>                                   X( 5, 20)        0.000000            13.00000<br>                                    X( 6, 1)        0.000000            14.00000<br>                                    X( 6, 2)        0.000000            17.00000<br>                                    X( 6, 3)        0.000000            13.00000<br>                                    X( 6, 4)        0.000000            16.00000<br>                                    X( 6, 5)        0.000000            9.000000<br>                                    X( 6, 6)        0.000000            1.000000<br>                                    X( 6, 7)        0.000000            15.00000<br>                                    X( 6, 8)        0.000000            17.00000<br>                                    X( 6, 9)        0.000000            12.00000<br>                                   X( 6, 10)        1.000000            0.000000<br>                                   X( 6, 11)        0.000000            7.000000<br>                                   X( 6, 12)        0.000000            13.00000<br>                                   X( 6, 13)        0.000000            2.000000<br>                                   X( 6, 14)        0.000000            2.000000<br>                                   X( 6, 15)        0.000000            9.000000<br>                                   X( 6, 16)        0.000000            16.00000<br>                                   X( 6, 17)        0.000000            18.00000<br>                                   X( 6, 18)        1.000000            0.000000<br>                                   X( 6, 19)        0.000000            17.00000<br>                                   X( 6, 20)        0.000000            3.000000<br>                                    X( 7, 1)        0.000000            14.00000<br>                                    X( 7, 2)        0.000000            13.00000<br>                                    X( 7, 3)        0.000000            19.00000<br>                                    X( 7, 4)        0.000000            10.00000<br>                                    X( 7, 5)        0.000000            4.000000<br>                                    X( 7, 6)        0.000000            12.00000<br>                                    X( 7, 7)        0.000000            15.00000<br>                                    X( 7, 8)        1.000000            0.000000<br>                                    X( 7, 9)        1.000000            0.000000<br>                                   X( 7, 10)        0.000000            15.00000<br>                                   X( 7, 11)        0.000000            3.000000<br>                                   X( 7, 12)        1.000000            0.000000<br>                                   X( 7, 13)        0.000000            2.000000<br>                                   X( 7, 14)        0.000000            18.00000<br>                                   X( 7, 15)        1.000000            0.000000<br>                                   X( 7, 16)        0.000000            13.00000<br>                                   X( 7, 17)        0.000000            4.000000<br>                                   X( 7, 18)        0.000000            10.00000<br>                                   X( 7, 19)        0.000000            14.00000<br>                                   X( 7, 20)        0.000000            8.000000<br>                                    X( 8, 1)        1.000000            0.000000<br>                                    X( 8, 2)        1.000000            0.000000<br>                                    X( 8, 3)        0.000000            4.000000<br>                                    X( 8, 4)        1.000000            0.000000<br>                                    X( 8, 5)        1.000000            0.000000<br>                                    X( 8, 6)        0.000000            2.000000<br>                                    X( 8, 7)        0.000000            11.00000<br>                                    X( 8, 8)        0.000000            5.000000<br>                                    X( 8, 9)        0.000000            6.000000<br>                                   X( 8, 10)        0.000000            6.000000<br>                                   X( 8, 11)        0.000000            9.000000<br>                                   X( 8, 12)        0.000000            3.000000<br>                                   X( 8, 13)        0.000000            1.000000<br>                                   X( 8, 14)        0.000000            10.00000<br>                                   X( 8, 15)        0.000000            3.000000<br>                                   X( 8, 16)        1.000000            0.000000<br>                                   X( 8, 17)        0.000000            15.00000<br>                                   X( 8, 18)        0.000000            10.00000<br>                                   X( 8, 19)        0.000000            8.000000<br>                                   X( 8, 20)        0.000000            16.00000<br>                                    X( 9, 1)        0.000000            20.00000<br>                                    X( 9, 2)        0.000000            18.00000<br>                                    X( 9, 3)        0.000000            22.00000<br>                                    X( 9, 4)        0.000000            19.00000<br>                                    X( 9, 5)        0.000000            6.000000<br>                                    X( 9, 6)        0.000000            20.00000<br>                                    X( 9, 7)        0.000000            6.000000<br>                                    X( 9, 8)        0.000000            6.000000<br>                                    X( 9, 9)        0.000000            19.00000<br>                                   X( 9, 10)        0.000000            22.00000<br>                                   X( 9, 11)        0.000000            9.000000<br>                                   X( 9, 12)        0.000000            16.00000<br>                                   X( 9, 13)        0.000000            0.000000<br>                                   X( 9, 14)        0.000000            11.00000<br>                                   X( 9, 15)        0.000000            9.000000<br>                                   X( 9, 16)        0.000000            4.000000<br>                                   X( 9, 17)        0.000000            9.000000<br>                                   X( 9, 18)        0.000000            11.00000<br>                                   X( 9, 19)        0.000000            17.00000<br>                                   X( 9, 20)        0.000000            14.00000<br>                                   X( 10, 1)        0.000000            8.000000<br>                                   X( 10, 2)        0.000000            9.000000<br>                                   X( 10, 3)        0.000000            19.00000<br>                                   X( 10, 4)        0.000000            5.000000<br>                                   X( 10, 5)        0.000000            13.00000<br>                                   X( 10, 6)        0.000000            4.000000<br>                                   X( 10, 7)        0.000000            17.00000<br>                                   X( 10, 8)        0.000000            4.000000<br>                                   X( 10, 9)        0.000000            15.00000<br>                                  X( 10, 10)        0.000000            18.00000<br>                                  X( 10, 11)        0.000000            7.000000<br>                                  X( 10, 12)        0.000000            3.000000<br>                                  X( 10, 13)        0.000000            0.000000<br>                                  X( 10, 14)        0.000000            15.00000<br>                                  X( 10, 15)        0.000000            11.00000<br>                                  X( 10, 16)        0.000000            4.000000<br>                                  X( 10, 17)        0.000000            8.000000<br>                                  X( 10, 18)        0.000000            11.00000<br>                                  X( 10, 19)        0.000000            11.00000<br>                                  X( 10, 20)        0.000000            12.00000<br>                                    C( 1, 1)        9.000000            0.000000<br>                                    C( 1, 2)        14.00000            0.000000<br>                                    C( 1, 3)        6.000000            0.000000<br>                                    C( 1, 4)        15.00000            0.000000<br>                                    C( 1, 5)        6.000000            0.000000<br>                                    C( 1, 6)        19.00000            0.000000<br>                                    C( 1, 7)        11.00000            0.000000<br>                                    C( 1, 8)        19.00000            0.000000<br>                                    C( 1, 9)        4.000000            0.000000<br>                                   C( 1, 10)        5.000000            0.000000<br>                                   C( 1, 11)        3.000000            0.000000<br>                                   C( 1, 12)        6.000000            0.000000<br>                                   C( 1, 13)        4.000000            0.000000<br>                                   C( 1, 14)        10.00000            0.000000<br>                                   C( 1, 15)        12.00000            0.000000<br>                                   C( 1, 16)        19.00000            0.000000<br>                                   C( 1, 17)        8.000000            0.000000<br>                                   C( 1, 18)        7.000000            0.000000<br>                                   C( 1, 19)        10.00000            0.000000<br>                                   C( 1, 20)        4.000000            0.000000<br>                                    C( 2, 1)        10.00000            0.000000<br>                                    C( 2, 2)        16.00000            0.000000<br>                                    C( 2, 3)        9.000000            0.000000<br>                                    C( 2, 4)        12.00000            0.000000<br>                                    C( 2, 5)        8.000000            0.000000<br>                                    C( 2, 6)        14.00000            0.000000<br>                                    C( 2, 7)        4.000000            0.000000<br>                                    C( 2, 8)        20.00000            0.000000<br>                                    C( 2, 9)        9.000000            0.000000<br>                                   C( 2, 10)        13.00000            0.000000<br>                                   C( 2, 11)        2.000000            0.000000<br>                                   C( 2, 12)        17.00000            0.000000<br>                                   C( 2, 13)        18.00000            0.000000<br>                                   C( 2, 14)        19.00000            0.000000<br>                                   C( 2, 15)        15.00000            0.000000<br>                                   C( 2, 16)        18.00000            0.000000<br>                                   C( 2, 17)        16.00000            0.000000<br>                                   C( 2, 18)        9.000000            0.000000<br>                                   C( 2, 19)        8.000000            0.000000<br>                                   C( 2, 20)        8.000000            0.000000<br>                                    C( 3, 1)        2.000000            0.000000<br>                                    C( 3, 2)        10.00000            0.000000<br>                                    C( 3, 3)        2.000000            0.000000<br>                                    C( 3, 4)        18.00000            0.000000<br>                                    C( 3, 5)        4.000000            0.000000<br>                                    C( 3, 6)        19.00000            0.000000<br>                                    C( 3, 7)        8.000000            0.000000<br>                                    C( 3, 8)        13.00000            0.000000<br>                                    C( 3, 9)        15.00000            0.000000<br>                                   C( 3, 10)        9.000000            0.000000<br>                                   C( 3, 11)        4.000000            0.000000<br>                                   C( 3, 12)        8.000000            0.000000<br>                                   C( 3, 13)        16.00000            0.000000<br>                                   C( 3, 14)        2.000000            0.000000<br>                                   C( 3, 15)        15.00000            0.000000<br>                                   C( 3, 16)        11.00000            0.000000<br>                                   C( 3, 17)        8.000000            0.000000<br>                                   C( 3, 18)        8.000000            0.000000<br>                                   C( 3, 19)        3.000000            0.000000<br>                                   C( 3, 20)        14.00000            0.000000<br>                                    C( 4, 1)        6.000000            0.000000<br>                                    C( 4, 2)        4.000000            0.000000<br>                                    C( 4, 3)        1.000000            0.000000<br>                                    C( 4, 4)        9.000000            0.000000<br>                                    C( 4, 5)        3.000000            0.000000<br>                                    C( 4, 6)        3.000000            0.000000<br>                                    C( 4, 7)        5.000000            0.000000<br>                                    C( 4, 8)        15.00000            0.000000<br>                                    C( 4, 9)        6.000000            0.000000<br>                                   C( 4, 10)        10.00000            0.000000<br>                                   C( 4, 11)        9.000000            0.000000<br>                                   C( 4, 12)        13.00000            0.000000<br>                                   C( 4, 13)        6.000000            0.000000<br>                                   C( 4, 14)        4.000000            0.000000<br>                                   C( 4, 15)        8.000000            0.000000<br>                                   C( 4, 16)        5.000000            0.000000<br>                                   C( 4, 17)        2.000000            0.000000<br>                                   C( 4, 18)        9.000000            0.000000<br>                                   C( 4, 19)        13.00000            0.000000<br>                                   C( 4, 20)        8.000000            0.000000<br>                                    C( 5, 1)        7.000000            0.000000<br>                                    C( 5, 2)        10.00000            0.000000<br>                                    C( 5, 3)        20.00000            0.000000<br>                                    C( 5, 4)        17.00000            0.000000<br>                                    C( 5, 5)        7.000000            0.000000<br>                                    C( 5, 6)        9.000000            0.000000<br>                                    C( 5, 7)        13.00000            0.000000<br>                                    C( 5, 8)        16.00000            0.000000<br>                                    C( 5, 9)        9.000000            0.000000<br>                                   C( 5, 10)        15.00000            0.000000<br>                                   C( 5, 11)        13.00000            0.000000<br>                                   C( 5, 12)        10.00000            0.000000<br>                                   C( 5, 13)        12.00000            0.000000<br>                                   C( 5, 14)        12.00000            0.000000<br>                                   C( 5, 15)        4.000000            0.000000<br>                                   C( 5, 16)        16.00000            0.000000<br>                                   C( 5, 17)        6.000000            0.000000<br>                                   C( 5, 18)        16.00000            0.000000<br>                                   C( 5, 19)        6.000000            0.000000<br>                                   C( 5, 20)        17.00000            0.000000<br>                                    C( 6, 1)        15.00000            0.000000<br>                                    C( 6, 2)        18.00000            0.000000<br>                                    C( 6, 3)        14.00000            0.000000<br>                                    C( 6, 4)        18.00000            0.000000<br>                                    C( 6, 5)        11.00000            0.000000<br>                                    C( 6, 6)        4.000000            0.000000<br>                                    C( 6, 7)        20.00000            0.000000<br>                                    C( 6, 8)        20.00000            0.000000<br>                                    C( 6, 9)        13.00000            0.000000<br>                                   C( 6, 10)        1.000000            0.000000<br>                                   C( 6, 11)        10.00000            0.000000<br>                                   C( 6, 12)        19.00000            0.000000<br>                                   C( 6, 13)        6.000000            0.000000<br>                                   C( 6, 14)        4.000000            0.000000<br>                                   C( 6, 15)        12.00000            0.000000<br>                                   C( 6, 16)        20.00000            0.000000<br>                                   C( 6, 17)        20.00000            0.000000<br>                                   C( 6, 18)        1.000000            0.000000<br>                                   C( 6, 19)        20.00000            0.000000<br>                                   C( 6, 20)        7.000000            0.000000<br>                                    C( 7, 1)        15.00000            0.000000<br>                                    C( 7, 2)        14.00000            0.000000<br>                                    C( 7, 3)        20.00000            0.000000<br>                                    C( 7, 4)        12.00000            0.000000<br>                                    C( 7, 5)        6.000000            0.000000<br>                                    C( 7, 6)        15.00000            0.000000<br>                                    C( 7, 7)        20.00000            0.000000<br>                                    C( 7, 8)        3.000000            0.000000<br>                                    C( 7, 9)        1.000000            0.000000<br>                                   C( 7, 10)        16.00000            0.000000<br>                                   C( 7, 11)        6.000000            0.000000<br>                                   C( 7, 12)        6.000000            0.000000<br>                                   C( 7, 13)        6.000000            0.000000<br>                                   C( 7, 14)        20.00000            0.000000<br>                                   C( 7, 15)        3.000000            0.000000<br>                                   C( 7, 16)        17.00000            0.000000<br>                                   C( 7, 17)        6.000000            0.000000<br>                                   C( 7, 18)        11.00000            0.000000<br>                                   C( 7, 19)        17.00000            0.000000<br>                                   C( 7, 20)        12.00000            0.000000<br>                                    C( 8, 1)        1.000000            0.000000<br>                                    C( 8, 2)        1.000000            0.000000<br>                                    C( 8, 3)        5.000000            0.000000<br>                                    C( 8, 4)        2.000000            0.000000<br>                                    C( 8, 5)        2.000000            0.000000<br>                                    C( 8, 6)        5.000000            0.000000<br>                                    C( 8, 7)        16.00000            0.000000<br>                                    C( 8, 8)        8.000000            0.000000<br>                                    C( 8, 9)        7.000000            0.000000<br>                                   C( 8, 10)        7.000000            0.000000<br>                                   C( 8, 11)        12.00000            0.000000<br>                                   C( 8, 12)        9.000000            0.000000<br>                                   C( 8, 13)        5.000000            0.000000<br>                                   C( 8, 14)        12.00000            0.000000<br>                                   C( 8, 15)        6.000000            0.000000<br>                                   C( 8, 16)        4.000000            0.000000<br>                                   C( 8, 17)        17.00000            0.000000<br>                                   C( 8, 18)        11.00000            0.000000<br>                                   C( 8, 19)        11.00000            0.000000<br>                                   C( 8, 20)        20.00000            0.000000<br>                                    C( 9, 1)        18.00000            0.000000<br>                                    C( 9, 2)        16.00000            0.000000<br>                                    C( 9, 3)        20.00000            0.000000<br>                                    C( 9, 4)        18.00000            0.000000<br>                                    C( 9, 5)        5.000000            0.000000<br>                                    C( 9, 6)        20.00000            0.000000<br>                                    C( 9, 7)        8.000000            0.000000<br>                                    C( 9, 8)        6.000000            0.000000<br>                                    C( 9, 9)        17.00000            0.000000<br>                                   C( 9, 10)        20.00000            0.000000<br>                                   C( 9, 11)        9.000000            0.000000<br>                                   C( 9, 12)        19.00000            0.000000<br>                                   C( 9, 13)        1.000000            0.000000<br>                                   C( 9, 14)        10.00000            0.000000<br>                                   C( 9, 15)        9.000000            0.000000<br>                                   C( 9, 16)        5.000000            0.000000<br>                                   C( 9, 17)        8.000000            0.000000<br>                                   C( 9, 18)        9.000000            0.000000<br>                                   C( 9, 19)        17.00000            0.000000<br>                                   C( 9, 20)        15.00000            0.000000<br>                                   C( 10, 1)        6.000000            0.000000<br>                                   C( 10, 2)        7.000000            0.000000<br>                                   C( 10, 3)        17.00000            0.000000<br>                                   C( 10, 4)        4.000000            0.000000<br>                                   C( 10, 5)        12.00000            0.000000<br>                                   C( 10, 6)        4.000000            0.000000<br>                                   C( 10, 7)        19.00000            0.000000<br>                                   C( 10, 8)        4.000000            0.000000<br>                                   C( 10, 9)        13.00000            0.000000<br>                                  C( 10, 10)        16.00000            0.000000<br>                                  C( 10, 11)        7.000000            0.000000<br>                                  C( 10, 12)        6.000000            0.000000<br>                                  C( 10, 13)        1.000000            0.000000<br>                                  C( 10, 14)        14.00000            0.000000<br>                                  C( 10, 15)        11.00000            0.000000<br>                                  C( 10, 16)        5.000000            0.000000<br>                                  C( 10, 17)        7.000000            0.000000<br>                                  C( 10, 18)        9.000000            0.000000<br>                                  C( 10, 19)        11.00000            0.000000<br>                                  C( 10, 20)        13.00000            0.000000<br>                                         Row    Slack or Surplus      Dual Price<br>                                           1        69.00000           -1.000000<br>                                           2        17.00000            0.000000<br>                                           3        0.000000            1.000000<br>                                           4        18.00000            0.000000<br>                                           5        16.00000            0.000000<br>                                           6        0.000000            0.000000<br>                                           7        18.00000            0.000000<br>                                           8        16.00000            0.000000<br>                                           9        15.00000            0.000000<br>                                          10        0.000000            3.000000<br>                                          11        0.000000            3.000000<br>                                          12        0.000000           -1.000000<br>                                          13        0.000000           -1.000000<br>                                          14        0.000000           -1.000000<br>                                          15        0.000000           -2.000000<br>                                          16        0.000000           -2.000000<br>                                          17        0.000000           -3.000000<br>                                          18        0.000000           -5.000000<br>                                          19        0.000000           -3.000000<br>                                          20        0.000000           -1.000000<br>                                          21        0.000000           -1.000000<br>                                          22        0.000000           -3.000000<br>                                          23        0.000000           -6.000000<br>                                          24        0.000000           -4.000000<br>                                          25        0.000000           -2.000000<br>                                          26        0.000000           -3.000000<br>                                          27        0.000000           -4.000000<br>                                          28        0.000000           -2.000000<br>                                          29        0.000000           -1.000000<br>                                          30        0.000000           -3.000000<br>                                          31        0.000000           -4.000000<br></code></pre></td></tr></table></figure>
+
+<section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000006192726">lingo学习篇</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/" class="category-chain-item">数学建模</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">#数学建模</a>
+      
+        <a href="/tags/%E6%95%B4%E6%95%B0%E8%A7%84%E5%88%92/">#整数规划</a>
+      
+        <a href="/tags/%E9%9D%9E%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92/">#非线性规划</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>lingo学习</div>
+      <div>https://blog.baixf.tk/2020/08/23/数学建模/lingo学习/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年8月23日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/08/23/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/%E5%AD%A6%E4%B9%A0%E5%B8%B8%E7%94%A8%E6%A8%A1%E5%9E%8B%E5%8F%8A%E7%AE%97%E6%B3%953.%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95/" title="学习常用模型及算法3.遗传算法">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">学习常用模型及算法3.遗传算法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/08/23/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E3%80%9020200823%E3%80%91/" title="每日一题【20200823】">
+                        <span class="hidden-mobile">每日一题【20200823】</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

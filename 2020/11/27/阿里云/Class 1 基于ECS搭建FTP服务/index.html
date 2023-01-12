@@ -1,0 +1,795 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="云上实践 云上成长 ECS 7天实践训练营">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Class 1 基于ECS搭建FTP服务">
+<meta property="og:url" content="https://blog.baixf.tk/2020/11/27/%E9%98%BF%E9%87%8C%E4%BA%91/Class%201%20%E5%9F%BA%E4%BA%8EECS%E6%90%AD%E5%BB%BAFTP%E6%9C%8D%E5%8A%A1/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="云上实践 云上成长 ECS 7天实践训练营">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201127154937.png">
+<meta property="article:published_time" content="2020-11-27T03:11:11.000Z">
+<meta property="article:modified_time" content="2022-06-20T09:42:49.958Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="阿里云">
+<meta property="article:tag" content="在家学习">
+<meta property="article:tag" content="ECS">
+<meta property="article:tag" content="FTP服务">
+<meta property="article:tag" content="进阶班">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201127154937.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>Class 1 基于ECS搭建FTP服务 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201127154939.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Class 1 基于ECS搭建FTP服务"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-11-27 03:11" pubdate>
+          2020年11月27日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          27 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Class 1 基于ECS搭建FTP服务</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="一-ssh连接远程服务器"><a href="#一-ssh连接远程服务器" class="headerlink" title="一.ssh连接远程服务器"></a>一.ssh连接远程服务器</h1><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-11-27/1606447302650-2.PNG" srcset="/img/loading.gif" lazyload></p>
+<h1 id="二-安装vsftpd"><a href="#二-安装vsftpd" class="headerlink" title="二.安装vsftpd"></a>二.安装vsftpd</h1><h3 id="1-运行以下命令安装vsftpd。"><a href="#1-运行以下命令安装vsftpd。" class="headerlink" title="1.运行以下命令安装vsftpd。"></a>1.运行以下命令安装vsftpd。</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">yum install -y vsftpd<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-11-27/1606447372928-3.PNG" srcset="/img/loading.gif" lazyload></p>
+<h3 id="2-运行以下命令设置FTP服务开机自启动。"><a href="#2-运行以下命令设置FTP服务开机自启动。" class="headerlink" title="2.运行以下命令设置FTP服务开机自启动。"></a>2.运行以下命令设置FTP服务开机自启动。</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl enable vsftpd.service<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-11-27/1606447411683-4.PNG" srcset="/img/loading.gif" lazyload></p>
+<h3 id="3-启动FTP服务。"><a href="#3-启动FTP服务。" class="headerlink" title="3.启动FTP服务。"></a>3.启动FTP服务。</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl start vsftpd.service<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-11-27/1606447463450-5.PNG" srcset="/img/loading.gif" lazyload></p>
+<h3 id="4-运行以下命令查看FTP服务监听的端口。"><a href="#4-运行以下命令查看FTP服务监听的端口。" class="headerlink" title="4.运行以下命令查看FTP服务监听的端口。"></a>4.运行以下命令查看FTP服务监听的端口。</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">netstat -antup | grep ftp<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-11-27/1606447508354-6.PNG" srcset="/img/loading.gif" lazyload></p>
+<p>如图所示，表示FTP服务已启动，监听的端口号为 21。vsftpd默认已开启匿名访问功能，无需输入用户名密码即可登录FTP服务器，但没有修改或上传文件的权限。</p>
+<h1 id="三-配置vsftpd"><a href="#三-配置vsftpd" class="headerlink" title="三.配置vsftpd"></a>三.配置vsftpd</h1><p>vsftpd（very secure FTP daemon）是一款在Linux发行版中最受推崇的FTP服务器。vsftpd支持匿名访问和本地用户模式两种访问方式。匿名访问方式任何用户都可以访问搭建的FTP服务；本地用户模式只支持添加的本地用户访问搭建的FTP服务。</p>
+<ul>
+<li>说明: 匿名用户模式和本地用户模式只可同时配置一种。</li>
+</ul>
+<h2 id="匿名用户模式"><a href="#匿名用户模式" class="headerlink" title="匿名用户模式"></a>匿名用户模式</h2><h3 id="1-修改配置文件vsftpd-conf。"><a href="#1-修改配置文件vsftpd-conf。" class="headerlink" title="1.  修改配置文件vsftpd.conf。"></a>1.  修改配置文件vsftpd.conf。</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">vim /etc/vsftpd/vsftpd.conf<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-11-27/1606447646260-7.PNG" srcset="/img/loading.gif" lazyload></p>
+<p>将匿名上传权限 anon_upload_enable&#x3D;YES 的注释解开。</p>
+<h3 id="2-按ESC键退出编辑模式，输入-wq-保存并退出vim。"><a href="#2-按ESC键退出编辑模式，输入-wq-保存并退出vim。" class="headerlink" title="2.  按ESC键退出编辑模式，输入:wq 保存并退出vim。"></a>2.  按ESC键退出编辑模式，输入:wq 保存并退出vim。</h3><h3 id="3-更改-x2F-var-x2F-ftp-x2F-pub目录的权限，为FTP用户添加写权限。"><a href="#3-更改-x2F-var-x2F-ftp-x2F-pub目录的权限，为FTP用户添加写权限。" class="headerlink" title="3.  更改&#x2F;var&#x2F;ftp&#x2F;pub目录的权限，为FTP用户添加写权限。"></a>3.  更改&#x2F;var&#x2F;ftp&#x2F;pub目录的权限，为FTP用户添加写权限。</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">chmod o+w /var/ftp/pub/<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-11-27/1606447723097-9.PNG" srcset="/img/loading.gif" lazyload></p>
+<h3 id="4-重启FTP服务。"><a href="#4-重启FTP服务。" class="headerlink" title="4.  重启FTP服务。"></a>4.  重启FTP服务。</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl restart vsftpd.service<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-11-27/1606447784558-10.PNG" srcset="/img/loading.gif" lazyload></p>
+<h2 id="本地用户模式"><a href="#本地用户模式" class="headerlink" title="本地用户模式"></a>本地用户模式</h2><h3 id="1-为FTP服务创建一个Linux用户。"><a href="#1-为FTP服务创建一个Linux用户。" class="headerlink" title="1.  为FTP服务创建一个Linux用户。"></a>1.  为FTP服务创建一个Linux用户。</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">adduser ftptest<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-11-27/1606447840217-11.PNG" srcset="/img/loading.gif" lazyload></p>
+<p>为用户设置密码。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">passwd ftptest<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-11-27/1606447901540-12.PNG" srcset="/img/loading.gif" lazyload></p>
+<h3 id="2-创建一个供FTP服务使用的文件目录。"><a href="#2-创建一个供FTP服务使用的文件目录。" class="headerlink" title="2.  创建一个供FTP服务使用的文件目录。"></a>2.  创建一个供FTP服务使用的文件目录。</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">mkdir /var/ftp/test<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-11-27/1606447950244-13.PNG" srcset="/img/loading.gif" lazyload></p>
+<h3 id="3-更改-x2F-var-x2F-ftp-x2F-test目录的拥有者为ftptest。"><a href="#3-更改-x2F-var-x2F-ftp-x2F-test目录的拥有者为ftptest。" class="headerlink" title="3.  更改&#x2F;var&#x2F;ftp&#x2F;test目录的拥有者为ftptest。"></a>3.  更改&#x2F;var&#x2F;ftp&#x2F;test目录的拥有者为ftptest。</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">chown -R ftptest:ftptest <span class="hljs-regexp">/var/</span>ftp/test<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-11-27/1606447990186-14.PNG" srcset="/img/loading.gif" lazyload></p>
+<h3 id="4-修改vsftpd-conf配置文件。"><a href="#4-修改vsftpd-conf配置文件。" class="headerlink" title="4.  修改vsftpd.conf配置文件。"></a>4.  修改vsftpd.conf配置文件。</h3><p>配置FTP为主动模式请执行如下命令:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">sed -i &#x27;s/anonymous_enable=YES/anonymous_enable=NO/&#x27; /etc/vsftpd/vsftpd.conf #禁止匿名登录FTP服务器 <br>sed -i &#x27;s/listen=NO/listen=YES/&#x27; /etc/vsftpd/vsftpd.conf #监听IPv4 sockets <br>sed -i &#x27;s/listen_ipv6=YES/#listen_ipv6=YES/&#x27; /etc/vsftpd/vsftpd.conf #关闭监听IPv6 sockets <br>sed -i &#x27;s/#chroot_local_user=YES/chroot_local_user=YES/&#x27; /etc/vsftpd/vsftpd.conf #全部用户被限制在主目录 <br>sed -i &#x27;s/#chroot_list_enable=YES/chroot_list_enable=YES/&#x27; /etc/vsftpd/vsftpd.conf #启用例外用户名单 <br>sed -i &#x27;s/#chroot_list_file=/chroot_list_file=/&#x27; /etc/vsftpd/vsftpd.conf #指定例外用户列表文件，列表中的用户不被锁定在主目录 <br>echo &quot;allow_writeable_chroot=YES&quot; &gt;&gt; /etc/vsftpd/vsftpd.conf <br>echo &quot;local_root=/var/ftp/test&quot; &gt;&gt; /etc/vsftpd/vsftpd.conf #设置本地用户登录后所在的目录<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>配置FTP为被动模式请执行如下命令：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs shell">sed -i &#x27;s/anonymous_enable=YES/anonymous_enable=NO/&#x27; /etc/vsftpd/vsftpd.conf #禁止匿名登录FTP服务器 <br>sed -i &#x27;s/listen=NO/listen=YES/&#x27; /etc/vsftpd/vsftpd.conf #监听IPv4 sockets <br>sed -i &#x27;s/listen_ipv6=YES/#listen_ipv6=YES/&#x27; /etc/vsftpd/vsftpd.conf #关闭监听IPv6 sockets <br>sed -i &#x27;s/#chroot_local_user=YES/chroot_local_user=YES/&#x27; /etc/vsftpd/vsftpd.conf #全部用户被限制在主目录 <br>sed -i &#x27;s/#chroot_list_enable=YES/chroot_list_enable=YES/&#x27; /etc/vsftpd/vsftpd.conf #启用例外用户名单 <br>sed -i &#x27;s/#chroot_list_file=/chroot_list_file=/&#x27; /etc/vsftpd/vsftpd.conf #指定例外用户列表文件，列表中的用户不被锁定在主目录 <br>echo &quot;allow_writeable_chroot=YES&quot; &gt;&gt; /etc/vsftpd/vsftpd.conf <br>echo &quot;local_root=/var/ftp/test&quot; &gt;&gt; /etc/vsftpd/vsftpd.conf #设置本地用户登录后所在的目录 <br><br>echo &quot;pasv_enable=YES&quot; &gt;&gt; /etc/vsftpd/vsftpd.conf #开启被动模式 <br>echo &quot;pasv_address=&lt;FTP服务器公网IP地址&gt;&quot; &gt;&gt; /etc/vsftpd/vsftpd.conf #本教程中为ECS服务器弹性IP <br>echo &quot;pasv_min_port=20&quot; &gt;&gt; /etc/vsftpd/vsftpd.conf #设置被动模式下，建立数据传输可使用的端口范围的最小值 <br>echo &quot;pasv_max_port=21&quot; &gt;&gt; /etc/vsftpd/vsftpd.conf #设置被动模式下，建立数据传输可使用的端口范围的最大值<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-在-x2F-etc-x2F-vsftpd目录下创建chroot-list文件，并在文件中写入例外用户名单。"><a href="#5-在-x2F-etc-x2F-vsftpd目录下创建chroot-list文件，并在文件中写入例外用户名单。" class="headerlink" title="5.  在&#x2F;etc&#x2F;vsftpd目录下创建chroot_list文件，并在文件中写入例外用户名单。"></a>5.  在&#x2F;etc&#x2F;vsftpd目录下创建chroot_list文件，并在文件中写入例外用户名单。</h3><p>#使用vim命令编辑chroot_list文件，添加例外用户名单。此名单中的用户不会被锁定在主目录，可以访问其他目录。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">vim /etc/vsftpd/chroot_list<br></code></pre></td></tr></table></figure>
+
+<p>没有例外用户时，也必须创建chroot_list文件，内容可为空。</p>
+<h3 id="6-重启FTP服务。"><a href="#6-重启FTP服务。" class="headerlink" title="6.  重启FTP服务。"></a>6.  重启FTP服务。</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl restart vsftpd.service<br></code></pre></td></tr></table></figure>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-11-27/1606448489247-16.PNG" srcset="/img/loading.gif" lazyload></p>
+<h1 id="四-客户端测试"><a href="#四-客户端测试" class="headerlink" title="四.客户端测试"></a>四.客户端测试</h1><p>FTP客户端、Windows命令行工具或浏览器均可用来测试FTP服务器。（此步骤仅适用于本地用户，匿名模式无需进行测试操作）</p>
+<p>说明：使用浏览器访问FTP服务器出错时，建议您清除浏览器缓存后再尝试。</p>
+<h3 id="1-打开搜狗浏览器，在地址栏中输入ftp-139-224-107-98"><a href="#1-打开搜狗浏览器，在地址栏中输入ftp-139-224-107-98" class="headerlink" title="1.    打开搜狗浏览器，在地址栏中输入ftp://139.224.107.98/"></a>1.    打开搜狗浏览器，在地址栏中输入<a href="ftp://139.224.107.98/">ftp://139.224.107.98/</a></h3><h3 id="2-在弹出的对话框中，输入用户名和密码。"><a href="#2-在弹出的对话框中，输入用户名和密码。" class="headerlink" title="2.    在弹出的对话框中，输入用户名和密码。"></a>2.    在弹出的对话框中，输入用户名和密码。</h3><h3 id="3-登录成功界面如下，此时可对FTP文件进行相应权限的操作。"><a href="#3-登录成功界面如下，此时可对FTP文件进行相应权限的操作。" class="headerlink" title="3.    登录成功界面如下，此时可对FTP文件进行相应权限的操作。"></a>3.    登录成功界面如下，此时可对FTP文件进行相应权限的操作。</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/2020-11-27/1606448628627-17.PNG" srcset="/img/loading.gif" lazyload></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://developer.aliyun.com/adc/student/bootcamp/?spm=a2c6h.13788107.J_3120529270.3.450750a3CaVHui">云上实践 云上成长 ECS 7天实践训练营</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/%E9%98%BF%E9%87%8C%E4%BA%91/" class="category-chain-item">阿里云</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E9%98%BF%E9%87%8C%E4%BA%91/">#阿里云</a>
+      
+        <a href="/tags/%E5%9C%A8%E5%AE%B6%E5%AD%A6%E4%B9%A0/">#在家学习</a>
+      
+        <a href="/tags/ECS/">#ECS</a>
+      
+        <a href="/tags/FTP%E6%9C%8D%E5%8A%A1/">#FTP服务</a>
+      
+        <a href="/tags/%E8%BF%9B%E9%98%B6%E7%8F%AD/">#进阶班</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Class 1 基于ECS搭建FTP服务</div>
+      <div>https://blog.baixf.tk/2020/11/27/阿里云/Class 1 基于ECS搭建FTP服务/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年11月27日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/11/28/%E9%98%BF%E9%87%8C%E4%BA%91/Class%202%20%E8%BA%AB%E4%BB%BD%E8%AF%81%E8%AF%86%E5%88%AB%E7%B3%BB%E7%BB%9F%E6%90%AD%E5%BB%BA/" title="Class 2 身份证识别系统搭建">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Class 2 身份证识别系统搭建</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/11/27/%E9%98%BF%E9%87%8C%E4%BA%91/Class%201%20%E8%BE%BE%E6%91%A9%E9%99%A2%E8%A7%86%E8%A7%89AI%E6%8A%80%E6%9C%AF%E5%BA%94%E7%94%A8%E6%8E%A2%E7%B4%A2/" title="Class 1 达摩院视觉AI技术应用探索">
+                        <span class="hidden-mobile">Class 1 达摩院视觉AI技术应用探索</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

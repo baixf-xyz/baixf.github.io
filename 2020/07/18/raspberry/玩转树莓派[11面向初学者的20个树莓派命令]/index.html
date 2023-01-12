@@ -1,0 +1,830 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="转载~">
+<meta property="og:type" content="article">
+<meta property="og:title" content="玩转树莓派[11:面向初学者的20个树莓派命令]">
+<meta property="og:url" content="https://blog.baixf.tk/2020/07/18/raspberry/%E7%8E%A9%E8%BD%AC%E6%A0%91%E8%8E%93%E6%B4%BE[11%E9%9D%A2%E5%90%91%E5%88%9D%E5%AD%A6%E8%80%85%E7%9A%8420%E4%B8%AA%E6%A0%91%E8%8E%93%E6%B4%BE%E5%91%BD%E4%BB%A4]/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="转载~">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201122225914.jpg">
+<meta property="article:published_time" content="2020-07-18T03:11:11.000Z">
+<meta property="article:modified_time" content="2022-06-20T09:42:49.959Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="raspberry">
+<meta property="article:tag" content="基地2.0">
+<meta property="article:tag" content="系统">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201122225914.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>玩转树莓派[11:面向初学者的20个树莓派命令] - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://api.ixiaowai.cn/mcapi/mcapi.php') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="玩转树莓派[11:面向初学者的20个树莓派命令]"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-07-18 03:11" pubdate>
+          2020年7月18日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          31 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">玩转树莓派[11:面向初学者的20个树莓派命令]</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p class="note note-primary">
+  您可能从快乐的Windows GUI用户变为没有按钮或双击任何东西的怀旧黑屏和绿屏。自从您的第一台PC开始使用GUI以来，这可能是令人恐惧的事情。
+  但是，有许多小技巧和命令可以帮助用户获得使用该系统的信心。
+  这里没有高级或突破性的内容，只有日常的基本命令可以帮助您从终端窗口浏览和执行Raspberry Pi的简单任务。随着时间的推移，您会发现更多的东西，但这是一个很好的起点。
+</p>
+
+<h2 id="01-sudo-apt-get更新-更新程序包列表"><a href="#01-sudo-apt-get更新-更新程序包列表" class="headerlink" title="01.[sudo apt-get更新]-更新程序包列表"></a>01.[sudo apt-get更新]-更新程序包列表</h2><p><span class="label label-primary">终端中的更新命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt-get update<br></code></pre></td></tr></table></figure>
+<p><span class="label label-primary">这是更新Raspberry Pi的第一阶段（有关其他步骤，请参阅此列表中的下两个项目）。</span></p>
+<p>“ sudo apt-get update”命令 从存储库下载软件包列表，并获取有关这些软件包的最新版本以及任何相关软件包的信息。</p>
+<p>因此，它实际上并没有进行传统意义上的任何实际更新。在整个过程中，它更是一个必需的步骤。</p>
+<h2 id="02-sudo-apt-get-upgrade-下载并安装更新的软件包"><a href="#02-sudo-apt-get-upgrade-下载并安装更新的软件包" class="headerlink" title="02.[sudo apt-get upgrade]-下载并安装更新的软件包"></a>02.[sudo apt-get upgrade]-下载并安装更新的软件包</h2><p><span class="label label-primary">终端中的升级命令</span></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt-get upgrade<br></code></pre></td></tr></table></figure>
+<p><span class="label label-primary">此命令从我们更新软件包列表的上一个项目开始。</span></p>
+<p>有了我们更新的软件包列表后，“ sudo apt-get upgrade”命令将查看当前安装的软件包，然后查看最新的软件包列表（我们刚刚升级的软件包），然后最后安装所有尚未安装的新软件包。</p>
+<h2 id="03-sudo-apt-get-clean-清理旧程序包文件"><a href="#03-sudo-apt-get-clean-清理旧程序包文件" class="headerlink" title="03.[sudo apt-get clean]-清理旧程序包文件"></a>03.[sudo apt-get clean]-清理旧程序包文件</h2><p><span class="label label-primary">终端中的清理命令</span></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt-get clean<br></code></pre></td></tr></table></figure>
+<p><span class="label label-primary">更新和升级过程的最后阶段，如果您有足够的磁盘空间，那么这并非总是必不可少的。</span></p>
+<p>“ sudo apt-get clean”命令删除在更新过程中下载的冗余软件包文件（.deb文件）。</p>
+<p>如果您空间有限或只想进行良好的清理，这是一个方便的命令。</p>
+<h2 id="04-sudo-raspi-config-Raspberry-Pi配置工具"><a href="#04-sudo-raspi-config-Raspberry-Pi配置工具" class="headerlink" title="04.[sudo raspi-config]-Raspberry Pi配置工具"></a>04.[sudo raspi-config]-Raspberry Pi配置工具</h2><p><span class="label label-primary">Raspberry Pi配置工具</span></p>
+<p><span class="label label-primary">这应该是您首次开始使用Raspberry Pi时要采取的第一步，以确保已针对您的语言，硬件和项目进行了设置。</span></p>
+<p>配置工具就像一个“设置”窗口，可让您设置语言，时间&#x2F;日期，启用摄像头模块，对处理器进行超频，启用设备，更改密码以及许多其他选项。</p>
+<p>您可以通过键入“ sudo raspi-config”然后按回车来访问它。根据您所做的更改，之后可能会提示您重新启动Pi。</p>
+<h2 id="05-ls-列出目录内容"><a href="#05-ls-列出目录内容" class="headerlink" title="05.[ls]-列出目录内容"></a>05.[ls]-列出目录内容</h2><p><span class="label label-primary">终端中的ls命令</span></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ls 目录<br></code></pre></td></tr></table></figure>
+
+<p><span class="label label-primary">Linux的“目录”与Windows中的“文件夹”相同。这可能是您（Windows用户）必须习惯的。</span></p>
+<p>当然，终端中没有浏览器，因此要查看您在任何给定时间所在目录的内容，只需键入“ ls”并按回车即可。</p>
+<p>您将看到列出该目录中的每个文件和目录，并且通常为不同项目使用颜色编码。</p>
+<h2 id="06-cd-更改目录"><a href="#06-cd-更改目录" class="headerlink" title="06.[cd]-更改目录"></a>06.[cd]-更改目录</h2><p><span class="label label-primary">终端中的cd命令</span></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd 目录<br></code></pre></td></tr></table></figure>
+<p><span class="label label-primary">如果要跳转到某个目录，可以使用“ cd”命令。</span></p>
+<p>如果您已经在其中的目录中有目录，则可以简单地使用“ cd directoryname”（用目录名替换“ directoryname”）。</p>
+<p>如果它在文件系统中的其他位置，只需在命令后输入路径，例如“ cd &#x2F; home &#x2F; pi &#x2F; directoryname”。</p>
+<p>此命令的另一个方便用法是“ cd ..”，它使您返回一个文件夹级别，类似于“返回”按钮。</p>
+<h2 id="07-mkdir-创建目录"><a href="#07-mkdir-创建目录" class="headerlink" title="07.[mkdir]-创建目录"></a>07.[mkdir]-创建目录</h2><p><span class="label label-primary">终端中的mkdir命令</span></p>
+<p><span class="label label-primary">mkdir 目录名</span></p>
+<p><span class="label label-primary">如果需要在已经存在的目录中创建一个新目录，则可以使用“ mkdir”命令。这是 相当于终端世界的新&gt; 文件夹。</span></p>
+<p>要创建新目录，只需在命令后添加目录名称，例如’mkdir new_directory’。</p>
+<h2 id="08-rmdir-删除目录"><a href="#08-rmdir-删除目录" class="headerlink" title="08.[rmdir]-删除目录"></a>08.[rmdir]-删除目录</h2><p><span class="label label-primary">您已经了解了如何创建新目录，但是如果要删除一个目录该怎么办？</span></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">rmdir 目录名<br></code></pre></td></tr></table></figure>
+
+<p><span class="label label-primary">这是删除目录的非常相似的命令，只需使用“ rmdir”然后输入目录名称即可。</span></p>
+<p>例如，“ rmdir directory_name”将删除目录“ directory_name”。值得注意的是，该目录必须为空才能执行此命令。</p>
+<h2 id="09-mv-移动文件"><a href="#09-mv-移动文件" class="headerlink" title="09.[mv]-移动文件"></a>09.[mv]-移动文件</h2><p><span class="label label-primary">使用“ mv”命令移动文件</span></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">mv 文件名 移动位置<br></code></pre></td></tr></table></figure>
+<p><span class="label label-primary">通过使用“ mv”命令可在目录之间移动文件。</span></p>
+<p>要移动文件，请使用“ mv”，然后是文件名，然后是目标目录。</p>
+<p>例如“ mv my_file.txt &#x2F; home &#x2F; pi &#x2F; destination_directory”，它将“ my_file.txt”文件移动到“ &#x2F; home &#x2F; pi &#x2F; destination_directory”。</p>
+<h2 id="10-tree-d-显示目录树"><a href="#10-tree-d-显示目录树" class="headerlink" title="10.[tree -d]-显示目录树"></a>10.[tree -d]-显示目录树</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">tree -d<br></code></pre></td></tr></table></figure>
+
+<p><span class="label label-primary">Tree命令是查看目录结构的便捷方法</span><br>创建少量新目录后，您可能会缺少Windows文件资源管理器的可视文件夹结构视图。如果无法看到目录的直观布局，事情可能会很快变得混乱。</p>
+<p>可以帮助您更清楚地了解目录的命令之一是“ tree -d”。它在终端内以树状布局显示所有目录。</p>
+<h2 id="11-pwd-显示当前目录"><a href="#11-pwd-显示当前目录" class="headerlink" title="11.[pwd]-显示当前目录"></a>11.[pwd]-显示当前目录</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">pwd<br></code></pre></td></tr></table></figure>
+
+<p><span class="label label-primary">当您开始感到有点迷茫时，使用“ pwd”可以为您提供帮助！</span></p>
+<p>当您迷路时，另一个帮助您的便捷命令是’pwd’命令。如果您只想知道自己在任何给定时间的位置，这将非常方便。</p>
+<p>只需随时输入“ pwd”以显示您所在的当前目录路径。</p>
+<h2 id="12-clear-清除终端窗口"><a href="#12-clear-清除终端窗口" class="headerlink" title="12.[clear]-清除终端窗口"></a>12.[clear]-清除终端窗口</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">clear<br></code></pre></td></tr></table></figure>
+
+<p><span class="label label-primary">在终端中清除命令</span></p>
+<p>当您开始使用终端机时，您会发现它会变得很混乱。在执行一些命令之后，您会在屏幕上留下一小段文字，对于我们中的某些人来说可能有点烦人。</p>
+<p>如果要擦拭屏幕干净，只需使用“ clear”命令。屏幕将被清除，为下一个命令做好准备。</p>
+<h2 id="13-sudo-half-关闭您的Raspberry-Pi"><a href="#13-sudo-half-关闭您的Raspberry-Pi" class="headerlink" title="13.[sudo half]-关闭您的Raspberry Pi"></a>13.[sudo half]-关闭您的Raspberry Pi</h2><p><span class="label label-primary">使用“ half”命令安全关闭Raspberry Pi</span></p>
+<p>安全地关闭Raspberry Pi可以避免SD卡损坏等问题。您有时可以通过快速拉动电源线来逃脱，但是最终，您将杀死您的卡。</p>
+<p>要正确关闭树莓派，请使用“ sudo halt”。在Pi的LED上最后闪烁一次之后，您可以拔下电源线。</p>
+<h2 id="14-sudo-reboot-重新启动Raspberry-Pi"><a href="#14-sudo-reboot-重新启动Raspberry-Pi" class="headerlink" title="14.[sudo reboot]-重新启动Raspberry Pi"></a>14.[sudo reboot]-重新启动Raspberry Pi</h2><p><span class="label label-primary">在终端中使用重新启动来重新启动Pi</span></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo reboot<br></code></pre></td></tr></table></figure>
+
+<p>与shutdown命令类似，如果您想以安全的方式重启Raspberry Pi，则可以使用“ reboot”命令。</p>
+<p>只需键入“ sudo reboot”，Pi就会自行重启。</p>
+<h2 id="15-startx-启动桌面环境（LXDE）"><a href="#15-startx-启动桌面环境（LXDE）" class="headerlink" title="15.[startx]-启动桌面环境（LXDE）"></a>15.[startx]-启动桌面环境（LXDE）</h2><p><span class="label label-primary">终端中的startx命令</span></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">startx<br></code></pre></td></tr></table></figure>
+
+<p><span class="label label-primary">如果您将Pi设置为始终在终端中启动，则您可能想知道如何启动桌面（如果需要使用它）。</span></p>
+<p>使用“ startx”启动LXDE（轻便X11桌面环境）。应该注意的是，这将无法通过SSH会话进行。</p>
+<h2 id="16-ifconfig-查找您的Raspberry-Pi的IP地址"><a href="#16-ifconfig-查找您的Raspberry-Pi的IP地址" class="headerlink" title="16.[ifconfig]-查找您的Raspberry Pi的IP地址"></a>16.[ifconfig]-查找您的Raspberry Pi的IP地址</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ifconfig<br></code></pre></td></tr></table></figure>
+
+<p><span class="label label-primary">ifconfig可以为您提供有用的网络信息</span><br>在很多情况下，可能需要您知道Raspberry Pi 的IP地址。许多人在配置SSH会话以远程访问其Pi时使用它。</p>
+<p>要查找您的IP地址，请在终端中键入“ ifconfig”，然后按Enter。您也可以使用“主机名-I”自行查找IP地址。</p>
+<h2 id="17-nano-编辑文件"><a href="#17-nano-编辑文件" class="headerlink" title="17.[nano]-编辑文件"></a>17.[nano]-编辑文件</h2><p><span class="label label-primary">终端中的Nano，是Raspberry Pi的首选文本编辑器</span><br>Linux有许多不同的文本编辑器，由于各种原因，您会发现有些人喜欢使用另一种。</p>
+<p>要编辑文件，只需键入“ nano”，然后键入文件名，例如“ nano myfile.txt”。编辑完成后，按Ctrl + X保存文件。</p>
+<h2 id="18-cat-显示文件的内容"><a href="#18-cat-显示文件的内容" class="headerlink" title="18.[cat]-显示文件的内容"></a>18.[cat]-显示文件的内容</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cat<br></code></pre></td></tr></table></figure>
+
+<p><span class="label label-primary">终端中的cat</span></p>
+<p>虽然可以使用“ nano”（上方）打开文件进行编辑，但是可以使用单独的命令在终端中简单列出文件的内容。</p>
+<p>使用“ cat”后跟文件名来执行此操作，例如，“ cat myfile.txt”。</p>
+<h2 id="19-rm-删除文件"><a href="#19-rm-删除文件" class="headerlink" title="19.[rm]-删除文件"></a>19.[rm]-删除文件</h2><p><span class="label label-primary">终端中的rm命令有助于轻松删除文件</span></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">rm 文件名<br></code></pre></td></tr></table></figure>
+<p>在Raspberry Pi上，删除文件很容易，并且在编写代码麻烦的同时制作许多版本的Python文件时，您会做很多事情。</p>
+<p>要删除文件，我们使用“ rm”命令，后跟文件名。例如“ rm myfile.txt”。</p>
+<h2 id="20-cp-复制文件或目录"><a href="#20-cp-复制文件或目录" class="headerlink" title="20.[cp]-复制文件或目录"></a>20.[cp]-复制文件或目录</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cp 文件名或目录名<br></code></pre></td></tr></table></figure>
+
+<p><span class="label label-primary">终端中的cp命令可帮助复制文件</span><br><span class="label label-primary">当需要复制文件或目录时，请使用“ cp”命令。</span></p>
+<p>要在同一目录中复制文件，请输入命令“ cp original_file new_file”</p>
+<p>要在另一个具有相同名称的目录中进行复制，请输入命令“ cp original_file home &#x2F; pi &#x2F; subdirectory”</p>
+<p>要复制整个目录（及其内容），请输入命令“ cp -R home &#x2F; pi &#x2F; folder_one home &#x2F; pi &#x2F; folder_two”。这会将“ folder_one”复制到“ folder_two”。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.lxx1.com/3985">面向初学者的20个树莓派命令</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.lifewire.com/raspberry-pi-terminal-commands-4054108">20 Handy Raspberry Pi Terminal Commands for Beginners</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/raspberry/" class="category-chain-item">raspberry</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/raspberry/">#raspberry</a>
+      
+        <a href="/tags/%E5%9F%BA%E5%9C%B02-0/">#基地2.0</a>
+      
+        <a href="/tags/%E7%B3%BB%E7%BB%9F/">#系统</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>玩转树莓派[11:面向初学者的20个树莓派命令]</div>
+      <div>https://blog.baixf.tk/2020/07/18/raspberry/玩转树莓派[11面向初学者的20个树莓派命令]/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年7月18日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/07/19/python/%E5%9F%BA%E4%BA%8EPython%E7%9A%84%E9%98%B2%E7%BD%91%E7%BB%9C%E6%B2%89%E8%BF%B7%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96/" title="基于Python的防网络沉迷相关信息获取">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">基于Python的防网络沉迷相关信息获取</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/07/17/raspberry/%E7%8E%A9%E8%BD%AC%E6%A0%91%E8%8E%93%E6%B4%BE%5B10%E5%9F%BA%E5%9C%B02.0%E5%BC%80%E5%90%AF9090%E7%AB%AF%E5%8F%A3%E5%92%8CVNC%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%5D/" title="玩转树莓派[10:基地2.0开启9090端口和VNC内网穿透]">
+                        <span class="hidden-mobile">玩转树莓派[10:基地2.0开启9090端口和VNC内网穿透]</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

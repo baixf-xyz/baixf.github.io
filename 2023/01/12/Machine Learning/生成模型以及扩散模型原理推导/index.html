@@ -1,0 +1,927 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="课程期末论文~">
+<meta property="og:type" content="article">
+<meta property="og:title" content="生成模型以及扩散模型原理推导">
+<meta property="og:url" content="https://blog.baixf.tk/2023/01/12/Machine%20Learning/%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E4%BB%A5%E5%8F%8A%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E5%8E%9F%E7%90%86%E6%8E%A8%E5%AF%BC/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="课程期末论文~">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202301101811936.jpg">
+<meta property="article:published_time" content="2023-01-12T23:00:11.000Z">
+<meta property="article:modified_time" content="2023-01-12T14:08:04.367Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="生成模型">
+<meta property="article:tag" content="概率模型">
+<meta property="article:tag" content="VAE">
+<meta property="article:tag" content="扩散模型">
+<meta property="article:tag" content="DDPM， Difussion Model">
+<meta property="article:tag" content="重参数化">
+<meta property="article:tag" content="KL散度">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202301101811936.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>生成模型以及扩散模型原理推导 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202301122048786.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="生成模型以及扩散模型原理推导"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-01-12 23:00" pubdate>
+          2023年1月12日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          35k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          295 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">生成模型以及扩散模型原理推导</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>美国科罗拉多州技术博览会中获得数字艺术类冠军的作品——《太空歌剧院》</p>
+</blockquote>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202301101811936.jpg" srcset="/img/loading.gif" lazyload alt="美国科罗拉多州技术博览会中获得数字艺术类冠军的作品——《太空歌剧院》"></p>
+<blockquote>
+<p>最近爆火的AI绘图，相信大家并不陌生了。本文讨论的是最近在生成模型中逐渐受到重视的扩散模型DDPM（全称Denoising Diffusion Probabilistic Models)。由于扩散模型相较于普通的深度学习模型，数学难度大很多，因此该模型理解起来非常吃力。本文主要根据B站<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1b541197HX">Probabilistic Diffusion Model概率扩散模型理论与完整PyTorch代码详细解</a>以及博客<a href="https://link.zhihu.com/?target=https://lilianweng.github.io/posts/2021-07-11-diffusion-models/">What are Diffusion Models?</a>中的讲解，同时加上一些数学基础知识和自己的理解，欢迎指正。</p>
+</blockquote>
+<h2 id="1-概率生成模型基本思想"><a href="#1-概率生成模型基本思想" class="headerlink" title="1 概率生成模型基本思想"></a>1 概率生成模型基本思想</h2><p>散度最小化是生成模型的一般框架。我们可以将我们的训练集看作是对某个高维空间$\Omega$中的一个随机向量$X$进行多次采样得到的结果，这个随机向量服从一个未知的概率分布$P_r$。那么我们可以通过$X$的样本集（即训练集）来学习获得一个参数化模型$P_\theta$，此时学习获得的模型$P_\theta$应当与$P_r$是近似的，之后通过学习到的模型$P_\theta$再进行采样，则就能获得与训练集近似分布的生成结果，这便是生成网络的基本思想。<br>然而在实际操作中，由于待拟合的概率分布$P_r$往往非常复杂，神经网络通常很难直接拟合，且另一方面生成的结果很难量化评估其好坏，因此并不能简单地去构造一个生成网络来解决问题。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202301101741426.png" srcset="/img/loading.gif" lazyload alt="image-20230110174139058"></p>
+<p>生成模型-GAN、生成模型-VAE和生成模型-Flow based model在生成高质量样本方面显示出巨大的成功，但每一种都有其自身的一些局限性。下面是对GAN、VAE和基于流的生成模型之间区别的一个快速总结。</p>
+<ol>
+<li><strong>生成对抗网络</strong>。GAN提供了一个聪明的解决方案，将数据生成这一无监督的学习问题建模为有监督的问题。鉴别器模型学习从生成器模型产生的虚假样本中区分出真实数据。两个模型同时训练，进行最大最小博弈。但是训练不稳定，多样性较少。</li>
+<li><strong>变量自动编码器</strong>。VAE通过最大化证据下限（ELBO），不明确地优化了数据的对数可能性。但是依赖于surrogate loss。</li>
+<li><strong>基于流的生成模型</strong>。基于流的生成模型是由一连串的可逆变换构建的。与其他两种不同，该模型明确地学习了数据分布，因此损失函数只是负对数似然。需要使用专门的架构来构建可逆变换。</li>
+<li><em><strong>扩散模型</strong></em>是受非平衡热力学的启发。它们定义一个扩散步骤的马尔可夫链，逐渐向数据添加随机噪声，然后学习逆扩散过程，从噪声中构建所需的数据样本。与VAE或流动模型不同，扩散模型是用固定的程序学习的，而且隐变量具有高维度（与原始数据相同）。</li>
+</ol>
+<p>现有的生成模型可以根据如何表示概率分布分为以下两类：</p>
+<ol>
+<li><strong>基于似然的模型</strong>，通过（近似）最大似然直接学习分布的概率密度（或质量）函数。典型的基于似然的模型包括自回归模型，归一化流模型, 基于能量的模型 (EBM)和变分自动编码器 (VAE)。</li>
+<li><strong>隐式生成模型</strong>，其概率分布由其采样过程的模型隐式表示。最突出的例子是生成对抗网络（GAN），其中来自数据分布的新样本是通过用神经网络转换随机高斯向量来合成的。</li>
+</ol>
+<h2 id="2-条件概率公式"><a href="#2-条件概率公式" class="headerlink" title="2 条件概率公式"></a>2 条件概率公式</h2><p>条件概率的一般形式：<br>$$<br>P(A,B,C)&#x3D;P(C\mid A,B)P(A,B)&#x3D;P(C\mid A,B)P(B\mid A)P(A) \<br>P(B,C\mid A)&#x3D;P(B\mid A)P(C\mid A,B)<br>$$<br>隐马尔可夫模型(HMM,Hidden Markov Model)的两个基本假设：</p>
+<ul>
+<li><p>齐次马尔可夫性假设：隐藏的马尔可夫链在时刻$t$的状态只和$t -1$的状态有关。<br>$$<br>P\left(i_t \mid i_{t-1}, o_{t-1}, \ldots, i_1, o_1\right)&#x3D;P\left(i_t \mid i_{t-1}\right), \quad t&#x3D;1,2, \ldots, T<br>$$</p>
+</li>
+<li><p>观测独立性假设：观测只和当前时刻的状态有关。<br>$$<br>P\left(o_t \mid i_T, o_T, i_{T-1}, o_{T-1}, \ldots, i_{t+1}, o_{t+1}, i_t, i_{t-1}, o_{t-1}, \ldots, i_1, o_1\right)&#x3D;P\left(o_t \mid i_t\right)<br>$$</p>
+</li>
+</ul>
+<p>基于马尔科夫链的关系$A → B → C$,则有：</p>
+<p>$$<br>P(A,B,C)&#x3D;P(C\mid A,B)P(A,B)&#x3D;P(C\mid B)P(B\mid A)P(A)$,$P(B,C\mid A)&#x3D;P(B\mid A)P(C\mid B)<br>$$</p>
+<h2 id="3-高斯分布的KL散度"><a href="#3-高斯分布的KL散度" class="headerlink" title="3 高斯分布的KL散度"></a>3 高斯分布的KL散度</h2><p>KL散度（Kullback Leibler Divergence）在概率模型中一般用于度量两个概率密度函数之间的“距离”，其定义为</p>
+<p>$K L[p(X) | q(X)]&#x3D;E_{x \sim p(X)}\left[\log \left(\frac{p(X)}{q(X)}\right)\right]&#x3D; \begin{cases}\sum_{x \in X}\left[p(x) \log \left(\frac{p(x)}{q(x)}\right)\right], &amp; x \sim p(X) \text { 为离散概率分布 } \ \int_{i \in X} p(x) \log \left(\frac{p(x)}{q(x)}\right) d x, &amp; x \sim p(X) \text { 为连续概率分布 }\end{cases}$</p>
+<p>由Jensen’s Inequality可以证明KL散度必然大于等于0。注意到KL散度的定义中$ KL[p(X)||q(X)]$关于 $p(X)$、 $q(X)$ 并不对称，即 $KL[p(X) ||q(X)]$ , $KL[q(X)||p(X)]$ ，因此KL散度不满足对称性，显然不是数学意义上的“度量”。 在优化问题中，常用 $p(X)$ 表示真实分布，$q (X)$ 表示一个用于拟合 $p (X)$ 的近似分布，在这种情形下，通常称 $KL[p (X) ||q (X)]$ 为前向KL散度（forward Kullback Leibler Divergence）， 而称$ KL[q (X) ||p (X)] $为反向KL散度（reverse Kullback Leibler Divergence）。</p>
+<h2 id="4-重参数化"><a href="#4-重参数化" class="headerlink" title="4 重参数化"></a>4 重参数化</h2><p>重参数化又称参数重整化，若希望从某个高斯分布$N(\mu,\sigma^2)$分布中随机采样一个样本，这个过程是无法反传梯度的。可以先从标准分布$N(0,1)$采样出$z$，再得到$ \sigma * z + \mu$。这样做的好处是将随机性转移到了 $z$ 这个常量上，而 $\sigma$ 和 $\mu$ 则当做仿射变换网络的一部分，整个“采样”过程依旧梯度可导。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">reparametrize</span>(<span class="hljs-params">mean,lg_var</span>): <span class="hljs-comment"># 采样器方法：对方差(lg_var)进行还原，并从高斯分布中采样，将采样数值映射到编码器输出的数据分布中。</span><br>        std = lg_var.exp().sqrt()<br>        <span class="hljs-comment"># torch.FloatTensor(std.size())的作用是，生成一个与std形状一样的张量。然后，调用该张量的normal_()方法，系统会对该张量中的每个元素在标准高斯空间（均值为0、方差为1）中进行采样。</span><br>        eps = torch.FloatTensor(std.size()).normal_() <span class="hljs-comment"># 随机张量方法normal_()，完成高斯空间的采样过程。</span><br>        <span class="hljs-keyword">return</span> eps.mul(std).add_(mean)<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="5-VAE"><a href="#5-VAE" class="headerlink" title="5 VAE"></a>5 VAE</h2><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202212291411568.png" srcset="/img/loading.gif" lazyload alt="3"></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202301101803455.png" srcset="/img/loading.gif" lazyload alt="image-20230110180316330"></p>
+<p>VAE整体可以看作encoder-decoder架构。对于一个输入的向量 $x$，它通常包含了许多冗余信息，我们要还原生成这个向量 $x$ 实际上更需要的是描述其本质信息的隐变量 $z$，因此使 用了encoder-decoder架构来设计网络，用encoder来进行 $x → z$ 的编码过程，而decoder则用于 $z → x$ 的生成过程。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202212291725940.png" srcset="/img/loading.gif" lazyload alt="4"></p>
+<p>首先考虑网络的decoder，即生成部分。如图所示，由于目标概率密度函数 $p_r (X)$ 通常并不是一个上凸函数，它通常会具有多个极值，所以我们可以考虑使用多个高斯分布相叠 加去拟合概率密度函数 $p_r (X)$，这个思想就是高斯混合模型的思想。我们将隐变量 $Z$ 看作 一个随机变量，我们对隐变量 $Z$ 的每个可能的取值，都将其放入一个映射来得到一个均值 $\mu (z)$ 和一个标准差 $\sigma(z)$，此时我们便可以从这个隐变量的每个取值分别获得一个高斯分布 $N(\mu(z),\sigma^2(z))$ 。 因此，如果我们假设 $Z$ 服从某个概率分布，那么对于概率密度函数 $p (X)$， 我们有$p(x)&#x3D;\int_z p(z) p(x\mid z) dz$，其中 $p (X\mid Z)$ 服从高斯分布 $X|Z ∼ N(\mu(Z),\sigma^2(Z))$ ，这个 $p (X \mid Z)$ 便是 $z → x$的结构，即VAE中的decoder结构。如果我们将 $Z$ 的概率分布确定下来为某个已知分布，那么概率密度函数 $p (X)$ 就仅与映射 $\mu$ 和 $\sigma$ 相关了。在VAE中我们假设 $Z$ 的概率分布为 $Z ∼ N (0, 1)$。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202301081600608.png" srcset="/img/loading.gif" lazyload alt="image-20230108160041443"></p>
+<p>现在再来尝试推导出网络的encoder结构。由于我们的目标是在训练集上最大化$\sum_x \log p(x)$，我们假设 $Z \mid X$上有一个任意的概率密度函数 $q(Z \mid X)$，对 $ \log p(X)$ 做变换我们有：</p>
+<p>$$<br>\begin{aligned} \log p(x) &amp; &#x3D;\log p(x) \cdot \int_z q(z \mid x) d z \ &amp; &#x3D;\int_z q(z \mid x) \log p(x) d z \ &amp; &#x3D;\int_z q(z \mid x) \log \left(\frac{p(z, x)}{p(z \mid x)}\right) d z \ &amp; &#x3D;\int_z q(z \mid x) \log \left(\frac{p(z, x)}{q(z \mid x)} \cdot \frac{q(z \mid x)}{p(z \mid x)}\right) d z \ &amp; &#x3D;\int_z q(z \mid x) \log \left(\frac{p(z, x)}{q(z \mid x)}\right) d z+\int_z q(z \mid x) \log \left(\frac{q(z \mid x)}{p(z \mid x)}\right) d z \ &amp; &#x3D;\int_z q(z \mid x) \log \left(\frac{p(x \mid z) p(z)}{q(z \mid x)}\right) d z+K L[q(z \mid x) | p(z \mid x)]\end{aligned}<br>$$<br>我们记$L_b&#x3D;\int_z q(z \mid x) \log \left(\frac{p(x \mid z) p(z)}{q(z \mid x)}\right) dz$，则我们便得到了如下式子（即置信下界）：<br>$$<br>\log p(x)&#x3D;L_b+K L[q(z \mid x) | p(z \mid x)] \geq L_b<br>$$<br>此时很直观地，我们似乎只要调整 $p(x\mid z)$ 和 $q(z\mid x)$ 来将 $L_b$ 最大化即可将 $ \log p (x)$ 最大化了， 但由于 $p(z\mid x)$ 与 $p (x\mid z)$ 相关联，在调整 $p (x\mid z)$ 的时候可能会导致 $KL [q (z\mid x) ||p (z\mid x)]$ 下降从而导致 $\log p (x)$ 反而下降，而由于 $q (z\mid x)$ 为任意概率密度函数，它变化时并不会导致 $p$ 变化，因此我们考虑先把 $p (x\mid z)$ 固定（此时 $\log p (x) &#x3D; log(\int_z p(z)p(x|z)dz)$ 也会固定），仅调整 $q (z\mid x)$。显然，当 $q (z\mid x)$ 逼近$p(z\mid x)$时，$KL[q (z\mid x) ||p (z\mid x)]$ 会趋近于0，此时$\log p (x)$ 会趋近于 $L_b$，因此，在将 $q (z\mid x)$ 逼近 $p (z\mid x)$ 的情况下再通过调整 $p (z\mid x)$ 来增大 $L_b$ 时， $\log p (x)$ 也会随之增大。而对于 $L_b$，我们有<br>$$<br>\begin{aligned}<br>L_b &amp; &#x3D;\int_z q(z \mid x) \log \left(\frac{p(x \mid z) p(z)}{q(z \mid x)}\right) d z \<br>&amp; &#x3D;\int_z q(z \mid x) \log p(x \mid z) d z+\int_z q(z \mid x) \log \left(\frac{p(z)}{q(z \mid x)}\right) d z \<br>&amp; &#x3D;E_{Z \sim q(z \mid x)}[\log p(x \mid z)]-K L[q(z \mid x) | p(z)]<br>\end{aligned}<br>$$<br>注：随机变量的数学期望，设X是随机变量，$Y$是$X$的函数，$Y&#x3D;g(X)$($g$为连续函数).如果$X$是连续型随机变量,其概率密度为$f(x)$。若积分$\int_{-\infty}^{+ \infty} xf(x)dx$绝对收敛，则称X的数学期望存在，且$E(x)&#x3D; \int_{-\infty}^{+ \infty} x f(x)d x$。</p>
+<p>此时我们便得到了我们最终所需的表达式：<br>$$<br>\log p(x)&#x3D;E_{Z \sim q(z \mid x)}[\log p(x \mid z)]-K L[q(z \mid x) | p(z)]+K L[q(z \mid x) | p(z \mid x)]<br>$$</p>
+<p>我们来逐个解析表达式中的三项内容：</p>
+<ol>
+<li><p>$K L[q(z \mid x) | p(z \mid x)]$</p>
+<p>在上文中我们已经提到，我们要最大化$\log p(x)$就会希望极小化$K L[q(z \mid x) | p(z \mid x)]$，这便意味着我们希望使用$q(z\mid x)$去逼近$p(z\mid x)$，即使用$q(z\mid x)$来作为网络的encoder部分。</p>
+</li>
+<li><p>$K L[q(z \mid x) | p(z)]$</p>
+<p>要最大化$\log p(x)$，则$K L[q(z \mid x) | p(z)]$就需要尽可能的小，而这项KL散度的直观含义也很明显，即我们希望$x → z$的过程中产生的$Z$的分布$q(z\mid x)$尽可能与我们假设的$Z$的分布$p(z)$相似，当 $q (z\mid x)$ 逼近$p(z)$时，$KL[q (z\mid x) ||p (z)]$ 会趋近于0，因此encoder部分还需要满足其概率分布为预先假设的 $Z$ 的分布。</p>
+</li>
+<li><p>$E_{Z \sim q(z \mid x)}[\log p(x \mid z)]$</p>
+<p>最大化$\log p(x)$显然就会需要最大化期望$E_{Z \sim q(z \mid x)}[\log p(x \mid z)]$，而最大化这项期望的直观含义也很明显，我们希望在给定encoder输出$q(z\mid x)$的情况下，decoder的输出$\log p(x\mid z)$的均值尽可能的大，即 $p(x\mid z)$的均值尽可能的大。</p>
+</li>
+</ol>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202301081705862.png" srcset="/img/loading.gif" lazyload alt="image-20230108170538668"></p>
+<p>现在对照网络结构图，显然 $q (z\mid x)$ 对应的即为网络encoder部分，它需要去近似 $Z$ 的分布，而根据我们对 $p (z)$ 的假设， $q (z|x)$ 将会趋近于一个标准正态分布，此时对 $q (z|x)$ 进行采样便可以得到 $z$，并传入decoder部分。网络的decoder部分则为最开始所说的 $p (x|z)$，即 $X|Z ∼N(\mu (<em>Z</em>) , \sigma^2 (Z))$ ，用于使用高斯分布的输出去近似数据分布。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202301081717121.png" srcset="/img/loading.gif" lazyload alt="image-20230108171747070"></p>
+<p>对于多层VAE及其置信下界，同理我们可以写成：<br>$$<br>\begin{aligned}<br>\log p(x) &amp; &#x3D;\log p(x) \cdot \iint q(z_1,z_2 \mid x) d z_1 d z_2 \<br>&amp; &#x3D;\iint q(z_1,z_2 \mid x) \log p(x) d z_1 d z_2 \<br>&amp; &#x3D;\iint q(z_1,z_2 \mid x) \log \left(\frac{p(z_1,z_2, x)}{p(z_1,z_2 \mid x)}\right) d z_1 d z_2 \<br>&amp; &#x3D;\iint q(z_1,z_2 \mid x) \log \left(\frac{p(z_1,z_2, x)}{q(z_1,z_2 \mid x)} \cdot \frac{q(z_1,z_2 \mid x)}{p(z_1,z_2 \mid x)}\right) d z_1 d z_2 \<br>&amp; &#x3D;\iint q(z_1,z_2 \mid x) \log \left(\frac{p(z_1,z_2, x)}{q(z_1,z_2 \mid x)}\right) d z_1 d z_2 +\iint q(z_1,z_2 \mid x) \log \left(\frac{q(z_1,z_2 \mid x)}{p(z_1,z_2 \mid x)}\right) d z_1 d z_2 \<br>&amp;(&#x3D;\iint q(z_1 \mid x) q(z_2 \mid z_1,x) \log \left(\frac{p(x \mid z_1,z_2) p(z_1 \mid z_2) p(z_2)}{q(z_1 \mid x) q(z_2 \mid z_1,x)}\right) d z_1 d z_2 + \iint q(z_1 \mid x) q(z_2 \mid z_1,x) \log \left(\frac{q(z_1 \mid x) q(z_2 \mid z_1,x))}{p(z_1,z_2 \mid x)}\right) d z_1 d z_2) \<br>&amp;(&#x3D;\iint q(z_1 \mid x) q(z_2 \mid z_1) \log \left(\frac{p(x \mid z_1) p(z_1 \mid z_2) p(z_2)}{q(z_1 \mid x) q(z_2 \mid z_1)}\right) d z_1 d z_2+\iint q(z_1 \mid x) q(z_2 \mid z_1) \log \left(\frac{q(z_1 \mid x) q(z_2 \mid z_1))}{p(z_1,z_2 \mid x)}\right) d z_1 d z_2)\end{aligned}<br>$$</p>
+<p>记 $L_b&#x3D;\iint q(z_1,z_2 \mid x) \log \left(\frac{p(z_1,z_2, x)}{q(z_1,z_2 \mid x)}\right) d z_1 d z_2$，则有</p>
+<p>$$<br>\begin{aligned}\log p(x)&#x3D;L_b+K L[q(z_1,z_2 \mid x) | p(z_1,z_2 \mid x)] \geq L_b\end{aligned}<br>$$</p>
+<p>$$<br>\begin{aligned}<br>L_b &amp; &#x3D;\iint q(z_1,z_2 \mid x) \log \left(\frac{p(z_1,z_2, x)}{q(z_1,z_2 \mid x)}\right) d z_1 d z_2 \<br>&amp; (&#x3D;\iint_z q(z_1,z_2 \mid x) \log p(x \mid z_1,z_2) d z_1 d z_2+\iint_z q(z_1,z_2 \mid x) \log \left(\frac{p(z_1,z_2)}{q(z_1,z_2 \mid x)}\right) d z_1 d z_2) \<br>&amp; &#x3D;\iint_z q(z_1,z_2 \mid x) \log \left(\frac{p(x\mid z_1,z_2)p(z_1\mid z_2)p(z_2)}{q(z_1\mid x)q(z_2\mid z_1,x)}\right) \<br>&amp; &#x3D;\iint_z q(z_1,z_2 \mid x) \log \left(\frac{p(x\mid z_1)p(z_1\mid z_2)p(z_2)}{q(z_1\mid x)q(z_2\mid z_1)}\right) \<br>&amp; &#x3D;\iint_z q(z_1,z_2 \mid x) \log [p(x\mid z_1)-\log q(z_1\mid x)+\log p(z_1\mid z_2)-\log q(z_2\mid z_1)+\log p(z_2)] \<br>&amp; &#x3D;E_{Z\sim q(z_1,z_2\mid x)}[\log p(x\mid z_1)-\log q(z_1\mid x)+\log p(z_1\mid z_2)-\log q(z_2\mid z_1)+\log p(z_2)]<br>\end{aligned}<br>$$</p>
+<h2 id="6-Diffusion-Models"><a href="#6-Diffusion-Models" class="headerlink" title="6 Diffusion Models"></a>6 Diffusion Models</h2><p>去噪扩散模型的想法已经存在了很长时间。它起源于扩散图概念，这是机器学习文献中使用的降维技术之一。它还借鉴了概率方法的概念，例如已在许多应用中使用的马尔可夫链。一些基于扩散的生成模型被提出，其下有类似的想法，包括扩散概率模型（DPM,Sohl-Dickstein et al., 2015），噪声条件得分网络（NCSN,Yang &amp; Ermon, 2019），以及去噪扩散概率模型（DDPM,Ho et al. 2020）。</p>
+<p>去噪扩散建模是一个两步过程：正向扩散过程和反向过程或重建。在前向扩散过程中，依次引入高斯噪声，直到数据全部变成噪声。反向&#x2F;重建过程通过使用神经网络模型学习条件概率密度来消除噪声。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202301082344026.png" srcset="/img/loading.gif" lazyload alt="image-20230108233246080"></p>
+<p>概率扩散模型的原理与VAE在某些地方有些相似。扩散模型如图所示，其中$X_0$是目标分布，$X_t$是噪声分布，扩散过程就是从$X_0$到$X_t$的过程，也就是熵增的过程从有序变无序，其实现原理是在源输入$X_0$上一步步的不断增加噪声，直到最后成为一个图像上各项独立分布，转变为随机噪声$X_T$；而生成过程则是一个相反的过程，其目的就是从随机噪声$X_T$分布中推理出目标分布，即还原源输入分布$X_0$，然后从目标分布中采样样本就能生成新的图像，也称为逆扩散过程。其中 $q(x_t\mid x_{t-1})$是扩散过程中的条件概率分布，$p(x_{t-1}\mid x_t)$是逆扩散过程的条件概率分布，在推理过程中只需要用到逆扩散过程的。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202301101626644.png" srcset="/img/loading.gif" lazyload alt="image-20230108234452995"></p>
+<p>如图来表示扩散模型的过程，扩散过程就如第一行所示。对$t&#x3D;0$规则的图像不断加噪，到$t&#x3D; \frac {T}{2} $时我们可以看到图片已经模糊了，当$t&#x3D;T$时我们发现图像已经变成了各项等与高斯分布。同理第二行展示的是逆扩散过程；第三行展示的就是在相同时刻扩散过程与逆扩散过程之间的差，即漂移量。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202301101626441.png" srcset="/img/loading.gif" lazyload alt="image-20230110162629294"></p>
+<h3 id="正向过程"><a href="#正向过程" class="headerlink" title="正向过程"></a>正向过程</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202301101652086.png" srcset="/img/loading.gif" lazyload alt="image-20230110165159976"></p>
+<p>我们先来讨论扩散过程，即正向过程。扩散过程实质上就是多次迭代向数据分布 $X_0 ∼ q(x)$ 中添加高斯噪声的一个马尔可夫链过程，因此，与 VAE 中的编码器不同，它不需要训练。从初始数据点开始，我们为$T$连续步骤添加高斯噪声，并获得一组噪声样本。时间$t$ 的概率密度预测仅取决于时间$t-1$的直接前驱，该噪声的标准差是以固定值$\beta_t$而确定的，均值是以固定值$\beta_t$和当前$t$时刻的数据$x_t$决定的。这个过程是固定的，且服从分布，因此，条件概率密度以及整个过程的完整分布可以计算如下：<br>$$<br>q\left(X_t \mid X_{t-1}\right)&#x3D;N\left(X_t ; \sqrt{1-\beta_t} X_{t-1}, \beta_t I\right) \quad q\left(X_{1: T} \mid X_0\right)&#x3D;\prod_{t&#x3D;1}^T q\left(X_t \mid X_{t-1}\right)<br>$$<br>其中${\beta_t \in (0,1)}{_{t&#x3D;1}^T}$ ，它是一个超参数，其值可以在整个过程中取为常数，也可以在连续的步骤中逐渐改变，且$\beta_t$的值是越来越大的。对于微分参数值分配，可以存在可用于对行为建模的函数范围（例如，sigmoid、tanh、linear等），$I$ 为单位矩阵。由于这个过程是确定的由于这个过程是确定的，因此任意时刻的分布 $q\left(X_t\right)$ 完全可以由 $X_0$ 及 $\beta_1,\beta_2,\cdots,\beta_t$ 确定，且随着$t$的不断增大，最终数据分布$x_T$变成了一个各项独立的高斯分布。</p>
+<p>上述推导足以预测连续状态，但是，如果我们想在任何给定时间间隔$t$采样而不经过所有中间步骤，因此允许有效实现，那么我们可以重新制定进行推导，对 $X_t|X_{t-1}$，显然我们有<br>$$<br>\frac{X_t|X_{t-1}-\sqrt{1-\beta_t}X_{t-1}}{\sqrt{\beta_tI}}\sim N\left(0,I\right)<br>$$<br>设一系列 $\left{Z\sim N\left(0,I\right)\right}$ 以及设 $\alpha_t&#x3D;1-\beta_t,\ \bar{\alpha}<em>t&#x3D;\prod\limits</em>{i&#x3D;1}^t\alpha_i$，基于前置参数重整化的知识此时我们可以从上式得到<br>$$<br>X_t|X_{t-1}&#x3D;\sqrt{\alpha_t}X_{t-1}+\sqrt{1-\alpha_t}Z_{t-1}<br>$$<br>将上式中的 $X_{t-1}$ 替换为条件分布 $X_{t-1}|X_{t-2}$，则<br>$$<br>\begin{aligned}<br>X_t|X_{t-1}|X_{t-2}&amp;&#x3D;\sqrt{\alpha_t}\left(X_{t-1}|X_{t-2}\right)+\sqrt{1-\alpha_t}Z_{t-1}\<br>X_t|X_{t-1},X_{t-2}&amp;&#x3D;\sqrt{\alpha_t}\left(\sqrt{\alpha_{t-1}}X_{t-2}+\sqrt{1-\alpha_{t-1}}Z_{t-2}\right)+\sqrt{1-\alpha_t}Z_{t-1}\<br>X_t|X_{t-1},X_{t-2}&amp;&#x3D;\sqrt{\alpha_t\alpha_{t-1}}X_{t-2}+\sqrt{\alpha_t-\alpha_t\alpha_{t-1}}Z_{t-2}+\sqrt{1-\alpha_t}Z_{t-1}\<br>X_t|X_{t-1},X_{t-2}&amp;&#x3D;\sqrt{\alpha_t\alpha_{t-1}}X_{t-2}+\sqrt{1-\alpha_t\alpha_{t-1}}Z_{t-1,t-2}\<br>\end{aligned}<br>$$<br>注意：两个正态分布$X \sim N(\mu_1, \sigma_1)$和$Y \sim N(\mu_2,\sigma_2)$的叠加后的分布$aX +bY$的均值为$a\mu_1+ b\mu_2$，方差为$a^2\sigma_1^2+b^2\sigma_2^2$。所以$\sqrt{\alpha_t-\alpha_t\alpha_{t-1}}Z_{t-2}+\sqrt{1-\alpha_t}Z_{t-1}$只是两个方差不一样，两方差求和开根号可以写成$\sqrt{\alpha_t-\alpha_t\alpha_{t-1}}Z_{t-2}$，这样就可以重参数化成只含一个随机变量 $Z$ 构成的$\sqrt{1-\alpha_t\alpha_{t-1}}Z$的形式。</p>
+<p>以此类推，最终我们可以得到<br>$$<br>X_t|X_{t-1},\cdots,X_0&#x3D;\sqrt{\bar{\alpha}<em>t}X_0+\sqrt{1-\bar{\alpha}<em>t}Z</em>{t-1,t-2,\cdots,0}<br>$$<br>即我们有<br>$$<br>q\left(X_t|X</em>{0:\left(t-1\right)}\right)&#x3D;N\left(X_t;\sqrt{\bar{\alpha}_t}X_0,\left(1-\bar{\alpha}_t\right)I\right)<br>$$<br>由于 $N\left(X_t;\sqrt{\bar{\alpha}<em>t}X_0,\left(1-\bar{\alpha}<em>t\right)I\right)$ 仅与 $X_0$ 有关，因此我们有<br>$$<br>q\left(X_t|X</em>{0}\right)&#x3D;N\left(X_t;\sqrt{\bar{\alpha}<em>t}X_0,\left(1-\bar{\alpha}<em>t\right)I\right)<br>$$<br>且有<br>$$<br>q\left(X_t|X</em>{t-1}\right)&#x3D;q\left(X_t|X</em>{0:\left(t-1\right)}\right)&#x3D;q\left(X_t|X</em>{0}\right)<br>$$<br>显然，当 $\bar{\alpha}_t\to0$ 时，此时必然也有$(1-\bar{\alpha}<em>t) \to 1 $， $q\left(X_t|X_0\right)$ 趋近于服从标准正态分布。通常情况下，当样本变得更加随机时，可以尝试更大的更新步骤，在DDPM原文中，作者将 $\left{\beta_t\right}</em>{t&#x3D;1}^{T}$ 设置为了线性增加的序列，即 $\beta_1&lt;\beta_2&lt;\cdots&lt;\beta_T$,$\bar{\alpha}_1\gt\bar{\alpha}_2\gt\cdots \gt \bar{\alpha}_T$。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202301102343130.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>到这里我们就理解完了扩散模型的前向过程，这里我们可以将扩散模型的前向过程与VAE做一下对比，首先在VAE中从$X$到$Z$的过程并不是一个无参的过程，我们是通过一个后验网络预测出来的，其次$X$也并不是与$Z$无关。在扩散模型中$X_t$已经是一个各项独立的高斯正态分布。第二点区别是在VAE中$X$和$Z$的维度不一定是一样的，但是在扩散模型中，$X_0,X_1,\cdots,X_t$他们的维度始终是一致的。diffusion model和其他模型最大的区别是它的latent code(z)和原图是同尺寸大小的，当然最近也有基于压缩的latent diffusion model。</p>
+<h3 id="重构过程"><a href="#重构过程" class="headerlink" title="重构过程"></a>重构过程</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202301101652170.png" srcset="/img/loading.gif" lazyload alt="image-20230110165226030"></p>
+<p>接下来我们讨论逆扩散过程，也称反向过程或重构过程。逆向过程需要在给定系统当前状态的情况下，在较早的时间步估计概率密度，通俗理解就是要从高斯分布中恢复原始数据，这意味着在$t&#x3D;T$时估计$q(X_{t-1} \mid X_t)$ ，从而从各向同性高斯噪声生成数据样本，在[文献](Feller, William. “On the theory of stochastic processes, with particular reference to applications.” Proceedings of the [First] Berkeley Symposium on Mathematical Statistics and Probability. University of California Press, 1949.)中证明了如果 $q(X_t|X_{t−1})$ 满足高斯分布且 $\beta_t$ 足够小，$q(X_{t-1} \mid X_t)$仍然是一个高斯分布。</p>
+<p>然而与前向过程不同，从当前状态估计先前状态需要所有先前梯度的知识，如果没有可以预测此类估计的学习模型，我们无法简单推断$q(X_{t-1} \mid X_t)$，因此我们使用深度学习模型（参数为 $\theta$ ，目前主流是U-Net+attention的结构），该模型去预测这样的一个逆向的分布 $p_\theta$（类似VAE），并且根据学习的权重$\theta$和时间$t$的当前状态来估计$p_\theta(X_{t-1}\mid X_t)$:<br>$$<br>p_{\theta}(X_{0:T})&#x3D;p(X_T)\prod\limits_{t&#x3D;1}^{T}p_{\theta}\left(X_{t-1}|X_t\right)<br>$$</p>
+<p>$$<br>p_\theta\left(X_{t-1} \mid X_t\right)&#x3D;\mathcal{N}\left(X_{t-1} ; \mu_\theta\left(X_t, t\right), \Sigma_\theta\left(X_t, t\right)\right)<br>$$</p>
+<p>虽然我们无法得到逆转后的分布$q(X_{t-1} \mid X_t)$，但是如果知道$X_t$和$X_0$，是可以通过贝叶斯公式得到$X_{t-1}$为：<br>$$<br>q\left(X_{t-1}\mid X_t,X_{0}\right)&#x3D;N(X_{t-1};\tilde \mu(X_t,X_0),\tilde \beta_t I)<br>$$<br>推导过程如下：<br>$$<br>\begin{aligned}<br>q\left(X_{t-1}|X_t,X_0\right)&amp;&#x3D;\frac{q\left(X_t,X_{t-1},X_0\right)}{q\left(X_t,X_0\right)}\<br>&amp;&#x3D;\frac{q\left(X_t|X_{t-1},X_0\right)q\left(X_{t-1},X_0\right)}{q\left(X_t,X_0\right)}\<br>&amp;&#x3D;\frac{q\left(X_t|X_{t-1}\right)q\left(X_{t-1},X_0\right)}{q\left(X_t,X_0\right)} (马尔科夫假设)\<br>&amp;&#x3D;q\left(X_t|X_{t-1}\right)\frac{q\left(X_{t-1}|X_0\right)}{q\left(X_t|X_0\right)}(巧妙地将逆向过程全部变回了前向)\<br>&amp;&#x3D;\frac{1}{\sqrt{2\pi}\cdot\frac{\sigma_{q\left(X_t|X_{t-1}\right)}\sigma_{q\left(X_{t-1}|X_0\right)}}{\sigma_{q\left(X_t|X_0\right)}}}\cdot e^{-\frac{1}{2}\left[\frac{\left(X_t-\sqrt{\alpha_t}X_{t-1}\right)^2}{\beta_t}+\frac{\left(X_{t-1}-\sqrt{\bar{\alpha}<em>{t-1}}X_0\right)^2}{1-\bar{\alpha}</em>{t-1}}-\frac{\left(X_t-\sqrt{\bar{\alpha}<em>t}X_0\right)^2}{1-\bar{\alpha}<em>t}\right]}\<br>&amp;&#x3D;\frac{1}{\sqrt{2\pi}\cdot\frac{\sigma</em>{q\left(X_t|X</em>{t-1}\right)}\sigma_{q\left(X_{t-1}|X_0\right)}}{\sigma_{q\left(X_t|X_0\right)}}}\cdot e^{-\frac{1}{2}\left[\left(\frac{\alpha_t}{\beta_t}+\frac{1}{1-\bar{\alpha}<em>{t-1}}\right)X</em>{t-1}^2-\left(\frac{2\sqrt{\alpha_t}}{\beta_t}X_t+\frac{2\sqrt{\bar{\alpha}<em>{t-1}}}{1-\bar{\alpha}</em>{t-1}}X_0\right)X_{t-1}+C\left(X_t,X_0\right)\right]}\<br>&amp;&#x3D;\frac{1}{\sqrt{2\pi}\cdot\frac{\sigma_{q\left(X_t|X_{t-1}\right)}\sigma_{q\left(X_{t-1}|X_0\right)}}{\sigma_{q\left(X_t|X_0\right)}}}\cdot e^{-\frac{1}{2}\left[\frac{\left(X_{t-1}-\frac{\frac{\sqrt{\alpha_t}}{\beta_t}X_t+\frac{\sqrt{\bar{\alpha}<em>{t-1}}}{1-\bar{\alpha}</em>{t-1}}X_0}{\frac{\alpha_t}{\beta_t}+\frac{1}{1-\bar{\alpha}<em>{t-1}}}\right)^2}{\frac{1}{\frac{\alpha_t}{\beta_t}+\frac{1}{1-\bar{\alpha}</em>{t-1}}}}\right]+C^{\prime}\left(X_t,X_0\right)}\<br>&amp;&#x3D;\frac{1}{\sqrt{2\pi}\cdot\frac{\sigma_{q\left(X_t|X_{t-1}\right)}\sigma_{q\left(X_{t-1}|X_0\right)}}{\sigma_{q\left(X_t|X_0\right)}}}e^{C^{\prime}\left(X_t,X_0\right)}\cdot e^{-\frac{1}{2}\left[\frac{\left(X_{t-1}-\left(\frac{\sqrt{\alpha_t}\left(1-\bar{\alpha}_{t-1}\right)}{1-\bar{\alpha}_t}X_t+\frac{\sqrt{\bar{\alpha}<em>t-1}\cdot\beta_t}{1-\bar{\alpha}<em>t}X_0\right)\right)^2}{\frac{1-\bar{\alpha}</em>{t-1}}{1-\bar{\alpha}<em>t}\beta_t}\right]}\<br>&amp;&#x3D;\frac{1}{\sqrt{2\pi}\cdot\sigma^{\prime}}\cdot e^{-\frac{1}{2}\left[\frac{\left(X</em>{t-1}-\left(\frac{\sqrt{\alpha_t}\left(1-\bar{\alpha}</em>{t-1}\right)}{1-\bar{\alpha}_t}X_t+\frac{\sqrt{\bar{\alpha}_t-1}\cdot\beta_t}{1-\bar{\alpha}<em>t}X_0\right)\right)^2}{\frac{1-\bar{\alpha}</em>{t-1}}{1-\bar{\alpha}_t}\beta_t}\right]}\<br>\end{aligned}<br>$$<br>注意：高斯分布的概率密度函数是$f(x)&#x3D;\frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$, $ax^2+bx&#x3D;a(x+{\frac {b}{2a}})^2+C$（韦达定理）</p>
+<p>其中， $C\left(X_t,X_0\right)$ 和 $C^{\prime}\left(X_t,X_0\right)$ 均为某个仅与 $X_0$ 和 $X_t$ 有关的函数, $\sigma^{\prime}&#x3D;\frac{\sigma_{q\left(X_t|X_{t-1}\right)}\cdot\sigma_{q\left(X_{t-1}|X_0\right)}}{\sigma_{q\left(X_t|X_0\right)}\cdot e^{C^{\prime}\left(X_t,X_0\right)}}$。显然，对均值为 $\tilde{\mu}<em>t\left(X_t,X_0\right)&#x3D;\frac{\sqrt{\alpha_t}\left(1-\bar{\alpha}</em>{t-1}\right)}{1-\bar{\alpha}_t}X_t+\frac{\sqrt{\bar{\alpha}_t-1}\cdot\beta_t}{1-\bar{\alpha}<em>t}X_0$，并且由前面的式子以及参数重整化的知识我们可以进一步得到：<br>$$<br>q\left(X_t|X</em>{0}\right)&#x3D;N\left(X_t;\sqrt{\bar{\alpha}_t}X_0,\left(1-\bar{\alpha}_t\right)I\right) \to X_0&#x3D;\frac{1}{\sqrt{\bar {\alpha}_t}}-\sqrt{1-\bar{\alpha}_t}\bar Z_t<br>$$<br>将$X_0$的表达式带入到均值的式子里，可以重新给出该分布的均值表达式，也就是说，在给定$X_0$的条件下，后验条件高斯分布的均值计算只与$X_t$和$Z_t$有关，$Z_t$是$t$时刻的随机正态分布变量，源自参数重整化。进一步我们可以将均值 $\tilde{\mu}_t\left(X_t,X_0\right)$ 记为：<br>$$<br>\tilde{\mu}<em>t\left(X_t,X_0\right)&#x3D;\frac{\sqrt{\alpha_t}\left(1-\bar{\alpha}</em>{t-1}\right)}{1-\bar{\alpha}_t}X_t+\frac{\sqrt{\bar{\alpha}_t-1}\cdot\beta_t}{1-\bar{\alpha}_t}(\frac{1}{\sqrt{\bar {\alpha}_t}}-\sqrt{1-\bar{\alpha}_t}Z_t)&#x3D;\frac {1}{\sqrt{\alpha_t}}(X_t-\frac{\beta_t}{\sqrt{1-\bar{\alpha_t}}}\bar Z_t)<br>$$<br>其中高斯分布$\bar Z_t$为深度模型所预测的噪声（用于去噪），可看做为$Z_\theta\left(X_t, t\right)$ ，即得到：<br>$$<br>\mu_\theta\left(X_t, t\right)&#x3D;\frac{1}{\sqrt{a_t}}\left(x_t-\frac{\beta_t}{\sqrt{1-\bar{a}_t}} Z_\theta\left(X_t, t\right)\right)<br>$$<br>由均值 $\tilde{\mu}_t\left(X_t,X_0\right)$ ，方差为 $\tilde{\beta}<em>tI&#x3D;\frac{1-\bar{\alpha}</em>{t-1}}{1-\bar{\alpha}<em>t}\beta_t\cdot I$ 的正态分布 $N\left(X</em>{t-1};\tilde{\mu}<em>t\left(X_t,X_0\right),\tilde{\beta}<em>tI\right)$，我们有<br>$$<br>\frac{q\left(X</em>{t-1}|X_t,X_0\right)}{f</em>{N\left(\tilde{\mu}_t\left(X_t,X_0\right),\tilde{\beta}<em>tI\right)}\left(X</em>{t-1}\right)}&#x3D;\frac{\sqrt{\tilde{\beta}_t}}{\sigma^{\prime}}<br>$$</p>
+<p>而由于<br>$$<br>\int q\left(X_{t-1}|X_t,X_0\right)dx&#x3D;1&#x3D;\int f_{N\left(\tilde{\mu}<em>t\left(X_t,X_0\right),\tilde{\beta}<em>tI\right)}\left(X</em>{t-1}\right)dx<br>$$<br>因此显然有 $\sigma^{\prime}&#x3D;\sqrt{\tilde{\beta}<em>t}$，即后验分布 $q\left(X</em>{t-1}|X_t,X_0\right)$ 服从正态分布 $N\left(X</em>{t-1};\tilde{\mu}_t\left(X_t,X_0\right),\tilde{\beta}_tI\right)$。</p>
+<p>这样一来，DDPM的每一步的推断可以总结为：</p>
+<p><strong>1) 每个时间步通过$X_t$ 和 $t$ 来预测高斯噪声$Z_\theta\left(X_t, t\right)$，随后根据$\mu_\theta\left(X_t, t\right)&#x3D;\frac{1}{\sqrt{a_t}}\left(x_t-\frac{\beta_t}{\sqrt{1-\bar{a}_t}} Z_\theta\left(X_t, t\right)\right)$得到均值 $\mu_\theta\left(X_t, t\right)$ .</strong></p>
+<p><strong>2) 得到方差 $\Sigma_\theta\left(x_t, t\right)$ ，DDPM中使用untrained$\Sigma_\theta\left(x_t, t\right)&#x3D;\tilde \beta_t$，且认为 $\tilde \beta_t &#x3D; \beta_t$ 和 $\tilde \beta_t &#x3D; \frac {1-\bar \alpha_{t-1}}{1-\bar \alpha_t} \cdot \beta_t$结果近似，在GLIDE中则是根据网络预测trainable方差 $\Sigma_\theta\left(x_t, t\right)$ .</strong></p>
+<p><strong>3) 根据$p_\theta\left(X_{t-1} \mid X_t\right)&#x3D;\mathcal{N}\left(X_{t-1} ; \mu_\theta\left(X_t, t\right), \Sigma_\theta\left(X_t, t\right)\right)$得到 $q(X_{t−1}\mid X_t)$ ，利用重参数得到$X_t−1$ .</strong></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202301102309638.png" srcset="/img/loading.gif" lazyload alt="由浅入深了解Diffusion Model"></p>
+<h3 id="Diffusion训练"><a href="#Diffusion训练" class="headerlink" title="Diffusion训练"></a>Diffusion训练</h3><p>现在我们假设逆扩散过程也是一个马尔可夫链过程，且有<br>$$<br>p_{\theta}\left(X_{0:\left(T-1\right)}|X_T\right)&#x3D;\prod\limits_{t&#x3D;1}^{T}p_{\theta}\left(X_{t-1}|X_t\right)<br>$$<br>通过对真实数据分布下，最大化模型预测分布的对数似然，即优化在 $X_0 \sim q(X_0)$ 下的 $p_\theta (X_0)$ 交叉熵：<br>$$<br>\mathcal{L}&#x3D;\mathbb{E}_{q\left(X_0\right)}\left[-\log p_\theta\left(X_0\right)\right]<br>$$<br>这里我们同前面VAE一样也是计算目标数据分布的似然函数，即使用变分下限(VLB)来优化负对数似然。与前面不同的是我们这里求的是负对数的似然函数，在此基础上加上了KL散度，因为KL散度是大于等于零的，于是式子就构成了负对数似然的上界，上界越小，负对数似然也就越小，其对数似然就越大，这里也就要求KL散度越小越好，其代表的含义也就是扩散和重构过程越相似越好。</p>
+<p>那么对于其负对数似然函数，我们有<br>$$<br>\begin{aligned}<br>-\log p_{\theta}\left(X_0\right)&amp;\leq -\log p_{\theta}\left(X_0\right)+KL\left[q\left(X_{1:T}|X_{0}\right)||p_{\theta}\left(X_{1:T}|X_{0}\right)\right]\<br>&amp;&#x3D;-\log p_{\theta}\left(X_0\right)+E_{x_{1:T}\sim q\left(X_{1:T}|X_{0}\right)}\left[\log\left(\frac{q\left(X_{1:T}|X_{0}\right)}{p_{\theta}\left(X_{1:T}|X_{0}\right)}\right)\right]\<br>&amp;&#x3D;-\log p_{\theta}\left(X_0\right)+E_{x_{1:T}\sim q\left(X_{1:T}|X_{0}\right)}\left[\log\left(\frac{q\left(X_{1:T}|X_{0}\right)}{\frac{p_{\theta}\left(X_{0:T}\right)}{p_{\theta}\left(X_{0}\right)}}\right)\right]\<br>&amp;&#x3D;-\log p_{\theta}\left(X_0\right)+E_{x_{1:T}\sim q\left(X_{1:T}|X_{0}\right)}\left[\log\left(\frac{q\left(X_{1:T}|X_{0}\right)}{p_{\theta}\left(X_{0:T}\right)}\right)\right]+E_{x_{1:T}\sim q\left(X_{1:T}|X_{0}\right)}\left[\log\left(p_{\theta}\left(X_{0}\right)\right)\right]\<br>&amp;&#x3D;E_{x_{1:T}\sim q\left(X_{1:T}|X_{0}\right)}\left[\log\left(\frac{q\left(X_{1:T}|X_{0}\right)}{p_{\theta}\left(X_{0:T}\right)}\right)\right]\<br>\end{aligned}<br>$$</p>
+<p>前面我们讲到所谓生成模型需要通过<strong>增大原始数据和反向过程最终生成数据的相似度来优化模型</strong>。在机器学习中，我们计算该相似度参考的是 <strong>交叉熵（ cross entropy ）</strong> 。关于交叉熵，学术上给出的定义是”用于度量两个概率分布间的差异性信息”。换句话讲，交叉熵越小，模型生成的图片就越和原始图片接近。但是，在大多数情况下，交叉熵是很难或者无法通过计算得出的，所以我们一般会通过优化一个更简单的表达式，达到同样的效果。Diffusion模型借鉴了VAE模型的优化思路，将 <strong>variational lower bound</strong> （ <strong>VLB</strong> ，又称 <strong>ELBO</strong> ）替代cross entropy来作为最大优化目标。</p>
+<p>将对数似然转换为交叉熵，我们有<br>$$<br>\begin{aligned}<br>E_{x\sim q\left(X_{0}\right)}\left[-\log p_{\theta}\left(X_0\right)\right]&amp;\leq E_{x\sim q\left(X_{0}\right)}\left{E_{x_{1:T}\sim q\left(X_{1:T}|X_{0}\right)}\left[\log\left(\frac{q\left(X_{1:T}|X_{0}\right)}{p_{\theta}\left(X_{0:T}\right)}\right)\right]\right}\<br>&amp;&#x3D;E_{x\sim q\left(X_{0}\right)}\left{\int q\left(X_{1:T}|X_{0}\right)\log\left(\frac{q\left(X_{1:T}|X_{0}\right)}{p_{\theta}\left(X_{0:T}\right)}\right)dX_{1:T}\right}\<br>&amp;&#x3D;\int q\left(X_{0}\right)\int q\left(X_{1:T}|X_{0}\right)\log\left(\frac{q\left(X_{1:T}|X_{0}\right)}{p_{\theta}\left(X_{0:T}\right)}\right)dX_{1:T}dX_{0}\<br>&amp;&#x3D;\int q\left(X_{0:T}\right)\log\left(\frac{q\left(X_{1:T}|X_{0}\right)}{p_{\theta}\left(X_{0:T}\right)}\right)dX_{0:T}\<br>&amp;&#x3D;E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[\log\left(\frac{q\left(X_{1:T}|X_{0}\right)}{p_{\theta}\left(X_{0:T}\right)}\right)\right]\<br>\end{aligned}<br>$$</p>
+<p>设 $L_{VLB}&#x3D;E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[\log\left(\frac{q\left(X_{1:T}|X_{0}\right)}{p_{\theta}\left(X_{0:T}\right)}\right)\right]$，那么要最小化交叉熵 $E_{x\sim q\left(X_{0}\right)}\left[-\log p_{\theta}\left(X_0\right)\right]$ 可以考虑直接最小化 $L_{VLB}$。继续推导 $L_{VLB}$，我们有<br>$$<br>\begin{aligned}<br>L_{VLB}&amp;&#x3D;E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[\log\left(\frac{q\left(X_{1:T}|X_{0}\right)}{p_{\theta}\left(X_{0:T}\right)}\right)\right]\<br>&amp;&#x3D;E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[\log\left(\frac{\prod\limits_{t&#x3D;1}^{T}q\left(X_t|X_{t-1}\right)}{p_{\theta}\left(X_T\right)\prod\limits_{t&#x3D;1}^{T}p_{\theta}\left(X_{t-1}|X_t\right)}\right)\right]\<br>&amp;&#x3D;E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[-\log p_{\theta}\left(X_T\right)+\sum\limits_{t&#x3D;1}^{T}\log\left(\frac{q\left(X_t|X_{t-1}\right)}{p_{\theta}\left(X_{t-1}|X_t\right)}\right)\right]\<br>&amp;&#x3D;E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[-\log p_{\theta}\left(X_T\right)+\log\left(\frac{q\left(X_1|X_0\right)}{p_{\theta}\left(X_0|X_1\right)}\right)+\sum\limits_{t&#x3D;2}^{T}\log\left(\frac{q\left(X_t|X_{t-1},X_0\right)}{p_{\theta}\left(X_{t-1}|X_t\right)}\right)\right]\<br>&amp;&#x3D;E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[-\log p_{\theta}\left(X_T\right)+\log\left(\frac{q\left(X_1|X_0\right)}{p_{\theta}\left(X_0|X_1\right)}\right)+\sum\limits_{t&#x3D;2}^{T}\log\left(\frac{q\left(X_t,X_{t-1},X_0\right)}{p_{\theta}\left(X_{t-1}|X_t\right)\cdot q\left(X_{t-1},X_0\right)}\right)\right]\<br>&amp;&#x3D;E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[-\log p_{\theta}\left(X_T\right)+\log\left(\frac{q\left(X_1|X_0\right)}{p_{\theta}\left(X_0|X_1\right)}\right)+\sum\limits_{t&#x3D;2}^{T}\log\left(\frac{q\left(X_{t-1}|X_t,X_0\right)\cdot q\left(X_t,X_0\right)}{p_{\theta}\left(X_{t-1}|X_t\right)\cdot q\left(X_{t-1},X_0\right)}\right)\right]\<br>&amp;&#x3D;E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[-\log p_{\theta}\left(X_T\right)+\log\left(\frac{q\left(X_1|X_0\right)}{p_{\theta}\left(X_0|X_1\right)}\right)+\sum\limits_{t&#x3D;2}^{T}\log\left(\frac{q\left(X_{t-1}|X_t,X_0\right)}{p_{\theta}\left(X_{t-1}|X_t\right)}\cdot\frac{q\left(X_t|X_0\right)}{q\left(X_{t-1}|X_0\right)}\right)\right]\<br>&amp;&#x3D;E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[-\log p_{\theta}\left(X_T\right)+\log\left(\frac{q\left(X_1|X_0\right)}{p_{\theta}\left(X_0|X_1\right)}\right)+\sum\limits_{t&#x3D;2}^{T}\log\left(\frac{q\left(X_{t-1}|X_t,X_0\right)}{p_{\theta}\left(X_{t-1}|X_t\right)}\right)+\sum\limits_{t&#x3D;2}^{T}\log\left(\frac{q\left(X_t|X_0\right)}{q\left(X_{t-1}|X_0\right)}\right)\right]\<br>&amp;&#x3D;E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[-\log p_{\theta}\left(X_T\right)+\log\left(\frac{q\left(X_1|X_0\right)}{p_{\theta}\left(X_0|X_1\right)}\right)+\sum\limits_{t&#x3D;2}^{T}\log\left(\frac{q\left(X_{t-1}|X_t,X_0\right)}{p_{\theta}\left(X_{t-1}|X_t\right)}\right)+\log\left(\frac{q\left(X_t|X_0\right)}{q\left(X_{1}|X_0\right)}\right)\right]\<br>&amp;&#x3D;E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[-\log p_{\theta}\left(X_T\right)+\sum\limits_{t&#x3D;2}^{T}\log\left(\frac{q\left(X_{t-1}|X_t,X_0\right)}{p_{\theta}\left(X_{t-1}|X_t\right)}\right)+\log\left(\frac{q\left(X_T|X_0\right)}{p_{\theta}\left(X_0|X_1\right)}\right)\right]\<br>&amp;&#x3D;E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[\log\left(\frac{q\left(X_T|X_0\right)}{p_{\theta}\left(X_T\right)}\right)+\sum\limits_{t&#x3D;2}^{T}\log\left(\frac{q\left(X_{t-1}|X_t,X_0\right)}{p_{\theta}\left(X_{t-1}|X_t\right)}\right)-\log p_{\theta}\left(X_0|X_1\right)\right]\<br>&amp;&#x3D;E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[\log\left(\frac{q\left(X_T|X_0\right)}{p_{\theta}\left(X_T\right)}\right)\right]+\sum\limits_{t&#x3D;2}^{T}E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[\log\left(\frac{q\left(X_{t-1}|X_t,X_0\right)}{p_{\theta}\left(X_{t-1}|X_t\right)}\right)\right]-\log p_{\theta}\left(X_0|X_1\right)\<br>&amp;(&#x3D;\mathbb{E}<em>q[\underbrace{D</em>{\mathrm{KL}}\left(q\left(\mathbf{x}<em>T \mid \mathbf{x}<em>0\right) | p_\theta\left(\mathbf{x}<em>T\right)\right)}</em>{L_T}+\sum</em>{t&#x3D;2}^T \underbrace{D</em>{\mathrm{KL}}\left(q\left(\mathbf{x}<em>{t-1} \mid \mathbf{x}<em>t, \mathbf{x}<em>0\right) | p_\theta\left(\mathbf{x}</em>{t-1} \mid \mathbf{x}<em>t\right)\right)}</em>{L</em>{t-1}}-\underbrace{\log p_\theta\left(\mathbf{x}<em>0 \mid \mathbf{x}<em>1\right)}</em>{L_0}]) \<br>\end{aligned}<br>$$<br>注意：$q(X_t\mid X</em>{t-1})&#x3D;q(X_t\mid X</em>{t-1},X_0)&#x3D;\frac{q(X_t,X_{t-1},X_0)}{q(X_{t-1},X_0)}&#x3D;\frac{q(X_{t-1}\mid X_t,X_0)q(X_t\mid X_0)q(X_0)}{q(X_{t-1},X_0)}&#x3D;\frac{q(X_{t-1}\mid X_t,X_0)q(X_t\mid X_0)}{q(X_{t-1}\mid X_0)}$</p>
+<h4 id="版本一"><a href="#版本一" class="headerlink" title="版本一"></a>版本一</h4><p>经过上面的推导，可以得到熵与多个KL散度的累加，具体可见[文献](Sohl-Dickstein, Jascha, et al. “Deep unsupervised learning using nonequilibrium thermodynamics.” International Conference on Machine Learning. PMLR, 2015.)，我们试图理解一下公式推导到最后一步后各项式子的含义：</p>
+<ul>
+<li><p>$L_T$这一项中是不含参的，首先是其中的分母$q(X_t\mid X_0)$是仅由$\beta_t$计算而来的没有可学习参数，而$p_{\theta}(X_T)$完全是一个各项独立的高斯分布，所以$L_T$ 可以当做常量忽略。</p>
+</li>
+<li><p>$L_{t-1}$代表的是扩散过程中后验条件概率分布与逆扩散过程条件概率分布之间的KL散度。<br>$$<br>L_t&#x3D;D_{K L}\left(q\left(X_t \mid X_{t+1}, X_0\right) | p_\theta\left(X_t \mid X_{t+1}\right)\right) ; \quad 1 \leq t \leq T-1<br>$$<br>根据<a href="https://link.zhihu.com/?target=https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence%23Multivariate_normal_distributions">多元高斯分布的KL散度求解</a>：<br>$$<br>L_t&#x3D;\mathbb{E}_q\left[\frac{1}{2\left|\Sigma_\theta\left(X_t, t\right)\right|_2^2}\left|\tilde{\mu}_t\left(X_t, X_0\right)-\mu_\theta\left(X_t, t\right)\right|^2\right]+C,<br>$$<br>其中$C$是与模型参数 $\theta$ 无关的常量。将前面$\tilde{\mu}_t\left(X_t,X_0\right)&#x3D;\frac {1}{\sqrt{\alpha_t}}(X_t-\frac{\beta_t}{\sqrt{1-\bar{\alpha_t}}}\bar Z_t)$和$\mu_\theta\left(X_t, t\right)&#x3D;\frac{1}{\sqrt{a_t}}\left(x_t-\frac{\beta_t}{\sqrt{1-\bar{a}<em>t}} Z_\theta\left(X_t, t\right)\right)$带入上式可以得到：<br>$$<br>\begin{aligned}<br>L_t&#x3D;&amp; \mathbb{E}</em>{x_0, \bar{z}_t}\left[\frac{1}{2\left|\Sigma_\theta\left(x_t, t\right)\right|_2^2}\left|\tilde{\mu}<em>t\left(x_t, x_0\right)-\mu_\theta\left(x_t, t\right)\right|^2\right] \<br>&#x3D;&amp; \mathbb{E}</em>{x_0, \bar{z}_t}\left[\frac{1}{2\left|\Sigma_\theta\left(x_t, t\right)\right|_2^2}\left|\frac{1}{\sqrt{\bar{a}_t}}\left(x_t-\frac{\beta_t}{\sqrt{1-\bar{a}_t}} \bar{z}_t\right)-\frac{1}{\sqrt{\bar{a}_t}}\left(x_t-\frac{\beta_t}{\sqrt{1-\bar{a}<em>t}} z_\theta\left(x_t, t\right)\right)\right|^2\right] \<br>&#x3D;&amp; \mathbb{E}</em>{x_0, \bar{z}_t}\left[\frac{\beta_t^2}{2 \alpha_t\left(1-\bar{\alpha}_t\left|\Sigma_\theta\right|_2^2\right)}\left|\bar{z}<em>t-z_\theta\left(x_t, t\right)\right|^2\right] \<br>&#x3D;&amp; \mathbb{E}</em>{x_0, \bar{z}_t}\left[\frac{\beta_t^2}{2 \alpha_t\left(1-\bar{\alpha}_t\left|\Sigma_\theta\right|_2^2\right)}\left|\bar{z}_t-z_\theta\left(\sqrt{\bar{\alpha}_t} x_0+\sqrt{1-\bar{\alpha}_t} \bar{z}_t, t\right)\right|^2\right]<br>\end{aligned}<br>$$<br>从上式可以看出，diffusion训练的核心就是取学习高斯噪声$\bar z_t,z_\theta$之间的MSE。</p>
+</li>
+<li><p>将第三项$L_0$加入到第二项$L_{t-1}$中，两项合并就变成了$\sum_{t&#x3D;1}^T {D_{<em>{KL}}\left(q\left(\mathbf{x}</em>{t-1} \mid \mathbf{x}_t, \mathbf{x}<em>0\right) | p_\theta\left(\mathbf{x}</em>{t-1} \mid \mathbf{x}_t\right)\right)}$。</p>
+<p>$L_0&#x3D;-\log p_{\theta}\left(X_0|X_1\right)$相当于最后一步的熵，DDPM论文指出，从 $X_1$ 到 $X_0$ 应该是一个离散化过程，因为图像RGB值都是离散化的。DDPM针对$p_{\theta}\left(X_0|X_1\right)$构建了一个离散化的分段积分累乘，有点类似基于分类目标的自回归(auto-regressive)学习。</p>
+</li>
+</ul>
+<p>DDPM将loss进一步简化为：<br>$$<br>L_t^{\text {simple }}&#x3D;\mathbb{E}_{x_0, \bar{z}_t}\left[\left|\bar{z}_t-z_\theta\left(\sqrt{\overline{\alpha_t}} x_0+\sqrt{1-\bar{\alpha}_t} \bar{z}_t, t\right)\right|^2\right]<br>$$<br>正如之前提过的，DDPM并没有将模型预测的方差$\Sigma_\theta\left(x_t, t\right)$ 考虑到训练和推断中，而是通过untrained$\beta_t$ 或者$\tilde \beta_t$代替。他们发现 $\Sigma_\theta$ 可能导致训练的不稳定。</p>
+<p>训练过程可以看做：</p>
+<p><strong>1）获取输入 $X_0$，从 $1…T$ 随机采样一个 $t$ .</strong></p>
+<p><strong>2) 从标准高斯分布采样一个噪声 $\bar z_t \sim N(0,I)$ .</strong></p>
+<p><strong>3) 最小化$|\bar z_t - z_\theta(\sqrt{\overline{\alpha_t}} x_0+\sqrt{1-\bar{\alpha}_t} \bar{z}_t, t)|^2$ .</strong></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/blog/202301102304193.png" srcset="/img/loading.gif" lazyload alt="DDPM提供的训练/测试（采样）流程图"></p>
+<h4 id="版本二"><a href="#版本二" class="headerlink" title="版本二"></a>版本二</h4><p>最后一步的 $E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[\log\left(\frac{q\left(X_T|X_0\right)}{p_{\theta}\left(X_T\right)}\right)\right]$ 以及 $T-1$ 项 $E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[\log\left(\frac{q\left(X_{t-1}|X_t,X_0\right)}{p_{\theta}\left(X_{t-1}|X_t\right)}\right)\right]$ 它们并不是真正意义的KL散度，因此记<br>$$<br>\begin{aligned}<br>L_{VLB}&amp;&#x3D;L_T+L_{t-1}+…+L_0\<br>L_T&amp;&#x3D;E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[\log\left(\frac{q\left(X_T|X_0\right)}{p_{\theta}\left(X_T\right)}\right)\right]\<br>L_{t-1}&amp;&#x3D;E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[\log\left(\frac{q\left(X_{t-1}|X_t,X_0\right)}{p_{\theta}\left(X_{t-1}|X_t\right)}\right)\right]\<br>L_0&amp;&#x3D;-\log p_{\theta}\left(X_0|X_1\right)\<br>\end{aligned}<br>$$</p>
+<p>由于最后一步的 $E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[\log\left(\frac{q\left(X_T|X_0\right)}{p_{\theta}\left(X_T\right)}\right)\right]$ 以及 $T-1$ 项 $E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[\log\left(\frac{q\left(X_{t-1}|X_t,X_0\right)}{p_{\theta}\left(X_{t-1}|X_t\right)}\right)\right]$ 并不是KL散度，因此我们并不能确定其优化下界是否存在，以及存在的话下界为多少，因此在讨论损失函数优化目标之前我们还需要先证明一下各个 $L_i,i&#x3D;0,1,\cdots,T$ 的值的取值范围。<br>$$<br>\begin{aligned}<br>L_T&amp;&#x3D;E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[\log\left(\frac{q\left(X_T|X_0\right)}{p_{\theta}\left(X_T\right)}\right)\right]\<br>&amp;&#x3D;E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[\log\left(\frac{q\left(X_T|X_{0:\left(T-1\right)}\right)}{p_{\theta}\left(X_T\right)}\right)\right]\<br>&amp;&#x3D;E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[\log\left(\frac{q\left(X_{0:T}\right)}{p_{\theta}\left(X_T\right)}\right)+\log\left(\frac{1}{q\left(X_{0:\left(T-1\right)}\right)}\right)\right]\<br>&amp;&#x3D;KL\left[q\left(X_{0:T}\right)||p_{\theta}\left(X_T\right)\right]+E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[\log\left(\frac{1}{q\left(X_{0:\left(T-1\right)}\right)}\right)\right]\<br>\end{aligned}<br>$$<br>由于 $KL\left[q\left(X_{0:T}\right)||p_{\theta}\left(X_T\right)\right]$ 和 $E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[\log\left(\frac{1}{q\left(X_{0:\left(T-1\right)}\right)}\right)\right]$ 均大于等于0，因此 $L_T$ 大于等于0；又由于当 $q\left(X_T|X_0\right)&#x3D;p_{\theta}\left(X_T\right)$ 时 $L_T$ 等于0，因此 $L_T$ 的优化下界存在且为0。<br>$$<br>\begin{aligned}<br>L_{t-1}&amp;&#x3D;E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[\log\left(\frac{q\left(X_{t-1}|X_t,X_0\right)}{p_{\theta}\left(X_{t-1}|X_t\right)}\right)\right]\<br>&amp;&#x3D;E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[\log\left(\frac{q\left(X_{0:T}\right)}{p_{\theta}\left(X_{t-1}|X_t\right)}\right)+\log\left(\frac{q\left(X_{t-1}|X_t,X_0\right)}{q\left(X_{0:T}\right)}\right)\right]\<br>&amp;&#x3D;KL\left[q\left(X_{0:T}\right)||p_{\theta}\left(X_{t-1}|X_t\right)\right]+E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[\log\left(\frac{q\left(X_t|X_{t-1}\right)q\left(X_{t-1}|X_0\right)}{q\left(X_{0:T}\right)q\left(X_t|X_0\right)}\right)\right]\<br>&amp;&#x3D;KL\left[q\left(X_{0:T}\right)||p_{\theta}\left(X_{t-1}|X_t\right)\right]+E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[\log\left(\frac{q\left(X_t|X_{0:\left(t-1\right)}\right)q\left(X_{t-1}|X_{0:\left(t-2\right)}\right)}{q\left(X_{0:T}\right)q\left(X_t|X_{0:\left(t-1\right)}\right)}\right)\right]\<br>&amp;&#x3D;KL\left[q\left(X_{0:T}\right)||p_{\theta}\left(X_{t-1}|X_t\right)\right]+E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[\log\left(\frac{q\left(X_{0:\left(t-1\right)}\right)}{q\left(X_{0:T}\right)q\left(X_{0:\left(t-2\right)}\right)}\right)\right]\<br>&amp;&#x3D;KL\left[q\left(X_{0:T}\right)||p_{\theta}\left(X_{t-1}|X_t\right)\right]+E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[\log\left(\frac{1}{q\left(X_{t:T}|X_{0:\left(t-1\right)}\right)q\left(X_{0:\left(t-2\right)}\right)}\right)\right]\<br>\end{aligned}<br>$$<br>由于 $KL\left[q\left(X_{0:T}\right)||p_{\theta}\left(X_{t-1}|X_t\right)\right]$ 和 $E_{x_{0:T}\sim q\left(X_{0:T}\right)}\left[\log\left(\frac{1}{q\left(X_{t:T}|X_{0:\left(t-1\right)}\right)q\left(X_{0:\left(t-2\right)}\right)}\right)\right]$ 均大于等于0，因此 $L_{t-1}$ 大于等于0；又由于当 $q\left(X_{t-1}|X_t,X_0\right)&#x3D;p_{\theta}\left(X_{t-1}|X_t\right)$ 时 $L_{t-1}$ 等于0，因此 $L_{t-1}$ 的优化下界存在且为0。<br>显然 $L_0$ 的优化下界存在且为0。<br>因此，根据上述推导过程，要最小化 $L_{VLB}$ 我们就需要最小化各个 $L_i,i&#x3D;0,1,\cdots,T$，且希望模型逆扩散过程的每一步都去拟合对应的扩散过程的反向概率分布，通过对扩散过程的学习来得到逆扩散的分布，即让 $p_{\theta}\left(X_T\right)$ 学习 $q\left(X_T|X_0\right)$，让 $p_{\theta}\left(X_{t-1}|X_t\right)$ 学习 $q\left(X_{t-1}|X_t,X_0\right)$，最后让 $p_{\theta}\left(X_0|X_1\right)$ 逼近1。而又由于我们证明了 $q\left(X_T|X_0\right)$ 近似服从标准正态分布，且每一步 $q\left(X_{t-1}|X_t,X_0\right)$ 均服从正态分布，因此逆扩散过程的每一步也服从正态分布，因此我们可以假设<br>$$<br>p_{\theta}\left(X_T\right)&#x3D;N\left(X_T;0,1\right)\qquad p_{\theta}\left(X_{t-1}|X_t\right)&#x3D;N\left(X_{t-1};\mu_{\theta}\left(X_t,t\right),\Sigma_{\theta}\left(X_t,t\right)\right)<br>$$</p>
+<p>来对生成过程进行拟合。至此，网络结构设计和损失函数设计均推导完毕。</p>
+<h2 id="7-结语"><a href="#7-结语" class="headerlink" title="7 结语"></a>7 结语</h2><p>最后的最后，在Diffusion爆火的如今，有人也曾发出过疑问，它为什么可以做到如此的大红大紫，甚至风头开始超过GAN网络？</p>
+<p>Diffusion的优势突出，劣势也很明显；它的诸多领域仍是空白，它的前方还是一片未知。为什么却有那么多的人在孜孜不倦地对它进行研究呢？</p>
+<p>兴许，<strong>马毅教授</strong>的一番话，可以给我们提供一种解答。</p>
+<blockquote>
+<p>“diffusion process的有效性以及很快取代GAN也充分说明了一个简单道理：</p>
+<p><strong>几行简单正确的数学推导，可以比近十年的大规模调试超参调试网络结构有效得多。</strong>“</p>
+</blockquote>
+<p>或许，这就是Diffusion模型的魅力吧。</p>
+<p>还有几句话也说的很有道理。</p>
+<blockquote>
+<p>“其实与GAN一样，Diffusion也无法解决学习一般高维空间分布问题的计算复杂性问题 – 这类问题基本都是NP hard。</p>
+<p>成功的实例固然让人高兴，但要避免过度夸大这些方法就可以解决整个这一类问题。</p>
+<p>最后才是重点的重点：如果大家希望自己将来的成功更可把控，就好好学习几本好书把数学计算原理弄清楚；如果大家只希望靠碰运气成功，就可以继续调超参数、玩数据集。即便好不容易调出一个结果，相信我，这样的结果也很快会被最终正确的方法取代、淘汰，在历史上不留痕迹。而过了三百年，我们还会记得Laplace， 他的方法还无法被取代！”</p>
+</blockquote>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span>Jonathan Ho, Ajay Jain, and Pieter Abbeel. Denoising Diffusion Probabilistic Models. arXiv:2006.11239, 2020.
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span>Sohl-Dickstein J ,  Weiss E A ,  Maheswaranathan N , et al. Deep Unsupervised Learning using Nonequilibrium Thermodynamics[J]. JMLR.org, 2015.
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span>Alex Nichol &amp; Prafulla Dhariwal. “ Improved denoising diffusion probabilistic models” arxiv Preprint arxiv:2102.09672 (2021). [code]
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span>Ling Yang, Zhilong Zhang, Shenda Hong, Runsheng Xu, Yue Zhao, Yingxia Shao, Wentao Zhang, Ming-Hsuan Yang, and Bin Cui. Diffusion models: A comprehensive survey of methods and applications. arXiv preprint arXiv:2209.00796, 2022.
+<a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:5" class="footnote-text"><span>Ho, Jonathan, Ajay Jain, and Pieter Abbeel. “Denoising diffusion probabilistic models.” Advances in Neural Information Processing Systems 33 (2020): 6840-6851.
+<a href="#fnref:5" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:6" class="footnote-text"><span>Feller, William. “On the theory of stochastic processes, with particular reference to applications.” Proceedings of the [First] Berkeley Symposium on Mathematical Statistics and Probability. University of California Press, 1949.
+<a href="#fnref:6" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:7" class="footnote-text"><span>Sohl-Dickstein, Jascha, et al. “Deep unsupervised learning using nonequilibrium thermodynamics.” International Conference on Machine Learning. PMLR, 2015.
+<a href="#fnref:7" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:8" class="footnote-text"><span>Sha Yuan et al. A Roadmap for Big Model ，2022.
+<a href="#fnref:8" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:9" class="footnote-text"><span>Kingma D P, Welling M. Auto-encoding variational bayes[J]. arXiv preprint arXiv:1312.6114, 2013.
+<a href="#fnref:9" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:10" class="footnote-text"><span>邱锡鹏. 神经网络与深度学习. 机械工业出版社. <a target="_blank" rel="noopener" href="https://nndl.github.io/">https://nndl.github.io/</a>. 2020
+<a href="#fnref:10" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:11" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/fish233yeah/Notes-of-Generative-Models">fish233yeah&#x2F;Notes-of-Generative-Models:生成模型笔记</a>
+<a href="#fnref:11" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:12" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://lilianweng.github.io/posts/2021-07-11-diffusion-models/">What are Diffusion Models?</a>
+<a href="#fnref:12" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:13" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1tZ4y1L7gu">Hung-yi Lee. ML Lecture 18: Unsupervised Learning - Deep Generative Model (Part II).Youtube. 2016</a>
+<a href="#fnref:13" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:14" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1b541197HX">deep thoughts. Probabilistic Diffusion Model概率扩散模型理论与完整PyTorch代码详细解读. bilibili. 2022</a>
+<a href="#fnref:14" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:15" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/syKaAfDJd26wVznpMBqeYQ">AI绘画爆火背后：扩散模型原理及实现</a>
+<a href="#fnref:15" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:16" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/lvyufeng/denoising-diffusion-mindspore">code:Denoising Diffusion Probabilistic Model, in MindSpore</a>
+<a href="#fnref:16" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:17" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/525106459">由浅入深了解Diffusion Model</a>
+<a href="#fnref:17" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:18" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://towardsdatascience.com/what-are-stable-diffusion-models-and-why-are-they-a-step-forward-for-image-generation-aa1182801d46">What are Stable Diffusion Models and Why are they a Step Forward for Image Generation?</a>
+<a href="#fnref:18" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:19" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://towardsdatascience.com/diffusion-models-made-easy-8414298ce4da">Diffusion Models Made Easy</a>
+<a href="#fnref:19" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:20" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/536012286">diffusion model 最近在图像生成领域大红大紫，如何看待它的风头开始超过 GAN ？</a>
+<a href="#fnref:20" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:21" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/499206074">生成模型(四):扩散模型</a>
+<a href="#fnref:21" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:22" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/Diobld/article/details/125074846">重参数化技巧：高斯分布采样</a>
+<a href="#fnref:22" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:23" class="footnote-text"><span>.<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzk0MDQyNTY4Mw==&mid=2247484554&idx=1&sn=c2b1ef9f56bcc4216bcc8f53d9f5d518&chksm=c2e0ac36f5972520bd76eea4cddc038134878d012f2ff9b061a0d674c9acf4c000fd963eb231&key=26614fd2f02643a9116860d682776bb15c5be87a7b0fcbb15e6f6373ba11454fa6343b4a00aa20ec6428cf312b020e2a3655ae894ee9e20720382032fa7a9ca7a3b90423696d90e13ce8323d9f980a6d795781ab3d7fdd2835829992a5289436315bed15a6e16641299ec09766a6de44d61fd55af17f662d9375f3ec8e87a88e&ascene=1&uin=MjE0MDI5MjA2&devicetype=Windows+11+x64&version=6308011a&lang=zh_CN&exportkey=n_ChQIAhIQ32xFxgWlZsupfDf5eviNWRL0AQIE97dBBAEAAAAAAJm5I12vdBQAAAAOpnltbLcz9gKNyK89dVj09i30sfHhbPkDizIwIUOPSrwRkK+p96Pt0/O0kbUI3dPvKjb4tw7jISmNwSjjP84N4QlQ6bihVqcbP2sASwL6AHKFLOpItRdYpzv9aunBOT+Ea/BhoLoRq4cxhTwalCGjL12l4DraW8DAtD2IpzMtv5B7I/clVVj7g+8GbT7oJr6X8ywGUsI+rbCLwdG2WCEsqnWqHpdvHBuRtxzjBrwNVT5WzJVRBF5d4SF3fgP2Afdh0JFdie7m8sOZsdwptvwkoCxXd0yQw072wgfX0iI=&acctmode=0&pass_ticket=JJMG3REpmABMsQiRXmiwTwKI/WtU7goLJysrOyPALJSMGSO3DPKK0zN4iCHki9D2kHvnURosBA2E9dvOZJbTPg==&wx_header=1&fontgear=2">中文版扩散模型课程：第一单元</a>
+<a href="#fnref:23" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:24" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/372835186">工具人66号. 进阶详解KL散度. 知乎. 2022</a>
+<a href="#fnref:24" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/">#生成模型</a>
+      
+        <a href="/tags/%E6%A6%82%E7%8E%87%E6%A8%A1%E5%9E%8B/">#概率模型</a>
+      
+        <a href="/tags/VAE/">#VAE</a>
+      
+        <a href="/tags/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/">#扩散模型</a>
+      
+        <a href="/tags/DDPM%EF%BC%8C-Difussion-Model/">#DDPM， Difussion Model</a>
+      
+        <a href="/tags/%E9%87%8D%E5%8F%82%E6%95%B0%E5%8C%96/">#重参数化</a>
+      
+        <a href="/tags/KL%E6%95%A3%E5%BA%A6/">#KL散度</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>生成模型以及扩散模型原理推导</div>
+      <div>https://blog.baixf.tk/2023/01/12/Machine Learning/生成模型以及扩散模型原理推导/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年1月12日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/01/11/c++/C++%20%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%AC%94%E8%AE%B0/" title="C++ 基础知识笔记">
+                        <span class="hidden-mobile">C++ 基础知识笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

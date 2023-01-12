@@ -1,0 +1,819 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="学习数学建模常用模型及算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习常用模型及算法3.遗传算法">
+<meta property="og:url" content="https://blog.baixf.tk/2020/08/23/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/%E5%AD%A6%E4%B9%A0%E5%B8%B8%E7%94%A8%E6%A8%A1%E5%9E%8B%E5%8F%8A%E7%AE%97%E6%B3%953.%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="学习数学建模常用模型及算法">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/shujian.jpg">
+<meta property="article:published_time" content="2020-08-23T09:40:11.000Z">
+<meta property="article:modified_time" content="2022-06-20T09:42:49.959Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="数学建模">
+<meta property="article:tag" content="matlab">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/shujian.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>学习常用模型及算法3.遗传算法 - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/sjban.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="学习常用模型及算法3.遗传算法"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-08-23 09:40" pubdate>
+          2020年8月23日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          49 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">学习常用模型及算法3.遗传算法</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/d0YnPJ.jpg" srcset="/img/loading.gif" lazyload></p>
+<h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h3><p>遗传算法最初是借鉴了进化生物学中的一些现象而发展起来的，这些现象包括遗传, 突变, 自然选择(适者生存，优胜劣汰遗传机制) 以及杂交等。当然借鉴这些现象主要是因为这些现象的某些特性，而不仅仅是现象本身。所以理解这些现象的特性对于理解算法的思想是至关重要的。<br>在遗传算法中，问题域中的可能解被看作是种群的个体。对于一个最优化问题，一定数量的候选解（称为个体）的抽象表示（称为染色体）的种群向更好的解进化。传统上，解用二进制将个体编码成符号串形式（即0 和1 的串），但也可以用其他表示方法。进化从完全随机个体的种群开始，之后一代一代发生。在每一代中, 整个种群的适应度被评价，基于它们的适应度，从当前种群中随机地择优选择多个个体。通过杂交和突变产生新的生命种群，该种群在算法的下一次迭代中成为当前种群。从而不断得到更优的种群，同时搜索优化种群中的最优个体，求得满足要求的最优解。<br>选择可以使得种群在一定程度上淘汰一些较差的解，这样就减少了以后计算的消耗。交叉和变异，在一定程度上保留了本代种群的优良特性（也就是解的优化性），并且基于本代优良特性产生的下一代种群不至于会有很差的优化性，这样就减少了搜索的代价。<br>遗传算法可以认为是退火算法的更加复杂化，能够使用遗传算法的地方就能够使用退火算法。如果遗传算法的种群只有一个个体，并且去除算法中的选择和交叉，仅保留变异操作，那么这两个算法是非常类似的。正是因为遗传算法使用了种群这个机制，使得它可以并行操作，在同一时间内可以求解一定数量的最优个体。而退火算法在同一时间内只能优化一个方案。这也就是它们两者的区别。根据实际问题的需要，一般都是先选退火算法。</p>
+<h3 id="2-算法模型"><a href="#2-算法模型" class="headerlink" title="2.算法模型"></a>2.算法模型</h3><p>算法的主要步骤</p>
+<ol>
+<li>初始化: 初始化进化代数计数器（generation） t ←← 0（即初始值为0），最大进化代数（max_generation）TT。随机生成MM个个体作为初始群体P(t)P(t)（population）。其中MM就是种群大小（population_size），TT就是进化代数（max_generation）。</li>
+<li>个体评价：计算P(t)P(t) 中各个个体的适应度值（population_fitness）。适应度值是一个M×1M×1维的向量。每个维度对应每个个体的适应度值。</li>
+<li>选择运算：将选择算子（select）作用于群体。</li>
+<li>交叉运算：将交叉算子（crossover）作用于群体。</li>
+<li>变异运算：将变异算子（mutate）作用于群体，并通过以上运算得到下一代群体P(t+1)P(t+1)。</li>
+<li>终止条件：如果t≤Tt≤T，则t←t+1t←t+1并跳转到第2步；否则输出P(t)P(t)中的最优解。也就是没有迭代完最大的迭代次数，那么继续迭代，并且代际更新。否则，就结束</li>
+</ol>
+<h3 id="3-主要内容"><a href="#3-主要内容" class="headerlink" title="3.主要内容"></a>3.主要内容</h3><ul>
+<li><p>解空间和编码<br>编码是解的表达形式，解空间的表达依赖于编码形式。编码影响交叉和变异等运算，在一定程度上会影响算法的效率。编码的形式主要有：二进制编码，实数编码，符号编码，格雷编码。选得较多的有实数编码，计算简答， 而且便于理解。</p>
+</li>
+<li><p>适应度计算<br>适应度是算法进行淘汰的依据，也就是说，适应度一般都是非负的，通常由目标函数直接改造得到，比如目标函数的相反数，目标函数的倒数。适应度函数不应该太复杂，以免影响计算。</p>
+</li>
+<li><p>选择算子<br>主要的方法有轮盘赌（比例选择算子），两两竞争，排序竞争。使用较多的就是前两个了。选择主要的作用就是从父代中选择一些适应度高的个体遗传到后代中。而且这是一个随机选择，依概率选择，适应度高的被选择的可能性大，适应度低的个体被选择的可能性小。</p>
+</li>
+<li><p>交叉算子<br>交叉就是指两个相互配对的染色体（在实际中一般选择相邻的两个染色体）依据交叉概率，交换他们的部分基因，从而形成新个体。通俗来讲，就是一个个体与其相邻的个体依据某个概率交换部分元素，从而产生新个体的过程。这样的过程会保留交换之前的个体的优良特性，减少算法的计算开销。遗传算法的独特之处，不仅仅是遗传算法，模拟退火算法等的独特之处都是其产生新个体的方式。而交叉运算是遗传算法产生新个体的主要方法，所以交叉运算是遗传算法的关键之处。交叉主要有两种，单点交叉和两点交叉，两点交叉使用的较多。</p>
+</li>
+<li><p>变异算子<br>变异操作对种群中的个体的某些基因上的基因值作变动，模拟生物在繁殖过程中新产生的染色体中的基因会以一定的概率出错。通俗来讲，就是一个个体的随机选取的某些元素依据某种概率发生变化。变异运算是产生新个体的辅助方法，决定遗传算法的局部搜索能力， 保持种群多样性。交叉运算和变异运算的相互配合，共同完成对搜索空间的全局搜索和局部搜索。类型主要有基本位变异和换位变异。</p>
+</li>
+<li><p>程序实现<br>这是解决TSP问题的程序，主要用于演示<br>程序框架介绍：</p>
+</li>
+</ul>
+<ol>
+<li>清理工作空间，加载数据，画出底层画布</li>
+<li>计算各城市之间的距离矩阵（distance_matrix），若城市有CC个则矩阵应该是C×CC×C的。</li>
+<li>初始化变量。包括种群大小（population_size），最大代数（max_generation），变异概率（probability_mutate）。</li>
+<li>初始化一个矩阵，用于存储种群。这就是种群的数学表示。（population或population_matrix）</li>
+<li>迭代开始。</li>
+<li>评价准则。计算每个个体的适应度。在这个问题中，个体的适应度等于个体的目标函数的倒数。其中涉及到目标函数值向量（f_vector），适应度向量（population_fitness）。</li>
+<li>获取本代种群中适应度最高的那个个体，并且加到下一代中。</li>
+<li>选择操作。这里使用的是两两竞争。将种群中的个体随机打乱，生成两个随机序列，并依次比较这两个随机序列，选择相应位置上适应度较高的个体，可能会出现重复，即使出现重复但都是适应度较高的方案，经过交叉和变异，会生成不同的个体，对结果影响不大。</li>
+<li>交叉操作。取种群中的个体，两两相取。这里使用的是两点交叉，所以随机生成两个点，在这两个点之间进行交叉操作。而交叉的对象就是这两个同时取到的个体，交叉之前的是父代，交叉之后的是子代。</li>
+<li>变异操作。每个个体是依概率进行变异的，这就说明有的个体可能不会变异。 而变异的方式也是随机的，这就能较好的符合真实的自然现象。三种变异方式：随机的两个点进行交换（也就是单个个体随机选取两个元素进行交换），两个点之间的数据循环移动（包括左移位，右移位），两个带你之间的数据转置（这是使用概率较大的一种变异方式，约为0.5）。</li>
+</ol>
+<h3 id="4-例"><a href="#4-例" class="headerlink" title="4.例"></a>4.例</h3><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/dBEQaV.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/dBEwa6.png" srcset="/img/loading.gif" lazyload></p>
+<p>pop为初始化的种群<br>select选择  crossover交叉  mutate变异<br>第14行是为了将最好的解留在种群当中</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/dBEwa6.png" srcset="/img/loading.gif" lazyload></p>
+<p>size(pop, 1)求出pop的行数，即种群的个数<br>第12行可理解为：在1至popSize的整数之间任意挑选nselect次（可重复）之后组成的数组。<br>interp1为线性插值函数<br>I是我们选择的行数，即我们选择了哪些个体。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/dBEcMd.png" srcset="/img/loading.gif" lazyload></p>
+<p>InsertPoints决定了我们进行交叉操作的起点与终点。<br>具体交叉方式与前文所述类似。<br>待交叉结束后，将child1和child2插回children。</p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/dBE5i8.png" srcset="/img/loading.gif" lazyload></p>
+<p>当rand小于probmutation时，发生变异，变异情况有三种，1&#x2F;4的可能性swap，1&#x2F;4的可能性slide，1&#x2F;2的可能性flip。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs matlab"><span class="hljs-comment">%</span><br><span class="hljs-comment">% This is the main script to finds a (near) optimal solution to the Traveling</span><br><span class="hljs-comment">% Salesman Problem (TSP), by setting up a Simulated Annealing (SA) to search</span><br><span class="hljs-comment">% for the shortest route (least distance for the salesman to travel to each</span><br><span class="hljs-comment">% city exactly once and return to the starting city).</span><br><span class="hljs-comment">%</span><br><span class="hljs-comment">% Author: zhou lvwen       Email: zhou.lv.wen@gmail.com</span><br><span class="hljs-comment">% Release Date: November 12, 2012</span><br><span class="hljs-comment">%</span><br>clear;clc;<br>load china; <span class="hljs-comment">% geographic information</span><br>plotcities(province, border, city); <span class="hljs-comment">% draw the map of China</span><br>numberofcities = <span class="hljs-built_in">length</span>(city);      <span class="hljs-comment">% number of cities</span><br><span class="hljs-comment">% distance matrix: dis(i,j) is the distance between city i and j.</span><br>dis = distancematrix(city);<br>temperature = <span class="hljs-number">1000</span>;                 <span class="hljs-comment">% Initialize the temperature.</span><br>cooling_rate = <span class="hljs-number">0.94</span>;                <span class="hljs-comment">% cooling rate</span><br>iterations = <span class="hljs-number">1</span>;                     <span class="hljs-comment">% Initialize the iteration number.</span><br><span class="hljs-comment">% Initialize random number generator with &quot;seed&quot;.</span><br><span class="hljs-built_in">rand</span>(<span class="hljs-string">&#x27;seed&#x27;</span>,<span class="hljs-number">0</span>);<br><span class="hljs-comment">% Initialize the route by generate a sequence of random</span><br>route = randperm(numberofcities);<br><span class="hljs-comment">% This is objective function, the total distance for the routes.</span><br>previous_distance = totaldistance(route,dis);<br><span class="hljs-comment">% This is a flag used to cool the current temperature after 100 iterations</span><br>temperature_iterations = <span class="hljs-number">1</span>;<br><span class="hljs-comment">% This is a flag used to plot the current route after 200 iterations</span><br>plot_iterations = <span class="hljs-number">1</span>;<br><span class="hljs-comment">% plot the current route</span><br>plotroute(city, route, previous_distance, temperature);<br><span class="hljs-keyword">while</span> <span class="hljs-number">1.0</span> &lt; temperature<br>    <span class="hljs-comment">% generate randomly a neighbouring solution</span><br>    temp_route = perturb(route,<span class="hljs-string">&#x27;reverse&#x27;</span>);<br>    <span class="hljs-comment">% compute total distance of the temp_route</span><br>    current_distance = totaldistance(temp_route, dis);<br>    <span class="hljs-comment">% compute change of distance</span><br>    diff = current_distance - previous_distance;<br>    <span class="hljs-comment">% Metropolis Algorithm</span><br>    <span class="hljs-keyword">if</span> (diff &lt; <span class="hljs-number">0</span>) || (<span class="hljs-built_in">rand</span> &lt; <span class="hljs-built_in">exp</span>(-diff/(temperature)))<br>        route = temp_route;         <span class="hljs-comment">%accept new route</span><br>        previous_distance = current_distance;<br>        <span class="hljs-comment">% update iterations</span><br>        temperature_iterations = temperature_iterations + <span class="hljs-number">1</span>;<br>        plot_iterations = plot_iterations + <span class="hljs-number">1</span>;<br>        iterations = iterations + <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">end</span><br>    <span class="hljs-comment">% reduce the temperature every 100 iterations</span><br>    <span class="hljs-keyword">if</span> temperature_iterations &gt;= <span class="hljs-number">100</span><br>       temperature = cooling_rate*temperature;<br>       temperature_iterations = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">end</span><br>    <span class="hljs-comment">%  plot the current route every 200 iterations</span><br>    <span class="hljs-keyword">if</span> plot_iterations &gt;= <span class="hljs-number">200</span><br>       plotroute(city, route, previous_distance,temperature);<br>       plot_iterations = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">end</span><br><span class="hljs-keyword">end</span><br><span class="hljs-comment">% plot the final solution</span><br>plotroute(city, route, previous_distance,temperature);<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/d0YgiQ.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="5-算法的比较"><a href="#5-算法的比较" class="headerlink" title="5.算法的比较"></a>5.算法的比较</h3><p>基于TSP问题，我们最先想到的就是暴力搜索方法，就是遍历所有可能的情况，然后计算每种情况的代价，选择其中代价最小的一种情况作为最优解，这在理论上是一定能够找到最优解的，然后解空间非常大，遍历所有情况花费的时间可能是无穷的，这种情况下，实际上是不可能实现的。遗传算法区别于这种暴力搜索的一个关键就是，它在随机搜索解空间中新的解的时候，能够保留原解的优良特性，不至于本次搜索到了一个比较好的解，接下来会搜索很多比本次的解还要差的解，而暴力搜索就会产生这样的过程，即在搜索到一个较好的解之后，还可能会搜索很多比这个解要差很多的解。<br>那么在算法上这样搜索解的过程就是产生新个体的过程，或者可以叫做是邻解生成，在模拟退火中，主要通过扰动产生新解，这个过程类似于遗传算法的变异，而变异过程只是遗传算法产生新个体（新解）的辅助方法，主要方法是交叉。而选择又使得一些适应度较低的个体，也就是代价较大的解被抛弃掉，在算法中叫做淘汰。而不论是扰动，变异，还是交叉，选择，都达到了两个目的，一个是减少需要被搜索的解空间，另一个是保留较优的解。选择在减少需要被搜索的解空间上达到的效果最明显，而其他三种在保留较优的解上达到的效果比较明显。<br>所以，基于这些算法，我们改进暴力搜索的方向应该是加上限制，使得这些限制能够减少被搜索的解空间，并且能够在被搜索的解空间中尽可能多的保留较优的解。另外，受这些算法的启发，我们在优化一个比较暴力的方案时（或者说是一个比较粗糙的类全解空间搜索方案），也可以在这样的方向上加上一些措施，以减少我们做的无用功，也就是使得我们尽可能的朝着最优解的方向前进，而不是在中途后退，去检验较差的解是否可行。</p>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41634283/article/details/95381415">遗传算法—-学习反馈</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41634283/article/details/95381415">学习常用模型及算法：1.启发式算法（模拟退火和遗传算法）</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/" class="category-chain-item">数学建模</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">#数学建模</a>
+      
+        <a href="/tags/matlab/">#matlab</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>学习常用模型及算法3.遗传算法</div>
+      <div>https://blog.baixf.tk/2020/08/23/数学建模/学习常用模型及算法3.遗传算法/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年8月23日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/08/23/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/lingo%E4%B8%8Ematlab%E6%B1%82%E8%A7%A3%E9%9D%9E%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92/" title="lingo与matlab求解非线性规划">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">lingo与matlab求解非线性规划</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/08/23/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/lingo%E5%AD%A6%E4%B9%A0/" title="lingo学习">
+                        <span class="hidden-mobile">lingo学习</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

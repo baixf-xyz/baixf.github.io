@@ -1,0 +1,794 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/custom-theme.css">
+<link rel="stylesheet" href="/css/animation.css">
+<!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pi.jpg">
+  <link rel="icon" href="/img/pi.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="白小飞">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="内网穿透第一弹">
+<meta property="og:type" content="article">
+<meta property="og:title" content="玩转树莓派[09:使用Ngrok进行内网穿透，在公网上搭建个人博客]">
+<meta property="og:url" content="https://blog.baixf.tk/2020/07/16/raspberry/%E7%8E%A9%E8%BD%AC%E6%A0%91%E8%8E%93%E6%B4%BE[09%E4%BD%BF%E7%94%A8Ngrok%E8%BF%9B%E8%A1%8C%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%EF%BC%8C%E5%9C%A8%E5%85%AC%E7%BD%91%E4%B8%8A%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2]/index.html">
+<meta property="og:site_name" content="白小飞のblog">
+<meta property="og:description" content="内网穿透第一弹">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201123204628.png">
+<meta property="article:published_time" content="2020-07-16T03:11:11.000Z">
+<meta property="article:modified_time" content="2022-06-20T09:42:49.959Z">
+<meta property="article:author" content="白小飞">
+<meta property="article:tag" content="raspberry">
+<meta property="article:tag" content="基地2.0">
+<meta property="article:tag" content="内网穿透">
+<meta property="article:tag" content="公网">
+<meta property="article:tag" content="个人博客">
+<meta property="article:tag" content="suny-ngrok">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201123204628.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+    <meta name="referrer" content="no-referrer" />
+  
+  <title>玩转树莓派[09:使用Ngrok进行内网穿透，在公网上搭建个人博客] - 白小飞のblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"blog.baixf.tk","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"32cfe221d23ea3ac2ca847f1e865c570","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":21061303,"cnzz":1279684341,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?32cfe221d23ea3ac2ca847f1e865c570";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    <!-- 51.la Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//js.users.51.la/21061303.js');
+      }
+    </script>
+  
+
+  
+    <!-- cnzz Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript('//s4.cnzz.com/z_stat.php?id=1279684341&show=pic');
+      }
+    </script>
+  
+
+  
+
+
+
+  <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>
+<!-- hexo injector head_end start -->
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/global.js"></script>
+<script src="/js/cat/custom-utils.js"></script>
+<script src="/js/cat/onClick.js"></script>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>白小飞のBlog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://api.ixiaowai.cn/mcapi/mcapi.php') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="玩转树莓派[09:使用Ngrok进行内网穿透，在公网上搭建个人博客]"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-07-16 03:11" pubdate>
+          2020年7月16日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          22 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+<aside class="sidebar d-none d-xl-block" style="margin-right:-1rem;z-index:-1"><ins class="adsbygoogle" style="display:flex;justify-content:center;min-width:160px;max-width:300px;width:100%;height:600px;position:sticky;top:2rem" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></aside>
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">玩转树莓派[09:使用Ngrok进行内网穿透，在公网上搭建个人博客]</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p class="note note-primary">
+  树莓派性能虽然比不上家用电脑或者服务器，但是搭建个人博客网站足够了。我使用树莓派4B，在树莓派上安装了宝塔面板，利用wordpress在本地搭建了一个个人博客。博客搭建好了，树莓派网站只能在局域网内访问，存在外网无法访问的问题。为解决这个问题，经过一番搜索，终于发现树莓派可以使用Ngrok进行内网穿透，从而在公网上也可以访问树莓派上的博客网站。以下是教程。
+</p>
+
+<h2 id="一、Ngrok-介绍和选择服务商"><a href="#一、Ngrok-介绍和选择服务商" class="headerlink" title="一、Ngrok 介绍和选择服务商"></a>一、Ngrok 介绍和选择服务商</h2><span class="label label-primary">
+  首先，什么是Ngrok?
+</span>
+
+<p><span class="label label-primary">ngrok 通过安全隧道将位于NAT和防火墙后面的本地服务器公开到公共Internet，即将没有公网IP地址的服务器公开到公网，从而可以在任何地方访问局域网内的服务器。</span></p>
+<span class="label label-primary">
+  其次，Ngrok是怎么运行的？
+</span>
+
+<p><span class="label label-primary">您可以在计算机上下载并运行客户端程序，并为客户端提供网络服务（通常是Web服务器）的端口。</span></p>
+<p><span class="label label-primary">客户端连接到ngrok云服务，该服务在公网上接受流量，并将该流量转发到计算机上运行的ngrok进程，然后再转发到您指定的本地地址，从而实现内网穿透。</span></p>
+<p><span class="label label-primary">最后如何选择Ngrok云服务，如果你有云服务器，那么你可以自己搭建Ngrok云服务，也可以选择Ngrok服务商，因为方便就没有自建服务。对比了Ngrok官方和 Sunny Ngrok之后，最终选择了Sunny Ngrok，因为从两个服务商提供的服务来说，官方的不能自定义域名，虽然提供4个通道，但是每分钟有40次连接的限制。</span></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201122224244.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="Ngrok-提供的服务价格"><a href="#Ngrok-提供的服务价格" class="headerlink" title="Ngrok 提供的服务价格"></a>Ngrok 提供的服务价格</h3><p><span class="label label-primary">而我只需要一个通道就够了，并且我有个人的域名，所以选择了可以自定义域名的Sunny Ngrok。</span></p>
+<h2 id="二、注册Sunny-Ngrok，并开通隧道"><a href="#二、注册Sunny-Ngrok，并开通隧道" class="headerlink" title="二、注册Sunny-Ngrok，并开通隧道"></a>二、注册Sunny-Ngrok，并开通隧道</h2><p><span class="label label-primary">在Sunny-Ngrok上注册一个账号，然后进入后台，开通一个隧道。</span></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201122224918.png" srcset="/img/loading.gif" lazyload></p>
+<p>开通Sunny-Ngrok 隧道</p>
+<h2 id="三、在宝塔面板中绑定新的域名"><a href="#三、在宝塔面板中绑定新的域名" class="headerlink" title="三、在宝塔面板中绑定新的域名"></a>三、在宝塔面板中绑定新的域名</h2><p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201122224956.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="四、下载客户端，并启动隧道"><a href="#四、下载客户端，并启动隧道" class="headerlink" title="四、下载客户端，并启动隧道"></a>四、下载客户端，并启动隧道</h2><h3 id="1-在树莓派上下载Ngrok客户端"><a href="#1-在树莓派上下载Ngrok客户端" class="headerlink" title="1.在树莓派上下载Ngrok客户端"></a>1.在树莓派上下载Ngrok客户端</h3><p><a target="_blank" rel="noopener" href="http://hls.ctopus.com/sunny/linux_arm.zip?v=2">下载地址</a></p>
+<p>下载完成之后将客户端执行文件移动到 &#x2F;use&#x2F;local&#x2F;bin 目录下并给予可执行权限。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo mv sunny /usr/local/bin/sunny<br>sudo chmod +x /usr/local/bin/sunny<br></code></pre></td></tr></table></figure>
+
+<h3 id="2、编写启动脚本"><a href="#2、编写启动脚本" class="headerlink" title="2、编写启动脚本"></a>2、编写启动脚本</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo nano /etc/init.d/sunny<br>/etc/init.d/sunny 启动脚本代码<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/sh -e</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">## BEGIN INIT INFO</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Provides:          ngrok.cc</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Required-Start:    <span class="hljs-variable">$network</span> <span class="hljs-variable">$remote_fs</span> <span class="hljs-variable">$local_fs</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Required-Stop:     <span class="hljs-variable">$network</span> <span class="hljs-variable">$remote_fs</span> <span class="hljs-variable">$local_fs</span></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Default-Start:     2 3 4 5</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Default-Stop:      0 1 6</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Short-Description: autostartup of ngrok <span class="hljs-keyword">for</span> Linux</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment">## END INIT INFO</span></span><br><br>NAME=sunny<br>DAEMON=/usr/local/bin/$NAME<br>PIDFILE=/var/run/$NAME.pid<br><br>[ -x &quot;$DAEMON&quot; ] || exit 0<br><br>case &quot;$1&quot; in<br>  start)<br>      if [ -f $PIDFILE ]; then<br>        echo &quot;$NAME already running...&quot;<br>        echo -e &quot;\033[1;35mStart Fail\033[0m&quot;<br>      else<br>        echo &quot;Starting $NAME...&quot;<br>        start-stop-daemon -S -p $PIDFILE -m -b -o -q -x $DAEMON -- clientid 隧道id || return 2<br>        echo -e &quot;\033[1;32mStart Success\033[0m&quot;<br>    fi<br>    ;;<br>  stop)<br>        echo &quot;Stoping $NAME...&quot;<br>        start-stop-daemon -K -p $PIDFILE -s TERM -o -q || return 2<br>        rm -rf $PIDFILE<br>        echo -e &quot;\033[1;32mStop Success\033[0m&quot;<br>    ;;<br>  restart)<br>    $0 stop &amp;&amp; sleep 2 &amp;&amp; $0 start<br>    ;;<br>  *)<br>    echo &quot;Usage: $0 &#123;start|stop|restart&#125;&quot;<br>    exit 1<br>    ;;<br>esac<br>exit 0<br></code></pre></td></tr></table></figure>
+
+<p><span class="label label-primary">⚠️注意：</span></p>
+<p><span class="label label-primary">把代码里面的【隧道id】替换成自己的隧道id</span></p>
+<h3 id="3、测试可执行代码"><a href="#3、测试可执行代码" class="headerlink" title="3、测试可执行代码"></a>3、测试可执行代码</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo chmod 755 /etc/init.d/sunny<br>sudo /etc/init.d/sunny start<br>sudo /etc/init.d/sunny start    #启动<br>sudo /etc/init.d/sunny stop     #停止<br>sudo /etc/init.d/sunny restart  #重启<br></code></pre></td></tr></table></figure>
+
+<h3 id="4、设置开机启动"><a href="#4、设置开机启动" class="headerlink" title="4、设置开机启动"></a>4、设置开机启动</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd /etc/init.d<br>sudo update-rc.d sunny defaults 90    #加入开机启动<br>sudo update-rc.d -f sunny remove  #取消开机启动<br></code></pre></td></tr></table></figure>
+
+<h3 id="5、隧道启动官方文档说明"><a href="#5、隧道启动官方文档说明" class="headerlink" title="5、隧道启动官方文档说明"></a>5、隧道启动官方文档说明</h3><h5 id="启动隧道"><a href="#启动隧道" class="headerlink" title="启动隧道"></a>启动隧道</h5><span class="label label-primary">
+  Mac、Linux、树莓派的使用方式是一样的。Windows才会不一样。但是它们的启动方式都是通过隧道id启动，隧道id可以在隧道管理的列表里面获得。这里以映射http服务为例。
+</span>
+
+<p><span class="label label-primary">注意 下方代码仅供参考，sunny执行文件位置还得对应自己安装位置</span></p>
+<p><span class="label label-primary">Mac、Linux、树莓派</span></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">./sunny clientid 隧道id<br></code></pre></td></tr></table></figure>
+
+<p><span class="label label-primary">启动多个隧道</span></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">./sunny clientid 隧道id,隧道id<br></code></pre></td></tr></table></figure>
+
+<p><span class="label label-primary">要想后台运行可以使用 setsid 命令</span></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">setsid ./sunny clientid 隧道id &amp;<br></code></pre></td></tr></table></figure>
+
+<h2 id="五、完成"><a href="#五、完成" class="headerlink" title="五、完成"></a>五、完成</h2><p><span class="label label-primary">启动Ngrok 隧道，可以看到服务器已经上线了。</span></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201122225032.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="六、树莓派内网穿透"><a href="#六、树莓派内网穿透" class="headerlink" title="六、树莓派内网穿透"></a>六、树莓派内网穿透</h2><p><span class="label label-primary">再打开赠送的域名<a target="_blank" rel="noopener" href="http://bxf.free.idcfengye.com/">http://bxf.free.idcfengye.com/</a> ，就可以看到运行在树莓派上的博客网站啦，树莓派内网穿透成功！</span></p>
+<p><img src="https://picture-store-repository.oss-cn-hangzhou.aliyuncs.com/PicGo/20201123204628.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.lxx1.com/3709">科技爱好者博客-树莓派使用Ngrok进行内网穿透，在公网上搭建个人博客</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/raspberry/" class="category-chain-item">raspberry</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/raspberry/">#raspberry</a>
+      
+        <a href="/tags/%E5%9F%BA%E5%9C%B02-0/">#基地2.0</a>
+      
+        <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/">#内网穿透</a>
+      
+        <a href="/tags/%E5%85%AC%E7%BD%91/">#公网</a>
+      
+        <a href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">#个人博客</a>
+      
+        <a href="/tags/suny-ngrok/">#suny-ngrok</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>玩转树莓派[09:使用Ngrok进行内网穿透，在公网上搭建个人博客]</div>
+      <div>https://blog.baixf.tk/2020/07/16/raspberry/玩转树莓派[09使用Ngrok进行内网穿透，在公网上搭建个人博客]/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>白小飞</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年7月16日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+<div style="width:100%;display:flex;justify-content:center;margin-bottom:1.5rem"><ins class="adsbygoogle" style="display:flex;justify-content:center;max-width:845px;width:100%;height:90px" data-ad-client="ca-pub-8876055955767828" data-ad-slot="9285507003"></ins><script> (adsbygoogle = window.adsbygoogle || []).push({}); </script></div>
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/07/17/raspberry/%E7%8E%A9%E8%BD%AC%E6%A0%91%E8%8E%93%E6%B4%BE%5B10%E5%9F%BA%E5%9C%B02.0%E5%BC%80%E5%90%AF9090%E7%AB%AF%E5%8F%A3%E5%92%8CVNC%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%5D/" title="玩转树莓派[10:基地2.0开启9090端口和VNC内网穿透]">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">玩转树莓派[10:基地2.0开启9090端口和VNC内网穿透]</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/07/15/raspberry/%E7%8E%A9%E8%BD%AC%E6%A0%91%E8%8E%93%E6%B4%BE%5B08%E5%AE%89%E8%A3%85x11vnc%E5%B9%B6%E8%AE%BE%E7%BD%AE%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8%5D/" title="玩转树莓派[08:安装x11vnc并设置开机自动启动]">
+                        <span class="hidden-mobile">玩转树莓派[08:安装x11vnc并设置开机自动启动]</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_1279684341" style="display: none"></span>
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/click.js"></script>
+<script src="/js/bg.js"></script>
+<script src="/js/forbid.js"></script>
+<script src="/js/cloudflare.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8876055955767828" crossorigin="anonymous"></script>
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
